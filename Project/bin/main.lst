@@ -1,0 +1,1248 @@
+*** EVALUATION ***
+ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+
+    1:  // ----------------------------------------
+    2:  // Filename: main.c
+    3:  // Description: 
+    4:  //   This file contains the high-level code for the DEM project.
+    5:  //   It initialises appropriate hardware subsystems,
+    6:  //   creates application threads, and then starts the OS.
+    7:  //
+    8:  // Author: Danny Sok
+    9:  // Date: 3-11-2011
+   10:  // Date LM: 3-11-2011
+   11:  
+   12:  // Constants and dependencies
+   13:  #include "main.h"
+   14:  
+   15:  static UINT16 SampleCount;
+   16:  
+   17:  // ----------------------------------------
+   18:  // main
+   19:  //
+   20:  // Initializes the various peripherals
+   21:  // Handles received packets endlessly
+   22:  // Input: none
+   23:  // Output: none
+   24:  // Conditions: none
+   25:  //
+   26:  
+   27:  void main(void)
+   28:  {
+*** EVALUATION ***
+
+Function: main
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 1b92         [2]     LEAS  -14,SP
+   29:    // Setup Routines.
+   30:    BOOL bSetupState;
+   31:    TTimerSetup timerSetup;
+   32:    
+   33:    
+   34:    bSetupState = Packet_Setup(baudRate, busClk) &&
+  0002 86c2         [1]     LDAA  #194
+  0004 c7           [1]     CLRB  
+  0005 3b           [2]     PSHD  
+  0006 cd0001       [2]     LDY   #1
+  0009 35           [2]     PSHY  
+  000a 8636         [1]     LDAA  #54
+  000c ce016e       [2]     LDX   #366
+  000f 160000       [4]     JSR   Packet_Setup
+  0012 1b84         [2]     LEAS  4,SP
+  0014 04443b       [3]     TBEQ  D,*+62 ;abs = 0052
+   35:                  EEPROM_Setup(oscClk, busClk) &&
+  0017 8624         [1]     LDAA  #36
+  0019 c7           [1]     CLRB  
+  001a 3b           [2]     PSHD  
+  001b ce00f4       [2]     LDX   #244
+  001e 34           [2]     PSHX  
+  001f 8636         [1]     LDAA  #54
+  0021 ce016e       [2]     LDX   #366
+  0024 160000       [4]     JSR   EEPROM_Setup
+  0027 1b84         [2]     LEAS  4,SP
+  0029 044426       [3]     TBEQ  D,*+41 ;abs = 0052
+   36:                  CRG_SetupPLL(busClk, oscClk, refClk) &&
+  002c 8636         [1]     LDAA  #54
+  002e c7           [1]     CLRB  
+  002f 3b           [2]     PSHD  
+  0030 ce016e       [2]     LDX   #366
+  0033 34           [2]     PSHX  
+  0034 cd2400       [2]     LDY   #9216
+  0037 35           [2]     PSHY  
+  0038 c6f4         [1]     LDAB  #244
+  003a 87           [1]     CLRA  
+  003b 3b           [2]     PSHD  
+  003c 8612         [1]     LDAA  #18
+  003e c7           [1]     CLRB  
+  003f ce007a       [2]     LDX   #122
+  0042 160000       [4]     JSR   CRG_SetupPLL
+  0045 1b88         [2]     LEAS  8,SP
+  0047 044408       [3]     TBEQ  D,*+11 ;abs = 0052
+   37:                  CRG_SetupCOP(watchDogRate);
+  004a c601         [1]     LDAB  #1
+  004c 160000       [4]     JSR   CRG_SetupCOP
+  004f 046405       [3]     TBNE  D,*+8 ;abs = 0057
+  0052 cd0000       [2]     LDY   #0
+  0055 2003         [3]     BRA   *+5 ;abs = 005a
+  0057 cd0001       [2]     LDY   #1
+  005a 6d8c         [2]     STY   12,SP
+   38:                  
+   39:                  
+   40:  
+   41:    timerSetup.outputCompare = bTRUE;
+  005c c601         [1]     LDAB  #1
+  005e 87           [1]     CLRA  
+  005f 6c80         [2]     STD   0,SP
+   42:    timerSetup.outputAction = TIMER_OUTPUT_DISCONNECT;      
+  0061 6983         [2]     CLR   3,SP
+  0063 6982         [2]     CLR   2,SP
+   43:    timerSetup.inputDetection = TIMER_INPUT_OFF;
+  0065 6985         [2]     CLR   5,SP
+  0067 6984         [2]     CLR   4,SP
+   44:    timerSetup.toggleOnOverflow = bFALSE;
+  0069 6987         [2]     CLR   7,SP
+  006b 6986         [2]     CLR   6,SP
+   45:    timerSetup.interruptEnable = bTRUE;
+  006d 6c88         [2]     STD   8,SP
+   46:                  
+   47:    Clock_Setup(prescaleRate, modulusCount);
+  006f c607         [1]     LDAB  #7
+  0071 37           [2]     PSHB  
+  0072 c60f         [1]     LDAB  #15
+  0074 160000       [4]     JSR   Clock_Setup
+  0077 32           [3]     PULA  
+   48:    Analog_Setup(busClk);
+  0078 8636         [1]     LDAA  #54
+  007a c7           [1]     CLRB  
+  007b ce016e       [2]     LDX   #366
+  007e 160000       [4]     JSR   Analog_Setup
+   49:    
+   50:    Timer_Setup();
+  0081 160000       [4]     JSR   Timer_Setup
+   51:    Timer_PeriodicTimerEnable(bTRUE);
+  0084 c601         [1]     LDAB  #1
+  0086 87           [1]     CLRA  
+  0087 160000       [4]     JSR   Timer_PeriodicTimerEnable
+   52:    Timer_SetupPeriodicTimer(Periodic_Delay, busClk);
+  008a cc2710       [2]     LDD   #10000
+  008d 3b           [2]     PSHD  
+  008e 8636         [1]     LDAA  #54
+  0090 c7           [1]     CLRB  
+  0091 ce016e       [2]     LDX   #366
+  0094 160000       [4]     JSR   Timer_SetupPeriodicTimer
+  0097 3a           [3]     PULD  
+   53:    
+   54:    Timer_SetupPulseAccumulators();
+  0098 160000       [4]     JSR   Timer_SetupPulseAccumulators
+   55:    Timer_Init(TIMER_Ch7, &timerSetup);
+  009b c607         [1]     LDAB  #7
+  009d 87           [1]     CLRA  
+  009e 3b           [2]     PSHD  
+  009f 1a82         [2]     LEAX  2,SP
+  00a1 b7c5         [1]     EXG   D,X
+  00a3 160000       [4]     JSR   Timer_Init
+   56:    Timer_Set(TIMER_Ch7, Timer_Ch7_Delay);
+  00a6 c607         [1]     LDAB  #7
+  00a8 87           [1]     CLRA  
+  00a9 6c80         [2]     STD   0,SP
+  00ab cc07d0       [2]     LDD   #2000
+  00ae 160000       [4]     JSR   Timer_Set
+  00b1 3a           [3]     PULD  
+   57:    HMI_Setup();
+  00b2 160000       [4]     JSR   HMI_Setup
+   58:    
+   59:    if (bSetupState)
+  00b5 ec8c         [3]     LDD   12,SP
+  00b7 2706         [3/1]   BEQ   *+8 ;abs = 00bf
+   60:    {
+   61:      // Turn on LED D11 to show success.
+   62:      DDRE_BIT7   = 1;
+  00b9 4c0080       [4]     BSET  _DDRE,#128
+   63:      PORTE_BIT7  = 0;
+  00bc 4d0080       [4]     BCLR  _PORTE,#128
+   64:    }
+   65:    
+   66:    EnableInterrupts;
+  00bf 10ef         [1]     CLI   
+   67:    (void)HandleStartupPacket();
+  00c1 160000       [4]     JSR   HandleStartupPacket
+   68:    
+   69:    SampleCount = 0;
+  00c4 c7           [1]     CLRB  
+  00c5 87           [1]     CLRA  
+  00c6 7c0000       [3]     STD   SampleCount
+   70:    
+   71:    // Main loop
+   72:    for (;;)
+   73:    {
+   74:      ARMCOP = copReset;
+  00c9 c655         [1]     LDAB  #85
+  00cb 5b00         [2]     STAB  _ARMCOP
+   75:      
+   76:      if ( Packet_Get() )
+  00cd 160000       [4]     JSR   Packet_Get
+  00d0 044403       [3]     TBEQ  D,*+6 ;abs = 00d6
+   77:        HandlePacket();
+  00d3 160000       [4]     JSR   HandlePacket
+   78:      
+   79:      // Determine if a second has passed. If it has then send a time packet  
+   80:      if ( Clock_Update() )
+  00d6 160000       [4]     JSR   Clock_Update
+  00d9 044406       [3]     TBEQ  D,*+9 ;abs = 00e2
+   81:      {
+   82:        //Analog_Put();
+   83:        (void)HandleTimePacket();
+  00dc 160000       [4]     JSR   HandleTimePacket
+   84:        HMI_Update();
+  00df 160000       [4]     JSR   HMI_Update
+   85:      }
+   86:      
+   87:      
+   88:    
+   89:      ARMCOP = copEnd;
+  00e2 c6aa         [1]     LDAB  #170
+  00e4 5b00         [2]     STAB  _ARMCOP
+  00e6 20e1         [3]     BRA   *-29 ;abs = 00c9
+   90:    }
+   91:  }
+   92:  
+   93:  //---------------------------------
+   94:  //  HandlePacket
+   95:  //
+   96:  //  Determines what packet is recieved, then replies with the
+   97:  //  coresponding answer
+   98:  //  Input: none
+   99:  //  Output: none
+  100:  //  Conditions: none
+  101:  void HandlePacket(void)
+  102:  {
+*** EVALUATION ***
+
+Function: HandlePacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  103:    BOOL bACK = bFALSE;
+  0000 c7           [1]     CLRB  
+  0001 87           [1]     CLRA  
+  0002 3b           [2]     PSHD  
+  104:  
+  105:    if (Packet_Command >= 0x80) // 128 in hex
+  0003 f60000       [3]     LDAB  Packet
+  0006 c180         [1]     CMPB  #128
+  0008 250c         [3/1]   BCS   *+14 ;abs = 0016
+  106:    {
+  107:      bACK = bTRUE;
+  000a c601         [1]     LDAB  #1
+  000c 6c80         [2]     STD   0,SP
+  108:      Packet_Command -= 0x80;  
+  000e f60000       [3]     LDAB  Packet
+  0011 c080         [1]     SUBB  #128
+  0013 7b0000       [3]     STAB  Packet
+  109:    }
+  110:    
+  111:    switch (Packet_Command)
+  0016 f60000       [3]     LDAB  Packet
+  0019 c11a         [1]     CMPB  #26
+  001b 2277         [3/1]   BHI   *+121 ;abs = 0094
+  001d c004         [1]     SUBB  #4
+  001f 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0022 17           DC.B  23
+  0023 70           DC.B  112
+  0024 17           DC.B  23
+  0025 70           DC.B  112
+  0026 70           DC.B  112
+  0027 2b           DC.B  43
+  0028 30           DC.B  48
+  0029 1c           DC.B  28
+  002a 35           DC.B  53
+  002b 21           DC.B  33
+  002c 70           DC.B  112
+  002d 26           DC.B  38
+  002e 70           DC.B  112
+  002f 70           DC.B  112
+  0030 3a           DC.B  58
+  0031 3f           DC.B  63
+  0032 44           DC.B  68
+  0033 49           DC.B  73
+  0034 4e           DC.B  78
+  0035 53           DC.B  83
+  0036 58           DC.B  88
+  0037 5d           DC.B  93
+  0038 62           DC.B  98
+  0039 67           DC.B  103
+  003a 6c           DC.B  108
+  112:    {
+  113:      case CMD_STARTUP:
+  114:           Packet_CommandOK = HandleStartupPacket();
+  003b 160000       [4]     JSR   HandleStartupPacket
+  115:      break;
+  003e 2056         [3]     BRA   *+88 ;abs = 0096
+  116:      case CMD_SPECIAL:
+  117:           Packet_CommandOK = HandleSpecialPacket();
+  0040 160000       [4]     JSR   HandleSpecialPacket
+  118:      break;
+  0043 2051         [3]     BRA   *+83 ;abs = 0096
+  119:      case CMD_MODCON_NB:
+  120:           Packet_CommandOK = HandleNumberPacket();
+  0045 160000       [4]     JSR   HandleNumberPacket
+  121:      break;
+  0048 204c         [3]     BRA   *+78 ;abs = 0096
+  122:      case CMD_MODCON_MODE:
+  123:           Packet_CommandOK = HandleModePacket();
+  004a 160000       [4]     JSR   HandleModePacket
+  124:      break;
+  004d 2047         [3]     BRA   *+73 ;abs = 0096
+  125:      case CMD_EEPROM_PROG:
+  126:           Packet_CommandOK = HandleEEPROMProgramPacket();
+  004f 160000       [4]     JSR   HandleEEPROMProgramPacket
+  127:      break;
+  0052 2042         [3]     BRA   *+68 ;abs = 0096
+  128:      case CMD_EEPROM_GET:
+  129:           Packet_CommandOK = HandleEEPROMGetPacket();
+  0054 160000       [4]     JSR   HandleEEPROMGetPacket
+  130:      break;
+  0057 203d         [3]     BRA   *+63 ;abs = 0096
+  131:      case CMD_MODCON_PMODE:
+  132:           Packet_CommandOK = HandlePacketModePacket();
+  0059 160000       [4]     JSR   HandlePacketModePacket
+  133:      break;
+  005c 2038         [3]     BRA   *+58 ;abs = 0096
+  134:      case CMD_TEST_MODE:
+  135:           HandleTestModePack();
+  005e 160000       [4]     JSR   HandleTestModePack
+  136:      break;
+  0061 2036         [3]     BRA   *+56 ;abs = 0099
+  137:      case CMD_TARRIF:
+  138:           HandleTarrifPacket();
+  0063 160000       [4]     JSR   HandleTarrifPacket
+  139:      break;
+  0066 2031         [3]     BRA   *+51 ;abs = 0099
+  140:      case CMD_TIME1:
+  141:           Packet_CommandOK = HandleTime1Packet();
+  0068 160000       [4]     JSR   HandleTime1Packet
+  142:      break;
+  006b 2029         [3]     BRA   *+43 ;abs = 0096
+  143:      case CMD_TIME2:
+  144:           Packet_CommandOK = HandleTime2Packet();
+  006d 160000       [4]     JSR   HandleTime2Packet
+  145:      break;
+  0070 2024         [3]     BRA   *+38 ;abs = 0096
+  146:      case CMD_POWER:
+  147:           Packet_CommandOK = HandlePowerPacket();
+  0072 160000       [4]     JSR   HandlePowerPacket
+  148:      break;
+  0075 201f         [3]     BRA   *+33 ;abs = 0096
+  149:      case CMD_ENERGY:
+  150:           Packet_CommandOK = HandleEnergyPacket();
+  0077 160000       [4]     JSR   HandleEnergyPacket
+  151:      break;
+  007a 201a         [3]     BRA   *+28 ;abs = 0096
+  152:      case CMD_COST:
+  153:           Packet_CommandOK = HandleCostPacket();
+  007c 160000       [4]     JSR   HandleCostPacket
+  154:      break;
+  007f 2015         [3]     BRA   *+23 ;abs = 0096
+  155:      case CMD_FREQUENCY:
+  156:           Packet_CommandOK = HandleFrquencyPacket();
+  0081 160000       [4]     JSR   HandleFrquencyPacket
+  157:      break;
+  0084 2010         [3]     BRA   *+18 ;abs = 0096
+  158:      case CMD_VOLRMS:
+  159:           Packet_CommandOK = HandleVRMS();
+  0086 160000       [4]     JSR   HandleVRMS
+  160:      break;
+  0089 200b         [3]     BRA   *+13 ;abs = 0096
+  161:      case CMD_CURRMS:
+  162:           Packet_CommandOK = HandleIRMS();
+  008b 160000       [4]     JSR   HandleIRMS
+  163:      break;
+  008e 2006         [3]     BRA   *+8 ;abs = 0096
+  164:      case CMD_POWFAC:
+  165:           Packet_CommandOK = HandlePFactor();
+  0090 160000       [4]     JSR   HandlePFactor
+  166:      break;
+  0093 8f           [2]     SKIP2 
+  167:      
+  168:      default:
+  169:           Packet_CommandOK = bFALSE;
+  0094 c7           [1]     CLRB  
+  0095 87           [1]     CLRA  
+  0096 7c0000       [3]     STD   Packet_CommandOK
+  170:      break;
+  171:    }
+  172:           
+  173:    if (bACK && Packet_CommandOK)
+  0099 ec80         [3]     LDD   0,SP
+  009b 270f         [3/1]   BEQ   *+17 ;abs = 00ac
+  009d fc0000       [3]     LDD   Packet_CommandOK
+  00a0 270a         [3/1]   BEQ   *+12 ;abs = 00ac
+  174:    {
+  175:      (void)Packet_Put(Packet_Command += 0x80, Packet_Parameter1, Packet_Parameter2, Packet_Parameter3);
+  00a2 f60000       [3]     LDAB  Packet
+  00a5 cb80         [1]     ADDB  #128
+  00a7 7b0000       [3]     STAB  Packet
+  176:    }
+  00aa 2007         [3]     BRA   *+9 ;abs = 00b3
+  177:    else if (bACK)
+  00ac ec80         [3]     LDD   0,SP
+  00ae 2714         [3/1]   BEQ   *+22 ;abs = 00c4
+  178:      (void)Packet_Put(Packet_Command, Packet_Parameter1, Packet_Parameter2, Packet_Parameter3);
+  00b0 f60000       [3]     LDAB  Packet
+  00b3 37           [2]     PSHB  
+  00b4 f60000       [3]     LDAB  Packet:1
+  00b7 37           [2]     PSHB  
+  00b8 f60000       [3]     LDAB  Packet:3
+  00bb 37           [2]     PSHB  
+  00bc f60000       [3]     LDAB  Packet:2
+  00bf 160000       [4]     JSR   Packet_Put
+  00c2 1b83         [2]     LEAS  3,SP
+  179:    
+  180:  
+  181:    
+  182:   }
+  00c4 3a           [3]     PULD  
+  00c5 3d           [5]     RTS   
+  183:  
+  184:  //---------------------------------
+  185:  //  MCCNT_ISR
+  186:  //
+  187:  //  The ISR for Modulus Count.
+  188:  //  This will send the analog values to the pc
+  189:  //  Input: none
+  190:  //  Output: none
+  191:  //  Conditions: none    
+  192:   void interrupt 26 MCCNT_ISR(void)
+  193:   {
+*** EVALUATION ***
+
+Function: MCCNT_ISR
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  194:    MCFLG_MCZF = 1; // Clear/Ack
+  0000 4c0080       [4]     BSET  _MCFLG,#128
+  195:    
+  196:    if (Debug)
+  0003 fc0420       [3]     LDD   1056
+  0006 2708         [3/1]   BEQ   *+10 ;abs = 0010
+  197:      PTT_PTT4 ^= 1;
+  0008 f60000       [3]     LDAB  _PTT
+  000b c810         [1]     EORB  #16
+  000d 7b0000       [3]     STAB  _PTT
+  198:    
+  199:    Analog_Put();
+  0010 160000       [4]     JSR   Analog_Put
+  200:    Analog_Get(Ch1);
+  0013 c7           [1]     CLRB  
+  0014 87           [1]     CLRA  
+  0015 160000       [4]     JSR   Analog_Get
+  201:    Analog_Get(Ch2);
+  0018 c601         [1]     LDAB  #1
+  001a 87           [1]     CLRA  
+  001b 160000       [4]     JSR   Analog_Get
+  202:    
+  203:    // In ASYNC mode, we send only if the value has changed.
+  204:    if (sControlMode == PACKET_ASYNCHRONOUS)
+  001e fc0404       [3]     LDD   1028
+  0021 264d         [3/1]   BNE   *+79 ;abs = 0070
+  205:    {
+  206:      if (Analog_Input[Ch1].OldValue.l != Analog_Input[Ch1].Value.l)
+  0023 fc0000       [3]     LDD   Analog_Input:2
+  0026 bc0000       [3]     CPD   Analog_Input
+  0029 2705         [3/1]   BEQ   *+7 ;abs = 0030
+  207:        (void)HandleAnalogValPacket(Ch1);
+  002b c7           [1]     CLRB  
+  002c 87           [1]     CLRA  
+  002d 160000       [4]     JSR   HandleAnalogValPacket
+  208:      if (Analog_Input[Ch2].OldValue.l != Analog_Input[Ch2].Value.l)
+  0030 fc0000       [3]     LDD   Analog_Input:12
+  0033 bc0000       [3]     CPD   Analog_Input:10
+  0036 2706         [3/1]   BEQ   *+8 ;abs = 003e
+  209:        (void)HandleAnalogValPacket(Ch2);
+  0038 c601         [1]     LDAB  #1
+  003a 87           [1]     CLRA  
+  003b 160000       [4]     JSR   HandleAnalogValPacket
+  210:      
+  211:      if (SampleCount >= DEM_PWRSIZE)
+  003e fc0000       [3]     LDD   SampleCount
+  0041 8c0010       [2]     CPD   #16
+  0044 250b         [3/1]   BCS   *+13 ;abs = 0051
+  212:      {
+  213:        SampleCount = 0;
+  0046 c7           [1]     CLRB  
+  0047 87           [1]     CLRA  
+  0048 7c0000       [3]     STD   SampleCount
+  214:        Math_FindEnergy(DEM_AvePower_Array);
+  004b cc0000       [2]     LDD   #DEM_AvePower_Array
+  004e 160000       [4]     JSR   Math_FindEnergy
+  215:      }
+  216:      DEM_AvePower_Array[SampleCount] = Math_FindPower(Analog_Input[Ch1].Value.l, Analog_Input[Ch2].Value.l);
+  0051 fc0000       [3]     LDD   Analog_Input
+  0054 3b           [2]     PSHD  
+  0055 fc0000       [3]     LDD   Analog_Input:10
+  0058 160000       [4]     JSR   Math_FindPower
+  005b 30           [3]     PULX  
+  005c b746         [1]     TFR   D,Y
+  005e fc0000       [3]     LDD   SampleCount
+  0061 59           [1]     LSLD  
+  0062 b745         [1]     TFR   D,X
+  0064 6de20000     [3]     STY   DEM_AvePower_Array,X
+  217:      SampleCount++;
+  0068 fe0000       [3]     LDX   SampleCount
+  006b 08           [1]     INX   
+  006c 7e0000       [3]     STX   SampleCount
+  218:      
+  219:      
+  220:    }
+  006f 0b           [8]     RTI   
+  221:    // In SYNC mode, we send all the time.
+  222:    else
+  223:    {
+  224:      (void)HandleAnalogValPacket(Ch1);
+  0070 c7           [1]     CLRB  
+  0071 87           [1]     CLRA  
+  0072 160000       [4]     JSR   HandleAnalogValPacket
+  225:      (void)HandleAnalogValPacket(Ch2);
+  0075 c601         [1]     LDAB  #1
+  0077 87           [1]     CLRA  
+  0078 160000       [4]     JSR   HandleAnalogValPacket
+  226:    }
+  227:    
+  228:    /*
+  229:    Clock_MilliSeconds += 2;
+  230:    if (Clock_MilliSeconds >= 1000)
+  231:    {
+  232:      if (Debug)
+  233:      {
+  234:        Clock_Hours++;
+  235:        Clock_MilliSeconds -= 1000;  // 1 second has passed
+  236:        
+  237:        if (Clock_Hours >= 24)
+  238:        {
+  239:          Clock_Days++;
+  240:          Clock_Hours -= 24;
+  241:        }
+  242:      }
+  243:      
+  244:      Clock_Seconds++;
+  245:      Clock_Interval++;
+  246:      Clock_MilliSeconds -= 1000;  // 1 second has passed
+  247:      
+  248:      
+  249:      
+  250:      if (Clock_Seconds >= 60)
+  251:      {
+  252:      Clock_Minutes++;               // 1 minute has passed
+  253:      Clock_Seconds -= 60;
+  254:      }
+  255:      
+  256:      if (Clock_Minutes >= 60)
+  257:      {
+  258:        Clock_Hours++;
+  259:        Clock_Minutes -= 60;
+  260:      }
+  261:         
+  262:      if (Clock_Hours >= 24)
+  263:      {
+  264:        Clock_Days++;
+  265:        Clock_Hours -= 24;
+  266:      }
+  267:    }
+  268:    
+  269:    Use later when ditching Clock*/
+  270:    
+  271:    
+  272:   }
+  007b 0b           [8]     RTI   
+  273:     
+  274:   
+  275:  
+  276:  //---------------------------------
+  277:  //  HandleStartupPacket
+  278:  //
+  279:  //  Creates the packet that will be in
+  280:  //  response to the startup call by the PC.
+  281:  //  Input: none
+  282:  //  Output: none
+  283:  //  Conditions: none
+  284:  BOOL HandleStartupPacket(void)
+  285:  {
+*** EVALUATION ***
+
+Function: HandleStartupPacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  286:    if(Packet_Parameter1 != 0 || Packet_Parameter1 != 0 || Packet_Parameter3 != 0)
+  0000 f60000       [3]     LDAB  Packet:1
+  0003 2639         [3/1]   BNE   *+59 ;abs = 003e
+  0005 f60000       [3]     LDAB  Packet:2
+  0008 2702         [3/1]   BEQ   *+4 ;abs = 000c
+  287:    {
+  288:      return bFALSE;  
+  000a 2032         [3]     BRA   *+52 ;abs = 003e
+  289:    }
+  290:      
+  291:    
+  292:    return Packet_Put(CMD_STARTUP, 0, 0, 0) && // startup takes 0 for all parameters
+  000c c604         [1]     LDAB  #4
+  000e 37           [2]     PSHB  
+  000f c7           [1]     CLRB  
+  0010 37           [2]     PSHB  
+  0011 37           [2]     PSHB  
+  0012 160000       [4]     JSR   Packet_Put
+  0015 1b83         [2]     LEAS  3,SP
+  0017 044424       [3]     TBEQ  D,*+39 ;abs = 003e
+  293:           HandleSpecialPacket() &&
+  001a 160000       [4]     JSR   HandleSpecialPacket
+  001d 04441e       [3]     TBEQ  D,*+33 ;abs = 003e
+  294:           HandleNumberPacket() &&
+  0020 160000       [4]     JSR   HandleNumberPacket
+  0023 044418       [3]     TBEQ  D,*+27 ;abs = 003e
+  295:           HandleModePacket() &&
+  0026 160000       [4]     JSR   HandleModePacket
+  0029 044412       [3]     TBEQ  D,*+21 ;abs = 003e
+  296:           Packet_Put( CMD_MODCON_PMODE, 1, (UINT8)sControlMode, 0 );
+  002c cc010a       [2]     LDD   #266
+  002f 37           [2]     PSHB  
+  0030 36           [2]     PSHA  
+  0031 f60405       [3]     LDAB  1029
+  0034 37           [2]     PSHB  
+  0035 c7           [1]     CLRB  
+  0036 160000       [4]     JSR   Packet_Put
+  0039 1b83         [2]     LEAS  3,SP
+  003b 046402       [3]     TBNE  D,*+5 ;abs = 0040
+  003e c7           [1]     CLRB  
+  003f 8f           [2]     SKIP2 
+  0040 c601         [1]     LDAB  #1
+  0042 87           [1]     CLRA  
+  297:  }
+  0043 3d           [5]     RTS   
+  298:  
+  299:  //---------------------------------
+  300:  //  HandleSpecialPacket
+  301:  //
+  302:  //  Creates the packet that will be in
+  303:  //  response to the special call by the PC.
+  304:  //  It responds with the ModCon Version.
+  305:  //  Input: none
+  306:  //  Output: none
+  307:  //  Conditions: none
+  308:  BOOL HandleSpecialPacket(void)
+  309:  {
+*** EVALUATION ***
+
+Function: HandleSpecialPacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  310:    switch (Packet_Parameter1)
+  0000 f60000       [3]     LDAB  Packet:1
+  0003 c164         [1]     CMPB  #100
+  0005 2610         [3/1]   BNE   *+18 ;abs = 0017
+  311:    {
+  312:      case 'v':
+  313:        return Packet_Put(CMD_SPECIAL, 'v', MAJOR_VERSION, MINOR_VERSION);
+  314:        break;
+  315:      case 'd':
+  316:        EEPROM_Write16(&Debug, Debug ^ 1); // Set debug
+  0007 cc0420       [2]     LDD   #1056
+  000a 3b           [2]     PSHD  
+  000b fc0420       [3]     LDD   1056
+  000e c801         [1]     EORB  #1
+  0010 160000       [4]     JSR   EEPROM_Write16
+  0013 3a           [3]     PULD  
+  317:        return HandleTimePacket();
+  0014 060000       [3]     JMP   HandleTimePacket
+  318:        break;
+  319:    }
+  320:    
+  321:    // If called by Startup Packet
+  322:    return Packet_Put(CMD_SPECIAL, 'v', MAJOR_VERSION, MINOR_VERSION);
+  0017 cc7609       [2]     LDD   #30217
+  001a 37           [2]     PSHB  
+  001b 36           [2]     PSHA  
+  001c c601         [1]     LDAB  #1
+  001e 37           [2]     PSHB  
+  001f c7           [1]     CLRB  
+  0020 160000       [4]     JSR   Packet_Put
+  0023 1b83         [2]     LEAS  3,SP
+  323:  }
+  0025 3d           [5]     RTS   
+  324:  
+  325:  //---------------------------------
+  326:  //  HandleNumberPacket
+  327:  //
+  328:  //  Creates the packet that will be in
+  329:  //  response to the ModCon number call by the PC.
+  330:  //  It responds with the last five digits of our
+  331:  //  student number.
+  332:  //  Input: none
+  333:  //  Output: none
+  334:  //  Conditions: none
+  335:  BOOL HandleNumberPacket(void)
+  336:  {
+*** EVALUATION ***
+
+Function: HandleNumberPacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+  337:    TUINT16 NbModCon;
+  338:    if (Packet_Parameter1 == 2)
+  0001 f60000       [3]     LDAB  Packet:1
+  0004 c102         [1]     CMPB  #2
+  0006 260c         [3/1]   BNE   *+14 ;abs = 0014
+  339:    {
+  340:      NbModCon.s.Lo = Packet_Parameter2;
+  0008 f60000       [3]     LDAB  Packet:3
+  000b 6b81         [2]     STAB  1,SP
+  341:      NbModCon.s.Hi = Packet_Parameter3;
+  000d f60000       [3]     LDAB  Packet:2
+  0010 6b80         [2]     STAB  0,SP
+  342:      
+  343:    }
+  0012 2005         [3]     BRA   *+7 ;abs = 0019
+  344:    else
+  345:    {
+  346:      NbModCon.l = sModConNb;
+  0014 fc0400       [3]     LDD   1024
+  0017 6c80         [2]     STD   0,SP
+  347:    }
+  348:    
+  349:    return Packet_Put(CMD_MODCON_NB, 1, NbModCon.s.Lo, NbModCon.s.Hi);
+  0019 cc010b       [2]     LDD   #267
+  001c 37           [2]     PSHB  
+  001d 36           [2]     PSHA  
+  001e e683         [3]     LDAB  3,SP
+  0020 37           [2]     PSHB  
+  0021 e683         [3]     LDAB  3,SP
+  0023 160000       [4]     JSR   Packet_Put
+  0026 1b83         [2]     LEAS  3,SP
+  350:    
+  351:  }
+  0028 30           [3]     PULX  
+  0029 3d           [5]     RTS   
+  352:  
+  353:  //---------------------------------
+  354:  //  HandleModePacket
+  355:  //
+  356:  //  Creates the packet that will be in
+  357:  //  response to the ModCon mode call by the PC.
+  358:  //  It responds with the modcon mode
+  359:  //  Input: none
+  360:  //  Output: none
+  361:  //  Conditions: none
+  362:  BOOL HandleModePacket(void)
+  363:  {
+*** EVALUATION ***
+
+Function: HandleModePacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  364:    TUINT16 mode;
+  365:    mode.l = sModConMode;
+  0000 fc0402       [3]     LDD   1026
+  0003 3b           [2]     PSHD  
+  366:    return Packet_Put(CMD_MODCON_MODE, 1, mode.s.Lo, mode.s.Hi);
+  0004 cc010d       [2]     LDD   #269
+  0007 37           [2]     PSHB  
+  0008 36           [2]     PSHA  
+  0009 e683         [3]     LDAB  3,SP
+  000b 37           [2]     PSHB  
+  000c e683         [3]     LDAB  3,SP
+  000e 160000       [4]     JSR   Packet_Put
+  0011 1b83         [2]     LEAS  3,SP
+  367:  }
+  0013 30           [3]     PULX  
+  0014 3d           [5]     RTS   
+  368:  
+  369:  //---------------------------------
+  370:  //  HandleEEPROMProgramPacket
+  371:  //
+  372:  //  Creates the packet that will be in
+  373:  //  response to the ModCon EEPROM Programming call by the PC.
+  374:  //  It responds by writing the data recieved
+  375:  //  Input: none
+  376:  //  Output: none
+  377:  //  Conditions: none
+  378:  BOOL HandleEEPROMProgramPacket(void)
+  379:  {
+*** EVALUATION ***
+
+Function: HandleEEPROMProgramPacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+  380:    TUINT16 address;
+  381:    address.s.Lo = Packet_Parameter1;    //LSB
+  0001 f60000       [3]     LDAB  Packet:1
+  0004 6b81         [2]     STAB  1,SP
+  382:    address.s.Hi = Packet_Parameter2;    //MSB
+  0006 f60000       [3]     LDAB  Packet:3
+  0009 6b80         [2]     STAB  0,SP
+  383:    
+  384:    if (address.s.Hi == 10 && address.s.Lo == 0)
+  000b c10a         [1]     CMPB  #10
+  000d 2609         [3/1]   BNE   *+11 ;abs = 0018
+  000f e681         [3]     LDAB  1,SP
+  0011 2605         [3/1]   BNE   *+7 ;abs = 0018
+  385:      return EEPROM_Erase();
+  0013 160000       [4]     JSR   EEPROM_Erase
+  0016 200b         [3]     BRA   *+13 ;abs = 0023
+  386:  
+  387:    return EEPROM_Write8( (volatile UINT8 *)address.l, Packet_Parameter3 ); 
+  0018 ec80         [3]     LDD   0,SP
+  001a 3b           [2]     PSHD  
+  001b f60000       [3]     LDAB  Packet:2
+  001e 160000       [4]     JSR   EEPROM_Write8
+  0021 1b82         [2]     LEAS  2,SP
+  388:  }
+  0023 30           [3]     PULX  
+  0024 3d           [5]     RTS   
+  389:  
+  390:  //---------------------------------
+  391:  //  HandleEEPROMGetPacket
+  392:  //
+  393:  //  Creates the packet that will be in
+  394:  //  response to the ModCon mode call by the PC.
+  395:  //  It responds with the modcon mode
+  396:  //  Input: none
+  397:  //  Output: none
+  398:  //  Conditions: none
+  399:  BOOL HandleEEPROMGetPacket(void)
+  400:  {
+*** EVALUATION ***
+
+Function: HandleEEPROMGetPacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+  401:    TUINT16 address;
+  402:    address.s.Lo = Packet_Parameter1;
+  0001 f60000       [3]     LDAB  Packet:1
+  0004 6b81         [2]     STAB  1,SP
+  403:    address.s.Hi = Packet_Parameter2;
+  0006 b60000       [3]     LDAA  Packet:3
+  0009 6a80         [2]     STAA  0,SP
+  404:    
+  405:    if ( (Packet_Parameter2 > 0x0F) || (Packet_Parameter2 < 0x04) )
+  000b 810f         [1]     CMPA  #15
+  000d 2204         [3/1]   BHI   *+6 ;abs = 0013
+  000f 8104         [1]     CMPA  #4
+  0011 2404         [3/1]   BCC   *+6 ;abs = 0017
+  406:      return bFALSE;
+  0013 c7           [1]     CLRB  
+  0014 87           [1]     CLRA  
+  0015 2011         [3]     BRA   *+19 ;abs = 0028
+  407:    
+  408:    return Packet_Put( CMD_EEPROM_GET, Packet_Parameter1, Packet_Parameter2, _EB(address.l) ); // cmd, lsb, msb, data
+  0017 c608         [1]     LDAB  #8
+  0019 37           [2]     PSHB  
+  001a f60000       [3]     LDAB  Packet:1
+  001d 37           [2]     PSHB  
+  001e 36           [2]     PSHA  
+  001f ee83         [3]     LDX   3,SP
+  0021 e600         [3]     LDAB  0,X
+  0023 160000       [4]     JSR   Packet_Put
+  0026 1b83         [2]     LEAS  3,SP
+  409:  }
+  0028 30           [3]     PULX  
+  0029 3d           [5]     RTS   
+  410:  
+  411:  //---------------------------------
+  412:  //  HandleTimePacket
+  413:  //
+  414:  //  Creates the packet that will be in
+  415:  //  response to the ModCon time call by the PC.
+  416:  //  It responds with the modcon time
+  417:  //  Input: none
+  418:  //  Output: none
+  419:  //  Conditions: none
+  420:  BOOL HandleTimePacket(void)
+  421:  {
+*** EVALUATION ***
+
+Function: HandleTimePacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  422:    // Intervals : 'i', Seconds, Minutes
+  423:    return Packet_Put(CMD_MODCON_TIME, 'i', Clock_Seconds, Clock_Minutes);
+  0000 cc690c       [2]     LDD   #26892
+  0003 37           [2]     PSHB  
+  0004 36           [2]     PSHA  
+  0005 f60000       [3]     LDAB  Clock_Seconds
+  0008 37           [2]     PSHB  
+  0009 f60000       [3]     LDAB  Clock_Minutes
+  000c 160000       [4]     JSR   Packet_Put
+  000f 1b83         [2]     LEAS  3,SP
+  424:  }
+  0011 3d           [5]     RTS   
+  425:  
+  426:  //---------------------------------
+  427:  //  HandlePacketModePacket
+  428:  //
+  429:  //  Creates the packet that will be in
+  430:  //  response to the ModCon Packet Mode call by the PC.
+  431:  //  It responds with the Packet Mode
+  432:  //  Input: none
+  433:  //  Output: none
+  434:  //  Conditions: none
+  435:  BOOL HandlePacketModePacket(void)
+  436:  {
+*** EVALUATION ***
+
+Function: HandlePacketModePacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  437:    // p1: 2 = set, 1 = get
+  438:    // p2: 0 = async, 1 = sync
+  439:    // p3: 0
+  440:    if (Packet_Parameter1 == 2)
+  0000 f60000       [3]     LDAB  Packet:1
+  0003 c102         [1]     CMPB  #2
+  0005 260e         [3/1]   BNE   *+16 ;abs = 0015
+  441:      return EEPROM_Write16(&sControlMode, Packet_Parameter2);
+  0007 cc0404       [2]     LDD   #1028
+  000a 3b           [2]     PSHD  
+  000b f60000       [3]     LDAB  Packet:3
+  000e 87           [1]     CLRA  
+  000f 160000       [4]     JSR   EEPROM_Write16
+  0012 1b82         [2]     LEAS  2,SP
+  0014 3d           [5]     RTS   
+  442:    if (Packet_Parameter1 == 1)
+  0015 04210f       [3]     DBNE  B,*+18 ;abs = 0027
+  443:      return Packet_Put( CMD_MODCON_PMODE, 1, (UINT8)sControlMode, 0 ); // cmd, 1, mode, 0;  
+  0018 cc010a       [2]     LDD   #266
+  001b 37           [2]     PSHB  
+  001c 36           [2]     PSHA  
+  001d f60405       [3]     LDAB  1029
+  0020 37           [2]     PSHB  
+  0021 c7           [1]     CLRB  
+  0022 160000       [4]     JSR   Packet_Put
+  0025 1b83         [2]     LEAS  3,SP
+  444:  }
+  0027 3d           [5]     RTS   
+  445:  
+  446:  //---------------------------------
+  447:  //  HandleAnalogValPacket
+  448:  //
+  449:  //  Creates the packet that will be in
+  450:  //  response to the ModCon Analog Value call by the PC.
+  451:  //  It responds with the current Analog Value
+  452:  //  Input: none
+  453:  //  Output: none
+  454:  //  Conditions: none
+  455:  BOOL HandleAnalogValPacket(TChannelNb channelNb)
+  456:  {
+*** EVALUATION ***
+
+Function: HandleAnalogValPacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+  457:    // cmd, channel, lsb, msb
+  458:    return Packet_Put(CMD_ANALOG_VALUE, (UINT8)channelNb, Analog_Input[channelNb].Value.s.Lo, Analog_Input[channelNb].Value.s.Hi);  
+  0001 c650         [1]     LDAB  #80
+  0003 37           [2]     PSHB  
+  0004 a682         [3]     LDAA  2,SP
+  0006 36           [2]     PSHA  
+  0007 c60a         [1]     LDAB  #10
+  0009 87           [1]     CLRA  
+  000a ed82         [3]     LDY   2,SP
+  000c 13           [3]     EMUL  
+  000d b745         [1]     TFR   D,X
+  000f e6e20000     [4]     LDAB  Analog_Input:1,X
+  0013 37           [2]     PSHB  
+  0014 e6e20000     [4]     LDAB  Analog_Input,X
+  0018 160000       [4]     JSR   Packet_Put
+  001b 1b83         [2]     LEAS  3,SP
+  459:  }
+  001d 30           [3]     PULX  
+  001e 3d           [5]     RTS   
+  460:  
+  461:  void HandleTestModePack(void)
+  462:  {
+*** EVALUATION ***
+
+Function: HandleTestModePack
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  463:    switch(Packet_Parameter1)
+  0000 f60000       [3]     LDAB  Packet:1
+  0003 2706         [3/1]   BEQ   *+8 ;abs = 000b
+  0005 042108       [3]     DBNE  B,*+11 ;abs = 0010
+  464:    {
+  465:      case 1:
+  466:        Debug = 1;
+  0008 c601         [1]     LDAB  #1
+  467:      break;
+  000a 21           [1]     SKIP1 
+  468:      case 0:
+  469:        Debug = 0;
+  000b c7           [1]     CLRB  
+  470:      break;
+  000c 87           [1]     CLRA  
+  000d 7c0420       [3]     STD   1056
+  471:    }
+  472:  }
+  0010 3d           [5]     RTS   
+  473:  
+  474:  void HandleTarrifPacket(void)
+  475:  {
+*** EVALUATION ***
+
+Function: HandleTarrifPacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  476:    switch(Packet_Parameter1)
+  0000 f60000       [3]     LDAB  Packet:1
+  0003 c103         [1]     CMPB  #3
+  0005 221a         [3/1]   BHI   *+28 ;abs = 0021
+  0007 53           [1]     DECB  
+  0008 87           [1]     CLRA  
+  0009 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  000c 03           DC.B  3
+  000d 13           DC.B  19
+  000e 03           DC.B  3
+  000f 08           DC.B  8
+  0010 0d           DC.B  13
+  477:    {
+  478:      case 1:
+  479:        DEM_Tarrif = sT1OffPeak;
+  0011 fc0454       [3]     LDD   1108
+  480:      break;
+  0014 2008         [3]     BRA   *+10 ;abs = 001e
+  481:      case 2:
+  482:        DEM_Tarrif = sT2NonTOU;
+  0016 fc0456       [3]     LDD   1110
+  483:      break;
+  0019 2003         [3]     BRA   *+5 ;abs = 001e
+  484:      case 3:
+  485:        DEM_Tarrif = sT3NonTOU;
+  001b fc0458       [3]     LDD   1112
+  001e 7c0000       [3]     STD   DEM_Tarrif
+  486:      break;
+  487:    }
+  488:    
+  489:    /*if (Packet_Parameter1 == 1 && Packet_Parameter3 == 0)
+  490:      DEM_Tarrif = sT1OffPeak;
+  491:    else if (Packet_Parameter1 == 2 && Packet_Parameter3 == 0)
+  492:      DEM_Tarrif = sT2NonTOU;
+  493:    else if (Packet_Parameter1 == 3 && Packet_Parameter3 == 0) 
+  494:      DEM_Tarrif = sT3NonTOU;*/
+  495:  }
+  0021 3d           [5]     RTS   
+  496:  
+  497:  BOOL HandleTime1Packet(void)
+  498:  {
+*** EVALUATION ***
+
+Function: HandleTime1Packet
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  499:    if (Packet_Parameter3 == 0)
+  0000 f60000       [3]     LDAB  Packet:2
+  0003 2612         [3/1]   BNE   *+20 ;abs = 0017
+  500:      return Packet_Put(CMD_TIME1, (UINT8)Clock_Seconds, (UINT8)Clock_Minutes, 0);
+  0005 c612         [1]     LDAB  #18
+  0007 37           [2]     PSHB  
+  0008 b60000       [3]     LDAA  Clock_Seconds
+  000b 36           [2]     PSHA  
+  000c b60000       [3]     LDAA  Clock_Minutes
+  000f 36           [2]     PSHA  
+  0010 c7           [1]     CLRB  
+  0011 160000       [4]     JSR   Packet_Put
+  0014 1b83         [2]     LEAS  3,SP
+  0016 3d           [5]     RTS   
+  501:    else
+  502:    {
+  503:      
+  504:      Clock_Seconds = Packet_Parameter1;
+  0017 f60000       [3]     LDAB  Packet:1
+  001a 7b0000       [3]     STAB  Clock_Seconds
+  505:      Clock_Minutes = Packet_Parameter2;
+  001d f60000       [3]     LDAB  Packet:3
+  0020 7b0000       [3]     STAB  Clock_Minutes
+  506:    }
+  507:    
+  508:  }
+  0023 3d           [5]     RTS   
+  509:  
+  510:  BOOL HandleTime2Packet(void)
+  511:  {
+*** EVALUATION ***
+
+Function: HandleTime2Packet
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  512:    if (Packet_Parameter3 == 0)
+  0000 f60000       [3]     LDAB  Packet:2
+  0003 2612         [3/1]   BNE   *+20 ;abs = 0017
+  513:      return Packet_Put(CMD_TIME2, (UINT8)Clock_Hours, (UINT8)Clock_Days, 0);
+  0005 c613         [1]     LDAB  #19
+  0007 37           [2]     PSHB  
+  0008 b60000       [3]     LDAA  Clock_Hours
+  000b 36           [2]     PSHA  
+  000c b60000       [3]     LDAA  Clock_Days
+  000f 36           [2]     PSHA  
+  0010 c7           [1]     CLRB  
+  0011 160000       [4]     JSR   Packet_Put
+  0014 1b83         [2]     LEAS  3,SP
+  0016 3d           [5]     RTS   
+  514:    else
+  515:    {
+  516:      Clock_Hours = Packet_Parameter1;
+  0017 f60000       [3]     LDAB  Packet:1
+  001a 7b0000       [3]     STAB  Clock_Hours
+  517:      Clock_Days = Packet_Parameter2;
+  001d f60000       [3]     LDAB  Packet:3
+  0020 7b0000       [3]     STAB  Clock_Days
+  518:    }
+  519:  }
+  0023 3d           [5]     RTS   
+  520:  
+  521:  BOOL HandlePowerPacket(void)
+  522:  {
+*** EVALUATION ***
+
+Function: HandlePowerPacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  523:    return Packet_Put(CMD_POWER, DEM_Average_Power.s.Lo, DEM_Average_Power.s.Hi, 0);
+  0000 c614         [1]     LDAB  #20
+  0002 37           [2]     PSHB  
+  0003 b60000       [3]     LDAA  DEM_Average_Power:1
+  0006 36           [2]     PSHA  
+  0007 b60000       [3]     LDAA  DEM_Average_Power
+  000a 36           [2]     PSHA  
+  000b c7           [1]     CLRB  
+  000c 160000       [4]     JSR   Packet_Put
+  000f 1b83         [2]     LEAS  3,SP
+  524:  }
+  0011 3d           [5]     RTS   
+  525:  
+  526:  BOOL HandleEnergyPacket(void)
+  527:  {
+*** EVALUATION ***
+
+Function: HandleEnergyPacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  528:    return Packet_Put(CMD_POWER, (UINT8)DEM_Total_Energy.s.Lo, (UINT8)DEM_Total_Energy.s.Hi, 0);
+  0000 c614         [1]     LDAB  #20
+  0002 37           [2]     PSHB  
+  0003 b60000       [3]     LDAA  DEM_Total_Energy:3
+  0006 36           [2]     PSHA  
+  0007 b60000       [3]     LDAA  DEM_Total_Energy:1
+  000a 36           [2]     PSHA  
+  000b c7           [1]     CLRB  
+  000c 160000       [4]     JSR   Packet_Put
+  000f 1b83         [2]     LEAS  3,SP
+  529:  }
+  0011 3d           [5]     RTS   
+  530:  
+  531:  BOOL HandleCostPacket(void)
+  532:  {
+*** EVALUATION ***
+
+Function: HandleCostPacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  533:    return Packet_Put(CMD_COST, (UINT8)Math_FromQNotation(DEM_Total_Cost, qRight), (UINT8)Math_FromQNotation(DEM_Total_Cost, qLeft), 0);
+  0000 c616         [1]     LDAB  #22
+  0002 37           [2]     PSHB  
+  0003 fc0000       [3]     LDD   DEM_Total_Cost:2
+  0006 3b           [2]     PSHD  
+  0007 fc0000       [3]     LDD   DEM_Total_Cost
+  000a 3b           [2]     PSHD  
+  000b c601         [1]     LDAB  #1
+  000d 87           [1]     CLRA  
+  000e 160000       [4]     JSR   Math_FromQNotation
+  0011 6ba2         [2]     STAB  3,+SP
+  0013 fc0000       [3]     LDD   DEM_Total_Cost:2
+  0016 3b           [2]     PSHD  
+  0017 fc0000       [3]     LDD   DEM_Total_Cost
+  001a 3b           [2]     PSHD  
+  001b c7           [1]     CLRB  
+  001c 87           [1]     CLRA  
+  001d 160000       [4]     JSR   Math_FromQNotation
+  0020 6ba2         [2]     STAB  3,+SP
+  0022 c7           [1]     CLRB  
+  0023 160000       [4]     JSR   Packet_Put
+  0026 1b83         [2]     LEAS  3,SP
+  534:  }
+  0028 3d           [5]     RTS   
+  535:  
+  536:  BOOL HandleFrquencyPacket(void)
+  537:  {
+*** EVALUATION ***
+
+Function: HandleFrquencyPacket
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  538:    return 0;
+  0000 c7           [1]     CLRB  
+  0001 87           [1]     CLRA  
+  539:  }
+  0002 3d           [5]     RTS   
+  540:  
+  541:  BOOL HandleVRMS(void)
+  542:  {
+*** EVALUATION ***
+
+Function: HandleVRMS
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  543:    return 0;
+  0000 c7           [1]     CLRB  
+  0001 87           [1]     CLRA  
+  544:  }
+  0002 3d           [5]     RTS   
+  545:  
+  546:  BOOL HandleIRMS(void)
+  547:  {
+*** EVALUATION ***
+
+Function: HandleIRMS
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  548:    return 0;
+  0000 c7           [1]     CLRB  
+  0001 87           [1]     CLRA  
+  549:  }
+  0002 3d           [5]     RTS   
+  550:  
+  551:  BOOL HandlePFactor(void)
+  552:  {
+*** EVALUATION ***
+
+Function: HandlePFactor
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\main.c.o -WmsgSd1106 -WmsgSd5703
+
+  553:    return 0;
+  0000 c7           [1]     CLRB  
+  0001 87           [1]     CLRA  
+  554:  }
+  0002 3d           [5]     RTS   

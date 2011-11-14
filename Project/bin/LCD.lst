@@ -1,0 +1,1009 @@
+*** EVALUATION ***
+ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+
+    1:  // ----------------------------------------
+    2:  // Filename: LCD.c
+    3:  // Description: Lab 5
+    4:  //  Implements the Clover LCD functions to control
+    5:  //  backlighting, display and setup
+    6:  // Author: Danny Sok
+    7:  //         Edward Khou
+    8:  // Date Created: 20-10-2011
+    9:  // Date Last Modified: 2-11-2011
+   10:  
+   11:  #include "LCD.h"
+   12:  // LCD Function Settings
+   13:  static UINT8 const SET_TEXT_HOME       = 0b01000000;
+   14:  static UINT8 const SET_TEXTAREA        = 0b01000001;
+   15:  static UINT8 const SET_CURSOR          = 0b00100001;
+   16:  static UINT8 const SET_RAM             = 0b00100100;
+   17:  static UINT8 const DISPLAY_MODE        = 0b10010100; // Text on, Graphics off, Curson off, Blink off
+   18:  // 100101XX
+   19:  // 1001XX11
+   20:  static UINT8 const TXT_GFX_ON          = 0b10011000;
+   21:  static UINT8 const SET_ONE_L           = 0b10100000;
+   22:  static UINT8 const SET_TWO_L           = 0b10100001;
+   23:  static UINT8 const SET_THREE_L         = 0b10100010;
+   24:  static UINT8 const SET_FOUR_L          = 0b10100011;
+   25:  static UINT8 const DATA_WRITE          = 0b11000000;
+   26:  static UINT8 const DATA_READ           = 0b11000011;
+   27:  static UINT8 const LCD_CLEAR           = 0b10010000;
+   28:  static UINT8 const MODE_SET            = 0b10000001; // EXOR && Internal CG ROM
+   29:  static UINT8 const CURSOR_SELECT       = 0b10100111; // 8-line cursor
+   30:  
+   31:  static UINT8 const DISPLAY_OFF         = 0b10010000;
+   32:  
+   33:  static UINT8 const COLUMN_SIZE         = 16;
+   34:  
+   35:  
+   36:  static UINT16 const Timer_Ch5_Delay    = 65535;     // ~20ms
+   37:  
+   38:  // ----------------------------------------
+   39:  // LCD_Setup
+   40:  // 
+   41:  // Sets up the LCD
+   42:  // Input:
+   43:  //   
+   44:  // Output:
+   45:  //   none
+   46:  // Conditions:
+   47:  //  none
+   48:  void LCD_Setup(void)
+   49:  {
+*** EVALUATION ***
+
+Function: LCD_Setup
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 1b94         [2]     LEAS  -12,SP
+   50:    TTimerSetup timerSetup;
+   51:    //RESET
+   52:    LCDF_RST = 0;
+  0002 4d0008       [4]     BCLR  _PORTAB:1,#8
+   53:    
+   54:    asm nop;
+  0005 a7           [1]     NOP   
+   55:    asm nop;
+  0006 a7           [1]     NOP   
+   56:    asm nop;   
+  0007 a7           [1]     NOP   
+   57:    asm nop;
+  0008 a7           [1]     NOP   
+   58:    asm nop;
+  0009 a7           [1]     NOP   
+   59:    asm nop;
+  000a a7           [1]     NOP   
+   60:    
+   61:    LCDF_RST = 1;
+  000b 4c0008       [4]     BSET  _PORTAB:1,#8
+   62:  
+   63:    
+   64:    //DDRA = Input;
+   65:    
+   66:    LCD_SetFunction(BacklightON, (UINT8)sLCDContrast);
+  000e c601         [1]     LDAB  #1
+  0010 87           [1]     CLRA  
+  0011 3b           [2]     PSHD  
+  0012 f60441       [3]     LDAB  1089
+  0015 160000       [4]     JSR   LCD_SetFunction
+  0018 3a           [3]     PULD  
+   67:  
+   68:    // Default settings
+   69:    LCDF_WR = 1;
+  0019 4c0001       [4]     BSET  _PORTAB:1,#1
+   70:    LCDF_RD = 1; 
+  001c 4c0002       [4]     BSET  _PORTAB:1,#2
+   71:    
+   72:    // Set address pointer to home address
+   73:    SetRAMAddress(0);
+  001f c7           [1]     CLRB  
+  0020 87           [1]     CLRA  
+  0021 160000       [4]     JSR   SetRAMAddress
+   74:    
+   75:    LCD_CursorHome();
+  0024 160000       [4]     JSR   LCD_CursorHome
+   76:    
+   77:    LCD_TextHome();
+  0027 160000       [4]     JSR   LCD_TextHome
+   78:    LCD_TextArea(COLUMN_SIZE);
+  002a c610         [1]     LDAB  #16
+  002c 160000       [4]     JSR   LCD_TextArea
+   79:  
+   80:    // Set mode (EXOR mode and internal CG ROM)
+   81:    WriteCommand(MODE_SET);
+  002f c681         [1]     LDAB  #129
+  0031 160000       [4]     JSR   WriteCommand
+   82:  
+   83:    // Set display mode (Cursor ON, blink ON, Text ON, graphic OFF)
+   84:    WriteCommand(DISPLAY_MODE);
+  0034 c694         [1]     LDAB  #148
+  0036 160000       [4]     JSR   WriteCommand
+   85:    
+   86:    // Cursor pattern select
+   87:    WriteCommand(CURSOR_SELECT);
+  0039 c6a7         [1]     LDAB  #167
+  003b 160000       [4]     JSR   WriteCommand
+   88:    
+   89:    LCD_Clear();
+  003e 160000       [4]     JSR   LCD_Clear
+   90:     
+   91:    // Setup Channel 5 for Output Compare of LCD Status Checks
+   92:    timerSetup.outputCompare = bTRUE;
+  0041 c601         [1]     LDAB  #1
+  0043 87           [1]     CLRA  
+  0044 6c80         [2]     STD   0,SP
+   93:    timerSetup.outputAction = TIMER_OUTPUT_DISCONNECT;
+  0046 6983         [2]     CLR   3,SP
+  0048 6982         [2]     CLR   2,SP
+   94:    timerSetup.inputDetection = TIMER_INPUT_OFF;
+  004a 6985         [2]     CLR   5,SP
+  004c 6984         [2]     CLR   4,SP
+   95:    timerSetup.toggleOnOverflow = bFALSE;
+  004e 6987         [2]     CLR   7,SP
+  0050 6986         [2]     CLR   6,SP
+   96:    timerSetup.interruptEnable = bFALSE;
+  0052 6989         [2]     CLR   9,SP
+  0054 6988         [2]     CLR   8,SP
+   97:  
+   98:    // Setup and Enable the timer.  
+   99:    Timer_Init(TIMER_Ch5, &timerSetup);
+  0056 c605         [1]     LDAB  #5
+  0058 3b           [2]     PSHD  
+  0059 1a82         [2]     LEAX  2,SP
+  005b b7c5         [1]     EXG   D,X
+  005d 160000       [4]     JSR   Timer_Init
+  100:    Timer_Set(TIMER_Ch5, Timer_Ch5_Delay);
+  0060 c605         [1]     LDAB  #5
+  0062 87           [1]     CLRA  
+  0063 6c80         [2]     STD   0,SP
+  0065 c6ff         [1]     LDAB  #255
+  0067 43           [1]     DECA  
+  0068 160000       [4]     JSR   Timer_Set
+  101:    Timer_Enable(TIMER_Ch5, bTRUE);
+  006b c605         [1]     LDAB  #5
+  006d 87           [1]     CLRA  
+  006e 6c80         [2]     STD   0,SP
+  0070 c601         [1]     LDAB  #1
+  0072 160000       [4]     JSR   Timer_Enable
+  0075 1b8e         [2]     LEAS  14,SP
+  102:  }
+  0077 3d           [5]     RTS   
+  103:  
+  104:  // ----------------------------------------
+  105:  // LCD_Clear
+  106:  // 
+  107:  // Clears the LCD
+  108:  // Input:
+  109:  //   none
+  110:  // Output:
+  111:  //   none
+  112:  // Conditions:
+  113:  //   LCD_Setup() has been run
+  114:  void LCD_Clear(void)
+  115:  {
+*** EVALUATION ***
+
+Function: LCD_Clear
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  116:    UINT8 i;  
+  117:    SetRAMAddress(0);
+  0000 c7           [1]     CLRB  
+  0001 87           [1]     CLRA  
+  0002 160000       [4]     JSR   SetRAMAddress
+  118:    
+  119:    for (i = 0; i < 128; i++)
+  0005 87           [1]     CLRA  
+  120:    {
+  121:      (void)LCD_OutChar(' ');
+  0006 c620         [1]     LDAB  #32
+  0008 36           [2]     PSHA  
+  0009 160000       [4]     JSR   LCD_OutChar
+  000c 33           [3]     PULB  
+  000d 52           [1]     INCB  
+  000e c180         [1]     CMPB  #128
+  0010 b710         [1]     TFR   B,A
+  0012 25f2         [3/1]   BCS   *-12 ;abs = 0006
+  122:    }
+  123:    
+  124:    SetRAMAddress(0);  
+  0014 c7           [1]     CLRB  
+  0015 87           [1]     CLRA  
+  0016 060000       [3]     JMP   SetRAMAddress
+  125:  }
+  126:  
+  127:  // ----------------------------------------
+  128:  // LCD_ClearLine
+  129:  // 
+  130:  // Clears the LCD at the line specified
+  131:  // Input:
+  132:  //   line is the line position
+  133:  // Output:
+  134:  //   none
+  135:  // Conditions:
+  136:  //   LCD_Setup() has been run
+  137:  void LCD_ClearLine(const UINT8 line)
+  138:  {
+*** EVALUATION ***
+
+Function: LCD_ClearLine
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  139:    LCD_SetLine(line);
+  0000 160000       [4]     JSR   LCD_SetLine
+  140:    LCD_OutString("                "); 
+  0003 cc0000       [2]     LDD   #"                "
+  0006 060000       [3]     JMP   LCD_OutString
+  141:  }
+  142:  
+  143:  // ----------------------------------------
+  144:  // LCD_CursorHome
+  145:  // 
+  146:  // Homes the cursor
+  147:  // Input:
+  148:  //   none
+  149:  // Output:
+  150:  //   none
+  151:  // Conditions:
+  152:  //   LCD_Setup() has been run
+  153:  void LCD_CursorHome(void)
+  154:  {
+*** EVALUATION ***
+
+Function: LCD_CursorHome
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  155:    // Set cursor pointer to home address
+  156:    SetCGAddress(0, 1);
+  0000 c7           [1]     CLRB  
+  0001 37           [2]     PSHB  
+  0002 52           [1]     INCB  
+  0003 160000       [4]     JSR   SetCGAddress
+  0006 32           [3]     PULA  
+  157:  }
+  0007 3d           [5]     RTS   
+  158:  
+  159:  // ----------------------------------------
+  160:  // LCD_TextHome
+  161:  // 
+  162:  // Sets up the Cursor position to the start of the LCD
+  163:  // Input:
+  164:  //   none
+  165:  // Output:
+  166:  //   none
+  167:  // Conditions:
+  168:  //   LCD_Setup() has been run
+  169:  void LCD_TextHome(void)
+  170:  {
+*** EVALUATION ***
+
+Function: LCD_TextHome
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  171:    // Set text home address (start of RAM)
+  172:    WriteData(0x00);
+  0000 c7           [1]     CLRB  
+  0001 160000       [4]     JSR   WriteData
+  173:    WriteData(0x00);
+  0004 c7           [1]     CLRB  
+  0005 160000       [4]     JSR   WriteData
+  174:    WriteCommand(SET_TEXT_HOME);
+  0008 c640         [1]     LDAB  #64
+  000a 060000       [3]     JMP   WriteCommand
+  175:  }
+  176:  
+  177:  // ----------------------------------------
+  178:  // LCD_TextArea
+  179:  // 
+  180:  // Sets up the area available to use on the LCD
+  181:  // Input:
+  182:  //   column is the amount of columns to use e.g 16
+  183:  // Output:
+  184:  //   none
+  185:  // Conditions:
+  186:  //   LCD_Setup() has been run
+  187:  void LCD_TextArea(UINT8 const column)
+  188:  {
+*** EVALUATION ***
+
+Function: LCD_TextArea
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  189:    // Set text area (16 columns)
+  190:    WriteData(column);
+  0000 160000       [4]     JSR   WriteData
+  191:    WriteData(0x00);
+  0003 c7           [1]     CLRB  
+  0004 160000       [4]     JSR   WriteData
+  192:    
+  193:    WriteCommand(SET_TEXTAREA);
+  0007 c641         [1]     LDAB  #65
+  0009 060000       [3]     JMP   WriteCommand
+  194:  }
+  195:  
+  196:  // ----------------------------------------
+  197:  // LCD_OutChar
+  198:  // 
+  199:  // Writes a character to the LCD
+  200:  // Input:
+  201:  //   
+  202:  // Output:
+  203:  //   none
+  204:  // Conditions:
+  205:  //  none
+  206:  BOOL LCD_OutChar(INT8 const data)
+  207:  {
+*** EVALUATION ***
+
+Function: LCD_OutChar
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  208:    if (data == '\0' || data == 0)
+  0000 046103       [3]     TBNE  B,*+6 ;abs = 0006
+  209:      return bFALSE;  
+  0003 c7           [1]     CLRB  
+  0004 200c         [3]     BRA   *+14 ;abs = 0012
+  210:    
+  211:    WriteData(data - 0x20);
+  0006 c020         [1]     SUBB  #32
+  0008 160000       [4]     JSR   WriteData
+  212:    WriteCommand(DATA_WRITE);
+  000b c6c0         [1]     LDAB  #192
+  000d 160000       [4]     JSR   WriteCommand
+  213:    return bTRUE;
+  0010 c601         [1]     LDAB  #1
+  0012 87           [1]     CLRA  
+  214:  }
+  0013 3d           [5]     RTS   
+  215:  
+  216:  // ----------------------------------------
+  217:  // LCD_OutInteger
+  218:  // 
+  219:  // Writes a number to the LCD
+  220:  // Input:
+  221:  //   data is the number to write to the LCD
+  222:  // Output:
+  223:  //   none
+  224:  // Conditions:
+  225:  //   LCD_Setup() has been run
+  226:  void LCD_OutInteger(UINT16 const data)
+  227:  {
+*** EVALUATION ***
+
+Function: LCD_OutInteger
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 1b99         [2]     LEAS  -7,SP
+  0002 3b           [2]     PSHD  
+  228:    UINT16 number;
+  229:    UINT8 tenThousand, thousand, hundred, ten, single;
+  230:    tenThousand = 0;
+  0003 6987         [2]     CLR   7,SP
+  231:    thousand = 0;
+  0005 6985         [2]     CLR   5,SP
+  232:    hundred  = 0;
+  0007 6984         [2]     CLR   4,SP
+  233:    ten      = 0;
+  0009 6986         [2]     CLR   6,SP
+  234:    single   = 0;
+  235:    number   = data;   
+  000b 6c82         [2]     STD   2,SP
+  236:    
+  237:    if (number >= 10000)
+  000d 8c2710       [2]     CPD   #10000
+  0010 2518         [3/1]   BCS   *+26 ;abs = 002a
+  238:    {
+  239:      tenThousand = (UINT8)(number / 1000);
+  0012 ce03e8       [2]     LDX   #1000
+  0015 1810         [12]    IDIV  
+  0017 b751         [1]     TFR   X,B
+  0019 6b87         [2]     STAB  7,SP
+  240:      number -= (tenThousand * 1000);
+  001b 87           [1]     CLRA  
+  001c cd03e8       [2]     LDY   #1000
+  001f 13           [3]     EMUL  
+  0020 3b           [2]     PSHD  
+  0021 ec82         [3]     LDD   2,SP
+  0023 a3b1         [3]     SUBD  2,SP+
+  0025 6c82         [2]     STD   2,SP
+  241:      tenThousand |= 0x30;
+  0027 0c8730       [4]     BSET  7,SP,#48
+  242:    }
+  243:    if (number >= 1000) 
+  002a ec82         [3]     LDD   2,SP
+  002c 8c03e8       [2]     CPD   #1000
+  002f 2512         [3/1]   BCS   *+20 ;abs = 0043
+  244:    {
+  245:      thousand = (UINT8)(number / 1000);
+  0031 ce03e8       [2]     LDX   #1000
+  0034 1810         [12]    IDIV  
+  0036 b751         [1]     TFR   X,B
+  0038 6b85         [2]     STAB  5,SP
+  246:      number -= (thousand * 1000);
+  003a 87           [1]     CLRA  
+  003b cd03e8       [2]     LDY   #1000
+  003e 0774         [4]     BSR   *+118 ;abs = 00b4
+  247:      thousand |= 0x30;
+  0040 0c8530       [4]     BSET  5,SP,#48
+  248:    }
+  249:    if (number >= 100)                       //if number is 300, 300/100 = 3
+  0043 ec82         [3]     LDD   2,SP
+  0045 8c0064       [2]     CPD   #100
+  0048 2512         [3/1]   BCS   *+20 ;abs = 005c
+  250:    {
+  251:      hundred = (UINT8)(number / 100);
+  004a ce0064       [2]     LDX   #100
+  004d 1810         [12]    IDIV  
+  004f b751         [1]     TFR   X,B
+  0051 6b84         [2]     STAB  4,SP
+  252:      number -= (hundred * 100);             //wtfuggles?!?!?! must be a better way...
+  0053 87           [1]     CLRA  
+  0054 cd0064       [2]     LDY   #100
+  0057 075b         [4]     BSR   *+93 ;abs = 00b4
+  253:      hundred |= 0x30;                       //convert to ASCII by ORing with 0x30  
+  0059 0c8430       [4]     BSET  4,SP,#48
+  254:    }
+  255:    if (number >= 10)
+  005c ec82         [3]     LDD   2,SP
+  005e 8c000a       [2]     CPD   #10
+  0061 2512         [3/1]   BCS   *+20 ;abs = 0075
+  256:    {
+  257:      ten = (UINT8)(number / 10);
+  0063 ce000a       [2]     LDX   #10
+  0066 1810         [12]    IDIV  
+  0068 b751         [1]     TFR   X,B
+  006a 6b86         [2]     STAB  6,SP
+  258:      number -= (ten * 10);
+  006c 87           [1]     CLRA  
+  006d cd000a       [2]     LDY   #10
+  0070 0742         [4]     BSR   *+68 ;abs = 00b4
+  259:      ten |= 0x30;  
+  0072 0c8630       [4]     BSET  6,SP,#48
+  260:    }
+  261:    if (number >= 0)
+  262:    {
+  263:      single = (UINT8)number;
+  0075 e683         [3]     LDAB  3,SP
+  0077 6b88         [2]     STAB  8,SP
+  264:      single |= 0x30;   
+  0079 0c8830       [4]     BSET  8,SP,#48
+  265:    }
+  266:    
+  267:    if (thousand == 0 && tenThousand != 0)
+  007c e685         [3]     LDAB  5,SP
+  007e 2607         [3/1]   BNE   *+9 ;abs = 0087
+  0080 e687         [3]     LDAB  7,SP
+  0082 2703         [3/1]   BEQ   *+5 ;abs = 0087
+  268:      thousand |= 0x30;
+  0084 0c8530       [4]     BSET  5,SP,#48
+  269:      
+  270:    if (hundred == 0 && thousand != 0)
+  0087 e684         [3]     LDAB  4,SP
+  0089 2607         [3/1]   BNE   *+9 ;abs = 0092
+  008b e685         [3]     LDAB  5,SP
+  008d 2703         [3/1]   BEQ   *+5 ;abs = 0092
+  271:      hundred |= 0x30;
+  008f 0c8430       [4]     BSET  4,SP,#48
+  272:    
+  273:    if (ten == 0 && hundred != 0)
+  0092 e686         [3]     LDAB  6,SP
+  0094 2607         [3/1]   BNE   *+9 ;abs = 009d
+  0096 e684         [3]     LDAB  4,SP
+  0098 2703         [3/1]   BEQ   *+5 ;abs = 009d
+  274:      ten |= 0x30;
+  009a 0c8630       [4]     BSET  6,SP,#48
+  275:    
+  276:    (void)LCD_OutChar(thousand);
+  009d e685         [3]     LDAB  5,SP
+  009f 160000       [4]     JSR   LCD_OutChar
+  277:    (void)LCD_OutChar(hundred);
+  00a2 e684         [3]     LDAB  4,SP
+  00a4 160000       [4]     JSR   LCD_OutChar
+  278:    (void)LCD_OutChar(ten);
+  00a7 e686         [3]     LDAB  6,SP
+  00a9 160000       [4]     JSR   LCD_OutChar
+  279:    (void)LCD_OutChar(single);
+  00ac e688         [3]     LDAB  8,SP
+  00ae 160000       [4]     JSR   LCD_OutChar
+  280:  }
+  00b1 1b89         [2]     LEAS  9,SP
+  00b3 3d           [5]     RTS   
+  00b4 13           [3]     EMUL  
+  00b5 3b           [2]     PSHD  
+  00b6 ec86         [3]     LDD   6,SP
+  00b8 a3b1         [3]     SUBD  2,SP+
+  00ba 6c84         [2]     STD   4,SP
+  00bc 3d           [5]     RTS   
+  281:  
+  282:  // ----------------------------------------
+  283:  // LCD_OutString
+  284:  // 
+  285:  // Writes a character to the LCD
+  286:  // Input:
+  287:  //   data is the string to write to the LCD
+  288:  // Output:
+  289:  //   none
+  290:  // Conditions:
+  291:  //   LCD_Setup() has been run
+  292:  void LCD_OutString(INT8 * const data)
+  293:  {
+*** EVALUATION ***
+
+Function: LCD_OutString
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 6cad         [2]     STD   3,-SP
+  294:    INT8 i;
+  295:    for (i = 0; i < COLUMN_SIZE; i++)
+  0002 6982         [2]     CLR   2,SP
+  296:    {
+  297:      if ( !LCD_OutChar(data[i]) )
+  0004 e682         [3]     LDAB  2,SP
+  0006 b714         [1]     SEX   B,D
+  0008 e380         [3]     ADDD  0,SP
+  000a b745         [1]     TFR   D,X
+  000c e600         [3]     LDAB  0,X
+  000e 160000       [4]     JSR   LCD_OutChar
+  0011 044408       [3]     TBEQ  D,*+11 ;abs = 001c
+  0014 6282         [3]     INC   2,SP
+  0016 e682         [3]     LDAB  2,SP
+  0018 c110         [1]     CMPB  #16
+  001a 2de8         [3/1]   BLT   *-22 ;abs = 0004
+  298:        break;
+  299:    }
+  300:  }
+  001c 1b83         [2]     LEAS  3,SP
+  001e 3d           [5]     RTS   
+  301:  
+  302:  // ----------------------------------------
+  303:  // LCD_SetFunction
+  304:  // 
+  305:  // Sets the function of the LCD
+  306:  // Will setup the Contrast and Backlight
+  307:  // Input:
+  308:  //   
+  309:  // Output:
+  310:  //   none
+  311:  // Conditions:
+  312:  //  none
+  313:  void LCD_SetFunction(const TLCDBacklight backlight, const INT8 contrast)
+  314:  {
+*** EVALUATION ***
+
+Function: LCD_SetFunction
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 37           [2]     PSHB  
+  315:    INT8 i;
+  316:    
+  317:    LCDF_CONTRAST_CTRL   = 1;
+  0001 4c0020       [4]     BSET  _PORTAB:1,#32
+  318:    LCDF_CONTRAST_ADJ    = 1;
+  0004 4c0010       [4]     BSET  _PORTAB:1,#16
+  319:    LCDF_CONTRAST_CTRL   = 0;
+  0007 4d0020       [4]     BCLR  _PORTAB:1,#32
+  320:    LCDF_CONTRAST_ADJ    = 0;
+  000a 4d0010       [4]     BCLR  _PORTAB:1,#16
+  321:    LCDF_CONTRAST_CTRL   = 1;
+  000d 4c0020       [4]     BSET  _PORTAB:1,#32
+  322:    
+  323:    // Set the contrast
+  324:    for (i = 0; i < contrast; i++)
+  0010 c7           [1]     CLRB  
+  0011 2007         [3]     BRA   *+9 ;abs = 001a
+  325:    { 
+  326:       LCDF_CONTRAST_ADJ = 1;
+  0013 4c0010       [4]     BSET  _PORTAB:1,#16
+  327:       LCDF_CONTRAST_ADJ = 0;
+  0016 4d0010       [4]     BCLR  _PORTAB:1,#16
+  0019 52           [1]     INCB  
+  001a e180         [3]     CMPB  0,SP
+  001c 2df5         [3/1]   BLT   *-9 ;abs = 0013
+  328:    }
+  329:    
+  330:    LCDF_BACKLIGHT = (UINT8)backlight;
+  001e 0e840105     [4]     BRSET 4,SP,#1,*+9 ;abs = 0027
+  0022 4d0040       [4]     BCLR  _PORTAB:1,#64
+  0025 2003         [3]     BRA   *+5 ;abs = 002a
+  0027 4c0040       [4]     BSET  _PORTAB:1,#64
+  331:  }
+  002a 32           [3]     PULA  
+  002b 3d           [5]     RTS   
+  332:  
+  333:  // ----------------------------------------
+  334:  // LCD_SetLine
+  335:  // 
+  336:  // Sets the current line of the LCD
+  337:  // Input:
+  338:  //   
+  339:  // Output:
+  340:  //   none
+  341:  // Conditions:
+  342:  //  none
+  343:  void LCD_SetLine(const UINT8 line)
+  344:  {  
+*** EVALUATION ***
+
+Function: LCD_SetLine
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 37           [2]     PSHB  
+  345:    // This is due to the fact that each new line starts
+  346:    // after the amount of columns
+  347:    // i.e new line after 16 columns
+  348:    // then another, etc
+  349:    SetRAMAddress(COLUMN_SIZE * line);
+  0001 c610         [1]     LDAB  #16
+  0003 a680         [3]     LDAA  0,SP
+  0005 12           [1]     MUL   
+  0006 160000       [4]     JSR   SetRAMAddress
+  350:  }
+  0009 32           [3]     PULA  
+  000a 3d           [5]     RTS   
+  351:  
+  352:  // ----------------------------------------
+  353:  // LCD_SetCursor
+  354:  // 
+  355:  // Sets the current cursor position of the LCD
+  356:  // Input:
+  357:  //   x is the x address (column)
+  358:  //   y is the y address (row)
+  359:  // Output:
+  360:  //   none
+  361:  // Conditions:
+  362:  //   LCD_Setup() has been run
+  363:  void LCD_SetCursor(const UINT8 x, const UINT8 y)
+  364:  {
+*** EVALUATION ***
+
+Function: LCD_SetCursor
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 37           [2]     PSHB  
+  365:    SetCGAddress(x, y);
+  0001 e683         [3]     LDAB  3,SP
+  0003 37           [2]     PSHB  
+  0004 e681         [3]     LDAB  1,SP
+  0006 160000       [4]     JSR   SetCGAddress
+  0009 3a           [3]     PULD  
+  366:  }
+  000a 3d           [5]     RTS   
+  367:  
+  368:  void LCD_DisplayOff(void)
+  369:  {
+*** EVALUATION ***
+
+Function: LCD_DisplayOff
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  370:    WriteCommand(DISPLAY_OFF);
+  0000 c690         [1]     LDAB  #144
+  0002 060000       [3]     JMP   WriteCommand
+  371:  }
+  372:  
+  373:  void LCD_DisplayOn(void)
+  374:  {
+*** EVALUATION ***
+
+Function: LCD_DisplayOn
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  375:    WriteCommand(DISPLAY_MODE);
+  0000 c694         [1]     LDAB  #148
+  0002 060000       [3]     JMP   WriteCommand
+  376:  }
+  377:  
+  378:  // ----------------------------------------
+  379:  // InChar
+  380:  // 
+  381:  // Reads data from the LCD
+  382:  // Input:
+  383:  //   dataPtr is a pointer to the variable in which the data from
+  384:  //   PORTA will be stored
+  385:  // Output:
+  386:  //   none
+  387:  // Conditions:
+  388:  //   LCD_Setup() has been run
+  389:  void InChar(UINT8 * const dataPtr)
+  390:  {
+*** EVALUATION ***
+
+Function: InChar
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+  391:    DDRA = Output;
+  0001 c6ff         [1]     LDAB  #255
+  0003 5b00         [2]     STAB  _DDRAB
+  392:    WriteCommand(DATA_READ);  
+  0005 c6c3         [1]     LDAB  #195
+  0007 160000       [4]     JSR   WriteCommand
+  393:    
+  394:    DDRA = Input;
+  000a 790000       [3]     CLR   _DDRAB
+  395:    LCDF_CD = eData;
+  000d 4d0004       [4]     BCLR  _PORTAB:1,#4
+  396:    
+  397:    *dataPtr = PORTA;
+  0010 ee80         [3]     LDX   0,SP
+  0012 d600         [3]     LDAB  _PORTAB
+  0014 6b00         [2]     STAB  0,X
+  398:    DDRA = Output;
+  0016 c6ff         [1]     LDAB  #255
+  0018 5b00         [2]     STAB  _DDRAB
+  399:  }
+  001a 3a           [3]     PULD  
+  001b 3d           [5]     RTS   
+  400:  
+  401:  // ----------------------------------------
+  402:  // SetCGAddress
+  403:  // 
+  404:  // Sets the character generator address
+  405:  // Input:
+  406:  //   x is the x address (column)
+  407:  //   y is the y address (row)
+  408:  // Output:
+  409:  //   none
+  410:  // Conditions:
+  411:  //   LCD_Setup() has been run
+  412:  void SetCGAddress(const UINT8 x, const UINT8 y)
+  413:  {
+*** EVALUATION ***
+
+Function: SetCGAddress
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 37           [2]     PSHB  
+  414:    WriteData(x);
+  0001 e683         [3]     LDAB  3,SP
+  0003 160000       [4]     JSR   WriteData
+  415:    WriteData(y);
+  0006 e680         [3]     LDAB  0,SP
+  0008 160000       [4]     JSR   WriteData
+  416:    WriteCommand(SET_CURSOR);
+  000b c621         [1]     LDAB  #33
+  000d 160000       [4]     JSR   WriteCommand
+  417:  }
+  0010 32           [3]     PULA  
+  0011 3d           [5]     RTS   
+  418:  
+  419:  // ----------------------------------------
+  420:  // SetRAMAddress
+  421:  // 
+  422:  // Sets the RAM address of the LCD
+  423:  // Input:
+  424:  //   address is the pointer to a 16 bit address to point to the location
+  425:  //   of the ram on the LCD
+  426:  // Output:
+  427:  //   none
+  428:  // Conditions:
+  429:  //   LCD_Setup() has been run
+  430:  void SetRAMAddress(const UINT16 address)
+  431:  {
+*** EVALUATION ***
+
+Function: SetRAMAddress
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  432:    TUINT16 address16;
+  433:    address16.l = address;
+  0000 3b           [2]     PSHD  
+  434:    WriteData(address16.s.Lo);
+  0001 e681         [3]     LDAB  1,SP
+  0003 160000       [4]     JSR   WriteData
+  435:    WriteData(address16.s.Hi);  
+  0006 e680         [3]     LDAB  0,SP
+  0008 160000       [4]     JSR   WriteData
+  436:    WriteCommand(SET_RAM);
+  000b c624         [1]     LDAB  #36
+  000d 160000       [4]     JSR   WriteCommand
+  437:  }
+  0010 3a           [3]     PULD  
+  0011 3d           [5]     RTS   
+  438:  
+  439:  // ----------------------------------------
+  440:  // StatusCheck
+  441:  // 
+  442:  // Determines if it is safe to read/write to the LCD
+  443:  // Input:
+  444:  //   none
+  445:  // Output:
+  446:  //   none
+  447:  // Conditions:
+  448:  //   LCD_Setup() has been run
+  449:  UINT8 StatusCheck(void)
+  450:  { 
+*** EVALUATION ***
+
+Function: StatusCheck
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  451:    UINT8 status;
+  452:   
+  453:    //Default settings 
+  454:    DDRA = Input;
+  0000 790000       [3]     CLR   _DDRAB
+  455:    LCDF_WR = 1;
+  0003 4c0001       [4]     BSET  _PORTAB:1,#1
+  456:    LCDF_RD = 1;
+  0006 4c0002       [4]     BSET  _PORTAB:1,#2
+  457:    
+  458:    LCDF_CD = eCommand;
+  0009 4c0004       [4]     BSET  _PORTAB:1,#4
+  459:    LCDF_RD = 0;
+  000c 4d0002       [4]     BCLR  _PORTAB:1,#2
+  460:   
+  461:    // Wait at least 150ns to read data
+  462:    asm nop;
+  000f a7           [1]     NOP   
+  463:    asm nop;
+  0010 a7           [1]     NOP   
+  464:    asm nop;
+  0011 a7           [1]     NOP   
+  465:    asm nop;
+  0012 a7           [1]     NOP   
+  466:    asm nop;
+  0013 a7           [1]     NOP   
+  467:   
+  468:    status = PORTA;
+  0014 d600         [3]     LDAB  _PORTAB
+  0016 37           [2]     PSHB  
+  469:    
+  470:    //Put LCD back in default setting 
+  471:    LCDF_RD = 1;
+  0017 4c0002       [4]     BSET  _PORTAB:1,#2
+  472:    
+  473:    return (status & 0x03); 
+  001a c403         [1]     ANDB  #3
+  474:  }
+  001c 32           [3]     PULA  
+  001d 3d           [5]     RTS   
+  475:  
+  476:  // ----------------------------------------
+  477:  // WaitForReady
+  478:  // 
+  479:  // Waits for the LCD to become ready 
+  480:  // Input: 
+  481:  //   None 
+  482:  // Output: 
+  483:  //   None
+  484:  // Conditions: 
+  485:  //   Assumes LCD_Setup has been called
+  486:  
+  487:  void WaitForReady(void)
+  488:  {
+*** EVALUATION ***
+
+Function: WaitForReady
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  489:    // Wait until STA0 & STA1 are set
+  490:    while ( (StatusCheck()) != 0x03);
+  0000 0700         [4]     BSR   StatusCheck
+  0002 c103         [1]     CMPB  #3
+  0004 26fa         [3/1]   BNE   *-4 ;abs = 0000
+  491:    
+  492:    
+  493:  }
+  0006 3d           [5]     RTS   
+  494:  
+  495:  // ----------------------------------------
+  496:  // WriteCommand
+  497:  // 
+  498:  // Writes a command to the LCD (when LCD is ready to accept)
+  499:  // Input: 
+  500:  //   an LCD command 
+  501:  // Output: 
+  502:  //   None
+  503:  // Conditions: 
+  504:  //   Assumes LCD_Setup has been called
+  505:  
+  506:  void WriteCommand(const UINT8 command)          
+  507:  {
+*** EVALUATION ***
+
+Function: WriteCommand
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 37           [2]     PSHB  
+  508:    WaitForReady();
+  0001 0700         [4]     BSR   WaitForReady
+  509:    
+  510:    DDRA = Output;
+  0003 c6ff         [1]     LDAB  #255
+  0005 5b00         [2]     STAB  _DDRAB
+  511:    
+  512:    PORTA = command;
+  0007 32           [3]     PULA  
+  0008 5a00         [2]     STAA  _PORTAB
+  513:    LCDF_CD = eCommand;
+  000a 4c0004       [4]     BSET  _PORTAB:1,#4
+  514:    LCDF_WR = 0;
+  000d 4d0001       [4]     BCLR  _PORTAB:1,#1
+  515:    
+  516:    // Wait at least 80ns (data set-up time)
+  517:    asm nop;
+  0010 a7           [1]     NOP   
+  518:    asm nop;
+  0011 a7           [1]     NOP   
+  519:    asm nop;
+  0012 a7           [1]     NOP   
+  520:    
+  521:    LCDF_WR = 1;
+  0013 4c0001       [4]     BSET  _PORTAB:1,#1
+  522:    DDRA = Input;
+  0016 790000       [3]     CLR   _DDRAB
+  523:  
+  524:  }
+  0019 3d           [5]     RTS   
+  525:  
+  526:  // ----------------------------------------
+  527:  // WriteData
+  528:  // 
+  529:  // Writes 1 byte of data to the LCD  
+  530:  // Input: 
+  531:  //   Data to be written 
+  532:  // Output: 
+  533:  //   None
+  534:  // Conditions: 
+  535:  //   Assumes LCD_Setup has been called
+  536:  
+  537:  void WriteData(const UINT8 data)
+  538:  {
+*** EVALUATION ***
+
+Function: WriteData
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 37           [2]     PSHB  
+  539:    WaitForReady();
+  0001 0700         [4]     BSR   WaitForReady
+  540:    
+  541:    DDRA = Output;
+  0003 c6ff         [1]     LDAB  #255
+  0005 5b00         [2]     STAB  _DDRAB
+  542:    
+  543:    PORTA = data;
+  0007 32           [3]     PULA  
+  0008 5a00         [2]     STAA  _PORTAB
+  544:    LCDF_CD = eData;
+  000a 4d0004       [4]     BCLR  _PORTAB:1,#4
+  545:    LCDF_WR = 0;
+  000d 4d0001       [4]     BCLR  _PORTAB:1,#1
+  546:      
+  547:    // Wait at least 80ns (data set-up time)
+  548:    asm nop;
+  0010 a7           [1]     NOP   
+  549:    asm nop;
+  0011 a7           [1]     NOP   
+  550:    asm nop;
+  0012 a7           [1]     NOP   
+  551:    
+  552:    LCDF_WR = 1;
+  0013 4c0001       [4]     BSET  _PORTAB:1,#1
+  553:    DDRA = Input;
+  0016 790000       [3]     CLR   _DDRAB
+  554:  }
+  0019 3d           [5]     RTS   
+  555:  

@@ -1,0 +1,149 @@
+*** EVALUATION ***
+ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+
+    1:  // ----------------------------------------
+    2:  // Filename: SPI.c
+    3:  // Description: I/O routines for MC9S12 serial
+    4:  //   peripheral interface 
+    5:  // Author: Danny Sok
+    6:  //         Edward Khou
+    7:  // Date Created: 24-09-2011
+    8:  // Date Last Modified: 30-09-2011
+    9:  
+   10:  #include "SPI.h"
+   11:  
+   12:  // ----------------------------------------
+   13:  // SPI_Setup
+   14:  // 
+   15:  // Sets up the Serial Peripheral Interface
+   16:  // Input:
+   17:  //   aSPISetup is a structure containing the parameters to 
+   18:  //     be used in setting up the SPI:
+   19:  //       isMaster is a Boolean value indicating whether the SPI is master or slave
+   20:  //       activeLowClocks is a Boolean value indicating whether the clock is active
+   21:  //         low or active high
+   22:  //       evenEdgeClockPhase is a Boolean value indicating whether the data is clocked
+   23:  //         on even or odd edges
+   24:  //       LSBFirst is a Boolean value indicating whether the data is transferred LSB
+   25:  //         first or MSB first
+   26:  //       baudRate is the baud rate in bits/sec of the SPI clock
+   27:  //   busClk is the bus clock rate in Hz
+   28:  // Output:
+   29:  //   none
+   30:  // Conditions:
+   31:  //   none
+   32:  // ----------------------------------------
+   33:  
+   34:  void SPI_Setup(const TSPISetup * const aSPISetup, const UINT32 busClk)
+   35:  {
+*** EVALUATION ***
+
+Function: SPI_Setup
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\SPI.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\SPI.c.o -WmsgSd1106 -WmsgSd5703
+
+   36:    // PORTH as per schematic
+   37:    UINT16 BRDivisor = (UINT16)(busClk / aSPISetup->baudRate);
+   38:    // XSPPRXSPR
+   39:    SPI0BR_SPR        = 2;                                  // Rate Selection
+  0000 ee82         [3]     LDX   2,SP
+  0002 d600         [3]     LDAB  _SPI0BR
+  0004 c4f8         [1]     ANDB  #248
+  0006 ca02         [1]     ORAB  #2
+  0008 5b00         [2]     STAB  _SPI0BR
+   40:    SPI0BR_SPPR       = 2;                                  // Prescale
+  000a d600         [3]     LDAB  _SPI0BR
+  000c c48f         [1]     ANDB  #143
+  000e ca20         [1]     ORAB  #32
+  0010 5b00         [2]     STAB  _SPI0BR
+   41:    
+   42:    SPI0CR1_SPIE      = 0;                                  // SPI Interrupt Enable, 0: Disabled
+  0012 4d0080       [4]     BCLR  _SPI0CR1,#128
+   43:    SPI0CR1_SPTIE     = 0;                                  // SPI Transmit Interrupt, 0: Disable
+  0015 4d0020       [4]     BCLR  _SPI0CR1,#32
+   44:    SPI0CR1_MSTR      = (UINT8)aSPISetup->isMaster;         // SPI Master/Slave. 0: Slave, 1: Master
+  0018 0e010105     [4]     BRSET 1,X,#1,*+9 ;abs = 0021
+  001c 4d0010       [4]     BCLR  _SPI0CR1,#16
+  001f 2003         [3]     BRA   *+5 ;abs = 0024
+  0021 4c0010       [4]     BSET  _SPI0CR1,#16
+   45:    SPI0CR1_CPOL      = (UINT8)aSPISetup->activeLowClock;   // SPI Clock Polarity. 0: High, 1: Low
+  0024 0e030105     [4]     BRSET 3,X,#1,*+9 ;abs = 002d
+  0028 4d0008       [4]     BCLR  _SPI0CR1,#8
+  002b 2003         [3]     BRA   *+5 ;abs = 0030
+  002d 4c0008       [4]     BSET  _SPI0CR1,#8
+   46:    SPI0CR1_CPHA      = (UINT8)aSPISetup->evenEdgeClock;    // SPI Clock Phase, 0: Odd, 1: Even
+  0030 0e050105     [4]     BRSET 5,X,#1,*+9 ;abs = 0039
+  0034 4d0004       [4]     BCLR  _SPI0CR1,#4
+  0037 2003         [3]     BRA   *+5 ;abs = 003c
+  0039 4c0004       [4]     BSET  _SPI0CR1,#4
+   47:    SPI0CR1_SSOE      = 0;                                  // SPI Slave Output, refer to Pg.17
+  003c 4d0002       [4]     BCLR  _SPI0CR1,#2
+   48:    SPI0CR1_LSBFE     = (UINT8)aSPISetup->LSBFirst;         // SPI LSB-First, 0: Most, 1: Least
+  003f 0e070105     [4]     BRSET 7,X,#1,*+9 ;abs = 0048
+  0043 4d0001       [4]     BCLR  _SPI0CR1,#1
+  0046 2003         [3]     BRA   *+5 ;abs = 004b
+  0048 4c0001       [4]     BSET  _SPI0CR1,#1
+   49:    
+   50:    SPI0CR2_MODFEN    = 0;                                  // ModFault, 0: SS Port not used, 1: MODF Feature
+  004b 4d0010       [4]     BCLR  _SPI0CR2,#16
+   51:    SPI0CR2_BIDIROE   = 0;                                  // Bidirectional Mode, 0: Disabled, 1: Enabled
+  004e 4d0008       [4]     BCLR  _SPI0CR2,#8
+   52:    SPI0CR2_SPISWAI   = 0;                                  // Stop in Wait Mode, 0: Normal, 1: Stop clock
+  0051 4d0002       [4]     BCLR  _SPI0CR2,#2
+   53:    SPI0CR2_SPC0      = 0;                                  // Serial Pin Control, Page 18.
+  0054 4d0001       [4]     BCLR  _SPI0CR2,#1
+   54:      
+   55:    SPI0CR1_SPE       = 1;                                  // SPI System Enable, 1: Enabled
+  0057 4c0040       [4]     BSET  _SPI0CR1,#64
+   56:    
+   57:    // Init Port H Directions to Output
+   58:    DDRH_DDRH4        = 1;       //1
+  005a 1c000010     [4]     BSET  _DDRH,#16
+   59:    DDRH_DDRH5        = 1;       //2
+  005e 1c000020     [4]     BSET  _DDRH,#32
+   60:    DDRH_DDRH6        = 1;       //3
+  0062 1c000040     [4]     BSET  _DDRH,#64
+   61:  }
+  0066 3d           [5]     RTS   
+   62:   
+   63:  // ----------------------------------------
+   64:  // SPI_ExchangeChar
+   65:  //
+   66:  // Transmits a byte and retrieves a received byte from the SPI
+   67:  // Input:
+   68:  //   dataTx is a byte to transmit
+   69:  //   dataRx is a pointer to a byte to receive
+   70:  // Output:
+   71:  //   none
+   72:  // Conditions:
+   73:  //   Assumes SPI has been set up
+   74:  
+   75:  void SPI_ExchangeChar(const UINT8 dataTx, UINT8 * const dataRx)
+   76:  { 
+*** EVALUATION ***
+
+Function: SPI_ExchangeChar
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\SPI.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\SPI.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+   77:    while (!SPI0SR_SPTEF);
+  0001 4f0020fc     [4]     BRCLR _SPI0SR,#32,*+0 ;abs = 0001
+   78:    
+   79:      // Wait for TX
+   80:    SPI0DR = dataTx;
+  0005 e684         [3]     LDAB  4,SP
+  0007 5b00         [2]     STAB  _SPI0DR
+   81:    
+   82:    while (!SPI0SR_SPIF);
+  0009 4f0080fc     [4]     BRCLR _SPI0SR,#128,*+0 ;abs = 0009
+   83:    
+   84:      // Wait for RX
+   85:    *dataRx = SPI0DR;
+  000d ee80         [3]     LDX   0,SP
+  000f d600         [3]     LDAB  _SPI0DR
+  0011 6b00         [2]     STAB  0,X
+   86:        
+   87:  }
+  0013 3a           [3]     PULD  
+  0014 3d           [5]     RTS   

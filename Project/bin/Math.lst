@@ -1,0 +1,239 @@
+*** EVALUATION ***
+ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+
+    1:  #include "types.h"
+    2:  #include "Math.h"
+    3:  
+    4:  
+    5:  // *8 ~= << 3
+    6:  // /8 ~= >> 3
+    7:  
+    8:  UINT32 Math_ToQNotation(const UINT32 number, const UINT8 base)
+    9:  {
+*** EVALUATION ***
+
+Function: Math_ToQNotation
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
+
+   10:    return number << base;
+  0000 ed84         [3]     LDY   4,SP
+  0002 ee82         [3]     LDX   2,SP
+  0004 160000       [4]     JSR   _LSHL
+   11:  }
+  0007 3d           [5]     RTS   
+   12:  
+   13:  UINT16 Math_FromQNotation(UINT32 const number, const TQNotationSide side)
+   14:  {
+*** EVALUATION ***
+
+Function: Math_FromQNotation
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 6caa         [2]     STD   6,-SP
+   15:    UINT32 tempNumber;
+   16:    UINT8 hundredThousand, tenThousand, thousand;
+   17:    hundredThousand, tenThousand, thousand = 0;
+   18:    tempNumber = (UINT32)(number >> Base);
+  0002 ed8a         [3]     LDY   10,SP
+  0004 ee88         [3]     LDX   8,SP
+  0006 c603         [1]     LDAB  #3
+  0008 160000       [4]     JSR   _LSHRU
+  000b 6c84         [2]     STD   4,SP
+  000d 6e82         [2]     STX   2,SP
+   19:    
+   20:    switch(side)
+  000f ec80         [3]     LDD   0,SP
+  0011 2705         [3/1]   BEQ   *+7 ;abs = 0018
+  0013 04040e       [3]     DBEQ  D,*+17 ;abs = 0024
+  0016 2059         [3]     BRA   *+91 ;abs = 0071
+   21:    {
+   22:      case qLeft:
+   23:        return (UINT16) (tempNumber / 1000);   // Change base back to 2
+  0018 cc03e8       [2]     LDD   #1000
+  001b 3b           [2]     PSHD  
+  001c 35           [2]     PSHY  
+  001d ec88         [3]     LDD   8,SP
+  001f 160000       [4]     JSR   _LDIVU
+  0022 204d         [3]     BRA   *+79 ;abs = 0071
+   24:      break;
+   25:      case qRight:
+   26:        if (tempNumber >= 100000)
+  0024 8e0001       [2]     CPX   #1
+  0027 220a         [3/1]   BHI   *+12 ;abs = 0033
+  0029 042529       [3]     DBNE  X,*+44 ;abs = 0055
+  002c ec84         [3]     LDD   4,SP
+  002e 8c86a0       [2]     CPD   #34464
+  0031 2522         [3/1]   BCS   *+36 ;abs = 0055
+   27:        {
+   28:          hundredThousand = (UINT8)(number / 1000);
+  0033 cd03e8       [2]     LDY   #1000
+  0036 35           [2]     PSHY  
+  0037 c7           [1]     CLRB  
+  0038 87           [1]     CLRA  
+  0039 3b           [2]     PSHD  
+  003a ec8e         [3]     LDD   14,SP
+  003c ee8c         [3]     LDX   12,SP
+  003e 160000       [4]     JSR   _LDIVU
+   29:          tempNumber -= (hundredThousand * 1000);  
+  0041 0752         [4]     BSR   *+84 ;abs = 0095
+  0043 3b           [2]     PSHD  
+  0044 ec86         [3]     LDD   6,SP
+  0046 a380         [3]     SUBD  0,SP
+  0048 6c86         [2]     STD   6,SP
+  004a ec84         [3]     LDD   4,SP
+  004c 34           [2]     PSHX  
+  004d e281         [3]     SBCB  1,SP
+  004f a2b1         [3]     SBCA  2,SP+
+  0051 6c84         [2]     STD   4,SP
+  0053 1b82         [2]     LEAS  2,SP
+   30:        }
+   31:        if (tempNumber >= 10000)
+  0055 ec82         [3]     LDD   2,SP
+  0057 2607         [3/1]   BNE   *+9 ;abs = 0060
+  0059 ec84         [3]     LDD   4,SP
+  005b 8c2710       [2]     CPD   #10000
+  005e 2502         [3/1]   BCS   *+4 ;abs = 0062
+   32:        {
+   33:          tenThousand = (UINT8)(tempNumber / 1000);
+  0060 0712         [4]     BSR   *+20 ;abs = 0074
+   34:          tempNumber -= (tenThousand * 1000);
+   35:        }
+   36:        if (tempNumber >= 1000)
+  0062 ec82         [3]     LDD   2,SP
+  0064 2607         [3/1]   BNE   *+9 ;abs = 006d
+  0066 ec84         [3]     LDD   4,SP
+  0068 8c03e8       [2]     CPD   #1000
+  006b 2502         [3/1]   BCS   *+4 ;abs = 006f
+   37:        {
+   38:          thousand = (UINT8)(tempNumber / 1000);
+  006d 0705         [4]     BSR   *+7 ;abs = 0074
+   39:          tempNumber -= (thousand * 1000);
+   40:        }
+   41:        return (UINT16)tempNumber;              // Only take the last 3 digits as the base is 1000
+  006f ec84         [3]     LDD   4,SP
+   42:      break;
+   43:      
+   44:    }
+   45:  }
+  0071 1b86         [2]     LEAS  6,SP
+  0073 3d           [5]     RTS   
+  0074 cd03e8       [2]     LDY   #1000
+  0077 35           [2]     PSHY  
+  0078 c7           [1]     CLRB  
+  0079 87           [1]     CLRA  
+  007a 3b           [2]     PSHD  
+  007b ec8a         [3]     LDD   10,SP
+  007d ee88         [3]     LDX   8,SP
+  007f 160000       [4]     JSR   _LDIVU
+  0082 0711         [4]     BSR   *+19 ;abs = 0095
+  0084 3b           [2]     PSHD  
+  0085 ec88         [3]     LDD   8,SP
+  0087 a3b1         [3]     SUBD  2,SP+
+  0089 6c86         [2]     STD   6,SP
+  008b 34           [2]     PSHX  
+  008c ec86         [3]     LDD   6,SP
+  008e e281         [3]     SBCB  1,SP
+  0090 a2b1         [3]     SBCA  2,SP+
+  0092 6c84         [2]     STD   4,SP
+  0094 3d           [5]     RTS   
+  0095 87           [1]     CLRA  
+  0096 cd03e8       [2]     LDY   #1000
+  0099 13           [3]     EMUL  
+  009a 060000       [3]     JMP   _ILSEXT
+   46:  
+   47:  UINT16 Math_FindPower(const INT16 voltage, const INT16 current)
+   48:  {
+*** EVALUATION ***
+
+Function: Math_FindPower
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+   49:    return voltage * current;
+  0001 ec84         [3]     LDD   4,SP
+  0003 ed80         [3]     LDY   0,SP
+  0005 13           [3]     EMUL  
+   50:  }
+  0006 30           [3]     PULX  
+  0007 3d           [5]     RTS   
+   51:  
+   52:  void Math_FindEnergy(const INT16 DEM_AvePower_Array[])
+   53:  {
+*** EVALUATION ***
+
+Function: Math_FindEnergy
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+   54:    // 16 Samples per Period/Cycle.
+   55:    // Sum of PkTs between k=0 and n
+   56:    // n = 15 then.
+   57:    // 1 cycle is approx 20 milliseconds
+   58:    // so 20/16 = 1.25, so sample approx every 1ms
+   59:    UINT8 i;
+   60:    
+   61:    for (i = 0; i < 15; i++)
+  0001 c7           [1]     CLRB  
+   62:    {
+   63:      DEM_Total_Energy.l += DEM_AvePower_Array[i];
+  0002 87           [1]     CLRA  
+  0003 37           [2]     PSHB  
+  0004 59           [1]     LSLD  
+  0005 e381         [3]     ADDD  1,SP
+  0007 b745         [1]     TFR   D,X
+  0009 ec00         [3]     LDD   0,X
+  000b 160000       [4]     JSR   _ILSEXT
+  000e f30000       [3]     ADDD  DEM_Total_Energy:2
+  0011 7c0000       [3]     STD   DEM_Total_Energy:2
+  0014 b754         [1]     TFR   X,D
+  0016 f90000       [3]     ADCB  DEM_Total_Energy:1
+  0019 b90000       [3]     ADCA  DEM_Total_Energy
+  001c 7c0000       [3]     STD   DEM_Total_Energy
+  001f 33           [3]     PULB  
+  0020 52           [1]     INCB  
+  0021 c10f         [1]     CMPB  #15
+  0023 25dd         [3/1]   BCS   *-33 ;abs = 0002
+   64:    }
+   65:  }
+  0025 3a           [3]     PULD  
+  0026 3d           [5]     RTS   
+   66:  
+   67:  UINT16 Math_FindCost(void)
+   68:  {
+*** EVALUATION ***
+
+Function: Math_FindCost
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
+
+   69:    // Energy in kWh * Tarrif
+   70:    return (UINT16) ( DEM_Total_Energy.l * Clock_TimeInHours() ) * DEM_Tarrif;
+  0000 160000       [4]     JSR   Clock_TimeInHours
+  0003 b746         [1]     TFR   D,Y
+  0005 fc0000       [3]     LDD   DEM_Total_Energy:2
+  0008 13           [3]     EMUL  
+  0009 b746         [1]     TFR   D,Y
+  000b fc0000       [3]     LDD   DEM_Tarrif
+  000e 13           [3]     EMUL  
+   71:    //return 0;
+   72:  }
+  000f 3d           [5]     RTS   
+   73:  
+   74:  UINT32 Math_SQRT(INT16 number, INT16 guess)
+   75:  {
+*** EVALUATION ***
+
+Function: Math_SQRT
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
+
+   76:    return 0;
+  0000 ce0000       [2]     LDX   #0
+  0003 b754         [1]     TFR   X,D
+   77:  }
+  0005 3d           [5]     RTS   
+   78:  

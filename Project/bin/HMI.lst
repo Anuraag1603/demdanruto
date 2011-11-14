@@ -1,0 +1,983 @@
+*** EVALUATION ***
+ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+
+    1:  // ----------------------------------------
+    2:  // Filename: HMI.c
+    3:  // Description: Lab 5
+    4:  //  Implements the HMI to control the LCD and menu system
+    5:  //  backlighting, display and setup
+    6:  // Author: Danny Sok
+    7:  //         Edward Khou
+    8:  // Date Created: 20-10-2011
+    9:  // Date Last Modified: 2-11-2011
+   10:  
+   11:  #include "HMI.h"
+   12:  #include "timer.h"
+   13:  
+   14:  // Position of the cursors
+   15:  static UINT8 X, Y;
+   16:  
+   17:  UINT32 Clock_Interval;
+   18:  static TButtonInputs PBState, PrevPBState;
+   19:  static TLCDState LCDState;
+   20:  
+   21:  TINT16 DEM_Average_Power;
+   22:  INT16 DEM_AvePower_Array[DEM_PWRSIZE];
+   23:  TUINT32 DEM_Total_Energy;
+   24:  UINT32 DEM_Total_Cost;
+   25:  UINT16 DEM_Tarrif;
+   26:  
+   27:  // ----------------------------------------
+   28:  // HMI_Setup
+   29:  // 
+   30:  // Sets up the HMI
+   31:  // Input:
+   32:  //   
+   33:  // Output:
+   34:  //   none
+   35:  // Conditions:
+   36:  //  none
+   37:  void HMI_Setup(void)
+   38:  {
+*** EVALUATION ***
+
+Function: HMI_Setup
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\HMI.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o -WmsgSd1106 -WmsgSd5703
+
+   39:    UINT8 i;
+   40:    // Port K - Push Buttons
+   41:    DDRK_BIT2 = 0;    // 0: Input, PK2
+  0000 4d0004       [4]     BCLR  _DDRK,#4
+   42:    DDRK_BIT3 = 0;    // 0: Input, PK3
+  0003 4d0008       [4]     BCLR  _DDRK,#8
+   43:    DDRK_BIT4 = 0;    // 0: Input, PK4
+  0006 4d0010       [4]     BCLR  _DDRK,#16
+   44:    DDRK_BIT5 = 0;    // 0: Input, PK5
+  0009 4d0020       [4]     BCLR  _DDRK,#32
+   45:    DDRK_BIT7 = 0;    // 0: Input, PK7
+  000c 4d0080       [4]     BCLR  _DDRK,#128
+   46:    
+   47:    // Port A: LCD Display
+   48:    DDRA_BIT0 = 1;    // 1: Output, PA0
+  000f 4c0001       [4]     BSET  _DDRAB,#1
+   49:    DDRA_BIT1 = 1;    // 1: Output, PA1
+  0012 4c0002       [4]     BSET  _DDRAB,#2
+   50:    DDRA_BIT2 = 1;    // 1: Output, PA2
+  0015 4c0004       [4]     BSET  _DDRAB,#4
+   51:    DDRA_BIT3 = 1;    // 1: Output, PA3
+  0018 4c0008       [4]     BSET  _DDRAB,#8
+   52:    DDRA_BIT4 = 1;    // 1: Output, PA4
+  001b 4c0010       [4]     BSET  _DDRAB,#16
+   53:    DDRA_BIT5 = 1;    // 1: Output, PA5
+  001e 4c0020       [4]     BSET  _DDRAB,#32
+   54:    DDRA_BIT6 = 1;    // 1: Output, PA6
+  0021 4c0040       [4]     BSET  _DDRAB,#64
+   55:    DDRA_BIT7 = 1;    // 1: Output, PA7
+  0024 4c0080       [4]     BSET  _DDRAB,#128
+   56:    
+   57:    // Port B: LCD Control
+   58:    DDRB_BIT0 = 1;    // 1: Output, PB0
+  0027 4c0001       [4]     BSET  _DDRAB:1,#1
+   59:    DDRB_BIT1 = 1;    // 1: Output, PB1
+  002a 4c0002       [4]     BSET  _DDRAB:1,#2
+   60:    DDRB_BIT2 = 1;    // 1: Output, PB2
+  002d 4c0004       [4]     BSET  _DDRAB:1,#4
+   61:    DDRB_BIT3 = 1;    // 1: Output, PB3
+  0030 4c0008       [4]     BSET  _DDRAB:1,#8
+   62:    DDRB_BIT4 = 1;    // 1: Output, PB4
+  0033 4c0010       [4]     BSET  _DDRAB:1,#16
+   63:    DDRB_BIT5 = 1;    // 1: Output, PB5
+  0036 4c0020       [4]     BSET  _DDRAB:1,#32
+   64:    DDRB_BIT6 = 1;    // 1: Output, PB6
+  0039 4c0040       [4]     BSET  _DDRAB:1,#64
+   65:    DDRB_BIT7 = 1;    // 1: Output, PB7
+  003c 4c0080       [4]     BSET  _DDRAB:1,#128
+   66:    
+   67:    LCD_Setup();
+  003f 160000       [4]     JSR   LCD_Setup
+   68:    X, Y = 0;
+  0042 790000       [3]     CLR   Y
+   69:    LCDState = MeteringTime;
+  0045 c601         [1]     LDAB  #1
+  0047 87           [1]     CLRA  
+  0048 7c0000       [3]     STD   LCDState
+   70:    CreateMenu(MeteringTime);
+  004b 160000       [4]     JSR   CreateMenu
+   71:    
+   72:    Clock_Interval      = 0;
+  004e c7           [1]     CLRB  
+  004f 87           [1]     CLRA  
+  0050 7c0000       [3]     STD   Clock_Interval:2
+  0053 7c0000       [3]     STD   Clock_Interval
+   73:    DEM_Average_Power.l = 0;
+  0056 7c0000       [3]     STD   DEM_Average_Power
+   74:    DEM_Total_Energy.l  = 0;
+  0059 7c0000       [3]     STD   DEM_Total_Energy:2
+  005c 7c0000       [3]     STD   DEM_Total_Energy
+   75:    DEM_Total_Cost      = 0;
+  005f 7c0000       [3]     STD   DEM_Total_Cost:2
+  0062 7c0000       [3]     STD   DEM_Total_Cost
+   76:    DEM_SetTarrif();
+  0065 160000       [4]     JSR   DEM_SetTarrif
+   77:    
+   78:    for (i = 0; i < DEM_PWRSIZE; i++)
+  0068 c7           [1]     CLRB  
+   79:    {
+   80:      DEM_AvePower_Array[i] = 0;
+  0069 87           [1]     CLRA  
+  006a 37           [2]     PSHB  
+  006b 59           [1]     LSLD  
+  006c b745         [1]     TFR   D,X
+  006e cd0000       [2]     LDY   #0
+  0071 6de20000     [3]     STY   DEM_AvePower_Array,X
+  0075 33           [3]     PULB  
+  0076 52           [1]     INCB  
+  0077 c110         [1]     CMPB  #16
+  0079 25ee         [3/1]   BCS   *-16 ;abs = 0069
+   81:    }
+   82:  }
+  007b 3d           [5]     RTS   
+   83:  
+   84:  void HMI_Update(void)
+   85:  {
+*** EVALUATION ***
+
+Function: HMI_Update
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\HMI.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o -WmsgSd1106 -WmsgSd5703
+
+   86:    UINT16 tarrifL = Math_FromQNotation(DEM_Tarrif, qLeft);
+  0000 fc0000       [3]     LDD   DEM_Tarrif
+  0003 6caa         [2]     STD   6,-SP
+  0005 c7           [1]     CLRB  
+  0006 87           [1]     CLRA  
+  0007 3b           [2]     PSHD  
+  0008 160000       [4]     JSR   Math_FromQNotation
+  000b 1b84         [2]     LEAS  4,SP
+  000d 6c82         [2]     STD   2,SP
+   87:    UINT16 tarrifR = Math_FromQNotation(DEM_Tarrif, qRight);
+  000f fc0000       [3]     LDD   DEM_Tarrif
+  0012 3b           [2]     PSHD  
+  0013 c7           [1]     CLRB  
+  0014 87           [1]     CLRA  
+  0015 3b           [2]     PSHD  
+  0016 52           [1]     INCB  
+  0017 160000       [4]     JSR   Math_FromQNotation
+  001a 6ca3         [2]     STD   4,+SP
+   88:    
+   89:    switch(LCDState)
+  001c fc0000       [3]     LDD   LCDState
+  001f 830001       [2]     SUBD  #1
+  0022 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0025 04           DC.B  4
+  0026 e7           DC.B  231
+  0027 04           DC.B  4
+  0028 3a           DC.B  58
+  0029 57           DC.B  87
+  002a a0           DC.B  160
+   90:    {
+   91:      case MeteringTime:
+   92:        if (Clock_Days <= MAX_DAYS)
+  002b f60000       [3]     LDAB  Clock_Days
+  002e c163         [1]     CMPB  #99
+  0030 222a         [3/1]   BHI   *+44 ;abs = 005c
+   93:        {
+   94:          LCD_ClearLine(2);
+  0032 160000       [4]     JSR   HMI_Update:0x011e
+   95:          LCD_SetLine(2);
+   96:          (void)LCD_OutChar(' ');
+  0035 160000       [4]     JSR   HMI_Update:0x0131
+   97:          LCD_OutInteger(Clock_Days);
+  0038 f60000       [3]     LDAB  Clock_Days
+  003b 87           [1]     CLRA  
+  003c 160000       [4]     JSR   LCD_OutInteger
+   98:          (void)LCD_OutChar(':');
+  003f c63a         [1]     LDAB  #58
+  0041 160000       [4]     JSR   LCD_OutChar
+   99:          LCD_OutInteger(Clock_Hours);
+  0044 f60000       [3]     LDAB  Clock_Hours
+  0047 160000       [4]     JSR   HMI_Update:0x0128
+  100:          (void)LCD_OutChar(':');
+  101:          LCD_OutInteger(Clock_Minutes);
+  004a f60000       [3]     LDAB  Clock_Minutes
+  004d 160000       [4]     JSR   HMI_Update:0x0128
+  102:          (void)LCD_OutChar(':');
+  103:          LCD_OutInteger((UINT16)Clock_Seconds);
+  0050 f60000       [3]     LDAB  Clock_Seconds
+  0053 87           [1]     CLRA  
+  0054 160000       [4]     JSR   HMI_Update:0x0111
+  104:          
+  105:          LCD_ClearLine(3);
+  106:          LCD_SetLine(3);
+  107:          LCD_OutString(" Tarrif:");
+  0057 cc0000       [2]     LDD   #" Tarrif:"
+  108:          LCD_OutInteger(tarrifL);
+  109:          (void)LCD_OutChar('.');
+  110:          LCD_OutInteger(tarrifR);
+  111:        }
+  005a 2061         [3]     BRA   *+99 ;abs = 00bd
+  112:        else
+  113:          LCD_OutString(" xx:xx:xx:xx  ");
+  005c cc0000       [2]     LDD   #" xx:xx:xx:xx  "
+  005f 2061         [3]     BRA   *+99 ;abs = 00c2
+  114:      break;
+  115:      
+  116:      case AveragePower:
+  117:        LCD_ClearLine(2);
+  0061 160000       [4]     JSR   HMI_Update:0x011e
+  118:        LCD_SetLine(2);
+  119:        (void)LCD_OutChar(' ');
+  0064 160000       [4]     JSR   HMI_Update:0x0131
+  120:        DEM_Average_Power.l = Math_FindPower(Analog_Input[Ch1].Value.l, Analog_Input[Ch2].Value.l);
+  0067 fc0000       [3]     LDD   Analog_Input
+  006a 3b           [2]     PSHD  
+  006b fc0000       [3]     LDD   Analog_Input:10
+  006e 160000       [4]     JSR   Math_FindPower
+  0071 1b82         [2]     LEAS  2,SP
+  0073 7c0000       [3]     STD   DEM_Average_Power
+  121:        LCD_OutInteger(DEM_Average_Power.l);
+  0076 160000       [4]     JSR   HMI_Update:0x0111
+  122:        
+  123:        LCD_ClearLine(3);
+  124:        LCD_SetLine(3);
+  125:        LCD_OutString(" Tarrif:");
+  0079 cc0000       [2]     LDD   #" Tarrif:"
+  126:        LCD_OutInteger(tarrifL);
+  127:        (void)LCD_OutChar('.');
+  128:        LCD_OutInteger(tarrifR);
+  129:      break;
+  007c 207e         [3]     BRA   *+128 ;abs = 00fc
+  130:      
+  131:      case TotalEnergy:
+  132:        LCD_ClearLine(2);
+  007e 160000       [4]     JSR   HMI_Update:0x011e
+  133:        LCD_SetLine(2);
+  134:        if (DEM_Total_Energy.l <= MAX_ENERGY)
+  0081 fc0000       [3]     LDD   DEM_Total_Energy
+  0084 8c0079       [2]     CPD   #121
+  0087 250a         [3/1]   BCS   *+12 ;abs = 0093
+  0089 2634         [3/1]   BNE   *+54 ;abs = 00bf
+  008b fc0000       [3]     LDD   DEM_Total_Energy:2
+  008e 8cf2c0       [2]     CPD   #62144
+  0091 222c         [3/1]   BHI   *+46 ;abs = 00bf
+  135:        {
+  136:          (void)LCD_OutChar(' ');
+  0093 160000       [4]     JSR   HMI_Update:0x0131
+  137:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qLeft) );
+  0096 fc0000       [3]     LDD   DEM_Total_Energy:2
+  0099 3b           [2]     PSHD  
+  009a fc0000       [3]     LDD   DEM_Total_Energy
+  009d 3b           [2]     PSHD  
+  009e c7           [1]     CLRB  
+  009f 87           [1]     CLRA  
+  00a0 160000       [4]     JSR   Math_FromQNotation
+  00a3 1b84         [2]     LEAS  4,SP
+  00a5 160000       [4]     JSR   HMI_Update:0x0136
+  138:          (void)LCD_OutChar('.');
+  139:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qRight) );
+  00a8 fc0000       [3]     LDD   DEM_Total_Energy:2
+  00ab 3b           [2]     PSHD  
+  00ac fc0000       [3]     LDD   DEM_Total_Energy
+  00af 3b           [2]     PSHD  
+  00b0 c601         [1]     LDAB  #1
+  00b2 87           [1]     CLRA  
+  00b3 160000       [4]     JSR   Math_FromQNotation
+  00b6 1b84         [2]     LEAS  4,SP
+  00b8 0757         [4]     BSR   *+89 ;abs = 0111
+  140:          
+  141:          LCD_ClearLine(3);
+  142:          LCD_SetLine(3);
+  143:          LCD_OutString(" Tarrif:");
+  00ba cc0000       [2]     LDD   #" Tarrif:"
+  144:          LCD_OutInteger(tarrifL);
+  145:          (void)LCD_OutChar('.');
+  146:          LCD_OutInteger(tarrifR);
+  147:        } 
+  00bd 203d         [3]     BRA   *+63 ;abs = 00fc
+  148:        else
+  149:          LCD_OutString(" xxx.xxx      ");
+  00bf cc0000       [2]     LDD   #" xxx.xxx      "
+  00c2 160000       [4]     JSR   LCD_OutString
+  00c5 2047         [3]     BRA   *+73 ;abs = 010e
+  150:      break;
+  151:      
+  152:      case TotalCost:
+  153:        LCD_ClearLine(2);
+  00c7 0755         [4]     BSR   *+87 ;abs = 011e
+  154:        LCD_SetLine(2);
+  155:        DEM_Total_Cost = Math_FindCost();
+  00c9 160000       [4]     JSR   Math_FindCost
+  00cc 7c0000       [3]     STD   DEM_Total_Cost:2
+  00cf c7           [1]     CLRB  
+  00d0 87           [1]     CLRA  
+  00d1 7c0000       [3]     STD   DEM_Total_Cost
+  156:        if (DEM_Total_Cost <= MAX_COST)
+  157:        {
+  158:          (void)LCD_OutChar(' ');
+  00d4 075b         [4]     BSR   *+93 ;abs = 0131
+  159:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qLeft) );
+  00d6 fc0000       [3]     LDD   DEM_Total_Cost:2
+  00d9 3b           [2]     PSHD  
+  00da fc0000       [3]     LDD   DEM_Total_Cost
+  00dd 3b           [2]     PSHD  
+  00de c7           [1]     CLRB  
+  00df 87           [1]     CLRA  
+  00e0 160000       [4]     JSR   Math_FromQNotation
+  00e3 1b84         [2]     LEAS  4,SP
+  00e5 074f         [4]     BSR   *+81 ;abs = 0136
+  160:          (void)LCD_OutChar('.');
+  161:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qRight) );
+  00e7 fc0000       [3]     LDD   DEM_Total_Cost:2
+  00ea 3b           [2]     PSHD  
+  00eb fc0000       [3]     LDD   DEM_Total_Cost
+  00ee 3b           [2]     PSHD  
+  00ef c601         [1]     LDAB  #1
+  00f1 87           [1]     CLRA  
+  00f2 160000       [4]     JSR   Math_FromQNotation
+  00f5 1b84         [2]     LEAS  4,SP
+  00f7 0718         [4]     BSR   *+26 ;abs = 0111
+  162:          
+  163:          LCD_ClearLine(3);
+  164:          LCD_SetLine(3);
+  165:          LCD_OutString(" Tarrif:");
+  00f9 cc0000       [2]     LDD   #" Tarrif:"
+  00fc 160000       [4]     JSR   LCD_OutString
+  166:          LCD_OutInteger(tarrifL);
+  00ff ec82         [3]     LDD   2,SP
+  0101 160000       [4]     JSR   LCD_OutInteger
+  167:          (void)LCD_OutChar('.');
+  0104 c62e         [1]     LDAB  #46
+  0106 160000       [4]     JSR   LCD_OutChar
+  168:          LCD_OutInteger(tarrifR);
+  0109 ec80         [3]     LDD   0,SP
+  010b 160000       [4]     JSR   LCD_OutInteger
+  169:        } 
+  170:        else
+  171:        {
+  172:          LCD_OutString(" xxxx.xx      ");
+  173:        }
+  174:      break;
+  175:    }
+  176:  }
+  010e 1b84         [2]     LEAS  4,SP
+  0110 3d           [5]     RTS   
+  0111 160000       [4]     JSR   LCD_OutInteger
+  0114 c603         [1]     LDAB  #3
+  0116 160000       [4]     JSR   LCD_ClearLine
+  0119 c603         [1]     LDAB  #3
+  011b 060000       [3]     JMP   LCD_SetLine
+  011e c602         [1]     LDAB  #2
+  0120 160000       [4]     JSR   LCD_ClearLine
+  0123 c602         [1]     LDAB  #2
+  0125 060000       [3]     JMP   LCD_SetLine
+  0128 87           [1]     CLRA  
+  0129 160000       [4]     JSR   LCD_OutInteger
+  012c c63a         [1]     LDAB  #58
+  012e 060000       [3]     JMP   LCD_OutChar
+  0131 c620         [1]     LDAB  #32
+  0133 060000       [3]     JMP   LCD_OutChar
+  0136 160000       [4]     JSR   LCD_OutInteger
+  0139 c62e         [1]     LDAB  #46
+  013b 060000       [3]     JMP   LCD_OutChar
+  177:  
+  178:  // ----------------------------------------
+  179:  // TIE5_ISR
+  180:  // 
+  181:  // The interrupt service routine for Timer Channel 5.
+  182:  // It will determine if a pushbutton has been pressed and will
+  183:  // allow for the button event to be handled.
+  184:  // Input:
+  185:  //   
+  186:  // Output:
+  187:  //   none
+  188:  // Conditions:
+  189:  //  none
+  190:  void interrupt 13 TIE5_ISR(void)
+  191:  {
+*** EVALUATION ***
+
+Function: TIE5_ISR
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\HMI.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o -WmsgSd1106 -WmsgSd5703
+
+  192:    TFLG1_C5F = 1; // Clear flag to say it was done.  
+  0000 4c0020       [4]     BSET  _TFLG1,#32
+  193:    
+  194:    Buttons_Get(&PBState); 
+  0003 cc0000       [2]     LDD   #PBState
+  0006 160000       [4]     JSR   Buttons_Get
+  195:    
+  196:    if (PBState != PrevPBState)
+  0009 fc0000       [3]     LDD   PBState
+  000c bc0000       [3]     CPD   PrevPBState
+  000f 2712         [3/1]   BEQ   *+20 ;abs = 0023
+  197:    {
+  198:      HandleButtonPress(PBState, LCDState);
+  0011 3b           [2]     PSHD  
+  0012 fc0000       [3]     LDD   LCDState
+  0015 160000       [4]     JSR   HandleButtonPress
+  0018 3a           [3]     PULD  
+  199:      Clock_Interval = 0;
+  0019 c7           [1]     CLRB  
+  001a 87           [1]     CLRA  
+  001b 7c0000       [3]     STD   Clock_Interval:2
+  001e 7c0000       [3]     STD   Clock_Interval
+  200:    }
+  0021 2018         [3]     BRA   *+26 ;abs = 003b
+  201:    else if (PBState == ButtonIdle && Clock_Interval >= 15) // 15 seconds
+  0023 046415       [3]     TBNE  D,*+24 ;abs = 003b
+  0026 fc0000       [3]     LDD   Clock_Interval
+  0029 2608         [3/1]   BNE   *+10 ;abs = 0033
+  002b fc0000       [3]     LDD   Clock_Interval:2
+  002e 8c000f       [2]     CPD   #15
+  0031 2508         [3/1]   BCS   *+10 ;abs = 003b
+  202:    {
+  203:      LCD_DisplayOff();
+  0033 160000       [4]     JSR   LCD_DisplayOff
+  204:      LCDState = Dormant;
+  0036 c7           [1]     CLRB  
+  0037 87           [1]     CLRA  
+  0038 7c0000       [3]     STD   LCDState
+  205:    }
+  206:    PrevPBState = PBState;
+  003b fc0000       [3]     LDD   PBState
+  003e 7c0000       [3]     STD   PrevPBState
+  207:  }
+  0041 0b           [8]     RTI   
+  208:  
+  209:  // ----------------------------------------
+  210:  // CreateMenu
+  211:  // 
+  212:  // Creates the menu to display on the LCD
+  213:  // Input:
+  214:  //   menu is the state to display on the LCD e.g. DefaultMenu
+  215:  // Output:
+  216:  //   none
+  217:  // Conditions:
+  218:  //   LCD and HMI have been setup
+  219:  void CreateMenu(TLCDState menu)
+  220:  {
+*** EVALUATION ***
+
+Function: CreateMenu
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\HMI.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 6caa         [2]     STD   6,-SP
+  221:    UINT16 tarrifL = Math_FromQNotation(DEM_Tarrif, qLeft);
+  0002 fc0000       [3]     LDD   DEM_Tarrif
+  0005 3b           [2]     PSHD  
+  0006 c7           [1]     CLRB  
+  0007 87           [1]     CLRA  
+  0008 3b           [2]     PSHD  
+  0009 160000       [4]     JSR   Math_FromQNotation
+  000c 1b84         [2]     LEAS  4,SP
+  000e 6c84         [2]     STD   4,SP
+  222:    UINT16 tarrifR = Math_FromQNotation(DEM_Tarrif, qRight);
+  0010 fc0000       [3]     LDD   DEM_Tarrif
+  0013 3b           [2]     PSHD  
+  0014 c7           [1]     CLRB  
+  0015 87           [1]     CLRA  
+  0016 3b           [2]     PSHD  
+  0017 52           [1]     INCB  
+  0018 160000       [4]     JSR   Math_FromQNotation
+  001b 1b84         [2]     LEAS  4,SP
+  001d 6c82         [2]     STD   2,SP
+  223:        
+  224:    LCD_SetCursor(0, 1); // Reset Cursor
+  001f c7           [1]     CLRB  
+  0020 37           [2]     PSHB  
+  0021 52           [1]     INCB  
+  0022 160000       [4]     JSR   LCD_SetCursor
+  0025 32           [3]     PULA  
+  225:    X = 0;
+  0026 790000       [3]     CLR   X
+  226:    Y = 1;
+  0029 c601         [1]     LDAB  #1
+  002b 7b0000       [3]     STAB  Y
+  227:    LCD_Clear();
+  002e 160000       [4]     JSR   LCD_Clear
+  228:    
+  229:    LCDState = menu;
+  0031 ec80         [3]     LDD   0,SP
+  0033 7c0000       [3]     STD   LCDState
+  230:    
+  231:    switch(menu)
+  0036 160000       [4]     JSR   _CASE_CHECKED
+  0039 0005         DC.W  5
+  003b 0000         DC.W  CreateMenu:0x01ef
+  003d 0000         DC.W  CreateMenu:0x0047
+  003f 0000         DC.W  CreateMenu:0x0082
+  0041 0000         DC.W  CreateMenu:0x00e8
+  0043 0000         DC.W  CreateMenu:0x0121
+  0045 0000         DC.W  CreateMenu:0x0192
+  232:    {
+  233:      case Dormant:
+  234:        LCD_SetLine(0);
+  0047 c7           [1]     CLRB  
+  0048 160000       [4]     JSR   LCD_SetLine
+  235:        LCD_OutString("                ");
+  004b cc0000       [2]     LDD   #"                "
+  004e 160000       [4]     JSR   CreateMenu:0x0203
+  236:        LCD_SetLine(1);
+  237:        LCD_OutString("                ");
+  0051 cc0000       [2]     LDD   #"                "
+  0054 160000       [4]     JSR   CreateMenu:0x0223
+  238:        LCD_SetLine(2);
+  239:        LCD_OutString("                ");
+  0057 cc0000       [2]     LDD   #"                "
+  005a 160000       [4]     JSR   LCD_OutString
+  240:        LCD_SetLine(3);
+  005d 160000       [4]     JSR   CreateMenu:0x0233
+  241:        LCD_OutString("                ");
+  0060 cc0000       [2]     LDD   #"                "
+  0063 160000       [4]     JSR   LCD_OutString
+  242:        LCD_SetLine(4);
+  0066 c604         [1]     LDAB  #4
+  0068 160000       [4]     JSR   LCD_SetLine
+  243:        LCD_OutString("                ");
+  006b cc0000       [2]     LDD   #"                "
+  006e 160000       [4]     JSR   CreateMenu:0x020b
+  244:        LCD_SetLine(5);
+  245:        LCD_OutString("                ");
+  0071 cc0000       [2]     LDD   #"                "
+  0074 160000       [4]     JSR   CreateMenu:0x0213
+  246:        LCD_SetLine(6);
+  247:        LCD_OutString("                ");
+  0077 cc0000       [2]     LDD   #"                "
+  007a 160000       [4]     JSR   CreateMenu:0x021b
+  248:        LCD_SetLine(7);
+  249:        LCD_OutString("                ");
+  007d cc0000       [2]     LDD   #"                "
+  250:      break;
+  0080 2064         [3]     BRA   *+102 ;abs = 00e6
+  251:      
+  252:      case MeteringTime:
+  253:        
+  254:        LCD_SetLine(0);
+  0082 c7           [1]     CLRB  
+  0083 160000       [4]     JSR   LCD_SetLine
+  255:        LCD_OutString("$--------------$");
+  0086 cc0000       [2]     LDD   #"$--------------$"
+  0089 160000       [4]     JSR   CreateMenu:0x0203
+  256:        LCD_SetLine(1);
+  257:        LCD_OutString("|Metering Time |");
+  008c cc0000       [2]     LDD   #"|Metering Time |"
+  008f 160000       [4]     JSR   LCD_OutString
+  258:        
+  259:        if (Clock_Days <= MAX_DAYS)
+  0092 f60000       [3]     LDAB  Clock_Days
+  0095 c163         [1]     CMPB  #99
+  0097 2229         [3/1]   BHI   *+43 ;abs = 00c2
+  260:        {
+  261:          LCD_SetLine(2);
+  0099 c602         [1]     LDAB  #2
+  009b 160000       [4]     JSR   LCD_SetLine
+  262:          (void)LCD_OutChar(' ');
+  009e 160000       [4]     JSR   CreateMenu:0x0241
+  263:          LCD_OutInteger(Clock_Days);
+  00a1 f60000       [3]     LDAB  Clock_Days
+  00a4 87           [1]     CLRA  
+  00a5 160000       [4]     JSR   LCD_OutInteger
+  264:          (void)LCD_OutChar(':');
+  00a8 c63a         [1]     LDAB  #58
+  00aa 160000       [4]     JSR   LCD_OutChar
+  265:          LCD_OutInteger(Clock_Hours);
+  00ad f60000       [3]     LDAB  Clock_Hours
+  00b0 160000       [4]     JSR   CreateMenu:0x0238
+  266:          (void)LCD_OutChar(':');
+  267:          LCD_OutInteger(Clock_Minutes);
+  00b3 f60000       [3]     LDAB  Clock_Minutes
+  00b6 160000       [4]     JSR   CreateMenu:0x0238
+  268:          (void)LCD_OutChar(':');
+  269:          LCD_OutInteger((UINT16)Clock_Seconds);
+  00b9 f60000       [3]     LDAB  Clock_Seconds
+  00bc 87           [1]     CLRA  
+  00bd 160000       [4]     JSR   LCD_OutInteger
+  270:        }
+  00c0 2006         [3]     BRA   *+8 ;abs = 00c8
+  271:        else
+  272:          LCD_OutString("xx:xx:xx:xx   ");
+  00c2 cc0000       [2]     LDD   #"xx:xx:xx:xx   "
+  00c5 160000       [4]     JSR   LCD_OutString
+  273:        
+  274:        LCD_SetLine(3);
+  00c8 160000       [4]     JSR   CreateMenu:0x0233
+  275:        LCD_OutString(" Tarrif:");
+  00cb cc0000       [2]     LDD   #" Tarrif:"
+  00ce 160000       [4]     JSR   CreateMenu:0x01f2
+  276:        LCD_OutInteger(tarrifL);
+  277:        (void)LCD_OutChar('.');
+  278:        LCD_OutInteger(tarrifR);
+  279:        LCD_SetLine(4);
+  280:        LCD_OutString("|              |");
+  00d1 cc0000       [2]     LDD   #"|              |"
+  00d4 160000       [4]     JSR   CreateMenu:0x020b
+  281:        LCD_SetLine(5);
+  282:        LCD_OutString("|              |");
+  00d7 cc0000       [2]     LDD   #"|              |"
+  00da 160000       [4]     JSR   CreateMenu:0x0213
+  283:        LCD_SetLine(6);
+  284:        LCD_OutString("|              |");
+  00dd cc0000       [2]     LDD   #"|              |"
+  00e0 160000       [4]     JSR   CreateMenu:0x021b
+  285:        LCD_SetLine(7);
+  286:        LCD_OutString("$------CYC-----$");
+  00e3 cc0000       [2]     LDD   #"$------CYC-----$"
+  287:      break;
+  00e6 2037         [3]     BRA   *+57 ;abs = 011f
+  288:      
+  289:      case AveragePower:
+  290:        LCD_SetLine(0);
+  00e8 c7           [1]     CLRB  
+  00e9 160000       [4]     JSR   LCD_SetLine
+  291:        LCD_OutString("$--------------$");
+  00ec cc0000       [2]     LDD   #"$--------------$"
+  00ef 160000       [4]     JSR   CreateMenu:0x0203
+  292:        LCD_SetLine(1);
+  293:        LCD_OutString("|   Ave Power  |");
+  00f2 cc0000       [2]     LDD   #"|   Ave Power  |"
+  00f5 160000       [4]     JSR   CreateMenu:0x0223
+  294:        LCD_SetLine(2);
+  295:        (void)LCD_OutChar(' ');
+  00f8 160000       [4]     JSR   CreateMenu:0x0241
+  296:        LCD_OutInteger(DEM_Average_Power.l);
+  00fb fc0000       [3]     LDD   DEM_Average_Power
+  00fe 160000       [4]     JSR   LCD_OutInteger
+  297:        LCD_SetLine(3);
+  0101 160000       [4]     JSR   CreateMenu:0x0233
+  298:        LCD_OutString(" Tarrif:");
+  0104 cc0000       [2]     LDD   #" Tarrif:"
+  0107 160000       [4]     JSR   CreateMenu:0x01f2
+  299:        LCD_OutInteger(tarrifL);
+  300:        (void)LCD_OutChar('.');
+  301:        LCD_OutInteger(tarrifR);
+  302:        LCD_SetLine(4);
+  303:        LCD_OutString("|              |");
+  010a cc0000       [2]     LDD   #"|              |"
+  010d 160000       [4]     JSR   CreateMenu:0x020b
+  304:        LCD_SetLine(5);
+  305:        LCD_OutString("|              |");
+  0110 cc0000       [2]     LDD   #"|              |"
+  0113 160000       [4]     JSR   CreateMenu:0x0213
+  306:        LCD_SetLine(6);
+  307:        LCD_OutString("|              |");
+  0116 cc0000       [2]     LDD   #"|              |"
+  0119 160000       [4]     JSR   CreateMenu:0x021b
+  308:        LCD_SetLine(7);
+  309:        LCD_OutString("$------CYC-----$");
+  011c cc0000       [2]     LDD   #"$------CYC-----$"
+  310:      break;
+  011f 206f         [3]     BRA   *+113 ;abs = 0190
+  311:      
+  312:      case TotalEnergy:
+  313:        LCD_SetLine(0);
+  0121 c7           [1]     CLRB  
+  0122 160000       [4]     JSR   LCD_SetLine
+  314:        LCD_OutString("$--------------$");
+  0125 cc0000       [2]     LDD   #"$--------------$"
+  0128 160000       [4]     JSR   CreateMenu:0x0203
+  315:        LCD_SetLine(1);
+  316:        LCD_OutString("| Total Energy |");
+  012b cc0000       [2]     LDD   #"| Total Energy |"
+  012e 160000       [4]     JSR   CreateMenu:0x0223
+  317:        
+  318:        LCD_SetLine(2);
+  319:        if (DEM_Total_Energy.l <= MAX_ENERGY)
+  0131 fc0000       [3]     LDD   DEM_Total_Energy
+  0134 8c0079       [2]     CPD   #121
+  0137 250a         [3/1]   BCS   *+12 ;abs = 0143
+  0139 2632         [3/1]   BNE   *+52 ;abs = 016d
+  013b fc0000       [3]     LDD   DEM_Total_Energy:2
+  013e 8cf2c0       [2]     CPD   #62144
+  0141 222a         [3/1]   BHI   *+44 ;abs = 016d
+  320:        {
+  321:          (void)LCD_OutChar(' ');
+  0143 160000       [4]     JSR   CreateMenu:0x0241
+  322:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qLeft) );
+  0146 fc0000       [3]     LDD   DEM_Total_Energy:2
+  0149 3b           [2]     PSHD  
+  014a fc0000       [3]     LDD   DEM_Total_Energy
+  014d 3b           [2]     PSHD  
+  014e c7           [1]     CLRB  
+  014f 87           [1]     CLRA  
+  0150 160000       [4]     JSR   Math_FromQNotation
+  0153 1b84         [2]     LEAS  4,SP
+  0155 160000       [4]     JSR   CreateMenu:0x022b
+  323:          (void)LCD_OutChar('.');
+  324:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qRight) );
+  0158 fc0000       [3]     LDD   DEM_Total_Energy:2
+  015b 3b           [2]     PSHD  
+  015c fc0000       [3]     LDD   DEM_Total_Energy
+  015f 3b           [2]     PSHD  
+  0160 c601         [1]     LDAB  #1
+  0162 87           [1]     CLRA  
+  0163 160000       [4]     JSR   Math_FromQNotation
+  0166 1b84         [2]     LEAS  4,SP
+  0168 160000       [4]     JSR   LCD_OutInteger
+  325:        } 
+  016b 2006         [3]     BRA   *+8 ;abs = 0173
+  326:        else
+  327:          LCD_OutString(" xxx.xxx      ");
+  016d cc0000       [2]     LDD   #" xxx.xxx      "
+  0170 160000       [4]     JSR   LCD_OutString
+  328:        
+  329:        LCD_SetLine(3);
+  0173 160000       [4]     JSR   CreateMenu:0x0233
+  330:        LCD_OutString(" Tarrif:");
+  0176 cc0000       [2]     LDD   #" Tarrif:"
+  0179 0777         [4]     BSR   *+121 ;abs = 01f2
+  331:        LCD_OutInteger(tarrifL);
+  332:        (void)LCD_OutChar('.');
+  333:        LCD_OutInteger(tarrifR);
+  334:        LCD_SetLine(4);
+  335:        LCD_OutString("|              |");
+  017b cc0000       [2]     LDD   #"|              |"
+  017e 160000       [4]     JSR   CreateMenu:0x020b
+  336:        LCD_SetLine(5);
+  337:        LCD_OutString("|              |");
+  0181 cc0000       [2]     LDD   #"|              |"
+  0184 160000       [4]     JSR   CreateMenu:0x0213
+  338:        LCD_SetLine(6);
+  339:        LCD_OutString("|              |");
+  0187 cc0000       [2]     LDD   #"|              |"
+  018a 160000       [4]     JSR   CreateMenu:0x021b
+  340:        LCD_SetLine(7);
+  341:        LCD_OutString("$------CYC-----$");
+  018d cc0000       [2]     LDD   #"$------CYC-----$"
+  342:      break;
+  0190 205a         [3]     BRA   *+92 ;abs = 01ec
+  343:      
+  344:      case TotalCost:
+  345:        LCD_SetLine(0);
+  0192 c7           [1]     CLRB  
+  0193 160000       [4]     JSR   LCD_SetLine
+  346:        LCD_OutString("$--------------$");
+  0196 cc0000       [2]     LDD   #"$--------------$"
+  0199 0768         [4]     BSR   *+106 ;abs = 0203
+  347:        LCD_SetLine(1);
+  348:        LCD_OutString("|  Total Cost  |");
+  019b cc0000       [2]     LDD   #"|  Total Cost  |"
+  019e 160000       [4]     JSR   CreateMenu:0x0223
+  349:        LCD_SetLine(2);
+  350:        DEM_Total_Cost = Math_FindCost();
+  01a1 160000       [4]     JSR   Math_FindCost
+  01a4 7c0000       [3]     STD   DEM_Total_Cost:2
+  01a7 c7           [1]     CLRB  
+  01a8 87           [1]     CLRA  
+  01a9 7c0000       [3]     STD   DEM_Total_Cost
+  351:        if (DEM_Total_Cost <= MAX_COST)
+  352:        {
+  353:          (void)LCD_OutChar(' ');
+  01ac 160000       [4]     JSR   CreateMenu:0x0241
+  354:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qLeft) );
+  01af fc0000       [3]     LDD   DEM_Total_Cost:2
+  01b2 3b           [2]     PSHD  
+  01b3 fc0000       [3]     LDD   DEM_Total_Cost
+  01b6 3b           [2]     PSHD  
+  01b7 c7           [1]     CLRB  
+  01b8 87           [1]     CLRA  
+  01b9 160000       [4]     JSR   Math_FromQNotation
+  01bc 1b84         [2]     LEAS  4,SP
+  01be 076b         [4]     BSR   *+109 ;abs = 022b
+  355:          (void)LCD_OutChar('.');
+  356:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qRight) );
+  01c0 fc0000       [3]     LDD   DEM_Total_Cost:2
+  01c3 3b           [2]     PSHD  
+  01c4 fc0000       [3]     LDD   DEM_Total_Cost
+  01c7 3b           [2]     PSHD  
+  01c8 c601         [1]     LDAB  #1
+  01ca 87           [1]     CLRA  
+  01cb 160000       [4]     JSR   Math_FromQNotation
+  01ce 1b84         [2]     LEAS  4,SP
+  01d0 160000       [4]     JSR   LCD_OutInteger
+  357:        } 
+  358:        else
+  359:        {
+  360:          LCD_OutString(" xxxx.xx      ");
+  361:        }
+  362:        LCD_SetLine(3);
+  01d3 075e         [4]     BSR   *+96 ;abs = 0233
+  363:        LCD_OutString(" Tarrif:");
+  01d5 cc0000       [2]     LDD   #" Tarrif:"
+  01d8 0718         [4]     BSR   *+26 ;abs = 01f2
+  364:        LCD_OutInteger(tarrifL);
+  365:        (void)LCD_OutChar('.');
+  366:        LCD_OutInteger(tarrifR);
+  367:        LCD_SetLine(4);
+  368:        LCD_OutString("|              |");
+  01da cc0000       [2]     LDD   #"|              |"
+  01dd 072c         [4]     BSR   *+46 ;abs = 020b
+  369:        LCD_SetLine(5);
+  370:        LCD_OutString("|              |");
+  01df cc0000       [2]     LDD   #"|              |"
+  01e2 072f         [4]     BSR   *+49 ;abs = 0213
+  371:        LCD_SetLine(6);
+  372:        LCD_OutString("|              |");
+  01e4 cc0000       [2]     LDD   #"|              |"
+  01e7 0732         [4]     BSR   *+52 ;abs = 021b
+  373:        LCD_SetLine(7);
+  374:        LCD_OutString("$------CYC-----$");
+  01e9 cc0000       [2]     LDD   #"$------CYC-----$"
+  01ec 160000       [4]     JSR   LCD_OutString
+  375:      break;
+  376:      
+  377:      
+  378:    }
+  379:  }
+  01ef 1b86         [2]     LEAS  6,SP
+  01f1 3d           [5]     RTS   
+  01f2 160000       [4]     JSR   LCD_OutString
+  01f5 ec86         [3]     LDD   6,SP
+  01f7 0732         [4]     BSR   *+52 ;abs = 022b
+  01f9 ec84         [3]     LDD   4,SP
+  01fb 160000       [4]     JSR   LCD_OutInteger
+  01fe c604         [1]     LDAB  #4
+  0200 060000       [3]     JMP   LCD_SetLine
+  0203 160000       [4]     JSR   LCD_OutString
+  0206 c601         [1]     LDAB  #1
+  0208 060000       [3]     JMP   LCD_SetLine
+  020b 160000       [4]     JSR   LCD_OutString
+  020e c605         [1]     LDAB  #5
+  0210 060000       [3]     JMP   LCD_SetLine
+  0213 160000       [4]     JSR   LCD_OutString
+  0216 c606         [1]     LDAB  #6
+  0218 060000       [3]     JMP   LCD_SetLine
+  021b 160000       [4]     JSR   LCD_OutString
+  021e c607         [1]     LDAB  #7
+  0220 060000       [3]     JMP   LCD_SetLine
+  0223 160000       [4]     JSR   LCD_OutString
+  0226 c602         [1]     LDAB  #2
+  0228 060000       [3]     JMP   LCD_SetLine
+  022b 160000       [4]     JSR   LCD_OutInteger
+  022e c62e         [1]     LDAB  #46
+  0230 060000       [3]     JMP   LCD_OutChar
+  0233 c603         [1]     LDAB  #3
+  0235 060000       [3]     JMP   LCD_SetLine
+  0238 87           [1]     CLRA  
+  0239 160000       [4]     JSR   LCD_OutInteger
+  023c c63a         [1]     LDAB  #58
+  023e 060000       [3]     JMP   LCD_OutChar
+  0241 c620         [1]     LDAB  #32
+  0243 060000       [3]     JMP   LCD_OutChar
+  380:  
+  381:  // ----------------------------------------
+  382:  // HandleButtonPress
+  383:  // 
+  384:  // Determines which functions to call/what to do when a button is pressed
+  385:  // Input:
+  386:  //   PBState is the push button state that was most recent
+  387:  //   LCDState is the menu currently displayed on the LCD
+  388:  // Output:
+  389:  //   none
+  390:  // Conditions:
+  391:  //   LCD and Buttons have been setup
+  392:  void HandleButtonPress(TButtonInputs PBState, TLCDState LCDState)
+  393:  {
+*** EVALUATION ***
+
+Function: HandleButtonPress
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\HMI.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o -WmsgSd1106 -WmsgSd5703
+
+  394:    switch(LCDState)
+  0000 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0003 05           DC.B  5
+  0004 3d           DC.B  61
+  0005 05           DC.B  5
+  0006 1b           DC.B  27
+  0007 23           DC.B  35
+  0008 2b           DC.B  43
+  0009 33           DC.B  51
+  395:    {
+  396:      case Dormant:
+  397:        switch(PBState)
+  000a ec82         [3]     LDD   2,SP
+  000c 160000       [4]     JSR   _CASE_SEARCH_8_BYTE
+  000f 80           DC.B  128
+  0010 33           DC.B  51
+  0011 04           DC.B  4
+  0012 0a           DC.B  10
+  0013 08           DC.B  8
+  0014 08           DC.B  8
+  0015 10           DC.B  16
+  0016 06           DC.B  6
+  0017 20           DC.B  32
+  0018 04           DC.B  4
+  0019 80           DC.B  128
+  001a 02           DC.B  2
+  398:        {
+  399:          case Button0:
+  400:          case Button1:
+  401:          case Button2:
+  402:          case Button3:
+  403:          case Button4:
+  404:            LCD_DisplayOn();
+  001b 160000       [4]     JSR   LCD_DisplayOn
+  405:            CreateMenu(MeteringTime);
+  406:          break;
+  001e 201c         [3]     BRA   *+30 ;abs = 003c
+  407:        }
+  408:      break;
+  409:      
+  410:      case MeteringTime:
+  411:        switch(PBState)
+  0020 0721         [4]     BSR   *+35 ;abs = 0043
+  0022 261e         [3/1]   BNE   *+32 ;abs = 0042
+  412:        {
+  413:          case Button2:
+  414:            CreateMenu(AveragePower);
+  0024 c602         [1]     LDAB  #2
+  415:          break;
+  0026 2016         [3]     BRA   *+24 ;abs = 003e
+  416:        }
+  417:      break;
+  418:      
+  419:      case AveragePower:
+  420:        switch(PBState)
+  0028 0719         [4]     BSR   *+27 ;abs = 0043
+  002a 2616         [3/1]   BNE   *+24 ;abs = 0042
+  421:        {
+  422:          case Button2:
+  423:            CreateMenu(TotalEnergy);  
+  002c c603         [1]     LDAB  #3
+  424:          break;
+  002e 200e         [3]     BRA   *+16 ;abs = 003e
+  425:        }
+  426:      break;
+  427:      
+  428:      case TotalEnergy:
+  429:        switch(PBState)
+  0030 0711         [4]     BSR   *+19 ;abs = 0043
+  0032 260e         [3/1]   BNE   *+16 ;abs = 0042
+  430:        {
+  431:          case Button2:
+  432:            CreateMenu(TotalCost);
+  0034 c604         [1]     LDAB  #4
+  433:          break;
+  0036 2006         [3]     BRA   *+8 ;abs = 003e
+  434:        }
+  435:      break;
+  436:      
+  437:      case TotalCost:
+  438:        switch(PBState)
+  0038 0709         [4]     BSR   *+11 ;abs = 0043
+  003a 2606         [3/1]   BNE   *+8 ;abs = 0042
+  439:        {
+  440:          case Button2:
+  441:            CreateMenu(MeteringTime);
+  003c c601         [1]     LDAB  #1
+  003e 87           [1]     CLRA  
+  003f 160000       [4]     JSR   CreateMenu
+  442:          break;
+  443:        }
+  444:      break;
+  445:    }
+  446:    
+  447:  }
+  0042 3d           [5]     RTS   
+  0043 ec84         [3]     LDD   4,SP
+  0045 8c0010       [2]     CPD   #16
+  0048 3d           [5]     RTS   
+  448:  
