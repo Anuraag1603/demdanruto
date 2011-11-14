@@ -1,0 +1,585 @@
+*** EVALUATION ***
+ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+
+    1:  // ----------------------------------------
+    2:  // Filename: EEPROM.c
+    3:  // Description: Routines for erasing and
+    4:  //   writing to the EEPROM
+    5:  // Author: Danny Sok
+    6:  //         Edward Khou
+    7:  // Date Created: 24-08-2011
+    8:  // Date Last Modified: 30-10-2011
+    9:  
+   10:  
+   11:  #include "EEPROM.h"
+   12:  #include "Math.h"
+   13:  #include <mc9s12a256.h>     /* derivative information */
+   14:  #include "packet.h"
+   15:  #include "Math.h"
+   16:  #include "types.h"
+   17:  
+   18:   
+   19:   // EEPROM Commands
+   20:   const UINT8 EEPROM_SECTOR_ERASE   = 0x40;
+   21:   const UINT8 EEPROM_WORD_PROGRAM   = 0x20;
+   22:   const UINT8 EEPROM_MASS_ERASE     = 0x41;
+   23:   const UINT8 EEPROM_ERASE_VERIFY   = 0x05;
+   24:  
+   25:  // ----------------------------------------
+   26:  // EEPROM_Setup
+   27:  // 
+   28:  // Sets up the EEPROM with the correct internal clock
+   29:  // Based on Figure 4-1 of the EETS4K Block User Guide V02.07
+   30:  // Input:
+   31:  //  oscClk is the oscillator clock frequency in Hz
+   32:  //  busClk is the bus clock frequency in Hz
+   33:  // Output:
+   34:  //   TRUE if the EEPROM was setup succesfully
+   35:  // Conditions:
+   36:  //   none
+   37:  
+   38:  BOOL EEPROM_Setup(const UINT32 oscClk, const UINT32 busClk)
+   39:  {
+*** EVALUATION ***
+
+Function: EEPROM_Setup
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\EEPROM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\EEPROM.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+  0001 34           [2]     PSHX  
+   40:    if ((oscClk != 16000000) || (busClk != 24000000))
+  0002 ec88         [3]     LDD   8,SP
+  0004 8c2400       [2]     CPD   #9216
+  0007 2613         [3/1]   BNE   *+21 ;abs = 001c
+  0009 ec86         [3]     LDD   6,SP
+  000b 8c00f4       [2]     CPD   #244
+  000e 260c         [3/1]   BNE   *+14 ;abs = 001c
+  0010 ec82         [3]     LDD   2,SP
+  0012 8c3600       [2]     CPD   #13824
+  0015 2605         [3/1]   BNE   *+7 ;abs = 001c
+  0017 8e016e       [2]     CPX   #366
+  001a 2704         [3/1]   BEQ   *+6 ;abs = 0020
+   41:      return bFALSE;
+  001c c7           [1]     CLRB  
+  001d 060000       [3]     JMP   EEPROM_Setup:0x0117
+   42:    
+   43:    ECLKDIV_EDIV   = 10;
+  0020 f60000       [3]     LDAB  _ECLKDIV
+  0023 c4c0         [1]     ANDB  #192
+  0025 ca0a         [1]     ORAB  #10
+  0027 7b0000       [3]     STAB  _ECLKDIV
+   44:    ECLKDIV_PRDIV8 = 1;
+  002a 1c000040     [4]     BSET  _ECLKDIV,#64
+   45:    
+   46:    if (sModConNb == 0xFFFF)
+  002e fc0400       [3]     LDD   1024
+  0031 04a40c       [3]     IBNE  D,*+15 ;abs = 0040
+   47:      (void)EEPROM_Write16(&sModConNb, 0x4F); //0x6003 = 24579, 0x4F = 79
+  0034 8604         [1]     LDAA  #4
+  0036 c7           [1]     CLRB  
+  0037 3b           [2]     PSHD  
+  0038 c64f         [1]     LDAB  #79
+  003a 87           [1]     CLRA  
+  003b 160000       [4]     JSR   EEPROM_Write16
+  003e 1b82         [2]     LEAS  2,SP
+   48:      
+   49:    if (sModConMode == 0xFFFF)
+  0040 fc0402       [3]     LDD   1026
+  0043 04a40b       [3]     IBNE  D,*+14 ;abs = 0051
+   50:      (void)EEPROM_Write16(&sModConMode, 1);
+  0046 cc0402       [2]     LDD   #1026
+  0049 3b           [2]     PSHD  
+  004a 57           [1]     ASRB  
+  004b 87           [1]     CLRA  
+  004c 160000       [4]     JSR   EEPROM_Write16
+  004f 1b82         [2]     LEAS  2,SP
+   51:    
+   52:    if (Debug == 0xFFFF)
+  0051 fc0420       [3]     LDD   1056
+  0054 04a406       [3]     IBNE  D,*+9 ;abs = 005d
+   53:      (void)EEPROM_Write16(&Debug, 0);
+  0057 cc0420       [2]     LDD   #1056
+  005a 160000       [4]     JSR   EEPROM_Setup:0x0127
+   54:    
+   55:    if (sControlMode == 0xFFFF)
+  005d fc0404       [3]     LDD   1028
+  0060 04a406       [3]     IBNE  D,*+9 ;abs = 0069
+   56:      (void)EEPROM_Write16(&sControlMode, PACKET_ASYNCHRONOUS); 
+  0063 cc0404       [2]     LDD   #1028
+  0066 160000       [4]     JSR   EEPROM_Setup:0x0127
+   57:   
+   58:    if (sNbAnalogInputs == 0xFFFF)
+  0069 fc0406       [3]     LDD   1030
+  006c 04a406       [3]     IBNE  D,*+9 ;abs = 0075
+   59:      (void)EEPROM_Write16(&sNbAnalogInputs, 2);
+  006f cc0406       [2]     LDD   #1030
+  0072 160000       [4]     JSR   EEPROM_Setup:0x0130
+   60:    
+   61:    if (sNbAnalogOutputs == 0xFFFF)
+  0075 fc0408       [3]     LDD   1032
+  0078 04a406       [3]     IBNE  D,*+9 ;abs = 0081
+   62:      (void)EEPROM_Write16(&sNbAnalogOutputs, 0);
+  007b cc0408       [2]     LDD   #1032
+  007e 160000       [4]     JSR   EEPROM_Setup:0x0127
+   63:    
+   64:    if (sAnalogPeriod == 0xFFFF)
+  0081 fc0416       [3]     LDD   1046
+  0084 04a40c       [3]     IBNE  D,*+15 ;abs = 0093
+   65:      (void)EEPROM_Write16(&sAnalogPeriod, 10);
+  0087 cc0416       [2]     LDD   #1046
+  008a 3b           [2]     PSHD  
+  008b c60a         [1]     LDAB  #10
+  008d 87           [1]     CLRA  
+  008e 160000       [4]     JSR   EEPROM_Write16
+  0091 1b82         [2]     LEAS  2,SP
+   66:    
+   67:    if (sPacketPeriod == 0xFFFF)
+  0093 fc0412       [3]     LDD   1042
+  0096 04a406       [3]     IBNE  D,*+9 ;abs = 009f
+   68:      (void)EEPROM_Write16(&sPacketPeriod, 2);
+  0099 cc0412       [2]     LDD   #1042
+  009c 160000       [4]     JSR   EEPROM_Setup:0x0130
+   69:    
+   70:    if (sLCDContrast == 0xFFFF)
+  009f fc0440       [3]     LDD   1088
+  00a2 04a40c       [3]     IBNE  D,*+15 ;abs = 00b1
+   71:      (void)EEPROM_Write16(&sLCDContrast, 50);
+  00a5 cc0440       [2]     LDD   #1088
+  00a8 3b           [2]     PSHD  
+  00a9 c632         [1]     LDAB  #50
+  00ab 87           [1]     CLRA  
+  00ac 160000       [4]     JSR   EEPROM_Write16
+  00af 1b82         [2]     LEAS  2,SP
+   72:    
+   73:    if (sT1Peak == 0xFFFF)
+  00b1 fc0450       [3]     LDD   1104
+  00b4 04a40e       [3]     IBNE  D,*+17 ;abs = 00c5
+   74:      (void)EEPROM_Write16( &sT1Peak, (UINT16)Math_ToQNotation(22235, Base) );
+  00b7 cc0450       [2]     LDD   #1104
+  00ba 3b           [2]     PSHD  
+  00bb ce56db       [2]     LDX   #22235
+  00be 075b         [4]     BSR   *+93 ;abs = 011b
+  00c0 160000       [4]     JSR   EEPROM_Write16
+  00c3 1b82         [2]     LEAS  2,SP
+   75:    
+   76:    if (sT1Shoulder == 0xFFFF)
+  00c5 fc0452       [3]     LDD   1106
+  00c8 04a40e       [3]     IBNE  D,*+17 ;abs = 00d9
+   77:      (void)EEPROM_Write16(&sT1Shoulder, (UINT16)Math_ToQNotation(4400, Base) );
+  00cb cc0452       [2]     LDD   #1106
+  00ce 3b           [2]     PSHD  
+  00cf ce1130       [2]     LDX   #4400
+  00d2 0747         [4]     BSR   *+73 ;abs = 011b
+  00d4 160000       [4]     JSR   EEPROM_Write16
+  00d7 1b82         [2]     LEAS  2,SP
+   78:    
+   79:    if (sT1OffPeak == 0xFFFF)
+  00d9 fc0454       [3]     LDD   1108
+  00dc 04a40e       [3]     IBNE  D,*+17 ;abs = 00ed
+   80:      (void)EEPROM_Write16(&sT1OffPeak, (UINT16)Math_ToQNotation(2109, Base) );
+  00df cc0454       [2]     LDD   #1108
+  00e2 3b           [2]     PSHD  
+  00e3 ce083d       [2]     LDX   #2109
+  00e6 0733         [4]     BSR   *+53 ;abs = 011b
+  00e8 160000       [4]     JSR   EEPROM_Write16
+  00eb 1b82         [2]     LEAS  2,SP
+   81:    
+   82:    if (sT2NonTOU == 0xFFFF)
+  00ed fc0456       [3]     LDD   1110
+  00f0 04a40e       [3]     IBNE  D,*+17 ;abs = 0101
+   83:      (void)EEPROM_Write16(&sT2NonTOU, (UINT16)Math_ToQNotation(1713, Base) );
+  00f3 cc0456       [2]     LDD   #1110
+  00f6 3b           [2]     PSHD  
+  00f7 ce06b1       [2]     LDX   #1713
+  00fa 071f         [4]     BSR   *+33 ;abs = 011b
+  00fc 160000       [4]     JSR   EEPROM_Write16
+  00ff 1b82         [2]     LEAS  2,SP
+   84:    
+   85:    if (sT3NonTOU == 0xFFFF)
+  0101 fc0458       [3]     LDD   1112
+  0104 04a40e       [3]     IBNE  D,*+17 ;abs = 0115
+   86:      (void)EEPROM_Write16(&sT3NonTOU, (UINT16)Math_ToQNotation(4100, Base) );
+  0107 cc0458       [2]     LDD   #1112
+  010a 3b           [2]     PSHD  
+  010b ce1004       [2]     LDX   #4100
+  010e 070b         [4]     BSR   *+13 ;abs = 011b
+  0110 160000       [4]     JSR   EEPROM_Write16
+  0113 1b82         [2]     LEAS  2,SP
+   87:    
+   88:    
+   89:    
+   90:    return bTRUE;
+  0115 c601         [1]     LDAB  #1
+  0117 87           [1]     CLRA  
+   91:  }
+  0118 1b84         [2]     LEAS  4,SP
+  011a 3d           [5]     RTS   
+  011b 34           [2]     PSHX  
+  011c c7           [1]     CLRB  
+  011d 87           [1]     CLRA  
+  011e 3b           [2]     PSHD  
+  011f c603         [1]     LDAB  #3
+  0121 160000       [4]     JSR   Math_ToQNotation
+  0124 1b84         [2]     LEAS  4,SP
+  0126 3d           [5]     RTS   
+  0127 3b           [2]     PSHD  
+  0128 c7           [1]     CLRB  
+  0129 87           [1]     CLRA  
+  012a 160000       [4]     JSR   EEPROM_Write16
+  012d 1b82         [2]     LEAS  2,SP
+  012f 3d           [5]     RTS   
+  0130 3b           [2]     PSHD  
+  0131 c602         [1]     LDAB  #2
+  0133 87           [1]     CLRA  
+  0134 160000       [4]     JSR   EEPROM_Write16
+  0137 1b82         [2]     LEAS  2,SP
+  0139 3d           [5]     RTS   
+   92:  
+   93:  // ----------------------------------------
+   94:  // EEPROM_Write32
+   95:  // 
+   96:  // Writes a 32-bit number to EEPROM
+   97:  // Input:
+   98:  //   address is the address of the data,
+   99:  //   data is the data to write
+  100:  // Output:
+  101:  //   TRUE if EEPROM was written successfully
+  102:  //   FALSE if address is not aligned to a 4-byte boundary
+  103:  //   or if there is a programming error
+  104:  // Conditions:
+  105:  //   Assumes EEPROM has been initialized
+  106:  
+  107:  BOOL EEPROM_Write32(UINT32 volatile * const address, const UINT32 data)
+  108:  {                               
+*** EVALUATION ***
+
+Function: EEPROM_Write32
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\EEPROM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\EEPROM.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 1b98         [2]     LEAS  -8,SP
+  0002 3b           [2]     PSHD  
+  0003 34           [2]     PSHX  
+  109:    TUINT32 address32, data32;
+  110:    address32.s.Lo = (UINT16)address;
+  0004 ee8e         [3]     LDX   14,SP
+  0006 6e86         [2]     STX   6,SP
+  111:    address32.s.Hi = address32.s.Lo + 2;
+  0008 1a02         [2]     LEAX  2,X
+  000a 6e84         [2]     STX   4,SP
+  112:    
+  113:    data32.l = data;
+  000c 6c8a         [2]     STD   10,SP
+  000e ec80         [3]     LDD   0,SP
+  0010 6c88         [2]     STD   8,SP
+  114:    
+  115:    // If not in a 4 byte bound
+  116:    if (address32.s.Lo % 4 != 0) 
+  0012 0f870302     [4]     BRCLR 7,SP,#3,*+6 ;abs = 0018
+  117:      return bFALSE; 
+  0016 2030         [3]     BRA   *+50 ;abs = 0048
+  118:    
+  119:    return Write(EEPROM_SECTOR_ERASE, (volatile UINT16 *)address32.s.Lo, data32.s.Lo) &&
+  0018 c640         [1]     LDAB  #64
+  001a 37           [2]     PSHB  
+  001b ec87         [3]     LDD   7,SP
+  001d 3b           [2]     PSHD  
+  001e ec8d         [3]     LDD   13,SP
+  0020 160000       [4]     JSR   Write
+  0023 1b83         [2]     LEAS  3,SP
+  0025 044420       [3]     TBEQ  D,*+35 ;abs = 0048
+  120:           Write(EEPROM_WORD_PROGRAM, (volatile UINT16 *)address32.s.Lo, data32.s.Lo) &&
+  0028 c620         [1]     LDAB  #32
+  002a 37           [2]     PSHB  
+  002b ee87         [3]     LDX   7,SP
+  002d 34           [2]     PSHX  
+  002e ec8d         [3]     LDD   13,SP
+  0030 160000       [4]     JSR   Write
+  0033 1b83         [2]     LEAS  3,SP
+  0035 044410       [3]     TBEQ  D,*+19 ;abs = 0048
+  121:           Write(EEPROM_WORD_PROGRAM, (volatile UINT16 *)address32.s.Hi, data32.s.Hi);
+  0038 c620         [1]     LDAB  #32
+  003a 37           [2]     PSHB  
+  003b ec85         [3]     LDD   5,SP
+  003d 3b           [2]     PSHD  
+  003e ec8b         [3]     LDD   11,SP
+  0040 160000       [4]     JSR   Write
+  0043 1b83         [2]     LEAS  3,SP
+  0045 046402       [3]     TBNE  D,*+5 ;abs = 004a
+  0048 c7           [1]     CLRB  
+  0049 8f           [2]     SKIP2 
+  004a c601         [1]     LDAB  #1
+  004c 87           [1]     CLRA  
+  122:  }
+  004d 1b8c         [2]     LEAS  12,SP
+  004f 3d           [5]     RTS   
+  123:  
+  124:   
+  125:  // ----------------------------------------
+  126:  // EEPROM_Write16
+  127:  // 
+  128:  // Writes a 16-bit number to EEPROM
+  129:  // Input:
+  130:  //   address is the address of the data,
+  131:  //   data is the data to write
+  132:  // Output:
+  133:  //   TRUE if EEPROM was written successfully
+  134:  //   FALSE if address is not aligned to a 2-byte boundary
+  135:  //   or if there is a programming error
+  136:  // Conditions:
+  137:  //   Assumes EEPROM has been initialized
+  138:  
+  139:  BOOL EEPROM_Write16(UINT16 volatile * const address, const UINT16 data)
+  140:  {
+*** EVALUATION ***
+
+Function: EEPROM_Write16
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\EEPROM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\EEPROM.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 6ca8         [2]     STD   8,-SP
+  141:    TUINT32 data32;
+  142:    UINT16 address16;
+  143:    address16 = (UINT16)address;
+  0002 ec8a         [3]     LDD   10,SP
+  0004 6c82         [2]     STD   2,SP
+  144:    
+  145:    // If not in a 2 byte bound
+  146:    if (address16 % 2 != 0) 
+  0006 0f830104     [4]     BRCLR 3,SP,#1,*+8 ;abs = 000e
+  147:      return bFALSE; 
+  000a c7           [1]     CLRB  
+  000b 87           [1]     CLRA  
+  000c 2032         [3]     BRA   *+52 ;abs = 0040
+  148:    
+  149:    // Check which word in sector
+  150:    // Align address to start of sector
+  151:    if (address16 % 4 == 0) 
+  000e 0f830302     [4]     BRCLR 3,SP,#3,*+6 ;abs = 0014
+  0012 200c         [3]     BRA   *+14 ;abs = 0020
+  152:    {
+  153:      data32.s.Lo = data;
+  0014 ec80         [3]     LDD   0,SP
+  0016 6c86         [2]     STD   6,SP
+  154:      data32.s.Hi = _EW(address16+2);  
+  0018 ee82         [3]     LDX   2,SP
+  001a ec21         [3]     LDD   2,+X
+  001c 6c84         [2]     STD   4,SP
+  155:    } 
+  001e 2014         [3]     BRA   *+22 ;abs = 0034
+  156:    else
+  157:    {
+  158:      // Save the data about to be overwritten
+  159:      data32.s.Lo = _EW(address16-2); 
+  0020 830002       [2]     SUBD  #2
+  0023 b745         [1]     TFR   D,X
+  0025 ec00         [3]     LDD   0,X
+  0027 6c86         [2]     STD   6,SP
+  160:      data32.s.Hi = data;
+  0029 ec80         [3]     LDD   0,SP
+  002b 6c84         [2]     STD   4,SP
+  161:      // Decrease the address to align it to a 4 byte bound
+  162:      address16 -= 2;
+  002d ec82         [3]     LDD   2,SP
+  002f 830002       [2]     SUBD  #2
+  0032 6c82         [2]     STD   2,SP
+  163:    }
+  164:    
+  165:    (void)EEPROM_Write32((volatile UINT32 *)address16, data32.l);   
+  0034 ec82         [3]     LDD   2,SP
+  0036 3b           [2]     PSHD  
+  0037 ec88         [3]     LDD   8,SP
+  0039 ee86         [3]     LDX   6,SP
+  003b 160000       [4]     JSR   EEPROM_Write32
+  003e 1b82         [2]     LEAS  2,SP
+  166:  }
+  0040 1b88         [2]     LEAS  8,SP
+  0042 3d           [5]     RTS   
+  167:  
+  168:  // ----------------------------------------
+  169:  // EEPROM_Write8
+  170:  // 
+  171:  // Writes an 8-bit number to EEPROM
+  172:  // Input:
+  173:  //   address is the address of the data,
+  174:  //   data is the data to write
+  175:  // Output:
+  176:  //   TRUE if EEPROM was written successfully
+  177:  //   FALSE if there is a programming error
+  178:  // Conditions:
+  179:  //   Assumes EEPROM has been initialized
+  180:  
+  181:  BOOL EEPROM_Write8(UINT8 volatile * const address, const UINT8 data)
+  182:  {
+*** EVALUATION ***
+
+Function: EEPROM_Write8
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\EEPROM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\EEPROM.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 6bab         [2]     STAB  5,-SP
+  183:  
+  184:    TUINT16 data16;
+  185:    UINT16 address16;
+  186:    
+  187:    address16 = (UINT16)address;
+  0002 ee87         [3]     LDX   7,SP
+  0004 6e83         [2]     STX   3,SP
+  188:    // Check byte in word
+  189:    // Align address to start of word
+  190:    if (address16 % 2 == 0) 
+  0006 0e840108     [4]     BRSET 4,SP,#1,*+12 ;abs = 0012
+  191:    {
+  192:      data16.s.Hi = data;
+  000a 6b81         [2]     STAB  1,SP
+  193:      data16.s.Lo = _EB(address16 + 1);
+  000c e620         [3]     LDAB  1,+X
+  000e 6b82         [2]     STAB  2,SP
+  194:    } 
+  0010 200e         [3]     BRA   *+16 ;abs = 0020
+  195:    else
+  196:    {
+  197:      data16.s.Hi = _EB(address16 - 1);
+  0012 09           [1]     DEX   
+  0013 e600         [3]     LDAB  0,X
+  0015 6b81         [2]     STAB  1,SP
+  198:      data16.s.Lo = data;
+  0017 e680         [3]     LDAB  0,SP
+  0019 6b82         [2]     STAB  2,SP
+  199:      // Decrease the address to align it to a 2 byte bound
+  200:      address16 --;
+  001b ee83         [3]     LDX   3,SP
+  001d 09           [1]     DEX   
+  001e 6e83         [2]     STX   3,SP
+  201:    }
+  202:    return EEPROM_Write16((volatile UINT16 *)address16, data16.l);
+  0020 ec83         [3]     LDD   3,SP
+  0022 3b           [2]     PSHD  
+  0023 ec83         [3]     LDD   3,SP
+  0025 0700         [4]     BSR   EEPROM_Write16
+  0027 1b82         [2]     LEAS  2,SP
+  203:  }
+  0029 1b85         [2]     LEAS  5,SP
+  002b 3d           [5]     RTS   
+  204:  
+  205:  
+  206:  // ----------------------------------------
+  207:  // EEPROM_Erase
+  208:  // 
+  209:  // Erases the entire EEPROM
+  210:  // Input:
+  211:  //   none
+  212:  // Output:
+  213:  //   TRUE if EEPROM was erased successfully
+  214:  // Conditions:
+  215:  //   Assumes EEPROM has been initialized
+  216:  
+  217:  BOOL EEPROM_Erase(void)
+  218:  {
+*** EVALUATION ***
+
+Function: EEPROM_Erase
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\EEPROM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\EEPROM.c.o -WmsgSd1106 -WmsgSd5703
+
+  219:    EPROT_EPDIS  = 1;          // EEPROM protection disabled
+  0000 1c000008     [4]     BSET  _EPROT,#8
+  220:    EPROT_EPOPEN = 1;
+  0004 1c000080     [4]     BSET  _EPROT,#128
+  221:    
+  222:    (void)Write(EEPROM_MASS_ERASE, (volatile UINT16 *)0x400, 0xFFFF);
+  0008 cc0441       [2]     LDD   #1089
+  000b 37           [2]     PSHB  
+  000c c7           [1]     CLRB  
+  000d 3b           [2]     PSHD  
+  000e 86ff         [1]     LDAA  #255
+  0010 53           [1]     DECB  
+  0011 160000       [4]     JSR   Write
+  223:    (void)Write(EEPROM_ERASE_VERIFY, (volatile UINT16 *)0x400, 0xFFFF);
+  0014 cc0405       [2]     LDD   #1029
+  0017 6ba1         [2]     STAB  2,+SP
+  0019 c7           [1]     CLRB  
+  001a 3b           [2]     PSHD  
+  001b 86ff         [1]     LDAA  #255
+  001d 53           [1]     DECB  
+  001e 160000       [4]     JSR   Write
+  0021 1b83         [2]     LEAS  3,SP
+  224:      
+  225:    EPROT_EPDIS  = 0;          // EEPROM protection enabled
+  0023 1d000008     [4]     BCLR  _EPROT,#8
+  226:    EPROT_EPOPEN = 0;
+  0027 1d000080     [4]     BCLR  _EPROT,#128
+  227:    
+  228:    return ESTAT_BLANK; 
+  002b 1e00000402   [5]     BRSET _ESTAT,#4,*+7 ;abs = 0032
+  0030 c7           [1]     CLRB  
+  0031 8f           [2]     SKIP2 
+  0032 c601         [1]     LDAB  #1
+  0034 87           [1]     CLRA  
+  229:  }
+  0035 3d           [5]     RTS   
+  230:  
+  231:  // ----------------------------------------
+  232:  // EEPROM_Action
+  233:  // 
+  234:  // Performs commands: program, sector erase, mass erase and erase verify
+  235:  // Input:
+  236:  //   command is the EEPROM command
+  237:  //   address is the address of the data,
+  238:  //   data is the data to write
+  239:  // Output:
+  240:  //   TRUE if EEPROM command was successful
+  241:  // Conditions:
+  242:  //   none
+  243:  
+  244:  BOOL Write(UINT8 const command, UINT16 volatile * const address, const UINT16 data)
+  245:  {
+*** EVALUATION ***
+
+Function: Write
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\EEPROM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\EEPROM.c.o -WmsgSd1106 -WmsgSd5703
+
+  246:    ESTAT_PVIOL = 1;
+  0000 1c000020     [4]     BSET  _ESTAT,#32
+  247:    ESTAT_ACCERR = 1;
+  0004 1c000010     [4]     BSET  _ESTAT,#16
+  248:    
+  249:    if (ESTAT_CBEIF)
+  0008 1f00008017   [5]     BRCLR _ESTAT,#128,*+28 ;abs = 0024
+  250:    {
+  251:      _EW(address) = data;
+  000d ee82         [3]     LDX   2,SP
+  000f 6c00         [2]     STD   0,X
+  252:      ECMD = command;
+  0011 e684         [3]     LDAB  4,SP
+  0013 7b0000       [3]     STAB  _ECMD
+  253:      ESTAT_CBEIF = 1;
+  0016 1c000080     [4]     BSET  _ESTAT,#128
+  254:      
+  255:      if (ESTAT_ACCERR || ESTAT_PVIOL)
+  001a 1e00001005   [5]     BRSET _ESTAT,#16,*+10 ;abs = 0024
+  001f 1f0000200a   [5]     BRCLR _ESTAT,#32,*+15 ;abs = 002e
+  256:        return bFALSE;
+  257:      
+  258:      while (!ESTAT_CCIF)
+  259:      {
+  260:        ARMCOP = 0x55;
+  261:        ARMCOP = 0xAA;
+  262:      }
+  263:      
+  264:      return bTRUE;
+  265:    } 
+  266:    return bFALSE;    
+  0024 c7           [1]     CLRB  
+  0025 200e         [3]     BRA   *+16 ;abs = 0035
+  0027 c655         [1]     LDAB  #85
+  0029 5b00         [2]     STAB  _ARMCOP
+  002b 58           [1]     LSLB  
+  002c 5b00         [2]     STAB  _ARMCOP
+  002e 1f000040f4   [5]     BRCLR _ESTAT,#64,*-7 ;abs = 0027
+  0033 c601         [1]     LDAB  #1
+  0035 87           [1]     CLRA  
+  267:  }
+  0036 3d           [5]     RTS   

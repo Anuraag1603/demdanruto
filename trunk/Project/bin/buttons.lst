@@ -1,0 +1,65 @@
+*** EVALUATION ***
+ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+
+    1:  // ----------------------------------------
+    2:  // Filename: buttons.c
+    3:  // Description: Lab 5
+    4:  //  Implements the pushbutton HAL
+    5:  // Author: Danny Sok
+    6:  //         Edward Khou
+    7:  // Date Created: 20-10-2011
+    8:  // Date Last Modified: 2-11-2011
+    9:  
+   10:  #include "buttons.h"
+   11:  
+   12:  
+   13:  // ----------------------------------------
+   14:  // Buttons_Get
+   15:  // 
+   16:  // Gets the state of the pushbuttons
+   17:  // Input:
+   18:  //   
+   19:  // Output:
+   20:  //   none
+   21:  // Conditions:
+   22:  //  none
+   23:  void Buttons_Get(TButtonInputs * const dataPtr) 
+   24:  {
+*** EVALUATION ***
+
+Function: Buttons_Get
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\buttons.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\buttons.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+   25:    //Timer_Set(TIMER_Ch5, bFALSE);
+   26:    *dataPtr = PORTK & 0xBC;
+  0001 d600         [3]     LDAB  _PORTK
+  0003 c4bc         [1]     ANDB  #188
+  0005 87           [1]     CLRA  
+  0006 ee80         [3]     LDX   0,SP
+  0008 6c00         [2]     STD   0,X
+   27:    
+   28:    //Wait Until the button is released
+   29:    //while ( !((PORTK & 0xBC) == 0) );
+   30:    Timer_Wait();
+  000a 160000       [4]     JSR   Timer_Wait
+   31:    Timer_Enable(TIMER_Ch6, bFALSE);
+  000d c606         [1]     LDAB  #6
+  000f 87           [1]     CLRA  
+  0010 3b           [2]     PSHD  
+  0011 c7           [1]     CLRB  
+  0012 160000       [4]     JSR   Timer_Enable
+  0015 1b82         [2]     LEAS  2,SP
+   32:    while(TFLG1_C5F);
+  0017 4e0020fc     [4]     BRSET _TFLG1,#32,*+0 ;abs = 0017
+   33:    
+   34:    // 10111100 
+   35:    // 1X1111XX
+   36:    // MSB: BC, LSB: 3D
+   37:    
+   38:  }
+  001b 3a           [3]     PULD  
+  001c 3d           [5]     RTS   
+   39:  
+   40:  

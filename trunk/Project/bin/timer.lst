@@ -1,0 +1,1300 @@
+*** EVALUATION ***
+ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+
+    1:  // ----------------------------------------
+    2:  // Filename: timer.c
+    3:  // Description:
+    4:  //   Routines to implement general purpose timers
+    5:  //   Routines to support the modulus down-counter
+    6:  //     as a periodic timer
+    7:  // Author: Danny Sok
+    8:  //         Edward Khou
+    9:  // Date Created: 24-08-2011
+   10:  // Date Last Modified: 30-08-2011
+   11:  
+   12:  // new types
+   13:  #include "timer.h"
+   14:  
+   15:  void Timer_SetupPulseAccumulators(void)
+   16:  {
+*** EVALUATION ***
+
+Function: Timer_SetupPulseAccumulators
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\timer.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\timer.c.o -WmsgSd1106 -WmsgSd5703
+
+   17:    PACTL_PAEN = 0; // Pulse Accumulator A System Enable : 0 DISABLE
+  0000 4d0040       [4]     BCLR  _PACTL,#64
+   18:                    // 8-Bit
+   19:                    
+   20:    PBCTL_PBEN = 0; // Pulse Accumulator B System Enable : 0 DISABLE
+  0003 4d0040       [4]     BCLR  _PBCTL,#64
+   21:                    // 8-Bit
+   22:    
+   23:    DLYCT = 0;      // Delayed o/p response disabled
+  0006 790000       [3]     CLR   _DLYCT
+   24:    
+   25:    // All 4 8-bit pulse accumulators enabled
+   26:    ICPAR_PA0EN = 1;
+  0009 4c0001       [4]     BSET  _ICPAR,#1
+   27:    ICPAR_PA1EN = 1;
+  000c 4c0002       [4]     BSET  _ICPAR,#2
+   28:    ICPAR_PA2EN = 1;
+  000f 4c0004       [4]     BSET  _ICPAR,#4
+   29:    ICPAR_PA3EN = 1;
+  0012 4c0008       [4]     BSET  _ICPAR,#8
+   30:    // 16-Bit Pulse Accumulator A Control Register
+   31:    PACTL_PAEN  = 1; // Pulse Accumulator A System Enable: 1 = ENABLED
+  0015 4c0040       [4]     BSET  _PACTL,#64
+   32:    PACTL_PAMOD = 0; // Pulse Accumulator Mode:            0 = event counter mode
+  0018 4d0020       [4]     BCLR  _PACTL,#32
+   33:    PACTL_PEDGE = 1; // Pulse Accumulator Edge Control:    1 = rissing edges on 
+  001b 4c0010       [4]     BSET  _PACTL,#16
+   34:                     // PT7 pin cause the count to be incremented
+   35:    PACTL_CLK1  = 0; // Clock Select Bits
+  001e 4d0008       [4]     BCLR  _PACTL,#8
+   36:    PACTL_CLK0  = 0; // 0 0 = Use timer prescaler clock as timer counter clock
+  0021 4d0004       [4]     BCLR  _PACTL,#4
+   37:    PACTL_PAOVI = 0; // Pulse Accumulator A Overflow Interrupt enable: 0 = disabled
+  0024 4d0002       [4]     BCLR  _PACTL,#2
+   38:    PACTL_PAI   = 0; // Pulse Accumulator Input Interrupt enable
+  0027 4d0001       [4]     BCLR  _PACTL,#1
+   39:    
+   40:    // 16-Bit Pulse Accumulator B Control Register
+   41:    PBCTL_PBEN  = 0; // Pulse Accumulator B System Enable: 0 = DISABLED
+  002a 4d0040       [4]     BCLR  _PBCTL,#64
+   42:    PBCTL_PBOVI = 0; // Pulse Accumulator B Overflow Interrupt enable: 0 = DISABLED
+  002d 4d0002       [4]     BCLR  _PBCTL,#2
+   43:  }
+  0030 3d           [5]     RTS   
+   44:  
+   45:  // ----------------------------------------
+   46:  // Timer_SetupPeriodicTimer
+   47:  // 
+   48:  // Sets the period of the periodic timer
+   49:  // Input:
+   50:  //   microSeconds is the number of microseconds for one period
+   51:  //   busClk is the actual bus clock rate in Hz
+   52:  // Output:
+   53:  //   none
+   54:  // Conditions:
+   55:  //   none
+   56:  
+   57:  void Timer_SetupPeriodicTimer(const UINT16 microSeconds, const UINT32 busClk)
+   58:  {
+*** EVALUATION ***
+
+Function: Timer_SetupPeriodicTimer
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\timer.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\timer.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+  0001 34           [2]     PSHX  
+   59:    INT32 second = 1000000;
+   60:    //UINT32 cyclePerPeriod = (UINT16) ((microSeconds / 16) * (busClk / second));
+   61:    // 24 Mhz bus clock which means 24 million clock cycles per second.
+   62:    // so we have 24 cycles per microSecond over a period of 2 milli seconds so
+   63:    // 2000 * 24 = 48 000 cycles per period. (0xBB80)
+   64:    // We need a 2ms period = 2000 microSeconds
+   65:    UINT8 prescale = 16;
+   66:    
+   67:    MCCTL_MCPR  = 3;   // Increments every (prescaler/busClk) seconds  
+  0002 cc4240       [2]     LDD   #16960
+  0005 ce000f       [2]     LDX   #15
+  0008 4c0003       [4]     BSET  _MCCTL,#3
+   68:    
+   69:    MCCTL_ICLAT = 0;   // Input capture latch mode disabled
+  000b 4d0010       [4]     BCLR  _MCCTL,#16
+   70:    MCCTL_RDMCL = 0;   // Reads of MCCNT will return current value
+  000e 4d0020       [4]     BCLR  _MCCTL,#32
+   71:    MCCTL_MODMC = 1;   // Modulus mode enabled
+  0011 4c0040       [4]     BSET  _MCCTL,#64
+   72:    
+   73:    MCCNT = (UINT16) ((busClk/second) * (microSeconds/prescale));  
+  0014 3b           [2]     PSHD  
+  0015 34           [2]     PSHX  
+  0016 ec86         [3]     LDD   6,SP
+  0018 ee84         [3]     LDX   4,SP
+  001a 160000       [4]     JSR   _LDIVU
+  001d b746         [1]     TFR   D,Y
+  001f ec86         [3]     LDD   6,SP
+  0021 49           [1]     LSRD  
+  0022 49           [1]     LSRD  
+  0023 49           [1]     LSRD  
+  0024 49           [1]     LSRD  
+  0025 13           [3]     EMUL  
+  0026 5c00         [2]     STD   _MCCNT
+   74:    
+   75:    MCCTL_FLMC = 1;    // Force load into MCCNT
+  0028 4c0008       [4]     BSET  _MCCTL,#8
+   76:  }
+  002b 1b84         [2]     LEAS  4,SP
+  002d 3d           [5]     RTS   
+   77:  
+   78:  // ----------------------------------------
+   79:  // Timer_PeriodicTimerEnable
+   80:  // 
+   81:  // Enables or disables the periodic timer
+   82:  // Input:
+   83:  //   enableTimer is a Boolean value indicating whether to enable the timer
+   84:  // Output:
+   85:  //   none
+   86:  // Conditions:
+   87:  //   Assumes the timer has been set up
+   88:  
+   89:  void Timer_PeriodicTimerEnable(const BOOL enable)
+   90:  {
+*** EVALUATION ***
+
+Function: Timer_PeriodicTimerEnable
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\timer.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\timer.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+   91:    MCCTL_MCEN = (UINT8)enable;
+  0001 0e810105     [4]     BRSET 1,SP,#1,*+9 ;abs = 000a
+  0005 4d0004       [4]     BCLR  _MCCTL,#4
+  0008 2003         [3]     BRA   *+5 ;abs = 000d
+  000a 4c0004       [4]     BSET  _MCCTL,#4
+   92:    MCCTL_MCZI = (UINT8)enable;  
+  000d 0e810105     [4]     BRSET 1,SP,#1,*+9 ;abs = 0016
+  0011 4d0080       [4]     BCLR  _MCCTL,#128
+  0014 2003         [3]     BRA   *+5 ;abs = 0019
+  0016 4c0080       [4]     BSET  _MCCTL,#128
+   93:  }
+  0019 3a           [3]     PULD  
+  001a 3d           [5]     RTS   
+   94:  
+   95:  // ----------------------------------------
+   96:  // Timer_Setup
+   97:  // 
+   98:  // Sets up the Enhanced Capture Timer unit for
+   99:  // operations with the timers
+  100:  // Input:
+  101:  //   none
+  102:  // Output:
+  103:  //   none
+  104:  // Conditions:
+  105:  //   none
+  106:  
+  107:  void Timer_Setup(void)
+  108:  {
+*** EVALUATION ***
+
+Function: Timer_Setup
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\timer.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\timer.c.o -WmsgSd1106 -WmsgSd5703
+
+  109:    //TSCR1_TFFCA   = 0;      // Timer Fast Flag Clear All 0 = Clear normally. Erratum, doesn't work.
+  110:    TSCR1_TEN     = 1;      // Timer Enable, 1: ON
+  0000 4c0080       [4]     BSET  _TSCR1,#128
+  111:    TSCR1_TSFRZ   = 0;      // Timer and Modulus Counter Stop While in Freeze Mode 0: DISABLED           
+  0003 4d0020       [4]     BCLR  _TSCR1,#32
+  112:    TSCR1_TSWAI   = 0;      // Timer Module Stops While in Wait, 0: DISABLED 
+  0006 4d0040       [4]     BCLR  _TSCR1,#64
+  113:    
+  114:    DDRT_DDRT4    = 1;      // Set Port T Bit 4 to output for debug mode
+  0009 1c000010     [4]     BSET  _DDRT,#16
+  115:    DDRT_DDRT5    = 1;      // Set Port T Bit 5 to output for debug mode
+  000d 1c000020     [4]     BSET  _DDRT,#32
+  116:    DDRT_DDRT6    = 1;      // Set Port T Bit 6 to output for debug mode
+  0011 1c000040     [4]     BSET  _DDRT,#64
+  117:    
+  118:    PTT_PTT4      = 0;      // Mod Down counter 
+  0015 1d000010     [4]     BCLR  _PTT,#16
+  119:    PTT_PTT5      = 0;      // RTI
+  0019 1d000020     [4]     BCLR  _PTT,#32
+  120:    PTT_PTT6      = 0;      // ECT Channel 7  
+  001d 1d000040     [4]     BCLR  _PTT,#64
+  121:  }
+  0021 3d           [5]     RTS   
+  122:  
+  123:  // ----------------------------------------
+  124:  // Timer_Init
+  125:  // 
+  126:  // Sets up a timer channel
+  127:  // Input:
+  128:  //   channelNb is the timer channel number
+  129:  //   aTimerSetup is a structure containing the parameters to 
+  130:  //     be used in setting up the timer channel:
+  131:  //       outputCompare is TRUE when the timer should be configured as an
+  132:  //         output, otherwise it is configured as an input
+  133:  //       outputAction is the action to take on a successful output compare
+  134:  //       inputDetection is the type of input capture detection
+  135:  //       toggleOnOverflow is TRUE when the timer should toggle on overflow
+  136:  //       interruptEnable is TRUE to enable interrupts
+  137:  //       pulseAccumulator is TRUE to enable pulse accumulator? Missing typo or meant to be missing?
+  138:  // Output:
+  139:  //   none
+  140:  // Conditions:
+  141:  //   none
+  142:  
+  143:  void Timer_Init(const TTimerChannel channelNb, const TTimerSetup * const aTimerSetup)
+  144:  {
+*** EVALUATION ***
+
+Function: Timer_Init
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\timer.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\timer.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+  145:    // TIOS for input/output setup
+  146:    // pg. 25 for InputDetection
+  147:    // pg. 24 for OutputAction 
+  148:    switch(channelNb)
+  0001 ec84         [3]     LDD   4,SP
+  0003 160000       [4]     JSR   _CASE_CHECKED
+  0006 0008         DC.W  8
+  0008 0000         DC.W  Timer_Init:0x03a0
+  000a 0000         DC.W  Timer_Init:0x001a
+  000c 0000         DC.W  Timer_Init:0x008c
+  000e 0000         DC.W  Timer_Init:0x00fd
+  0010 0000         DC.W  Timer_Init:0x016e
+  0012 0000         DC.W  Timer_Init:0x01df
+  0014 0000         DC.W  Timer_Init:0x0250
+  0016 0000         DC.W  Timer_Init:0x02c1
+  0018 0000         DC.W  Timer_Init:0x0332
+  149:    {
+  150:      case TIMER_Ch0:
+  151:        TIOS_IOS0 = (UINT8)aTimerSetup->outputCompare;    // 0: Input, 1: Output
+  001a ee80         [3]     LDX   0,SP
+  001c 0e010105     [4]     BRSET 1,X,#1,*+9 ;abs = 0025
+  0020 4d0001       [4]     BCLR  _TIOS,#1
+  0023 2003         [3]     BRA   *+5 ;abs = 0028
+  0025 4c0001       [4]     BSET  _TIOS,#1
+  152:              
+  153:        switch(aTimerSetup->outputAction)
+  0028 ec02         [3]     LDD   2,X
+  002a 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  002d 04           DC.B  4
+  002e 1c           DC.B  28
+  002f 04           DC.B  4
+  0030 0a           DC.B  10
+  0031 10           DC.B  16
+  0032 16           DC.B  22
+  154:        {
+  155:          case TIMER_OUTPUT_DISCONNECT:
+  156:            TCTL2_OM0 = 0;
+  0033 4d0002       [4]     BCLR  _TCTL2,#2
+  157:            TCTL2_OL0 = 0;
+  0036 4d0001       [4]     BCLR  _TCTL2,#1
+  158:          case TIMER_OUTPUT_TOGGLE:
+  159:            TCTL2_OM0 = 0;
+  0039 4d0002       [4]     BCLR  _TCTL2,#2
+  160:            TCTL2_OL0 = 1;
+  003c 4c0001       [4]     BSET  _TCTL2,#1
+  161:          case TIMER_OUTPUT_LOW:
+  162:            TCTL2_OM0 = 1;
+  003f 4c0002       [4]     BSET  _TCTL2,#2
+  163:            TCTL2_OL0 = 0;
+  0042 4d0001       [4]     BCLR  _TCTL2,#1
+  164:          case TIMER_OUTPUT_HIGH:
+  165:            TCTL2_OM0 = 1;
+  0045 4c0002       [4]     BSET  _TCTL2,#2
+  166:            TCTL2_OL0 = 1;
+  0048 4c0001       [4]     BSET  _TCTL2,#1
+  167:        }
+  168:        
+  169:        //TCTL4_EDG0x = (UINT8)aTimerSetup->inputDetection; 
+  170:        switch(aTimerSetup->inputDetection)
+  004b 160000       [4]     JSR   Timer_Init:0x03a2
+  004e 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0051 04           DC.B  4
+  0052 1c           DC.B  28
+  0053 04           DC.B  4
+  0054 0a           DC.B  10
+  0055 10           DC.B  16
+  0056 16           DC.B  22
+  171:        {
+  172:          case TIMER_INPUT_OFF:
+  173:            TCTL4_EDG0B = 0;
+  0057 4d0002       [4]     BCLR  _TCTL4,#2
+  174:            TCTL4_EDG0A = 0;
+  005a 4d0001       [4]     BCLR  _TCTL4,#1
+  175:          case TIMER_INPUT_RISING:
+  176:            TCTL4_EDG0B = 0;
+  005d 4d0002       [4]     BCLR  _TCTL4,#2
+  177:            TCTL4_EDG0A = 1;
+  0060 4c0001       [4]     BSET  _TCTL4,#1
+  178:          case TIMER_INPUT_FALLING:
+  179:            TCTL4_EDG0B = 1;
+  0063 4c0002       [4]     BSET  _TCTL4,#2
+  180:            TCTL4_EDG0A = 0;
+  0066 4d0001       [4]     BCLR  _TCTL4,#1
+  181:          case TIMER_INPUT_ANY:
+  182:            TCTL4_EDG0B = 1;
+  0069 4c0002       [4]     BSET  _TCTL4,#2
+  183:            TCTL4_EDG0A = 1;            
+  006c 4c0001       [4]     BSET  _TCTL4,#1
+  184:        }
+  185:        
+  186:        TTOV_TOV0 = (UINT8)aTimerSetup->toggleOnOverflow; // 0: OFF, 1: ON  
+  006f ee80         [3]     LDX   0,SP
+  0071 0e070105     [4]     BRSET 7,X,#1,*+9 ;abs = 007a
+  0075 4d0001       [4]     BCLR  _TTOV,#1
+  0078 2003         [3]     BRA   *+5 ;abs = 007d
+  007a 4c0001       [4]     BSET  _TTOV,#1
+  187:        TIE_C0I   = (UINT8)aTimerSetup->interruptEnable;  // 0: OFF, 1: ON
+  007d 0e090105     [4]     BRSET 9,X,#1,*+9 ;abs = 0086
+  0081 4d0001       [4]     BCLR  _TIE,#1
+  0084 2003         [3]     BRA   *+5 ;abs = 0089
+  0086 4c0001       [4]     BSET  _TIE,#1
+  0089 060000       [3]     JMP   Timer_Init:0x03a0
+  188:        break;
+  189:      case TIMER_Ch1:
+  190:        TIOS_IOS1 = (UINT8)aTimerSetup->outputCompare;    // 0: Input, 1: Output
+  008c ee80         [3]     LDX   0,SP
+  008e 0e010105     [4]     BRSET 1,X,#1,*+9 ;abs = 0097
+  0092 4d0002       [4]     BCLR  _TIOS,#2
+  0095 2003         [3]     BRA   *+5 ;abs = 009a
+  0097 4c0002       [4]     BSET  _TIOS,#2
+  191:        
+  192:        switch(aTimerSetup->outputAction)
+  009a ec02         [3]     LDD   2,X
+  009c 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  009f 04           DC.B  4
+  00a0 1c           DC.B  28
+  00a1 04           DC.B  4
+  00a2 0a           DC.B  10
+  00a3 10           DC.B  16
+  00a4 16           DC.B  22
+  193:        {
+  194:          case TIMER_OUTPUT_DISCONNECT:
+  195:            TCTL2_OM1 = 0;
+  00a5 4d0008       [4]     BCLR  _TCTL2,#8
+  196:            TCTL2_OL1 = 0;
+  00a8 4d0004       [4]     BCLR  _TCTL2,#4
+  197:          case TIMER_OUTPUT_TOGGLE:
+  198:            TCTL2_OM1 = 0;
+  00ab 4d0008       [4]     BCLR  _TCTL2,#8
+  199:            TCTL2_OL1 = 1;
+  00ae 4c0004       [4]     BSET  _TCTL2,#4
+  200:          case TIMER_OUTPUT_LOW:
+  201:            TCTL2_OM1 = 1;
+  00b1 4c0008       [4]     BSET  _TCTL2,#8
+  202:            TCTL2_OL1 = 0;
+  00b4 4d0004       [4]     BCLR  _TCTL2,#4
+  203:          case TIMER_OUTPUT_HIGH:
+  204:            TCTL2_OM1 = 1;
+  00b7 4c0008       [4]     BSET  _TCTL2,#8
+  205:            TCTL2_OL1 = 1;
+  00ba 4c0004       [4]     BSET  _TCTL2,#4
+  206:        }
+  207:        
+  208:        //TCTL4_EDG1x = (UINT8)aTimerSetup->inputDetection; 
+  209:        switch(aTimerSetup->inputDetection)
+  00bd 160000       [4]     JSR   Timer_Init:0x03a2
+  00c0 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  00c3 04           DC.B  4
+  00c4 1c           DC.B  28
+  00c5 04           DC.B  4
+  00c6 0a           DC.B  10
+  00c7 10           DC.B  16
+  00c8 16           DC.B  22
+  210:        {
+  211:          case TIMER_INPUT_OFF:
+  212:            TCTL4_EDG1B = 0;
+  00c9 4d0008       [4]     BCLR  _TCTL4,#8
+  213:            TCTL4_EDG1A = 0;
+  00cc 4d0004       [4]     BCLR  _TCTL4,#4
+  214:          case TIMER_INPUT_RISING:
+  215:            TCTL4_EDG1B = 0;
+  00cf 4d0008       [4]     BCLR  _TCTL4,#8
+  216:            TCTL4_EDG1A = 1;
+  00d2 4c0004       [4]     BSET  _TCTL4,#4
+  217:          case TIMER_INPUT_FALLING:
+  218:            TCTL4_EDG1B = 1;
+  00d5 4c0008       [4]     BSET  _TCTL4,#8
+  219:            TCTL4_EDG1A = 0;
+  00d8 4d0004       [4]     BCLR  _TCTL4,#4
+  220:          case TIMER_INPUT_ANY:
+  221:            TCTL4_EDG1B = 1;
+  00db 4c0008       [4]     BSET  _TCTL4,#8
+  222:            TCTL4_EDG1A = 1;
+  00de 4c0004       [4]     BSET  _TCTL4,#4
+  223:        }
+  224:        
+  225:        TTOV_TOV1 = (UINT8)aTimerSetup->toggleOnOverflow; // 0: OFF, 1: ON
+  00e1 ee80         [3]     LDX   0,SP
+  00e3 0e070105     [4]     BRSET 7,X,#1,*+9 ;abs = 00ec
+  00e7 4d0002       [4]     BCLR  _TTOV,#2
+  00ea 2003         [3]     BRA   *+5 ;abs = 00ef
+  00ec 4c0002       [4]     BSET  _TTOV,#2
+  226:        TIE_C1I   = (UINT8)aTimerSetup->interruptEnable;  // 0: OFF, 1: ON
+  00ef 0e090105     [4]     BRSET 9,X,#1,*+9 ;abs = 00f8
+  00f3 4d0002       [4]     BCLR  _TIE,#2
+  00f6 2091         [3]     BRA   *-109 ;abs = 0089
+  00f8 4c0002       [4]     BSET  _TIE,#2
+  00fb 208c         [3]     BRA   *-114 ;abs = 0089
+  227:        break;
+  228:      case TIMER_Ch2:
+  229:        TIOS_IOS2 = (UINT8)aTimerSetup->outputCompare;    // 0: Input, 1: Output
+  00fd ee80         [3]     LDX   0,SP
+  00ff 0e010105     [4]     BRSET 1,X,#1,*+9 ;abs = 0108
+  0103 4d0004       [4]     BCLR  _TIOS,#4
+  0106 2003         [3]     BRA   *+5 ;abs = 010b
+  0108 4c0004       [4]     BSET  _TIOS,#4
+  230:        
+  231:        switch(aTimerSetup->outputAction)
+  010b ec02         [3]     LDD   2,X
+  010d 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0110 04           DC.B  4
+  0111 1c           DC.B  28
+  0112 04           DC.B  4
+  0113 0a           DC.B  10
+  0114 10           DC.B  16
+  0115 16           DC.B  22
+  232:        {
+  233:          case TIMER_OUTPUT_DISCONNECT:
+  234:            TCTL2_OM2 = 0;
+  0116 4d0020       [4]     BCLR  _TCTL2,#32
+  235:            TCTL2_OL2 = 0;
+  0119 4d0010       [4]     BCLR  _TCTL2,#16
+  236:          case TIMER_OUTPUT_TOGGLE:
+  237:            TCTL2_OM2 = 0;
+  011c 4d0020       [4]     BCLR  _TCTL2,#32
+  238:            TCTL2_OL2 = 1;
+  011f 4c0010       [4]     BSET  _TCTL2,#16
+  239:          case TIMER_OUTPUT_LOW:
+  240:            TCTL2_OM2 = 1;
+  0122 4c0020       [4]     BSET  _TCTL2,#32
+  241:            TCTL2_OL2 = 0;
+  0125 4d0010       [4]     BCLR  _TCTL2,#16
+  242:          case TIMER_OUTPUT_HIGH:
+  243:            TCTL2_OM2 = 1;
+  0128 4c0020       [4]     BSET  _TCTL2,#32
+  244:            TCTL2_OL2 = 1;
+  012b 4c0010       [4]     BSET  _TCTL2,#16
+  245:        }
+  246:        
+  247:        //TCTL4_EDG2x = (UINT8)aTimerSetup->inputDetection; 
+  248:        switch(aTimerSetup->inputDetection)
+  012e 160000       [4]     JSR   Timer_Init:0x03a2
+  0131 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0134 04           DC.B  4
+  0135 1c           DC.B  28
+  0136 04           DC.B  4
+  0137 0a           DC.B  10
+  0138 10           DC.B  16
+  0139 16           DC.B  22
+  249:        {
+  250:          case TIMER_INPUT_OFF:
+  251:            TCTL4_EDG2B = 0;
+  013a 4d0020       [4]     BCLR  _TCTL4,#32
+  252:            TCTL4_EDG2A = 0;
+  013d 4d0010       [4]     BCLR  _TCTL4,#16
+  253:          case TIMER_INPUT_RISING:
+  254:            TCTL4_EDG2B = 0;
+  0140 4d0020       [4]     BCLR  _TCTL4,#32
+  255:            TCTL4_EDG2A = 1;
+  0143 4c0010       [4]     BSET  _TCTL4,#16
+  256:          case TIMER_INPUT_FALLING:
+  257:            TCTL4_EDG2B = 1;
+  0146 4c0020       [4]     BSET  _TCTL4,#32
+  258:            TCTL4_EDG2A = 0;
+  0149 4d0010       [4]     BCLR  _TCTL4,#16
+  259:          case TIMER_INPUT_ANY:
+  260:            TCTL4_EDG2B = 1;
+  014c 4c0020       [4]     BSET  _TCTL4,#32
+  261:            TCTL4_EDG2A = 1;
+  014f 4c0010       [4]     BSET  _TCTL4,#16
+  262:        }
+  263:        
+  264:        TTOV_TOV2 = (UINT8)aTimerSetup->toggleOnOverflow; // 0: OFF, 1: ON
+  0152 ee80         [3]     LDX   0,SP
+  0154 0e070105     [4]     BRSET 7,X,#1,*+9 ;abs = 015d
+  0158 4d0004       [4]     BCLR  _TTOV,#4
+  015b 2003         [3]     BRA   *+5 ;abs = 0160
+  015d 4c0004       [4]     BSET  _TTOV,#4
+  265:        TIE_C2I   = (UINT8)aTimerSetup->interruptEnable;  // 0: OFF, 1: ON
+  0160 0e090105     [4]     BRSET 9,X,#1,*+9 ;abs = 0169
+  0164 4d0004       [4]     BCLR  _TIE,#4
+  0167 2092         [3]     BRA   *-108 ;abs = 00fb
+  0169 4c0004       [4]     BSET  _TIE,#4
+  016c 208d         [3]     BRA   *-113 ;abs = 00fb
+  266:        break;
+  267:      case TIMER_Ch3:
+  268:        TIOS_IOS3 = (UINT8)aTimerSetup->outputCompare;    // 0: Input, 1: Output
+  016e ee80         [3]     LDX   0,SP
+  0170 0e010105     [4]     BRSET 1,X,#1,*+9 ;abs = 0179
+  0174 4d0008       [4]     BCLR  _TIOS,#8
+  0177 2003         [3]     BRA   *+5 ;abs = 017c
+  0179 4c0008       [4]     BSET  _TIOS,#8
+  269:        
+  270:        switch(aTimerSetup->outputAction)
+  017c ec02         [3]     LDD   2,X
+  017e 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0181 04           DC.B  4
+  0182 1c           DC.B  28
+  0183 04           DC.B  4
+  0184 0a           DC.B  10
+  0185 10           DC.B  16
+  0186 16           DC.B  22
+  271:        {
+  272:          case TIMER_OUTPUT_DISCONNECT:
+  273:            TCTL2_OM3 = 0;
+  0187 4d0080       [4]     BCLR  _TCTL2,#128
+  274:            TCTL2_OL3 = 0;
+  018a 4d0040       [4]     BCLR  _TCTL2,#64
+  275:          case TIMER_OUTPUT_TOGGLE:
+  276:            TCTL2_OM3 = 0;
+  018d 4d0080       [4]     BCLR  _TCTL2,#128
+  277:            TCTL2_OL3 = 1;
+  0190 4c0040       [4]     BSET  _TCTL2,#64
+  278:          case TIMER_OUTPUT_LOW:
+  279:            TCTL2_OM3 = 1;
+  0193 4c0080       [4]     BSET  _TCTL2,#128
+  280:            TCTL2_OL3 = 0;
+  0196 4d0040       [4]     BCLR  _TCTL2,#64
+  281:          case TIMER_OUTPUT_HIGH:
+  282:            TCTL2_OM3 = 1;
+  0199 4c0080       [4]     BSET  _TCTL2,#128
+  283:            TCTL2_OL3 = 1;
+  019c 4c0040       [4]     BSET  _TCTL2,#64
+  284:        }
+  285:        
+  286:        //TCTL4_EDG3x = (UINT8)aTimerSetup->inputDetection; 
+  287:        switch(aTimerSetup->inputDetection)
+  019f 160000       [4]     JSR   Timer_Init:0x03a2
+  01a2 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  01a5 04           DC.B  4
+  01a6 1c           DC.B  28
+  01a7 04           DC.B  4
+  01a8 0a           DC.B  10
+  01a9 10           DC.B  16
+  01aa 16           DC.B  22
+  288:        {
+  289:          case TIMER_INPUT_OFF:
+  290:            TCTL4_EDG3B = 0;
+  01ab 4d0080       [4]     BCLR  _TCTL4,#128
+  291:            TCTL4_EDG3A = 0;
+  01ae 4d0040       [4]     BCLR  _TCTL4,#64
+  292:          case TIMER_INPUT_RISING:
+  293:            TCTL4_EDG3B = 0;
+  01b1 4d0080       [4]     BCLR  _TCTL4,#128
+  294:            TCTL4_EDG3A = 1;
+  01b4 4c0040       [4]     BSET  _TCTL4,#64
+  295:          case TIMER_INPUT_FALLING:
+  296:            TCTL4_EDG3B = 1;
+  01b7 4c0080       [4]     BSET  _TCTL4,#128
+  297:            TCTL4_EDG3A = 0;
+  01ba 4d0040       [4]     BCLR  _TCTL4,#64
+  298:          case TIMER_INPUT_ANY:
+  299:            TCTL4_EDG3B = 1;
+  01bd 4c0080       [4]     BSET  _TCTL4,#128
+  300:            TCTL4_EDG3A = 1;
+  01c0 4c0040       [4]     BSET  _TCTL4,#64
+  301:        }
+  302:        
+  303:        TTOV_TOV3 = (UINT8)aTimerSetup->toggleOnOverflow; // 0: OFF, 1: ON
+  01c3 ee80         [3]     LDX   0,SP
+  01c5 0e070105     [4]     BRSET 7,X,#1,*+9 ;abs = 01ce
+  01c9 4d0008       [4]     BCLR  _TTOV,#8
+  01cc 2003         [3]     BRA   *+5 ;abs = 01d1
+  01ce 4c0008       [4]     BSET  _TTOV,#8
+  304:        TIE_C3I   = (UINT8)aTimerSetup->interruptEnable;  // 0: OFF, 1: ON
+  01d1 0e090105     [4]     BRSET 9,X,#1,*+9 ;abs = 01da
+  01d5 4d0008       [4]     BCLR  _TIE,#8
+  01d8 2092         [3]     BRA   *-108 ;abs = 016c
+  01da 4c0008       [4]     BSET  _TIE,#8
+  01dd 208d         [3]     BRA   *-113 ;abs = 016c
+  305:        break;  
+  306:      case TIMER_Ch4:
+  307:        TIOS_IOS4 = (UINT8)aTimerSetup->outputCompare;    // 0: Input, 1: Output
+  01df ee80         [3]     LDX   0,SP
+  01e1 0e010105     [4]     BRSET 1,X,#1,*+9 ;abs = 01ea
+  01e5 4d0010       [4]     BCLR  _TIOS,#16
+  01e8 2003         [3]     BRA   *+5 ;abs = 01ed
+  01ea 4c0010       [4]     BSET  _TIOS,#16
+  308:        
+  309:        switch(aTimerSetup->outputAction)
+  01ed ec02         [3]     LDD   2,X
+  01ef 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  01f2 04           DC.B  4
+  01f3 1c           DC.B  28
+  01f4 04           DC.B  4
+  01f5 0a           DC.B  10
+  01f6 10           DC.B  16
+  01f7 16           DC.B  22
+  310:        {
+  311:          case TIMER_OUTPUT_DISCONNECT:
+  312:            TCTL1_OM4 = 0;
+  01f8 4d0002       [4]     BCLR  _TCTL1,#2
+  313:            TCTL1_OL4 = 0;
+  01fb 4d0001       [4]     BCLR  _TCTL1,#1
+  314:          case TIMER_OUTPUT_TOGGLE:
+  315:            TCTL1_OM4 = 0;
+  01fe 4d0002       [4]     BCLR  _TCTL1,#2
+  316:            TCTL1_OL4 = 1;
+  0201 4c0001       [4]     BSET  _TCTL1,#1
+  317:          case TIMER_OUTPUT_LOW:
+  318:            TCTL1_OM4 = 1;
+  0204 4c0002       [4]     BSET  _TCTL1,#2
+  319:            TCTL1_OL4 = 0;
+  0207 4d0001       [4]     BCLR  _TCTL1,#1
+  320:          case TIMER_OUTPUT_HIGH:
+  321:            TCTL1_OM4 = 1;
+  020a 4c0002       [4]     BSET  _TCTL1,#2
+  322:            TCTL1_OL4 = 1;
+  020d 4c0001       [4]     BSET  _TCTL1,#1
+  323:        }
+  324:        
+  325:        //TCTL3_EDG4x = (UINT8)aTimerSetup->inputDetection; 
+  326:        switch(aTimerSetup->inputDetection)
+  0210 160000       [4]     JSR   Timer_Init:0x03a2
+  0213 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0216 04           DC.B  4
+  0217 1c           DC.B  28
+  0218 04           DC.B  4
+  0219 0a           DC.B  10
+  021a 10           DC.B  16
+  021b 16           DC.B  22
+  327:        {
+  328:          case TIMER_INPUT_OFF:
+  329:            TCTL3_EDG4B = 0;
+  021c 4d0002       [4]     BCLR  _TCTL3,#2
+  330:            TCTL3_EDG4A = 0;
+  021f 4d0001       [4]     BCLR  _TCTL3,#1
+  331:          case TIMER_INPUT_RISING:
+  332:            TCTL3_EDG4B = 0;
+  0222 4d0002       [4]     BCLR  _TCTL3,#2
+  333:            TCTL3_EDG4A = 1;
+  0225 4c0001       [4]     BSET  _TCTL3,#1
+  334:          case TIMER_INPUT_FALLING:
+  335:            TCTL3_EDG4B = 1;
+  0228 4c0002       [4]     BSET  _TCTL3,#2
+  336:            TCTL3_EDG4A = 0;
+  022b 4d0001       [4]     BCLR  _TCTL3,#1
+  337:          case TIMER_INPUT_ANY:
+  338:            TCTL3_EDG4B = 1;
+  022e 4c0002       [4]     BSET  _TCTL3,#2
+  339:            TCTL3_EDG4A = 1;
+  0231 4c0001       [4]     BSET  _TCTL3,#1
+  340:        }
+  341:        
+  342:        TTOV_TOV4 = (UINT8)aTimerSetup->toggleOnOverflow; // 0: OFF, 1: ON
+  0234 ee80         [3]     LDX   0,SP
+  0236 0e070105     [4]     BRSET 7,X,#1,*+9 ;abs = 023f
+  023a 4d0010       [4]     BCLR  _TTOV,#16
+  023d 2003         [3]     BRA   *+5 ;abs = 0242
+  023f 4c0010       [4]     BSET  _TTOV,#16
+  343:        TIE_C4I   = (UINT8)aTimerSetup->interruptEnable;  // 0: OFF, 1: ON
+  0242 0e090105     [4]     BRSET 9,X,#1,*+9 ;abs = 024b
+  0246 4d0010       [4]     BCLR  _TIE,#16
+  0249 2092         [3]     BRA   *-108 ;abs = 01dd
+  024b 4c0010       [4]     BSET  _TIE,#16
+  024e 208d         [3]     BRA   *-113 ;abs = 01dd
+  344:        break;
+  345:      case TIMER_Ch5:
+  346:        TIOS_IOS5 = (UINT8)aTimerSetup->outputCompare;    // 0: Input, 1: Output
+  0250 ee80         [3]     LDX   0,SP
+  0252 0e010105     [4]     BRSET 1,X,#1,*+9 ;abs = 025b
+  0256 4d0020       [4]     BCLR  _TIOS,#32
+  0259 2003         [3]     BRA   *+5 ;abs = 025e
+  025b 4c0020       [4]     BSET  _TIOS,#32
+  347:        
+  348:        switch(aTimerSetup->outputAction)
+  025e ec02         [3]     LDD   2,X
+  0260 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0263 04           DC.B  4
+  0264 1c           DC.B  28
+  0265 04           DC.B  4
+  0266 0a           DC.B  10
+  0267 10           DC.B  16
+  0268 16           DC.B  22
+  349:        {
+  350:          case TIMER_OUTPUT_DISCONNECT:
+  351:            TCTL1_OM5 = 0;
+  0269 4d0008       [4]     BCLR  _TCTL1,#8
+  352:            TCTL1_OL5 = 0;
+  026c 4d0004       [4]     BCLR  _TCTL1,#4
+  353:          case TIMER_OUTPUT_TOGGLE:
+  354:            TCTL1_OM5 = 0;
+  026f 4d0008       [4]     BCLR  _TCTL1,#8
+  355:            TCTL1_OL5 = 1;
+  0272 4c0004       [4]     BSET  _TCTL1,#4
+  356:          case TIMER_OUTPUT_LOW:
+  357:            TCTL1_OM5 = 1;
+  0275 4c0008       [4]     BSET  _TCTL1,#8
+  358:            TCTL1_OL5 = 0;
+  0278 4d0004       [4]     BCLR  _TCTL1,#4
+  359:          case TIMER_OUTPUT_HIGH:
+  360:            TCTL1_OM5 = 1;
+  027b 4c0008       [4]     BSET  _TCTL1,#8
+  361:            TCTL1_OL5 = 1;
+  027e 4c0004       [4]     BSET  _TCTL1,#4
+  362:        }
+  363:        
+  364:        //TCTL3_EDG5x = (UINT8)aTimerSetup->inputDetection; 
+  365:        switch(aTimerSetup->inputDetection)
+  0281 160000       [4]     JSR   Timer_Init:0x03a2
+  0284 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0287 04           DC.B  4
+  0288 1c           DC.B  28
+  0289 04           DC.B  4
+  028a 0a           DC.B  10
+  028b 10           DC.B  16
+  028c 16           DC.B  22
+  366:        {
+  367:          case TIMER_INPUT_OFF:
+  368:            TCTL3_EDG5B = 0;
+  028d 4d0008       [4]     BCLR  _TCTL3,#8
+  369:            TCTL3_EDG5A = 0;
+  0290 4d0004       [4]     BCLR  _TCTL3,#4
+  370:          case TIMER_INPUT_RISING:
+  371:            TCTL3_EDG5B = 0;
+  0293 4d0008       [4]     BCLR  _TCTL3,#8
+  372:            TCTL3_EDG5A = 1;
+  0296 4c0004       [4]     BSET  _TCTL3,#4
+  373:          case TIMER_INPUT_FALLING:
+  374:            TCTL3_EDG5B = 1;
+  0299 4c0008       [4]     BSET  _TCTL3,#8
+  375:            TCTL3_EDG5A = 0;
+  029c 4d0004       [4]     BCLR  _TCTL3,#4
+  376:          case TIMER_INPUT_ANY:
+  377:            TCTL3_EDG5B = 1;
+  029f 4c0008       [4]     BSET  _TCTL3,#8
+  378:            TCTL3_EDG5A = 1;
+  02a2 4c0004       [4]     BSET  _TCTL3,#4
+  379:        }
+  380:        
+  381:        TTOV_TOV5 = (UINT8)aTimerSetup->toggleOnOverflow; // 0: OFF, 1: ON
+  02a5 ee80         [3]     LDX   0,SP
+  02a7 0e070105     [4]     BRSET 7,X,#1,*+9 ;abs = 02b0
+  02ab 4d0020       [4]     BCLR  _TTOV,#32
+  02ae 2003         [3]     BRA   *+5 ;abs = 02b3
+  02b0 4c0020       [4]     BSET  _TTOV,#32
+  382:        TIE_C5I   = (UINT8)aTimerSetup->interruptEnable;  // 0: OFF, 1: ON
+  02b3 0e090105     [4]     BRSET 9,X,#1,*+9 ;abs = 02bc
+  02b7 4d0020       [4]     BCLR  _TIE,#32
+  02ba 2092         [3]     BRA   *-108 ;abs = 024e
+  02bc 4c0020       [4]     BSET  _TIE,#32
+  02bf 208d         [3]     BRA   *-113 ;abs = 024e
+  383:        break;
+  384:      case TIMER_Ch6:
+  385:        TIOS_IOS6 = (UINT8)aTimerSetup->outputCompare;    // 0: Input, 1: Output
+  02c1 ee80         [3]     LDX   0,SP
+  02c3 0e010105     [4]     BRSET 1,X,#1,*+9 ;abs = 02cc
+  02c7 4d0040       [4]     BCLR  _TIOS,#64
+  02ca 2003         [3]     BRA   *+5 ;abs = 02cf
+  02cc 4c0040       [4]     BSET  _TIOS,#64
+  386:        
+  387:        switch(aTimerSetup->outputAction)
+  02cf ec02         [3]     LDD   2,X
+  02d1 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  02d4 04           DC.B  4
+  02d5 1c           DC.B  28
+  02d6 04           DC.B  4
+  02d7 0a           DC.B  10
+  02d8 10           DC.B  16
+  02d9 16           DC.B  22
+  388:        {
+  389:          case TIMER_OUTPUT_DISCONNECT:
+  390:            TCTL1_OM6 = 0;
+  02da 4d0020       [4]     BCLR  _TCTL1,#32
+  391:            TCTL1_OL6 = 0;
+  02dd 4d0010       [4]     BCLR  _TCTL1,#16
+  392:          case TIMER_OUTPUT_TOGGLE:
+  393:            TCTL1_OM6 = 0;
+  02e0 4d0020       [4]     BCLR  _TCTL1,#32
+  394:            TCTL1_OL6 = 1;
+  02e3 4c0010       [4]     BSET  _TCTL1,#16
+  395:          case TIMER_OUTPUT_LOW:
+  396:            TCTL1_OM6 = 1;
+  02e6 4c0020       [4]     BSET  _TCTL1,#32
+  397:            TCTL1_OL6 = 0;
+  02e9 4d0010       [4]     BCLR  _TCTL1,#16
+  398:          case TIMER_OUTPUT_HIGH:
+  399:            TCTL1_OM6 = 1;
+  02ec 4c0020       [4]     BSET  _TCTL1,#32
+  400:            TCTL1_OL6 = 1;
+  02ef 4c0010       [4]     BSET  _TCTL1,#16
+  401:        }
+  402:        
+  403:        //TCTL3_EDG6x = (UINT8)aTimerSetup->inputDetection; 
+  404:        switch(aTimerSetup->inputDetection)
+  02f2 160000       [4]     JSR   Timer_Init:0x03a2
+  02f5 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  02f8 04           DC.B  4
+  02f9 1c           DC.B  28
+  02fa 04           DC.B  4
+  02fb 0a           DC.B  10
+  02fc 10           DC.B  16
+  02fd 16           DC.B  22
+  405:        {
+  406:          case TIMER_INPUT_OFF:
+  407:            TCTL3_EDG6B = 0;
+  02fe 4d0020       [4]     BCLR  _TCTL3,#32
+  408:            TCTL3_EDG6A = 0;
+  0301 4d0010       [4]     BCLR  _TCTL3,#16
+  409:          case TIMER_INPUT_RISING:
+  410:            TCTL3_EDG6B = 0;
+  0304 4d0020       [4]     BCLR  _TCTL3,#32
+  411:            TCTL3_EDG6A = 1;
+  0307 4c0010       [4]     BSET  _TCTL3,#16
+  412:          case TIMER_INPUT_FALLING:
+  413:            TCTL3_EDG6B = 1;
+  030a 4c0020       [4]     BSET  _TCTL3,#32
+  414:            TCTL3_EDG6A = 0;
+  030d 4d0010       [4]     BCLR  _TCTL3,#16
+  415:          case TIMER_INPUT_ANY:
+  416:            TCTL3_EDG6B = 1;
+  0310 4c0020       [4]     BSET  _TCTL3,#32
+  417:            TCTL3_EDG6A = 1;
+  0313 4c0010       [4]     BSET  _TCTL3,#16
+  418:        }
+  419:        
+  420:        TTOV_TOV6 = (UINT8)aTimerSetup->toggleOnOverflow; // 0: OFF, 1: ON
+  0316 ee80         [3]     LDX   0,SP
+  0318 0e070105     [4]     BRSET 7,X,#1,*+9 ;abs = 0321
+  031c 4d0040       [4]     BCLR  _TTOV,#64
+  031f 2003         [3]     BRA   *+5 ;abs = 0324
+  0321 4c0040       [4]     BSET  _TTOV,#64
+  421:        TIE_C6I   = (UINT8)aTimerSetup->interruptEnable;  // 0: OFF, 1: ON
+  0324 0e090105     [4]     BRSET 9,X,#1,*+9 ;abs = 032d
+  0328 4d0040       [4]     BCLR  _TIE,#64
+  032b 2092         [3]     BRA   *-108 ;abs = 02bf
+  032d 4c0040       [4]     BSET  _TIE,#64
+  0330 208d         [3]     BRA   *-113 ;abs = 02bf
+  422:        break;
+  423:      case TIMER_Ch7:
+  424:        TIOS_IOS7 = (UINT8)aTimerSetup->outputCompare;    // 0: Input, 1: Output
+  0332 ee80         [3]     LDX   0,SP
+  0334 0e010105     [4]     BRSET 1,X,#1,*+9 ;abs = 033d
+  0338 4d0080       [4]     BCLR  _TIOS,#128
+  033b 2003         [3]     BRA   *+5 ;abs = 0340
+  033d 4c0080       [4]     BSET  _TIOS,#128
+  425:        
+  426:        switch(aTimerSetup->outputAction)
+  0340 ec02         [3]     LDD   2,X
+  0342 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0345 04           DC.B  4
+  0346 1c           DC.B  28
+  0347 04           DC.B  4
+  0348 0a           DC.B  10
+  0349 10           DC.B  16
+  034a 16           DC.B  22
+  427:        {
+  428:          case TIMER_OUTPUT_DISCONNECT:
+  429:            TCTL1_OM7 = 0;
+  034b 4d0080       [4]     BCLR  _TCTL1,#128
+  430:            TCTL1_OL7 = 0;
+  034e 4d0040       [4]     BCLR  _TCTL1,#64
+  431:          case TIMER_OUTPUT_TOGGLE:
+  432:            TCTL1_OM7 = 0;
+  0351 4d0080       [4]     BCLR  _TCTL1,#128
+  433:            TCTL1_OL7 = 1;
+  0354 4c0040       [4]     BSET  _TCTL1,#64
+  434:          case TIMER_OUTPUT_LOW:
+  435:            TCTL1_OM7 = 1;
+  0357 4c0080       [4]     BSET  _TCTL1,#128
+  436:            TCTL1_OL7 = 0;
+  035a 4d0040       [4]     BCLR  _TCTL1,#64
+  437:          case TIMER_OUTPUT_HIGH:
+  438:            TCTL1_OM7 = 1;
+  035d 4c0080       [4]     BSET  _TCTL1,#128
+  439:            TCTL1_OL7 = 1;
+  0360 4c0040       [4]     BSET  _TCTL1,#64
+  440:        }
+  441:        
+  442:        //TCTL3_EDG7x = (UINT8)aTimerSetup->inputDetection; 
+  443:        switch(aTimerSetup->inputDetection)
+  0363 073d         [4]     BSR   *+63 ;abs = 03a2
+  0365 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0368 04           DC.B  4
+  0369 1c           DC.B  28
+  036a 04           DC.B  4
+  036b 0a           DC.B  10
+  036c 10           DC.B  16
+  036d 16           DC.B  22
+  444:        {
+  445:          case TIMER_INPUT_OFF:
+  446:            TCTL3_EDG7B = 0;
+  036e 4d0080       [4]     BCLR  _TCTL3,#128
+  447:            TCTL3_EDG7A = 0;
+  0371 4d0040       [4]     BCLR  _TCTL3,#64
+  448:          case TIMER_INPUT_RISING:
+  449:            TCTL3_EDG7B = 0;
+  0374 4d0080       [4]     BCLR  _TCTL3,#128
+  450:            TCTL3_EDG7A = 1;
+  0377 4c0040       [4]     BSET  _TCTL3,#64
+  451:          case TIMER_INPUT_FALLING:
+  452:            TCTL3_EDG7B = 1;
+  037a 4c0080       [4]     BSET  _TCTL3,#128
+  453:            TCTL3_EDG7A = 0;
+  037d 4d0040       [4]     BCLR  _TCTL3,#64
+  454:          case TIMER_INPUT_ANY:
+  455:            TCTL3_EDG7B = 1;
+  0380 4c0080       [4]     BSET  _TCTL3,#128
+  456:            TCTL3_EDG7A = 1;
+  0383 4c0040       [4]     BSET  _TCTL3,#64
+  457:        }
+  458:        
+  459:        TTOV_TOV7 = (UINT8)aTimerSetup->toggleOnOverflow; // 0: OFF, 1: ON
+  0386 ee80         [3]     LDX   0,SP
+  0388 0e070105     [4]     BRSET 7,X,#1,*+9 ;abs = 0391
+  038c 4d0080       [4]     BCLR  _TTOV,#128
+  038f 2003         [3]     BRA   *+5 ;abs = 0394
+  0391 4c0080       [4]     BSET  _TTOV,#128
+  460:        TIE_C7I   = (UINT8)aTimerSetup->interruptEnable;  // 0: OFF, 1: ON  -- ARM BIT
+  0394 0e090105     [4]     BRSET 9,X,#1,*+9 ;abs = 039d
+  0398 4d0080       [4]     BCLR  _TIE,#128
+  039b 2003         [3]     BRA   *+5 ;abs = 03a0
+  039d 4c0080       [4]     BSET  _TIE,#128
+  461:        break;
+  462:    }
+  463:  }
+  03a0 3a           [3]     PULD  
+  03a1 3d           [5]     RTS   
+  03a2 ee82         [3]     LDX   2,SP
+  03a4 ec04         [3]     LDD   4,X
+  03a6 3d           [5]     RTS   
+  464:  
+  465:  // ----------------------------------------
+  466:  // Timer_Enable
+  467:  // 
+  468:  // Enables or disables a timer channel interrupt
+  469:  // Input:
+  470:  //   channelNb is the timer channel number
+  471:  //   enableInt is a Boolean value indicating whether to enable the 
+  472:  //     interrupt on the timer channel
+  473:  // Output:
+  474:  //   none
+  475:  // Conditions:
+  476:  //   none
+  477:  
+  478:  void Timer_Enable(const TTimerChannel channelNb, const BOOL enableInt)
+  479:  {
+*** EVALUATION ***
+
+Function: Timer_Enable
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\timer.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\timer.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+  480:    switch (channelNb)
+  0001 ec84         [3]     LDD   4,SP
+  0003 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0006 08           DC.B  8
+  0007 76           DC.B  118
+  0008 08           DC.B  8
+  0009 16           DC.B  22
+  000a 24           DC.B  36
+  000b 32           DC.B  50
+  000c 40           DC.B  64
+  000d 4e           DC.B  78
+  000e 5c           DC.B  92
+  000f 6a           DC.B  106
+  481:    {
+  482:      case TIMER_Ch0:
+  483:        TIE_C0I = (UINT8)enableInt;
+  0010 0e810105     [4]     BRSET 1,SP,#1,*+9 ;abs = 0019
+  0014 4d0001       [4]     BCLR  _TIE,#1
+  0017 2065         [3]     BRA   *+103 ;abs = 007e
+  0019 4c0001       [4]     BSET  _TIE,#1
+  001c 2060         [3]     BRA   *+98 ;abs = 007e
+  484:        break;
+  485:      case TIMER_Ch1:
+  486:        TIE_C1I = (UINT8)enableInt;
+  001e 0e810105     [4]     BRSET 1,SP,#1,*+9 ;abs = 0027
+  0022 4d0002       [4]     BCLR  _TIE,#2
+  0025 2057         [3]     BRA   *+89 ;abs = 007e
+  0027 4c0002       [4]     BSET  _TIE,#2
+  002a 2052         [3]     BRA   *+84 ;abs = 007e
+  487:        break;
+  488:      case TIMER_Ch2:
+  489:        TIE_C2I = (UINT8)enableInt;
+  002c 0e810105     [4]     BRSET 1,SP,#1,*+9 ;abs = 0035
+  0030 4d0004       [4]     BCLR  _TIE,#4
+  0033 2049         [3]     BRA   *+75 ;abs = 007e
+  0035 4c0004       [4]     BSET  _TIE,#4
+  0038 2044         [3]     BRA   *+70 ;abs = 007e
+  490:        break;
+  491:      case TIMER_Ch3:
+  492:        TIE_C3I = (UINT8)enableInt;
+  003a 0e810105     [4]     BRSET 1,SP,#1,*+9 ;abs = 0043
+  003e 4d0008       [4]     BCLR  _TIE,#8
+  0041 203b         [3]     BRA   *+61 ;abs = 007e
+  0043 4c0008       [4]     BSET  _TIE,#8
+  0046 2036         [3]     BRA   *+56 ;abs = 007e
+  493:        break;
+  494:      case TIMER_Ch4:
+  495:        TIE_C4I = (UINT8)enableInt;
+  0048 0e810105     [4]     BRSET 1,SP,#1,*+9 ;abs = 0051
+  004c 4d0010       [4]     BCLR  _TIE,#16
+  004f 202d         [3]     BRA   *+47 ;abs = 007e
+  0051 4c0010       [4]     BSET  _TIE,#16
+  0054 2028         [3]     BRA   *+42 ;abs = 007e
+  496:        break;
+  497:      case TIMER_Ch5:
+  498:        TIE_C5I = (UINT8)enableInt;
+  0056 0e810105     [4]     BRSET 1,SP,#1,*+9 ;abs = 005f
+  005a 4d0020       [4]     BCLR  _TIE,#32
+  005d 201f         [3]     BRA   *+33 ;abs = 007e
+  005f 4c0020       [4]     BSET  _TIE,#32
+  0062 201a         [3]     BRA   *+28 ;abs = 007e
+  499:        break;
+  500:      case TIMER_Ch6:
+  501:        TIE_C6I = (UINT8)enableInt;
+  0064 0e810105     [4]     BRSET 1,SP,#1,*+9 ;abs = 006d
+  0068 4d0040       [4]     BCLR  _TIE,#64
+  006b 2011         [3]     BRA   *+19 ;abs = 007e
+  006d 4c0040       [4]     BSET  _TIE,#64
+  0070 200c         [3]     BRA   *+14 ;abs = 007e
+  502:        break;
+  503:      case TIMER_Ch7:
+  504:        TIE_C7I = (UINT8)enableInt;
+  0072 0e810105     [4]     BRSET 1,SP,#1,*+9 ;abs = 007b
+  0076 4d0080       [4]     BCLR  _TIE,#128
+  0079 2003         [3]     BRA   *+5 ;abs = 007e
+  007b 4c0080       [4]     BSET  _TIE,#128
+  505:        break;
+  506:    }
+  507:  }
+  007e 3a           [3]     PULD  
+  007f 3d           [5]     RTS   
+  508:  
+  509:  // ----------------------------------------
+  510:  // Timer_Enabled
+  511:  // 
+  512:  // Returns the status of a timer
+  513:  // Input:
+  514:  //   channelNb is the timer channel number
+  515:  // Output:
+  516:  //   a Boolean value indicating whether the channel is enabled
+  517:  // Conditions:
+  518:  //   none
+  519:  
+  520:  BOOL Timer_Enabled(const TTimerChannel channelNb)
+  521:  {
+*** EVALUATION ***
+
+Function: Timer_Enabled
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\timer.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\timer.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 36           [2]     PSHA  
+  522:    switch (channelNb)
+  0001 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0004 08           DC.B  8
+  0005 59           DC.B  89
+  0006 08           DC.B  8
+  0007 12           DC.B  18
+  0008 1c           DC.B  28
+  0009 26           DC.B  38
+  000a 30           DC.B  48
+  000b 3a           DC.B  58
+  000c 44           DC.B  68
+  000d 4e           DC.B  78
+  523:    {
+  524:      case TIMER_Ch0:
+  525:        return TIE_C0I;
+  000e 4e000102     [4]     BRSET _TIE,#1,*+6 ;abs = 0014
+  0012 c7           [1]     CLRB  
+  0013 8f           [2]     SKIP2 
+  0014 c601         [1]     LDAB  #1
+  0016 2044         [3]     BRA   *+70 ;abs = 005c
+  526:        break;
+  527:      case TIMER_Ch1:
+  528:        return TIE_C1I;
+  0018 4e000202     [4]     BRSET _TIE,#2,*+6 ;abs = 001e
+  001c c7           [1]     CLRB  
+  001d 8f           [2]     SKIP2 
+  001e c601         [1]     LDAB  #1
+  0020 203a         [3]     BRA   *+60 ;abs = 005c
+  529:        break;
+  530:      case TIMER_Ch2:
+  531:        return TIE_C2I;
+  0022 4e000402     [4]     BRSET _TIE,#4,*+6 ;abs = 0028
+  0026 c7           [1]     CLRB  
+  0027 8f           [2]     SKIP2 
+  0028 c601         [1]     LDAB  #1
+  002a 2030         [3]     BRA   *+50 ;abs = 005c
+  532:        break;
+  533:      case TIMER_Ch3:
+  534:        return TIE_C3I;
+  002c 4e000802     [4]     BRSET _TIE,#8,*+6 ;abs = 0032
+  0030 c7           [1]     CLRB  
+  0031 8f           [2]     SKIP2 
+  0032 c601         [1]     LDAB  #1
+  0034 2026         [3]     BRA   *+40 ;abs = 005c
+  535:        break;
+  536:      case TIMER_Ch4:
+  537:        return TIE_C4I;
+  0036 4e001002     [4]     BRSET _TIE,#16,*+6 ;abs = 003c
+  003a c7           [1]     CLRB  
+  003b 8f           [2]     SKIP2 
+  003c c601         [1]     LDAB  #1
+  003e 201c         [3]     BRA   *+30 ;abs = 005c
+  538:        break;
+  539:      case TIMER_Ch5:
+  540:        return TIE_C5I;
+  0040 4e002002     [4]     BRSET _TIE,#32,*+6 ;abs = 0046
+  0044 c7           [1]     CLRB  
+  0045 8f           [2]     SKIP2 
+  0046 c601         [1]     LDAB  #1
+  0048 2012         [3]     BRA   *+20 ;abs = 005c
+  541:        break;
+  542:      case TIMER_Ch6:
+  543:        return TIE_C6I;
+  004a 4e004002     [4]     BRSET _TIE,#64,*+6 ;abs = 0050
+  004e c7           [1]     CLRB  
+  004f 8f           [2]     SKIP2 
+  0050 c601         [1]     LDAB  #1
+  0052 2008         [3]     BRA   *+10 ;abs = 005c
+  544:        break;
+  545:      case TIMER_Ch7:
+  546:        return TIE_C7I;
+  0054 4e008002     [4]     BRSET _TIE,#128,*+6 ;abs = 005a
+  0058 c7           [1]     CLRB  
+  0059 8f           [2]     SKIP2 
+  005a c601         [1]     LDAB  #1
+  005c 6b80         [2]     STAB  0,SP
+  005e 87           [1]     CLRA  
+  547:        break;
+  548:    }
+  549:  }
+  005f 1b81         [2]     LEAS  1,SP
+  0061 3d           [5]     RTS   
+  550:  
+  551:  // ----------------------------------------
+  552:  // Timer_Set
+  553:  // 
+  554:  // Sets a timer channel to generate an
+  555:  //   interrupt after a certain number of busClk cycles
+  556:  // Input:
+  557:  //   channelNb is the timer channel number
+  558:  //   busClkCyclesDelay is the number of busClk cycles
+  559:  //     to wait until an interrupt is triggered
+  560:  // Output:
+  561:  //   none
+  562:  // Conditions:
+  563:  //   none
+  564:  
+  565:  void Timer_Set(const TTimerChannel channelNb, const UINT16 busClkCyclesDelay)
+  566:  {  
+*** EVALUATION ***
+
+Function: Timer_Set
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\timer.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\timer.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+  567:    switch (channelNb)
+  0001 ec84         [3]     LDD   4,SP
+  0003 160000       [4]     JSR   _CASE_CHECKED_BYTE
+  0006 08           DC.B  8
+  0007 28           DC.B  40
+  0008 08           DC.B  8
+  0009 0c           DC.B  12
+  000a 10           DC.B  16
+  000b 14           DC.B  20
+  000c 18           DC.B  24
+  000d 1c           DC.B  28
+  000e 20           DC.B  32
+  000f 24           DC.B  36
+  568:    {
+  569:      case TIMER_Ch0:
+  570:        TC0 = TCNT + busClkCyclesDelay;
+  0010 0720         [4]     BSR   *+34 ;abs = 0032
+  0012 5c00         [2]     STD   _TC0
+  571:      case TIMER_Ch1:
+  572:        TC1 = TCNT + busClkCyclesDelay;
+  0014 071c         [4]     BSR   *+30 ;abs = 0032
+  0016 5c00         [2]     STD   _TC1
+  573:      case TIMER_Ch2:
+  574:        TC2 = TCNT + busClkCyclesDelay;
+  0018 0718         [4]     BSR   *+26 ;abs = 0032
+  001a 5c00         [2]     STD   _TC2
+  575:      case TIMER_Ch3:
+  576:        TC3 = TCNT + busClkCyclesDelay;
+  001c 0714         [4]     BSR   *+22 ;abs = 0032
+  001e 5c00         [2]     STD   _TC3
+  577:      case TIMER_Ch4:
+  578:        TC4 = TCNT + busClkCyclesDelay;
+  0020 0710         [4]     BSR   *+18 ;abs = 0032
+  0022 5c00         [2]     STD   _TC4
+  579:      case TIMER_Ch5:
+  580:        TC5 = TCNT + busClkCyclesDelay;
+  0024 070c         [4]     BSR   *+14 ;abs = 0032
+  0026 5c00         [2]     STD   _TC5
+  581:      case TIMER_Ch6:
+  582:        TC6 = TCNT + busClkCyclesDelay;
+  0028 0708         [4]     BSR   *+10 ;abs = 0032
+  002a 5c00         [2]     STD   _TC6
+  583:      case TIMER_Ch7:
+  584:        TC7 = TCNT + busClkCyclesDelay;
+  002c 0704         [4]     BSR   *+6 ;abs = 0032
+  002e 5c00         [2]     STD   _TC7
+  585:    }  
+  586:  }
+  0030 3a           [3]     PULD  
+  0031 3d           [5]     RTS   
+  0032 dc00         [3]     LDD   _TCNT
+  0034 e382         [3]     ADDD  2,SP
+  0036 3d           [5]     RTS   
+  587:  
+  588:  void Timer_Wait(void)
+  589:  {
+*** EVALUATION ***
+
+Function: Timer_Wait
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\timer.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\timer.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 1b94         [2]     LEAS  -12,SP
+  590:    TTimerSetup timerSetup;
+  591:    
+  592:    timerSetup.outputCompare = bTRUE;
+  0002 c601         [1]     LDAB  #1
+  0004 87           [1]     CLRA  
+  0005 6c80         [2]     STD   0,SP
+  593:    timerSetup.outputAction = TIMER_OUTPUT_DISCONNECT;      
+  0007 6983         [2]     CLR   3,SP
+  0009 6982         [2]     CLR   2,SP
+  594:    timerSetup.inputDetection = TIMER_INPUT_OFF;
+  000b 6985         [2]     CLR   5,SP
+  000d 6984         [2]     CLR   4,SP
+  595:    timerSetup.toggleOnOverflow = bFALSE;
+  000f 6987         [2]     CLR   7,SP
+  0011 6986         [2]     CLR   6,SP
+  596:    timerSetup.interruptEnable = bFALSE;
+  0013 6989         [2]     CLR   9,SP
+  0015 6988         [2]     CLR   8,SP
+  597:    
+  598:    Timer_Init(TIMER_Ch6, &timerSetup);
+  0017 c606         [1]     LDAB  #6
+  0019 3b           [2]     PSHD  
+  001a 1a82         [2]     LEAX  2,SP
+  001c b7c5         [1]     EXG   D,X
+  001e 160000       [4]     JSR   Timer_Init
+  599:    Timer_Set(TIMER_Ch6, 24000);
+  0021 c606         [1]     LDAB  #6
+  0023 87           [1]     CLRA  
+  0024 6c80         [2]     STD   0,SP
+  0026 cc5dc0       [2]     LDD   #24000
+  0029 0700         [4]     BSR   Timer_Set
+  600:    Timer_Enable(TIMER_Ch6, bTRUE);
+  002b c606         [1]     LDAB  #6
+  002d 87           [1]     CLRA  
+  002e 6c80         [2]     STD   0,SP
+  0030 c601         [1]     LDAB  #1
+  0032 160000       [4]     JSR   Timer_Enable
+  0035 1b8e         [2]     LEAS  14,SP
+  601:  }
+  0037 3d           [5]     RTS   
+  602:  
+  603:  void interrupt 12 TI6_ISR(void)
+  604:  {
+*** EVALUATION ***
+
+Function: TI6_ISR
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\timer.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\timer.c.o -WmsgSd1106 -WmsgSd5703
+
+  605:    TFLG1_C6F = 1;  // ACK
+  0000 4c0040       [4]     BSET  _TFLG1,#64
+  606:    while(!TFLG1_C6F);
+  0003 4f0040fc     [4]     BRCLR _TFLG1,#64,*+0 ;abs = 0003
+  607:  }
+  0007 0b           [8]     RTI   

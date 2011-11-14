@@ -1,0 +1,288 @@
+*** EVALUATION ***
+ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+
+    1:  // ----------------------------------------
+    2:  // Filename: clock.c
+    3:  // Description: Routines for maintaining
+    4:  //   a real-time clock
+    5:  // Author: PMcL
+    6:  //         Danny Sok
+    7:  //         Edward Khou
+    8:  // Date Created: 12-09-2011
+    9:  // Date Last Modified: 16-09-2011
+   10:  
+   11:  // new types
+   12:  #include "clock.h"
+   13:  
+   14:  
+   15:  
+   16:  
+   17:  // ----------------------------------------
+   18:  // Clock_Setup
+   19:  // 
+   20:  // Initializes the clock
+   21:  // Input:
+   22:  //   prescaleRate is the desired prescale rate and modulus count
+   23:  //   of the CRG block's real-time interrupt module,
+   24:  //   corresponding to Table 3.2 in the CRG Block User Guide,
+   25:  //   to ensure ticks of the clock occur every 65.536 ms
+   26:  // Output:
+   27:  //   TRUE if the clock was setup successfully
+   28:  // Conditions:
+   29:  //   none
+   30:  
+   31:  void Clock_Setup(const UINT8 prescaleRate, const UINT8 modulusCount)
+   32:  {
+*** EVALUATION ***
+
+Function: Clock_Setup
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\clock.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\clock.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 37           [2]     PSHB  
+   33:    // 2^16 = 63536. So RTR[6:4] (Prescale) = 111 and RTR[3:0] (Mod) = 0000.
+   34:    Clock_Minutes = 0;
+  0001 790000       [3]     CLR   Clock_Minutes
+   35:    Clock_Seconds = 0;
+  0004 790000       [3]     CLR   Clock_Seconds
+   36:    CRG_SetupRTI(prescaleRate, modulusCount);
+  0007 e683         [3]     LDAB  3,SP
+  0009 37           [2]     PSHB  
+  000a e681         [3]     LDAB  1,SP
+  000c 160000       [4]     JSR   CRG_SetupRTI
+  000f 3a           [3]     PULD  
+   37:  }
+  0010 3d           [5]     RTS   
+   38:  
+   39:  // ----------------------------------------
+   40:  // Clock_Update
+   41:  // 
+   42:  // Updates the clock by converting milliseconds
+   43:  //   and microseconds into seconds and minutes
+   44:  // Input:
+   45:  //   none
+   46:  // Output:
+   47:  //   TRUE if clock seconds have changed
+   48:  // Conditions:
+   49:  //   Assumes that the clock has been set up
+   50:  
+   51:  BOOL Clock_Update(void)
+   52:  {
+*** EVALUATION ***
+
+Function: Clock_Update
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\clock.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\clock.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 1b99         [2]     LEAS  -7,SP
+   53:    UINT32 second;
+   54:    UINT8  minute;
+   55:    UINT8  hour;
+   56:    UINT8  day;
+   57:    
+   58:    second = 1000000;              // In microSeconds
+  0002 cc4240       [2]     LDD   #16960
+  0005 6c82         [2]     STD   2,SP
+  0007 ce000f       [2]     LDX   #15
+  000a 6e80         [2]     STX   0,SP
+   59:    minute = 60;
+  000c c63c         [1]     LDAB  #60
+  000e 6b86         [2]     STAB  6,SP
+   60:    hour   = 60;
+  0010 6b85         [2]     STAB  5,SP
+   61:    day    = 24;
+  0012 c618         [1]     LDAB  #24
+  0014 6b84         [2]     STAB  4,SP
+   62:    
+   63:    // Save current state to allow us to modify these sections
+   64:    EnterCritical();
+  0016 39           [2]     PSHC  
+  0017 1410         [1]     SEI   
+  0019 1b81         [2]     LEAS  1,SP
+   65:     
+   66:    // Every half second flash the LED
+   67:    if (Clock_MicroSeconds >= second/2)
+  001b ee82         [3]     LDX   2,SP
+  001d ec80         [3]     LDD   0,SP
+  001f 49           [1]     LSRD  
+  0020 b7c5         [1]     EXG   D,X
+  0022 46           [1]     RORA  
+  0023 56           [1]     RORB  
+  0024 3b           [2]     PSHD  
+  0025 34           [2]     PSHX  
+  0026 fc0000       [3]     LDD   Clock_MicroSeconds:2
+  0029 fe0000       [3]     LDX   Clock_MicroSeconds
+  002c 160000       [4]     JSR   _LCMP
+  002f 2505         [3/1]   BCS   *+7 ;abs = 0036
+   68:      PORTE_BIT7 = 0;                // ON
+  0031 4d0080       [4]     BCLR  _PORTE,#128
+  0034 2003         [3]     BRA   *+5 ;abs = 0039
+   69:    else
+   70:      PORTE_BIT7 = 1;                // OFF
+  0036 4c0080       [4]     BSET  _PORTE,#128
+   71:    
+   72:    // Update the clock  
+   73:    if (Clock_MicroSeconds >= second)
+  0039 ae80         [3]     CPX   0,SP
+  003b 2206         [3/1]   BHI   *+8 ;abs = 0043
+  003d 266e         [3/1]   BNE   *+112 ;abs = 00ad
+  003f ac82         [3]     CPD   2,SP
+  0041 256a         [3/1]   BCS   *+108 ;abs = 00ad
+   74:    {
+   75:      if (Debug)
+  0043 fc0420       [3]     LDD   1056
+  0046 2719         [3/1]   BEQ   *+27 ;abs = 0061
+   76:      {
+   77:        Clock_Hours++;
+  0048 720000       [4]     INC   Clock_Hours
+   78:        Clock_MicroSeconds -= second;  // 1 second has passed
+  004b 0768         [4]     BSR   *+106 ;abs = 00b5
+  004d b754         [1]     TFR   X,D
+  004f e281         [3]     SBCB  1,SP
+  0051 a280         [3]     SBCA  0,SP
+  0053 7c0000       [3]     STD   Clock_MicroSeconds
+   79:        
+   80:        if (Clock_Hours >= day)
+  0056 f60000       [3]     LDAB  Clock_Hours
+  0059 e184         [3]     CMPB  4,SP
+  005b 2502         [3/1]   BCS   *+4 ;abs = 005f
+   81:        {
+   82:          Clock_Days++;
+  005d 075f         [4]     BSR   *+97 ;abs = 00be
+   83:          Clock_Hours -= day;
+   84:        }
+   85:        
+   86:        ExitCritical();
+   87:        return bTRUE;
+  005f 2045         [3]     BRA   *+71 ;abs = 00a6
+   88:      }
+   89:      
+   90:      Clock_Seconds++;
+  0061 720000       [4]     INC   Clock_Seconds
+   91:      Clock_Interval++;
+  0064 fc0000       [3]     LDD   Clock_Interval:2
+  0067 fe0000       [3]     LDX   Clock_Interval
+  006a 160000       [4]     JSR   _LINC
+  006d 7c0000       [3]     STD   Clock_Interval:2
+  0070 7e0000       [3]     STX   Clock_Interval
+   92:      Clock_MicroSeconds -= second;  // 1 second has passed
+  0073 0740         [4]     BSR   *+66 ;abs = 00b5
+  0075 fc0000       [3]     LDD   Clock_MicroSeconds
+  0078 e281         [3]     SBCB  1,SP
+  007a a280         [3]     SBCA  0,SP
+  007c 7c0000       [3]     STD   Clock_MicroSeconds
+   93:      
+   94:      
+   95:      
+   96:      if (Clock_Seconds >= minute)
+  007f f60000       [3]     LDAB  Clock_Seconds
+  0082 e186         [3]     CMPB  6,SP
+  0084 2508         [3/1]   BCS   *+10 ;abs = 008e
+   97:      {
+   98:      Clock_Minutes++;               // 1 minute has passed
+  0086 720000       [4]     INC   Clock_Minutes
+   99:      Clock_Seconds -= minute;
+  0089 e086         [3]     SUBB  6,SP
+  008b 7b0000       [3]     STAB  Clock_Seconds
+  100:      }
+  101:      
+  102:      if (Clock_Minutes >= hour)
+  008e f60000       [3]     LDAB  Clock_Minutes
+  0091 e185         [3]     CMPB  5,SP
+  0093 2508         [3/1]   BCS   *+10 ;abs = 009d
+  103:      {
+  104:        Clock_Hours++;
+  0095 720000       [4]     INC   Clock_Hours
+  105:        Clock_Minutes -= hour;
+  0098 e085         [3]     SUBB  5,SP
+  009a 7b0000       [3]     STAB  Clock_Minutes
+  106:      }
+  107:         
+  108:      if (Clock_Hours >= day)
+  009d f60000       [3]     LDAB  Clock_Hours
+  00a0 e184         [3]     CMPB  4,SP
+  00a2 2502         [3/1]   BCS   *+4 ;abs = 00a6
+  109:      {
+  110:        Clock_Days++;
+  00a4 0718         [4]     BSR   *+26 ;abs = 00be
+  111:        Clock_Hours -= day;
+  112:      }
+  113:      
+  114:      // Restore state
+  115:      ExitCritical();
+  00a6 1b9f         [2]     LEAS  -1,SP
+  00a8 38           [3]     PULC  
+  116:      return bTRUE;
+  00a9 c601         [1]     LDAB  #1
+  00ab 2004         [3]     BRA   *+6 ;abs = 00b1
+  117:    }
+  118:    
+  119:    
+  120:    // Restore state
+  121:    ExitCritical();
+  00ad 1b9f         [2]     LEAS  -1,SP
+  00af 38           [3]     PULC  
+  122:    return bFALSE;  
+  00b0 c7           [1]     CLRB  
+  00b1 87           [1]     CLRA  
+  123:  }
+  00b2 1b87         [2]     LEAS  7,SP
+  00b4 3d           [5]     RTS   
+  00b5 fc0000       [3]     LDD   Clock_MicroSeconds:2
+  00b8 a384         [3]     SUBD  4,SP
+  00ba 7c0000       [3]     STD   Clock_MicroSeconds:2
+  00bd 3d           [5]     RTS   
+  00be 720000       [4]     INC   Clock_Days
+  00c1 e086         [3]     SUBB  6,SP
+  00c3 7b0000       [3]     STAB  Clock_Hours
+  00c6 3d           [5]     RTS   
+  124:  
+  125:  UINT16 Clock_TimeInHours(void)
+  126:  {
+*** EVALUATION ***
+
+Function: Clock_TimeInHours
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\clock.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\clock.c.o -WmsgSd1106 -WmsgSd5703
+
+  127:    UINT16 minutes = Math_ToQNotation(16, 3);
+  0000 c610         [1]     LDAB  #16
+  0002 87           [1]     CLRA  
+  0003 6cac         [2]     STD   4,-SP
+  0005 c603         [1]     LDAB  #3
+  0007 160000       [4]     JSR   Math_ToQNotation
+  128:    UINT16 seconds = Math_ToQNotation(27, 4);
+  000a ce001b       [2]     LDX   #27
+  000d 6e80         [2]     STX   0,SP
+  000f 6c82         [2]     STD   2,SP
+  0011 c604         [1]     LDAB  #4
+  0013 87           [1]     CLRA  
+  0014 160000       [4]     JSR   Math_ToQNotation
+  129:    // Nfi how I'm gonna do this :S
+  130:    //return (Clock_Days * 24) + Clock_Hours + (Clock_Minutes * 0.0166666667)  = (Clock_Seconds * 0.000277777778);
+  131:    return (Clock_Days * 24) + Clock_Hours + ((Clock_Minutes << 3) * minutes) + ((Clock_Seconds << 4) * seconds);
+  0017 6c80         [2]     STD   0,SP
+  0019 c618         [1]     LDAB  #24
+  001b b60000       [3]     LDAA  Clock_Days
+  001e 12           [1]     MUL   
+  001f b745         [1]     TFR   D,X
+  0021 f60000       [3]     LDAB  Clock_Hours
+  0024 87           [1]     CLRA  
+  0025 1ae6         [2]     LEAX  D,X
+  0027 f60000       [3]     LDAB  Clock_Minutes
+  002a 59           [1]     LSLD  
+  002b 59           [1]     LSLD  
+  002c 59           [1]     LSLD  
+  002d ed82         [3]     LDY   2,SP
+  002f 13           [3]     EMUL  
+  0030 1ae6         [2]     LEAX  D,X
+  0032 c610         [1]     LDAB  #16
+  0034 b60000       [3]     LDAA  Clock_Seconds
+  0037 12           [1]     MUL   
+  0038 31           [3]     PULY  
+  0039 13           [3]     EMUL  
+  003a 1ae6         [2]     LEAX  D,X
+  003c b754         [1]     TFR   X,D
+  132:  }
+  003e 30           [3]     PULX  
+  003f 3d           [5]     RTS   

@@ -1,0 +1,168 @@
+*** EVALUATION ***
+ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+
+    1:  // ----------------------------------------
+    2:  // Filename: FIFO.c
+    3:  // Description: Routines to implement a FIFO buffer 
+    4:  // Author: Danny Sok
+    5:  //         Edward Khou
+    6:  // Date Created: 4-08-2011
+    7:  // Date Last Modified: 10-08-2011
+    8:  
+    9:  #include "FIFO.h"
+   10:  
+   11:  void FIFO_Init(TFIFO * const FIFO) 
+   12:  {
+*** EVALUATION ***
+
+Function: FIFO_Init
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\FIFO.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\FIFO.c.o -WmsgSd5703
+
+   13:    FIFO->Start   = 0;
+  0000 b745         [1]     TFR   D,X
+  0002 6901         [2]     CLR   1,X
+  0004 6900         [2]     CLR   0,X
+   14:    FIFO->End     = 0;  
+  0006 6903         [2]     CLR   3,X
+  0008 6902         [2]     CLR   2,X
+   15:    FIFO->NbBytes = 0;
+  000a 6905         [2]     CLR   5,X
+  000c 6904         [2]     CLR   4,X
+   16:  }
+  000e 3d           [5]     RTS   
+   17:  
+   18:  BOOL FIFO_Put(TFIFO * const FIFO, const UINT8 data) 
+   19:  {
+*** EVALUATION ***
+
+Function: FIFO_Put
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\FIFO.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\FIFO.c.o -WmsgSd5703
+
+  0000 37           [2]     PSHB  
+   20:    // Saves state of hardware
+   21:    EnterCritical();
+  0001 39           [2]     PSHC  
+  0002 1410         [1]     SEI   
+  0004 1b81         [2]     LEAS  1,SP
+   22:    if (FIFO->NbBytes >= FIFO_SIZE)
+  0006 ee83         [3]     LDX   3,SP
+  0008 ec04         [3]     LDD   4,X
+  000a 8c0100       [2]     CPD   #256
+  000d 2506         [3/1]   BCS   *+8 ;abs = 0015
+   23:    {
+   24:      //Error
+   25:      ExitCritical();
+  000f 1b9f         [2]     LEAS  -1,SP
+  0011 38           [3]     PULC  
+   26:      return bFALSE;
+  0012 c7           [1]     CLRB  
+  0013 2026         [3]     BRA   *+40 ;abs = 003b
+   27:    } 
+   28:    else
+   29:    {
+   30:      FIFO->Buffer[FIFO->End] = data;
+  0015 b754         [1]     TFR   X,D
+  0017 e302         [3]     ADDD  2,X
+  0019 b745         [1]     TFR   D,X
+  001b e680         [3]     LDAB  0,SP
+  001d 6b06         [2]     STAB  6,X
+   31:      
+   32:      if(FIFO->End >= FIFO_SIZE - 1)      
+  001f ee83         [3]     LDX   3,SP
+  0021 ed02         [3]     LDY   2,X
+  0023 8d00ff       [2]     CPY   #255
+  0026 2506         [3/1]   BCS   *+8 ;abs = 002e
+   33:        FIFO->End = 0;
+  0028 c7           [1]     CLRB  
+  0029 87           [1]     CLRA  
+  002a 6c02         [2]     STD   2,X
+  002c 2003         [3]     BRA   *+5 ;abs = 0031
+   34:      else
+   35:        FIFO->End++;
+  002e 02           [1]     INY   
+  002f 6d02         [2]     STY   2,X
+   36:      
+   37:      FIFO->NbBytes++;
+  0031 ed04         [3]     LDY   4,X
+  0033 02           [1]     INY   
+  0034 6d04         [2]     STY   4,X
+   38:      ExitCritical();
+  0036 1b9f         [2]     LEAS  -1,SP
+  0038 38           [3]     PULC  
+   39:      return bTRUE;
+  0039 c601         [1]     LDAB  #1
+  003b 87           [1]     CLRA  
+   40:    }
+   41:  }
+  003c 1b81         [2]     LEAS  1,SP
+  003e 3d           [5]     RTS   
+   42:  
+   43:  BOOL FIFO_Get(TFIFO * const FIFO, UINT8 * const dataPtr)
+   44:  { 
+*** EVALUATION ***
+
+Function: FIFO_Get
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\FIFO.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\FIFO.c.o -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+   45:    EnterCritical(); 
+  0001 39           [2]     PSHC  
+  0002 1410         [1]     SEI   
+  0004 1b81         [2]     LEAS  1,SP
+   46:    if (FIFO->NbBytes == 0)
+  0006 ee84         [3]     LDX   4,SP
+  0008 ec04         [3]     LDD   4,X
+  000a 2606         [3/1]   BNE   *+8 ;abs = 0012
+   47:    {
+   48:      //Error
+   49:      ExitCritical();
+  000c 1b9f         [2]     LEAS  -1,SP
+  000e 38           [3]     PULC  
+   50:      return bFALSE;
+  000f c7           [1]     CLRB  
+  0010 2028         [3]     BRA   *+42 ;abs = 003a
+   51:    } 
+   52:    else
+   53:    {
+   54:      *dataPtr = FIFO->Buffer[FIFO->Start];
+  0012 b754         [1]     TFR   X,D
+  0014 e300         [3]     ADDD  0,X
+  0016 b745         [1]     TFR   D,X
+  0018 e606         [3]     LDAB  6,X
+  001a ee80         [3]     LDX   0,SP
+  001c 6b00         [2]     STAB  0,X
+   55:      
+   56:      if(FIFO->Start >= FIFO_SIZE - 1)      
+  001e ee84         [3]     LDX   4,SP
+  0020 ed00         [3]     LDY   0,X
+  0022 8d00ff       [2]     CPY   #255
+  0025 2506         [3/1]   BCS   *+8 ;abs = 002d
+   57:        FIFO->Start = 0;
+  0027 c7           [1]     CLRB  
+  0028 87           [1]     CLRA  
+  0029 6c00         [2]     STD   0,X
+  002b 2003         [3]     BRA   *+5 ;abs = 0030
+   58:      else
+   59:        FIFO->Start++;
+  002d 02           [1]     INY   
+  002e 6d00         [2]     STY   0,X
+   60:    
+   61:      FIFO->NbBytes--;
+  0030 ed04         [3]     LDY   4,X
+  0032 03           [1]     DEY   
+  0033 6d04         [2]     STY   4,X
+   62:      ExitCritical();
+  0035 1b9f         [2]     LEAS  -1,SP
+  0037 38           [3]     PULC  
+   63:      return bTRUE;
+  0038 c601         [1]     LDAB  #1
+  003a 87           [1]     CLRA  
+   64:    }
+   65:  }
+  003b 30           [3]     PULX  
+  003c 3d           [5]     RTS   
+   66:  
+   67:  

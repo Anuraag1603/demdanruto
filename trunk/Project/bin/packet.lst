@@ -1,0 +1,228 @@
+*** EVALUATION ***
+ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+
+    1:  // ----------------------------------------
+    2:  // Filename: packet.c
+    3:  // Description: Routines to implement packet
+    4:  //   encoding and decoding for the serial port
+    5:  // Author: Danny Sok
+    6:  //         Edward Khou
+    7:  // Date Created: 4-08-2011
+    8:  // Date Last Modified: 10-08-2011
+    9:  
+   10:  #include "packet.h"
+   11:  
+   12:  
+   13:  static TState FSM[STATE_SIZE];
+   14:  static UINT8 StateIndex;
+   15:  static BOOL bSwapFlag;
+   16:  
+   17:  
+   18:  BOOL Packet_Setup(const UINT32 baudRate, const UINT32 busClk)
+   19:  {
+*** EVALUATION ***
+
+Function: Packet_Setup
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\packet.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\packet.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+  0001 34           [2]     PSHX  
+   20:    (void)SCI_Setup(baudRate, busClk);
+  0002 ec88         [3]     LDD   8,SP
+  0004 3b           [2]     PSHD  
+  0005 ec88         [3]     LDD   8,SP
+  0007 3b           [2]     PSHD  
+  0008 ec86         [3]     LDD   6,SP
+  000a 160000       [4]     JSR   SCI_Setup
+  000d 1b84         [2]     LEAS  4,SP
+   21:    StateIndex = 0;
+  000f 790000       [3]     CLR   StateIndex
+   22:    bSwapFlag = bFALSE;
+  0012 c7           [1]     CLRB  
+  0013 87           [1]     CLRA  
+  0014 7c0000       [3]     STD   bSwapFlag
+   23:     
+   24:    return bTRUE;
+  0017 52           [1]     INCB  
+   25:  }
+  0018 1b84         [2]     LEAS  4,SP
+  001a 3d           [5]     RTS   
+   26:  
+   27:  BOOL Packet_Put(const UINT8 command, const UINT8 parameter1, 
+   28:    const UINT8 parameter2, const UINT8 parameter3)
+   29:  {
+*** EVALUATION ***
+
+Function: Packet_Put
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\packet.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\packet.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 37           [2]     PSHB  
+   30:    if (!Timer_Enabled(TIMER_Ch7))
+  0001 c607         [1]     LDAB  #7
+  0003 87           [1]     CLRA  
+  0004 160000       [4]     JSR   Timer_Enabled
+  0007 04640b       [3]     TBNE  D,*+14 ;abs = 0015
+   31:      Timer_Enable(TIMER_Ch7, bTRUE); // Will enable TDRF Interrupts
+  000a c607         [1]     LDAB  #7
+  000c 87           [1]     CLRA  
+  000d 3b           [2]     PSHD  
+  000e c601         [1]     LDAB  #1
+  0010 160000       [4]     JSR   Timer_Enable
+  0013 1b82         [2]     LEAS  2,SP
+   32:      
+   33:    return SCI_OutChar(command)     &&
+  0015 e685         [3]     LDAB  5,SP
+  0017 160000       [4]     JSR   SCI_OutChar
+  001a 044426       [3]     TBEQ  D,*+41 ;abs = 0043
+   34:           SCI_OutChar(parameter1)  &&
+  001d e684         [3]     LDAB  4,SP
+  001f 160000       [4]     JSR   SCI_OutChar
+  0022 04441e       [3]     TBEQ  D,*+33 ;abs = 0043
+   35:           SCI_OutChar(parameter2)  &&
+  0025 e683         [3]     LDAB  3,SP
+  0027 160000       [4]     JSR   SCI_OutChar
+  002a 044416       [3]     TBEQ  D,*+25 ;abs = 0043
+   36:           SCI_OutChar(parameter3)  &&
+  002d e680         [3]     LDAB  0,SP
+  002f 160000       [4]     JSR   SCI_OutChar
+  0032 04440e       [3]     TBEQ  D,*+17 ;abs = 0043
+   37:           SCI_OutChar( command ^ parameter1 ^ parameter2 ^ parameter3 );
+  0035 e685         [3]     LDAB  5,SP
+  0037 e884         [3]     EORB  4,SP
+  0039 e883         [3]     EORB  3,SP
+  003b e880         [3]     EORB  0,SP
+  003d 160000       [4]     JSR   SCI_OutChar
+  0040 046402       [3]     TBNE  D,*+5 ;abs = 0045
+  0043 c7           [1]     CLRB  
+  0044 8f           [2]     SKIP2 
+  0045 c601         [1]     LDAB  #1
+  0047 87           [1]     CLRA  
+   38:  }
+  0048 1b81         [2]     LEAS  1,SP
+  004a 3d           [5]     RTS   
+   39:  
+   40:  BOOL Packet_Get(void)
+   41:  {
+*** EVALUATION ***
+
+Function: Packet_Get
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\packet.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\packet.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+   42:    BOOL bStateInput = SCI_InChar(&FSM[StateIndex].data);  
+  0001 c603         [1]     LDAB  #3
+  0003 b60000       [3]     LDAA  StateIndex
+  0006 12           [1]     MUL   
+  0007 c30000       [2]     ADDD  #FSM
+  000a 160000       [4]     JSR   SCI_InChar
+  000d 6c80         [2]     STD   0,SP
+   43:   
+   44:    switch (StateIndex)
+  000f f60000       [3]     LDAB  StateIndex
+  0012 c104         [1]     CMPB  #4
+  0014 263e         [3/1]   BNE   *+64 ;abs = 0054
+   45:    {
+   46:      case 4:
+   47:        // If the FSM is full and the checksum matches, save it.
+   48:        if ( bStateInput && FSM[StateIndex].data == (FSM[0].data ^ FSM[1].data ^ FSM[2].data ^ FSM[3].data) )
+  0016 ee80         [3]     LDX   0,SP
+  0018 2733         [3/1]   BEQ   *+53 ;abs = 004d
+  001a 8603         [1]     LDAA  #3
+  001c 12           [1]     MUL   
+  001d b745         [1]     TFR   D,X
+  001f f60000       [3]     LDAB  FSM:3
+  0022 f80000       [3]     EORB  FSM
+  0025 f80000       [3]     EORB  FSM:6
+  0028 f80000       [3]     EORB  FSM:9
+  002b e1e20000     [4]     CMPB  FSM,X
+  002f 261c         [3/1]   BNE   *+30 ;abs = 004d
+   49:        {
+   50:          Packet_Command    = FSM[0].data;
+  0031 f60000       [3]     LDAB  FSM
+  0034 7b0000       [3]     STAB  Packet
+   51:          Packet_Parameter1 = FSM[1].data;
+  0037 f60000       [3]     LDAB  FSM:3
+  003a 7b0000       [3]     STAB  Packet:1
+   52:          Packet_Parameter2 = FSM[2].data;
+  003d f60000       [3]     LDAB  FSM:6
+  0040 7b0000       [3]     STAB  Packet:3
+   53:          Packet_Parameter3 = FSM[3].data;
+  0043 f60000       [3]     LDAB  FSM:9
+  0046 7b0000       [3]     STAB  Packet:2
+   54:          return bTRUE;
+  0049 c601         [1]     LDAB  #1
+  004b 2014         [3]     BRA   *+22 ;abs = 0061
+   55:        }
+   56:        else if (bStateInput)  // If it isn't, and the state machine is full, then shuffle the bytes
+  004d ec80         [3]     LDD   0,SP
+  004f 2703         [3/1]   BEQ   *+5 ;abs = 0054
+   57:          shuffleFSM();
+  0051 160000       [4]     JSR   shuffleFSM
+   58:        
+   59:        break;
+   60:    }
+   61:    
+   62:    if (bStateInput && !bSwapFlag) 
+  0054 ec80         [3]     LDD   0,SP
+  0056 2708         [3/1]   BEQ   *+10 ;abs = 0060
+  0058 fc0000       [3]     LDD   bSwapFlag
+  005b 2603         [3/1]   BNE   *+5 ;abs = 0060
+   63:    {
+   64:      //FSM->next = *FSM[StateIndex++];
+   65:      StateIndex++;   // S0, -> 1, S1 -> 2 S4-> 5
+  005d 720000       [4]     INC   StateIndex
+   66:    }
+   67:    
+   68:    return bFALSE; 
+  0060 c7           [1]     CLRB  
+  0061 87           [1]     CLRA  
+   69:  }
+  0062 30           [3]     PULX  
+  0063 3d           [5]     RTS   
+   70:  
+   71:  void shuffleFSM(void)
+   72:  {
+*** EVALUATION ***
+
+Function: shuffleFSM
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\packet.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\packet.c.o -WmsgSd1106 -WmsgSd5703
+
+   73:    INT8 i;
+   74:    for (i = 0; i < StateIndex; i++)
+  0000 87           [1]     CLRA  
+  0001 2015         [3]     BRA   *+23 ;abs = 0018
+   75:    {
+   76:      FSM[i].data = FSM[i+1].data;
+  0003 b706         [1]     SEX   A,Y
+  0005 36           [2]     PSHA  
+  0006 c603         [1]     LDAB  #3
+  0008 87           [1]     CLRA  
+  0009 13           [3]     EMUL  
+  000a b745         [1]     TFR   D,X
+  000c e6e20000     [4]     LDAB  FSM:3,X
+  0010 6be20000     [3]     STAB  FSM,X
+  0014 33           [3]     PULB  
+  0015 52           [1]     INCB  
+  0016 b710         [1]     TFR   B,A
+  0018 b705         [1]     SEX   A,X
+  001a f60000       [3]     LDAB  StateIndex
+  001d 36           [2]     PSHA  
+  001e 87           [1]     CLRA  
+  001f 3b           [2]     PSHD  
+  0020 aeb1         [3]     CPX   2,SP+
+  0022 32           [3]     PULA  
+  0023 2dde         [3/1]   BLT   *-32 ;abs = 0003
+   77:      // 1 -> 0, 2->1, 3->2, 4->3  
+   78:    }
+   79:      
+   80:    // Clear a state for new input
+   81:    bSwapFlag = bTRUE; 
+  0025 c601         [1]     LDAB  #1
+  0027 87           [1]     CLRA  
+  0028 7c0000       [3]     STD   bSwapFlag
+   82:  }
+  002b 3d           [5]     RTS   
