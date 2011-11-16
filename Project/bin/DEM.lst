@@ -1,54 +1,63 @@
 *** EVALUATION ***
 ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
 
-    1:  #include "DEM.h"
-    2:  
-    3:  void DEM_SetTarrif(void)
-    4:  {
+    1:  // ----------------------------------------
+    2:  // Filename:     DEM.c
+    3:  // Description:
+    4:  //  The Digital Energy meter library containing the cost, power and energy usage
+    5:  //
+    6:  // Author: Danny Sok
+    7:  // Date:   14-11-2011
+    8:  // Date LM: 14-11-2011
+    9:  
+   10:  #include "DEM.h"
+   11:  
+   12:  void DEM_SetTarrif(void)
+   13:  {
 *** EVALUATION ***
 
 Function: DEM_SetTarrif
 Source  : D:\Profiles\10824579\Desktop\Project\Sources\DEM.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\DEM.c.o -WmsgSd1106 -WmsgSd5703
 
-    5:    /*
-    6:    Peak 14-20
-    7:    Shoulder 7-14
-    8:    Off Peak every
-    9:    */
-   10:    
-   11:    // Time of Use
-   12:    if (DEM_Average_Power.l >= 1)
+   14:    /*
+   15:    Peak 14-20
+   16:    Shoulder 7-14
+   17:    Off Peak every
+   18:    */
+   19:    
+   20:    // Time of Use
+   21:    if (DEM_Average_Power.l >= 1)
   0000 fc0000       [3]     LDD   DEM_Average_Power
   0003 2f21         [3/1]   BLE   *+35 ;abs = 0026
-   13:    {
-   14:      
-   15:      if (Clock_Hours >= 14 && Clock_Hours <= 20)
+   22:    {
+   23:      
+   24:      if (Clock_Hours >= 14 && Clock_Hours <= 20)
   0005 f60000       [3]     LDAB  Clock_Hours
   0008 c00e         [1]     SUBB  #14
   000a c106         [1]     CMPB  #6
   000c 2205         [3/1]   BHI   *+7 ;abs = 0013
-   16:        DEM_Tarrif = sT1Peak;  
+   25:        DEM_Tarrif = sT1Peak;  
   000e fc0450       [3]     LDD   1104
   0011 2016         [3]     BRA   *+24 ;abs = 0029
-   17:      else if (Clock_Hours >= 7 && Clock_Hours <= 14)
+   26:      else if (Clock_Hours >= 7 && Clock_Hours <= 14)
   0013 f60000       [3]     LDAB  Clock_Hours
   0016 c007         [1]     SUBB  #7
   0018 c107         [1]     CMPB  #7
   001a 2205         [3/1]   BHI   *+7 ;abs = 0021
-   18:        DEM_Tarrif = sT1Shoulder;
+   27:        DEM_Tarrif = sT1Shoulder;
   001c fc0452       [3]     LDD   1106
   001f 2008         [3]     BRA   *+10 ;abs = 0029
-   19:      else
-   20:        DEM_Tarrif = sT1OffPeak;
+   28:      else
+   29:        DEM_Tarrif = sT1OffPeak;
   0021 fc0454       [3]     LDD   1108
   0024 2003         [3]     BRA   *+5 ;abs = 0029
-   21:    }
-   22:    else
-   23:    {
-   24:      DEM_Tarrif = sT2NonTOU;
+   30:    }
+   31:    else
+   32:    {
+   33:      DEM_Tarrif = sT2NonTOU;
   0026 fc0456       [3]     LDD   1110
   0029 7c0000       [3]     STD   DEM_Tarrif
-   25:    }
-   26:  }
+   34:    }
+   35:  }
   002c 3d           [5]     RTS   

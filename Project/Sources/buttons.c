@@ -27,7 +27,6 @@ void Buttons_Get(TButtonInputs * const dataPtr)
   
   //Wait Until the button is released
   //while ( !((PORTK & 0xBC) == 0) );
-  Timer_Wait();
   Timer_Enable(TIMER_Ch6, bFALSE);
   while(TFLG1_C5F);
   

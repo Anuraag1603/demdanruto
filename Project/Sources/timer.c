@@ -585,23 +585,8 @@ void Timer_Set(const TTimerChannel channelNb, const UINT16 busClkCyclesDelay)
   }  
 }
 
-void Timer_Wait(void)
-{
-  TTimerSetup timerSetup;
-  
-  timerSetup.outputCompare = bTRUE;
-  timerSetup.outputAction = TIMER_OUTPUT_DISCONNECT;      
-  timerSetup.inputDetection = TIMER_INPUT_OFF;
-  timerSetup.toggleOnOverflow = bFALSE;
-  timerSetup.interruptEnable = bFALSE;
-  
-  Timer_Init(TIMER_Ch6, &timerSetup);
-  Timer_Set(TIMER_Ch6, 24000);
-  Timer_Enable(TIMER_Ch6, bTRUE);
-}
-
 void interrupt 12 TI6_ISR(void)
 {
   TFLG1_C6F = 1;  // ACK
-  while(!TFLG1_C6F);
+  while(TFLG1_C6F);
 }

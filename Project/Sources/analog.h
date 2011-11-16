@@ -61,6 +61,6 @@ void PWM_Setup(const UINT32 busClk);
 
 void Analog_Get(const TChannelNb channelNb);
 
-void Analog_Put(void);
+void Analog_Put(const TChannelNb channelNb);
 
 #endif
