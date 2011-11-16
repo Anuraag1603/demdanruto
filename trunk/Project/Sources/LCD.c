@@ -99,6 +99,10 @@ void LCD_Setup(void)
   Timer_Init(TIMER_Ch5, &timerSetup);
   Timer_Set(TIMER_Ch5, Timer_Ch5_Delay);
   Timer_Enable(TIMER_Ch5, bTRUE);
+  
+  Timer_Init(TIMER_Ch6, &timerSetup);
+  Timer_Set(TIMER_Ch6, 65535);
+  Timer_Enable(TIMER_Ch6, bTRUE);
 }
 
 // ----------------------------------------
@@ -228,11 +232,14 @@ void LCD_OutInteger(UINT16 const data)
   UINT16 number;
   UINT8 tenThousand, thousand, hundred, ten, single;
   tenThousand = 0;
-  thousand = 0;
-  hundred  = 0;
-  ten      = 0;
-  single   = 0;
-  number   = data;   
+  thousand    = 0;
+  hundred     = 0;
+  ten         = 0;
+  single      = 0;
+  number      = data;   
+  
+  if (number >= 100000)
+    return;
   
   if (number >= 10000)
   {
@@ -273,6 +280,7 @@ void LCD_OutInteger(UINT16 const data)
   if (ten == 0 && hundred != 0)
     ten |= 0x30;
   
+  (void)LCD_OutChar(tenThousand);
   (void)LCD_OutChar(thousand);
   (void)LCD_OutChar(hundred);
   (void)LCD_OutChar(ten);

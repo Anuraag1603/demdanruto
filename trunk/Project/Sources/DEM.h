@@ -1,9 +1,17 @@
-//DEM.h
+// ----------------------------------------
+// Filename:     DEM.h
+// Description:
+//  The Digital Energy meter library containing the cost, power and energy usage
+//
+// Author: Danny Sok
+// Date:   14-11-2011
+// Date LM: 14-11-2011
 #ifndef DEM_H
 #define DEM_H
 
 #include "EEPROM.h"
 #include "clock.h"
+#include "types.h"
 
 #define DEM_PWRSIZE 16
 #define MAX_COST    7999992 //999999*8

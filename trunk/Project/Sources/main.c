@@ -46,6 +46,7 @@ void main(void)
                 
   Clock_Setup(prescaleRate, modulusCount);
   Analog_Setup(busClk);
+  PWM_Setup(busClk);
   
   Timer_Setup();
   Timer_PeriodicTimerEnable(bTRUE);
@@ -79,7 +80,7 @@ void main(void)
     // Determine if a second has passed. If it has then send a time packet  
     if ( Clock_Update() )
     {
-      //Analog_Put();
+      //Analog_Put(Ch1);
       (void)HandleTimePacket();
       HMI_Update();
     }
@@ -196,8 +197,9 @@ void HandlePacket(void)
   if (Debug)
     PTT_PTT4 ^= 1;
   
-  Analog_Put();
+  Analog_Put(Ch1);
   Analog_Get(Ch1);
+  Analog_Put(Ch2);
   Analog_Get(Ch2);
   
   // In ASYNC mode, we send only if the value has changed.
@@ -213,7 +215,7 @@ void HandlePacket(void)
       SampleCount = 0;
       Math_FindEnergy(DEM_AvePower_Array);
     }
-    DEM_AvePower_Array[SampleCount] = Math_FindPower(Analog_Input[Ch1].Value.l, Analog_Input[Ch2].Value.l);
+    DEM_AvePower_Array[SampleCount] = Math_FindPower(Analog_Input[Ch1].Value.l*10, Analog_Input[Ch2].Value.l*10);
     SampleCount++;
     
     
@@ -530,7 +532,7 @@ BOOL HandleEnergyPacket(void)
 
 BOOL HandleCostPacket(void)
 {
-  return Packet_Put(CMD_COST, (UINT8)Math_FromQNotation(DEM_Total_Cost, qRight), (UINT8)Math_FromQNotation(DEM_Total_Cost, qLeft), 0);
+  return Packet_Put(CMD_COST, (UINT8)Math_FromQNotation(DEM_Total_Cost, qRight, bFALSE), (UINT8)Math_FromQNotation(DEM_Total_Cost, qLeft, bFALSE), 0);
 }
 
 BOOL HandleFrquencyPacket(void)

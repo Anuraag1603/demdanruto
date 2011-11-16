@@ -1,3 +1,12 @@
+// ----------------------------------------
+// Filename:     DEM.c
+// Description:
+//  The Digital Energy meter library containing the cost, power and energy usage
+//
+// Author: Danny Sok
+// Date:   14-11-2011
+// Date LM: 14-11-2011
+
 #include "DEM.h"
 
 void DEM_SetTarrif(void)

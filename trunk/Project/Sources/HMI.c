@@ -83,8 +83,8 @@ void HMI_Setup(void)
 
 void HMI_Update(void)
 {
-  UINT16 tarrifL = Math_FromQNotation(DEM_Tarrif, qLeft);
-  UINT16 tarrifR = Math_FromQNotation(DEM_Tarrif, qRight);
+  UINT16 tarrifL = Math_FromQNotation(DEM_Tarrif, qLeft, bTRUE);
+  UINT16 tarrifR = Math_FromQNotation(DEM_Tarrif, qRight, bTRUE);
   
   switch(LCDState)
   {
@@ -117,8 +117,10 @@ void HMI_Update(void)
       LCD_ClearLine(2);
       LCD_SetLine(2);
       (void)LCD_OutChar(' ');
-      DEM_Average_Power.l = Math_FindPower(Analog_Input[Ch1].Value.l, Analog_Input[Ch2].Value.l);
-      LCD_OutInteger(DEM_Average_Power.l);
+      DEM_Average_Power.l = Math_FindPower(Analog_Input[Ch1].Value.l*10, Analog_Input[Ch2].Value.l*10);
+      LCD_OutInteger(Math_FromQNotation(DEM_Average_Power.l, qLeft, bFALSE));
+      (void)LCD_OutChar('.');
+      LCD_OutInteger(Math_FromQNotation(DEM_Average_Power.l, qRight, bFALSE));
       
       LCD_ClearLine(3);
       LCD_SetLine(3);
@@ -134,9 +136,9 @@ void HMI_Update(void)
       if (DEM_Total_Energy.l <= MAX_ENERGY)
       {
         (void)LCD_OutChar(' ');
-        LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qLeft) );
+        LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qLeft, bFALSE) );
         (void)LCD_OutChar('.');
-        LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qRight) );
+        LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qRight, bFALSE) );
         
         LCD_ClearLine(3);
         LCD_SetLine(3);
@@ -152,13 +154,13 @@ void HMI_Update(void)
     case TotalCost:
       LCD_ClearLine(2);
       LCD_SetLine(2);
-      DEM_Total_Cost = Math_FindCost();
+      Math_FindCost();
       if (DEM_Total_Cost <= MAX_COST)
       {
         (void)LCD_OutChar(' ');
-        LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qLeft) );
+        LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qLeft, bFALSE) );
         (void)LCD_OutChar('.');
-        LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qRight) );
+        LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qRight, bFALSE) );
         
         LCD_ClearLine(3);
         LCD_SetLine(3);
@@ -218,10 +220,9 @@ void interrupt 13 TIE5_ISR(void)
 //   LCD and HMI have been setup
 void CreateMenu(TLCDState menu)
 {
-  UINT16 tarrifL = Math_FromQNotation(DEM_Tarrif, qLeft);
-  UINT16 tarrifR = Math_FromQNotation(DEM_Tarrif, qRight);
+  UINT16 tarrifL = Math_FromQNotation(DEM_Tarrif, qLeft, bTRUE);
+  UINT16 tarrifR = Math_FromQNotation(DEM_Tarrif, qRight, bTRUE);
       
-  LCD_SetCursor(0, 1); // Reset Cursor
   X = 0;
   Y = 1;
   LCD_Clear();
@@ -269,7 +270,7 @@ void CreateMenu(TLCDState menu)
         LCD_OutInteger((UINT16)Clock_Seconds);
       }
       else
-        LCD_OutString("xx:xx:xx:xx   ");
+        LCD_OutString(" xx:xx:xx:xx  ");
       
       LCD_SetLine(3);
       LCD_OutString(" Tarrif:");
@@ -319,9 +320,9 @@ void CreateMenu(TLCDState menu)
       if (DEM_Total_Energy.l <= MAX_ENERGY)
       {
         (void)LCD_OutChar(' ');
-        LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qLeft) );
+        LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qLeft, bFALSE) );
         (void)LCD_OutChar('.');
-        LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qRight) );
+        LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qRight, bFALSE) );
       } 
       else
         LCD_OutString(" xxx.xxx      ");
@@ -347,13 +348,13 @@ void CreateMenu(TLCDState menu)
       LCD_SetLine(1);
       LCD_OutString("|  Total Cost  |");
       LCD_SetLine(2);
-      DEM_Total_Cost = Math_FindCost();
+      Math_FindCost();
       if (DEM_Total_Cost <= MAX_COST)
       {
         (void)LCD_OutChar(' ');
-        LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qLeft) );
+        LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qLeft, bFALSE) );
         (void)LCD_OutChar('.');
-        LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qRight) );
+        LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qRight, bFALSE) );
       } 
       else
       {

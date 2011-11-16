@@ -17,7 +17,7 @@ static const INT16 ADC_OFFSET = 2048; // 12 Bit Offset, 1000 0000 0000
 // 
 // Sets up the ADC and DAC
 // Input:
-//   none
+//   busClk is the bus clock speed
 // Output:
 //   none
 // Conditions:
@@ -37,7 +37,7 @@ void Analog_Setup(const UINT32 busClk)
   NbAnalogInputs.l            = 2;
   NbAnalogOutputs.l           = 2;
   
-  PWM_Setup(busClk);
+  
   SPI_Setup(&aSPISetup, busClk);
   
   // Init 0 for ADC
@@ -46,125 +46,75 @@ void Analog_Setup(const UINT32 busClk)
   PTH_PTH6 = 0;
 }
 
+// ----------------------------------------
+// PWM_Setup
+// 
+// Sets up the Pulse Width Modulators for use with the DAC (missing LPFilter)
+// Input:
+//   busClk is the bus clock speed
+// Output:
+//   none
+// Conditions:
+//   none
 void PWM_Setup(const UINT32 busClk)
 {
-    // 50 Duty Cycle => PWMDTY = 128, PWMPER = 256
+  // 50 Duty Cycle => PWMDTY = 128, PWMPER = 256
   // Setup 2 PWMs, one for Voltage, one for Current
   
-  // PWM Single (ends up as Saw Wave)
+  // PWM Setups
   
-  PWMPOL_PPOL0 = 1; // Low to High 50
-  PWMPOL_PPOL1 = 1; // Low to High 25
-  PWMPOL_PPOL2 = 1; // Low to High 0
-  PWMPOL_PPOL3 = 0; // High to Low 50
-  PWMPOL_PPOL4 = 0; // High to Low 25
-  PWMPOL_PPOL5 = 0; // High to Low 0
+  PWMPOL_PPOL0  = 1;    // Low to High 50
+  PWMPOL_PPOL1  = 1;    // Low to High 25
+  PWMPOL_PPOL2  = 1;    // Low to High 0
+  PWMPOL_PPOL3  = 0;    // High to Low 50
+  PWMPOL_PPOL4  = 0;    // High to Low 25
+  PWMPOL_PPOL5  = 0;    // High to Low 0
   
-  PWMCLK_PCLK0 = 0; // Clock A
-  PWMCLK_PCLK1 = 0; // Clock A
-  PWMCLK_PCLK2 = 0; // Clock B
-  PWMCLK_PCLK3 = 0; // Clock B
-  PWMCLK_PCLK4 = 0; // Clock A
-  PWMCLK_PCLK5 = 0; // Clock A
+  PWMCLK_PCLK0  = 1;    // Clock A
+  PWMCLK_PCLK1  = 1;    // Clock A
+  PWMCLK_PCLK2  = 1;    // Clock B
+  PWMCLK_PCLK3  = 1;    // Clock B
+  PWMCLK_PCLK4  = 1;    // Clock A
+  PWMCLK_PCLK5  = 1;    // Clock A
   
-  PWMCAE_CAE0  = 0; // Left Align
-  PWMCAE_CAE1  = 0;
-  PWMCAE_CAE2  = 0; // Left Align
-  PWMCAE_CAE3  = 0; // Left Align
-  PWMCAE_CAE4  = 1;
-  PWMCAE_CAE5  = 1; // Cen Align
+  PWMCAE_CAE0   = 0;    // Left Align
+  PWMCAE_CAE1   = 0;    // Left Align
+  PWMCAE_CAE2   = 0;    // Left Align
+  PWMCAE_CAE3   = 0;    // Left Align
+  PWMCAE_CAE4   = 0;    // Left Align
+  PWMCAE_CAE5   = 0;    // Left Align
   
-  PWMPRCLK_PCKA = 7; // busClk / 128 prescale
-  PWMPRCLK_PCKB = 7; // busClk / 128 prescale
-  
-  
-  PWMCTL_CON01 = 0; // Seperate
-  PWMCTL_CON23 = 0;
-  PWMCTL_CON45 = 0;
-  
-  PWMCTL_PSWAI = 1;
-  PWMCTL_PFRZ = 1;
-  
-  PWMPER0 = 255;
-  PWMPER1 = 255;
-  PWMPER2 = 255;
-  PWMPER3 = 255;
-  PWMPER4 = 255;
-  PWMPER5 = 255;
-  
-  PWMDTY0 = 127; // 50 Duty Cycle
-  PWMDTY1 = 63; // 25 Duty Cycle
-  PWMDTY2 = 0; // 0 Duty Cycle
-  PWMDTY3 = 127;  // 50
-  PWMDTY4 = 63;   // 25
-  PWMDTY5 = 0; // 0
-  
-  PWME_PWME0  = 1;
-  PWME_PWME1  = 1;
-  PWME_PWME2  = 1;
-  PWME_PWME3  = 1;
-  PWME_PWME4  = 1;
-  PWME_PWME5  = 1;
+  PWMPRCLK_PCKA = 7;    // busClk / 128 prescale
+  PWMPRCLK_PCKB = 7;    // busClk / 128 prescale
   
   
+  PWMCTL_CON01  = 0;    // Seperate Channel
+  PWMCTL_CON23  = 0;    // Seperate Channel
+  PWMCTL_CON45  = 0;    // Seperate Channel
   
+  PWMCTL_PSWAI  = 1;    // PWM Stops in Wait Mode           :: 1 Stop Input Clock
+  PWMCTL_PFRZ   = 1;    // PWM Counters Stop in Freeze Mode :: 1 Disable PWM Input Clock
   
-  //PWMSDN_PWMIE = 1;
+  PWMPER0       = 255;
+  PWMPER1       = 255;
+  PWMPER2       = 255;
+  PWMPER3       = 255;
+  PWMPER4       = 255;
+  PWMPER5       = 255;
   
-  /*//Pwm Concat
+  PWMDTY0       = 127;  // 50 Duty Cycle
+  PWMDTY1       = 63;   // 25 Duty Cycle
+  PWMDTY2       = 0;    // 0  Duty Cycle
+  PWMDTY3       = 127;  // 50 Duty Cycle
+  PWMDTY4       = 63;   // 25 Duty Cycle
+  PWMDTY5       = 0;    // 0  Duty Cycle
   
-  PWMPOL_PPOL0 = 1; // Low to High 50
-  PWMPOL_PPOL1 = 1; // Low to High 25
-  PWMPOL_PPOL2 = 1; // Low to High 0
-  PWMPOL_PPOL3 = 1; // High to Low 50
-  PWMPOL_PPOL4 = 1; // High to Low 25
-  PWMPOL_PPOL5 = 1; // High to Low 0
-  
-  PWMCLK_PCLK0 = 0; // Clock A
-  PWMCLK_PCLK1 = 0; // Clock A
-  PWMCLK_PCLK2 = 0; // Clock B
-  PWMCLK_PCLK3 = 0; // Clock B
-  PWMCLK_PCLK4 = 0; // Clock A
-  PWMCLK_PCLK5 = 0; // Clock A
-  
-  PWMCAE_CAE0  = 0; // Left Align
-  PWMCAE_CAE1  = 0;
-  PWMCAE_CAE2  = 0; // Left Align
-  PWMCAE_CAE3  = 0; // Left Align
-  PWMCAE_CAE4  = 0;
-  PWMCAE_CAE5  = 0; // Cen Align
-  
-  PWMPRCLK_PCKA = 7; // busClk / 128 prescale
-  PWMPRCLK_PCKB = 7; // busClk / 128 prescale
-  
-  
-  PWMCTL_CON01 = 1; // Con
-  PWMCTL_CON23 = 1;
-  PWMCTL_CON45 = 1;
-  
-  PWMCTL_PSWAI = 1;
-  PWMCTL_PFRZ = 1;
-  
-  PWMPER0 = 255;
-  PWMPER1 = 255;
-  PWMPER2 = 255;
-  PWMPER3 = 255;
-  PWMPER4 = 255;
-  PWMPER5 = 255;
-  
-  PWMDTY0 = 127; // 50 Duty Cycle
-  PWMDTY1 = 127; // 25 Duty Cycle
-  PWMDTY2 = 63; // 0 Duty Cycle
-  PWMDTY3 = 63;  // 50
-  PWMDTY4 = 0;   // 25
-  PWMDTY5 = 0; // 0
-  
-  PWME_PWME0  = 1;
-  PWME_PWME1  = 1;
-  PWME_PWME2  = 1;
-  PWME_PWME3  = 1;
-  PWME_PWME4  = 1;
-  PWME_PWME5  = 1;*/
+  PWME_PWME0    = 1;    // PWM 0 Enable
+  PWME_PWME1    = 1;    // PWM 1 Enable
+  PWME_PWME2    = 1;    // PWM 2 Enable
+  PWME_PWME3    = 1;    // PWM 3 Enable
+  PWME_PWME4    = 1;    // PWM 4 Enable
+  PWME_PWME5    = 1;    // PWM 5 Enable
 }
 
 // ----------------------------------------
@@ -182,7 +132,7 @@ void Analog_Get(const TChannelNb channelNb)
 {
   TUINT16 conversionResult;
   INT16 medianArray[3];
-  INT16 x, y, temp;
+  INT16 x, y, temp = 0;
   
   UINT8 txByte, txByte2, txByte3;
   txByte = 0x06; // Masking out D2 and don't cares [0000 0110]
@@ -216,6 +166,7 @@ void Analog_Get(const TChannelNb channelNb)
   Analog_Input[channelNb].Value2 = Analog_Input[channelNb].Value1;
   Analog_Input[channelNb].Value1 = ADC_OFFSET - (INT16)conversionResult.l;
   
+  
   Analog_Input[channelNb].OldValue.l = Analog_Input[channelNb].Value.l;
   
   medianArray[0] = Analog_Input[channelNb].Value1;
@@ -240,7 +191,17 @@ void Analog_Get(const TChannelNb channelNb)
   
 }
 
-void Analog_Put(void)
+// ----------------------------------------
+// Analog_Put
+// 
+// Places a PWM cycle into the ADC for output
+// Input:
+//   channelNb is the number of the anlog input channel to output to
+// Output:
+//   none
+// Conditions:
+//   Assumes that the DAC has been set up
+void Analog_Put(const TChannelNb channelNb)
 {
   // PWM into a filter(Low)
   // PWMCNTn(counter) -> Duty -> Pin Logic -> PWMn
@@ -249,81 +210,56 @@ void Analog_Put(void)
   // 0-> 25 -> 50 -> 25 -> 0
   // Have the values hold over the period and it should display a sine wave
   // 12 bit DAC
-  
+  UINT8 channelNbHex, i;
   TUINT16 rxByte;
   
+  switch (channelNb)
+  {
+    case Ch1:
+      channelNbHex = 0x20;
+    break;
+    case Ch2:
+      channelNbHex = 0x60;
+    break;
+  }
+  // DAC Data Structure:
+  // A1 A0   !PD !LDAC D11 D10 D9 D8 D7 D6 D5 D4 D3 D2 D1 D0
+  //|OutSel| |ContOps| |              Data                 |
+  // 2 1  0  3  4  5
+  // 0 25 50 50 25 0
+  //------------------------------------------------------------------------
+  // PWM2
   // 4 Low (Inverted) for transfer (CS4) - DAC
+  for (i = 0; i < 50; i++);
+  
   PTH_PTH4 = 0;
   PTH_PTH5 = 0;
   PTH_PTH6 = 1;
   
-  // DAC Data Structure:
-  // A1 A0   !PD !LDAC D11 D10 D9 D8 D7 D6 D5 D4 D3 D2 D1 D0
-  //|OutSel| |ContOps| |              Data                 |
   
-   
-  //SPI_ExchangeChar(0,  &rxByte.s.Hi);      // Output 1 + Normal Operation + Input register updated [0011 0000]
-  //SPI_ExchangeChar(0, &rxByte.s.Lo);
-  
-  asm nop;
-  asm nop;
-  asm nop;
-  
-  SPI_ExchangeChar( ((PWMCNT2 & 0x0F) | 0x00),  &rxByte.s.Hi);      // Output 1 + Normal Operation + Input register updated [0011 0000]
-  asm nop;
-  asm nop;
+  // Output Chan + Normal Operation + Input register updated [0110 0000]
+  SPI_ExchangeChar( ((PWMCNT2 & 0x0F) | channelNbHex),  &rxByte.s.Hi);      
   SPI_ExchangeChar(PWMCNT2, &rxByte.s.Lo);
-  asm nop;
-  SPI_ExchangeChar(PWMCNT1, &rxByte.s.Lo);
-  asm nop;
-  SPI_ExchangeChar(PWMCNT0, &rxByte.s.Lo);
-  asm nop;
   
-  SPI_ExchangeChar(PWMCNT4, &rxByte.s.Lo);
-  asm nop;
   
-  SPI_ExchangeChar(PWMCNT5, &rxByte.s.Lo);
-  
-  // 0 High (Inverted) for no transfer
+    // 0 High (Inverted) for no transfer
   PTH_PTH4 = 0;
   PTH_PTH5 = 0;
   PTH_PTH6 = 0;
   
-  asm nop;
-  asm nop;
   
-  // 4 Low (Inverted) for transfer (CS4) - DAC
+  //------------------------------------------------------------------------
+  // PWM1
+  for (i = 0; i < 50; i++);
+  
+    // 4 Low (Inverted) for transfer (CS4) - DAC
   PTH_PTH4 = 0;
   PTH_PTH5 = 0;
   PTH_PTH6 = 1;
   
-  // DAC Data Structure:
-  // A1 A0   !PD !LDAC D11 D10 D9 D8 D7 D6 D5 D4 D3 D2 D1 D0
-  //|OutSel| |ContOps| |              Data                 |
   
-   
-  //SPI_ExchangeChar(0,  &rxByte.s.Hi);      // Output 2 + Normal Operation + Input register updated [0111 0000]
-  //SPI_ExchangeChar(0, &rxByte.s.Lo);
-  
-  asm nop;
-  asm nop;
-  asm nop;
-  
-  SPI_ExchangeChar( ((PWMCNT2 & 0x0F) | 0x70),  &rxByte.s.Hi);      // Output 2 + Normal Operation + Input register updated [0111 0000]
-  asm nop;
-  asm nop;
-  
-  SPI_ExchangeChar(PWMCNT2, &rxByte.s.Lo);
-  asm nop;
+  SPI_ExchangeChar( ((PWMCNT1 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
   SPI_ExchangeChar(PWMCNT1, &rxByte.s.Lo);
-  asm nop;
-  SPI_ExchangeChar(PWMCNT0, &rxByte.s.Lo);
-  asm nop;
-  
-  SPI_ExchangeChar(PWMCNT4, &rxByte.s.Lo);
-  asm nop;
-  
-  SPI_ExchangeChar(PWMCNT5, &rxByte.s.Lo);
   
   
   // 0 High (Inverted) for no transfer
@@ -332,104 +268,115 @@ void Analog_Put(void)
   PTH_PTH6 = 0;
   
   
-    
-  /*// 4 Low (Inverted) for transfer (CS4) - DAC
+  //------------------------------------------------------------------------
+  // PWM0
+  for (i = 0; i < 60; i++);
+  
+    // 4 Low (Inverted) for transfer (CS4) - DAC
   PTH_PTH4 = 0;
   PTH_PTH5 = 0;
   PTH_PTH6 = 1;
   
-  // DAC Data Structure:
-  // A1 A0   !PD !LDAC D11 D10 D9 D8 D7 D6 D5 D4 D3 D2 D1 D0
-  //|OutSel| |ContOps| |              Data                 |
   
-   
-  //SPI_ExchangeChar(0,  &rxByte.s.Hi);      // Output 1 + Normal Operation + Input register updated [0011 0000]
-  //SPI_ExchangeChar(0, &rxByte.s.Lo);
-  
-  asm nop;
-  asm nop;
-  asm nop;
-  
-  SPI_ExchangeChar( ((PWMCNT4 & 0x0F) | 0x00),  &rxByte.s.Hi);      // Output 1 + Normal Operation + Input register updated [0011 0000]
-  asm nop;
-  asm nop;
-  
-  SPI_ExchangeChar(PWMCNT5, &rxByte.s.Lo);
-  asm nop;
-  SPI_ExchangeChar(PWMCNT2, &rxByte.s.Lo);
-  asm nop;
-  
-  SPI_ExchangeChar(PWMCNT3, &rxByte.s.Lo);
-  asm nop;
-  
-  SPI_ExchangeChar(PWMCNT1, &rxByte.s.Lo);
-  asm nop;
-  asm nop;
+  SPI_ExchangeChar( ((PWMCNT0 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
   SPI_ExchangeChar(PWMCNT0, &rxByte.s.Lo);
-  asm nop
-  SPI_ExchangeChar(PWMCNT3, &rxByte.s.Lo);
-  asm nop;
   
-  SPI_ExchangeChar(PWMCNT2, &rxByte.s.Lo);
-  asm nop;
-  SPI_ExchangeChar(PWMCNT5, &rxByte.s.Lo);
-  asm nop;
-  SPI_ExchangeChar(PWMCNT4, &rxByte.s.Lo);
   
   // 0 High (Inverted) for no transfer
   PTH_PTH4 = 0;
   PTH_PTH5 = 0;
   PTH_PTH6 = 0;
   
-  asm nop;
-  asm nop;
+  for (i = 0; i < 100; i++);
+  
+    // 4 Low (Inverted) for transfer (CS4) - DAC
+  PTH_PTH4 = 0;
+  PTH_PTH5 = 0;
+  PTH_PTH6 = 1;
+  
+  
+  SPI_ExchangeChar( ((PWMCNT0 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  SPI_ExchangeChar(PWMCNT0, &rxByte.s.Lo);
+  
+  
+  // 0 High (Inverted) for no transfer
+  PTH_PTH4 = 0;
+  PTH_PTH5 = 0;
+  PTH_PTH6 = 0;
+  
+  //------------------------------------------------------------------------
+  // PWM3
+  for (i = 0; i < 100; i++);
+    // 4 Low (Inverted) for transfer (CS4) - DAC
+  PTH_PTH4 = 0;
+  PTH_PTH5 = 0;
+  PTH_PTH6 = 1;
+  
+  
+  SPI_ExchangeChar( ((PWMCNT3 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  SPI_ExchangeChar(PWMCNT3, &rxByte.s.Lo);
+  
+  
+  // 0 High (Inverted) for no transfer
+  PTH_PTH4 = 0;
+  PTH_PTH5 = 0;
+  PTH_PTH6 = 0;
+  
+  
+  for (i = 0; i < 60; i++);
+    // 4 Low (Inverted) for transfer (CS4) - DAC
+  PTH_PTH4 = 0;
+  PTH_PTH5 = 0;
+  PTH_PTH6 = 1;
+  
+  
+  SPI_ExchangeChar( ((PWMCNT3 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  SPI_ExchangeChar(PWMCNT3, &rxByte.s.Lo);
+  
+  
+  // 0 High (Inverted) for no transfer
+  PTH_PTH4 = 0;
+  PTH_PTH5 = 0;
+  PTH_PTH6 = 0;
+  
+  
+  //------------------------------------------------------------------------
+  // PWM4
+  for (i = 0; i < 50; i++);
+  
+    // 4 Low (Inverted) for transfer (CS4) - DAC
+  PTH_PTH4 = 0;
+  PTH_PTH5 = 0;
+  PTH_PTH6 = 1;
+  
+  
+  SPI_ExchangeChar( ((PWMCNT4 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  SPI_ExchangeChar(PWMCNT4, &rxByte.s.Lo);
+  
+  
+  // 0 High (Inverted) for no transfer
+  PTH_PTH4 = 0;
+  PTH_PTH5 = 0;
+  PTH_PTH6 = 0;
+  PTH_PTH6 = 0;
+  
+  //------------------------------------------------------------------------
+  // PWM5
+  for (i = 0; i < 50; i++);
   
   // 4 Low (Inverted) for transfer (CS4) - DAC
   PTH_PTH4 = 0;
   PTH_PTH5 = 0;
   PTH_PTH6 = 1;
   
-  // DAC Data Structure:
-  // A1 A0   !PD !LDAC D11 D10 D9 D8 D7 D6 D5 D4 D3 D2 D1 D0
-  //|OutSel| |ContOps| |              Data                 |
-  
-   
-  //SPI_ExchangeChar(0,  &rxByte.s.Hi);      // Output 2 + Normal Operation + Input register updated [0111 0000]
-  //SPI_ExchangeChar(0, &rxByte.s.Lo);
-  
-  asm nop;
-  asm nop;
-  asm nop;
-  
-  SPI_ExchangeChar( ((PWMCNT4 & 0x0F) | 0x70),  &rxByte.s.Hi);      // Output 2 + Normal Operation + Input register updated [0111 0000]
-  asm nop;
-  asm nop;
-  
+  SPI_ExchangeChar( ((PWMCNT5 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
   SPI_ExchangeChar(PWMCNT5, &rxByte.s.Lo);
-  asm nop;
-  SPI_ExchangeChar(PWMCNT2, &rxByte.s.Lo);
-  asm nop;
   
-  SPI_ExchangeChar(PWMCNT3, &rxByte.s.Lo);
-  asm nop;
-  
-  SPI_ExchangeChar(PWMCNT1, &rxByte.s.Lo);
-  asm nop;
-  asm nop;
-  SPI_ExchangeChar(PWMCNT0, &rxByte.s.Lo);
-  asm nop
-  SPI_ExchangeChar(PWMCNT3, &rxByte.s.Lo);
-  asm nop;
-  
-  SPI_ExchangeChar(PWMCNT2, &rxByte.s.Lo);
-  asm nop;
-  SPI_ExchangeChar(PWMCNT5, &rxByte.s.Lo);
-  asm nop;
-  SPI_ExchangeChar(PWMCNT4, &rxByte.s.Lo);
   
   // 0 High (Inverted) for no transfer
   PTH_PTH4 = 0;
   PTH_PTH5 = 0;
-  PTH_PTH6 = 0;*/
+  PTH_PTH6 = 0;
+
   
 }
