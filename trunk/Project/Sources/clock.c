@@ -124,10 +124,10 @@ BOOL Clock_Update(void)
 
 UINT16 Clock_TimeInHours(void)
 {
-  UINT32 minutes, seconds;
-  minutes = Math_ToQN(16, 3) * (Clock_Minutes << 3);
+  UINT16 minutes, seconds;
+  minutes = (UINT16)Math_ToQN(16, 3) * (Clock_Minutes << 3);
   minutes = minutes >> 3;
-  seconds = Math_ToQN(27, 5) * (Clock_Seconds << 5);
+  seconds = (UINT16)Math_ToQN(27, 5) * (Clock_Seconds << 5);
   seconds = seconds >> 5;
   // Nfi how I'm gonna do this :S
   //return (Clock_Days * 24) + Clock_Hours + (Clock_Minutes * 0.0166666667)  = (Clock_Seconds * 0.000277777778);

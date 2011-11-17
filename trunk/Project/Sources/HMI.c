@@ -13,16 +13,18 @@
 
 // Position of the cursors
 static UINT8 X, Y;
-
-UINT32 Clock_Interval;
 static TButtonInputs PBState, PrevPBState;
 static TLCDState LCDState;
+UINT32 Clock_Interval;
+
 
 TINT16 DEM_Average_Power;
 INT16 DEM_AvePower_Array[DEM_PWRSIZE];
 TUINT32 DEM_Total_Energy;
 UINT32 DEM_Total_Cost;
 UINT16 DEM_Tarrif;
+UINT16 DEM_VRMS;
+UINT16 DEM_IRMS;
 
 // ----------------------------------------
 // HMI_Setup
@@ -85,6 +87,11 @@ void HMI_Update(void)
 {
   UINT16 tarrifL = Math_FromQN(DEM_Tarrif, qLeft, bTRUE);
   UINT16 tarrifR = Math_FromQN(DEM_Tarrif, qRight, bTRUE);
+  INT16 voltage, current;
+  DEM_SetTarrif();
+  
+  DEM_VRMS = Math_FindRMS(DEM_Average_Power.l);
+  DEM_IRMS = Math_FindRMS(Analog_Input[Ch2].Value.l);
   
   switch(LCDState)
   {
@@ -117,7 +124,9 @@ void HMI_Update(void)
       LCD_ClearLine(2);
       LCD_SetLine(2);
       (void)LCD_OutChar(' ');
-      DEM_Average_Power.l = Math_FindPower(Analog_Input[Ch1].Value.l*10, Analog_Input[Ch2].Value.l*10);
+      voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
+      current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
+      DEM_Average_Power.l = Math_FindPower(voltage, current);
       LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qLeft, bFALSE));
       (void)LCD_OutChar('.');
       LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qRight, bFALSE));

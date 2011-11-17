@@ -1244,7 +1244,9 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
 
   590:    TFLG1_C6F = 1;  // ACK
   0000 4c0040       [4]     BSET  _TFLG1,#64
-  591:    while(TFLG1_C6F);
+  591:    //OS_ISREnter();
+  592:    while(TFLG1_C6F);
   0003 4e0040fc     [4]     BRSET _TFLG1,#64,*+0 ;abs = 0003
-  592:  }
+  593:    //OS_ISRExit();
+  594:  }
   0007 0b           [8]     RTI   

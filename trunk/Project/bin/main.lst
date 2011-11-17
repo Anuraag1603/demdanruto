@@ -16,19 +16,22 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
    13:  #include "main.h"
    14:  
    15:  static UINT16 SampleCount;
-   16:  
-   17:  // ----------------------------------------
-   18:  // main
-   19:  //
-   20:  // Initializes the various peripherals
-   21:  // Handles received packets endlessly
-   22:  // Input: none
-   23:  // Output: none
-   24:  // Conditions: none
-   25:  //
-   26:  
-   27:  void main(void)
-   28:  {
+   16:  //OS_ECB SCIInUse;
+   17:  //UINT8 *SCI0Stack[1024];
+   18:  
+   19:  
+   20:  // ----------------------------------------
+   21:  // main
+   22:  //
+   23:  // Initializes the various peripherals
+   24:  // Handles received packets endlessly
+   25:  // Input: none
+   26:  // Output: none
+   27:  // Conditions: none
+   28:  //
+   29:  
+   30:  void main(void)
+   31:  {
 *** EVALUATION ***
 
 Function: main
@@ -36,12 +39,12 @@ Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Source
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 1b92         [2]     LEAS  -14,SP
-   29:    // Setup Routines.
-   30:    BOOL bSetupState;
-   31:    TTimerSetup timerSetup;
-   32:    
-   33:    
-   34:    bSetupState = Packet_Setup(baudRate, busClk) &&
+   32:    // Setup Routines.
+   33:    BOOL bSetupState;
+   34:    TTimerSetup timerSetup;
+   35:    
+   36:    
+   37:    bSetupState = Packet_Setup(baudRate, busClk) &&
   0002 86c2         [1]     LDAA  #194
   0004 c7           [1]     CLRB  
   0005 3b           [2]     PSHD  
@@ -52,7 +55,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   000f 160000       [4]     JSR   Packet_Setup
   0012 1b84         [2]     LEAS  4,SP
   0014 04443b       [3]     TBEQ  D,*+62 ;abs = 0052
-   35:                  EEPROM_Setup(oscClk, busClk) &&
+   38:                  EEPROM_Setup(oscClk, busClk) &&
   0017 8624         [1]     LDAA  #36
   0019 c7           [1]     CLRB  
   001a 3b           [2]     PSHD  
@@ -63,7 +66,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0024 160000       [4]     JSR   EEPROM_Setup
   0027 1b84         [2]     LEAS  4,SP
   0029 044426       [3]     TBEQ  D,*+41 ;abs = 0052
-   36:                  CRG_SetupPLL(busClk, oscClk, refClk) &&
+   39:                  CRG_SetupPLL(busClk, oscClk, refClk) &&
   002c 8636         [1]     LDAA  #54
   002e c7           [1]     CLRB  
   002f 3b           [2]     PSHD  
@@ -80,7 +83,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0042 160000       [4]     JSR   CRG_SetupPLL
   0045 1b88         [2]     LEAS  8,SP
   0047 044408       [3]     TBEQ  D,*+11 ;abs = 0052
-   37:                  CRG_SetupCOP(watchDogRate);
+   40:                  CRG_SetupCOP(watchDogRate);
   004a c601         [1]     LDAB  #1
   004c 160000       [4]     JSR   CRG_SetupCOP
   004f 046405       [3]     TBNE  D,*+8 ;abs = 0057
@@ -88,167 +91,174 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0055 2003         [3]     BRA   *+5 ;abs = 005a
   0057 cd0001       [2]     LDY   #1
   005a 6d8c         [2]     STY   12,SP
-   38:                  
-   39:                  
-   40:  
-   41:    timerSetup.outputCompare = bTRUE;
+   41:                  
+   42:                  
+   43:  
+   44:    timerSetup.outputCompare = bTRUE;
   005c c601         [1]     LDAB  #1
   005e 87           [1]     CLRA  
   005f 6c80         [2]     STD   0,SP
-   42:    timerSetup.outputAction = TIMER_OUTPUT_DISCONNECT;      
+   45:    timerSetup.outputAction = TIMER_OUTPUT_DISCONNECT;      
   0061 6983         [2]     CLR   3,SP
   0063 6982         [2]     CLR   2,SP
-   43:    timerSetup.inputDetection = TIMER_INPUT_OFF;
+   46:    timerSetup.inputDetection = TIMER_INPUT_OFF;
   0065 6985         [2]     CLR   5,SP
   0067 6984         [2]     CLR   4,SP
-   44:    timerSetup.toggleOnOverflow = bFALSE;
+   47:    timerSetup.toggleOnOverflow = bFALSE;
   0069 6987         [2]     CLR   7,SP
   006b 6986         [2]     CLR   6,SP
-   45:    timerSetup.interruptEnable = bTRUE;
+   48:    timerSetup.interruptEnable = bTRUE;
   006d 6c88         [2]     STD   8,SP
-   46:                  
-   47:    Clock_Setup(prescaleRate, modulusCount);
+   49:                  
+   50:    Clock_Setup(prescaleRate, modulusCount);
   006f c607         [1]     LDAB  #7
   0071 37           [2]     PSHB  
   0072 c60f         [1]     LDAB  #15
   0074 160000       [4]     JSR   Clock_Setup
   0077 32           [3]     PULA  
-   48:    Analog_Setup(busClk);
+   51:    Analog_Setup(busClk);
   0078 8636         [1]     LDAA  #54
   007a c7           [1]     CLRB  
   007b ce016e       [2]     LDX   #366
   007e 160000       [4]     JSR   Analog_Setup
-   49:    PWM_Setup(busClk);
+   52:    PWM_Setup(busClk);
   0081 8636         [1]     LDAA  #54
   0083 c7           [1]     CLRB  
   0084 ce016e       [2]     LDX   #366
   0087 160000       [4]     JSR   PWM_Setup
-   50:    
-   51:    Timer_Setup();
+   53:    
+   54:    Timer_Setup();
   008a 160000       [4]     JSR   Timer_Setup
-   52:    Timer_PeriodicTimerEnable(bTRUE);
+   55:    Timer_PeriodicTimerEnable(bTRUE);
   008d c601         [1]     LDAB  #1
   008f 87           [1]     CLRA  
   0090 160000       [4]     JSR   Timer_PeriodicTimerEnable
-   53:    Timer_SetupPeriodicTimer(Periodic_Delay, busClk);
-  0093 cc4e20       [2]     LDD   #20000
+   56:    Timer_SetupPeriodicTimer(Periodic_Delay, busClk);
+  0093 cc03e8       [2]     LDD   #1000
   0096 3b           [2]     PSHD  
   0097 8636         [1]     LDAA  #54
   0099 c7           [1]     CLRB  
   009a ce016e       [2]     LDX   #366
   009d 160000       [4]     JSR   Timer_SetupPeriodicTimer
   00a0 3a           [3]     PULD  
-   54:    
-   55:    Timer_SetupPulseAccumulators();
+   57:    
+   58:    Timer_SetupPulseAccumulators();
   00a1 160000       [4]     JSR   Timer_SetupPulseAccumulators
-   56:    Timer_Init(TIMER_Ch7, &timerSetup);
+   59:    Timer_Init(TIMER_Ch7, &timerSetup);
   00a4 c607         [1]     LDAB  #7
   00a6 87           [1]     CLRA  
   00a7 3b           [2]     PSHD  
   00a8 1a82         [2]     LEAX  2,SP
   00aa b7c5         [1]     EXG   D,X
   00ac 160000       [4]     JSR   Timer_Init
-   57:    Timer_Set(TIMER_Ch7, Timer_Ch7_Delay);
+   60:    Timer_Set(TIMER_Ch7, Timer_Ch7_Delay);
   00af c607         [1]     LDAB  #7
   00b1 87           [1]     CLRA  
   00b2 6c80         [2]     STD   0,SP
   00b4 cc07d0       [2]     LDD   #2000
   00b7 160000       [4]     JSR   Timer_Set
   00ba 3a           [3]     PULD  
-   58:    HMI_Setup();
+   61:    HMI_Setup();
   00bb 160000       [4]     JSR   HMI_Setup
-   59:    
-   60:    if (bSetupState)
+   62:    
+   63:    if (bSetupState)
   00be ec8c         [3]     LDD   12,SP
   00c0 2706         [3/1]   BEQ   *+8 ;abs = 00c8
-   61:    {
-   62:      // Turn on LED D11 to show success.
-   63:      DDRE_BIT7   = 1;
+   64:    {
+   65:      // Turn on LED D11 to show success.
+   66:      DDRE_BIT7   = 1;
   00c2 4c0080       [4]     BSET  _DDRE,#128
-   64:      PORTE_BIT7  = 0;
+   67:      PORTE_BIT7  = 0;
   00c5 4d0080       [4]     BCLR  _PORTE,#128
-   65:    }
-   66:    
-   67:    EnableInterrupts;
-  00c8 10ef         [1]     CLI   
-   68:    (void)HandleStartupPacket();
-  00ca 160000       [4]     JSR   HandleStartupPacket
+   68:    }
    69:    
-   70:    SampleCount = 0;
+   70:    EnableInterrupts;
+  00c8 10ef         [1]     CLI   
+   71:    (void)HandleStartupPacket();
+  00ca 160000       [4]     JSR   HandleStartupPacket
+   72:    
+   73:    SampleCount = 0;
   00cd c7           [1]     CLRB  
   00ce 87           [1]     CLRA  
   00cf 7c0000       [3]     STD   SampleCount
-   71:    
-   72:    // Main loop
-   73:    for (;;)
-   74:    {
-   75:      ARMCOP = copReset;
+   74:    
+   75:    //OS_Init();
+   76:    //
+   77:    //SCIInUse = OS_SemaphoreCreate(1); 
+   78:    //error = OS_ThreadCreate(SCIThread, (void *)&SCI0DR, &SCI0Stack[1024], 10);
+   79:     
+   80:    //OS_Start();
+   81:    
+   82:    // Main loop
+   83:    for (;;)
+   84:    {
+   85:      ARMCOP = copReset;
   00d2 c655         [1]     LDAB  #85
   00d4 5b00         [2]     STAB  _ARMCOP
-   76:      
-   77:      if ( Packet_Get() )
+   86:      
+   87:      if ( Packet_Get() )
   00d6 160000       [4]     JSR   Packet_Get
   00d9 044403       [3]     TBEQ  D,*+6 ;abs = 00df
-   78:        HandlePacket();
+   88:        HandlePacket();
   00dc 160000       [4]     JSR   HandlePacket
-   79:      
-   80:      // Determine if a second has passed. If it has then send a time packet  
-   81:      if ( Clock_Update() )
+   89:      
+   90:      // Determine if a second has passed. If it has then send a time packet  
+   91:      if ( Clock_Update() )
   00df 160000       [4]     JSR   Clock_Update
   00e2 044406       [3]     TBEQ  D,*+9 ;abs = 00eb
-   82:      {
-   83:        //Analog_Put(Ch1);
-   84:        (void)HandleTimePacket();
+   92:      {
+   93:        //Analog_Put(Ch1);
+   94:        (void)HandleTimePacket();
   00e5 160000       [4]     JSR   HandleTimePacket
-   85:        HMI_Update();
+   95:        HMI_Update();
   00e8 160000       [4]     JSR   HMI_Update
-   86:      }
-   87:      
-   88:      
-   89:    
-   90:      ARMCOP = copEnd;
+   96:      }
+   97:      
+   98:      
+   99:    
+  100:      ARMCOP = copEnd;
   00eb c6aa         [1]     LDAB  #170
   00ed 5b00         [2]     STAB  _ARMCOP
   00ef 20e1         [3]     BRA   *-29 ;abs = 00d2
-   91:    }
-   92:  }
-   93:  
-   94:  //---------------------------------
-   95:  //  HandlePacket
-   96:  //
-   97:  //  Determines what packet is recieved, then replies with the
-   98:  //  coresponding answer
-   99:  //  Input: none
-  100:  //  Output: none
-  101:  //  Conditions: none
-  102:  void HandlePacket(void)
-  103:  {
+  101:    }
+  102:  }
+  103:  
+  104:  //---------------------------------
+  105:  //  HandlePacket
+  106:  //
+  107:  //  Determines what packet is recieved, then replies with the
+  108:  //  coresponding answer
+  109:  //  Input: none
+  110:  //  Output: none
+  111:  //  Conditions: none
+  112:  void HandlePacket(void)
+  113:  {
 *** EVALUATION ***
 
 Function: HandlePacket
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  104:    BOOL bACK = bFALSE;
+  114:    BOOL bACK = bFALSE;
   0000 c7           [1]     CLRB  
   0001 87           [1]     CLRA  
   0002 3b           [2]     PSHD  
-  105:  
-  106:    if (Packet_Command >= 0x80) // 128 in hex
+  115:  
+  116:    if (Packet_Command >= 0x80) // 128 in hex
   0003 f60000       [3]     LDAB  Packet
   0006 c180         [1]     CMPB  #128
   0008 250c         [3/1]   BCS   *+14 ;abs = 0016
-  107:    {
-  108:      bACK = bTRUE;
+  117:    {
+  118:      bACK = bTRUE;
   000a c601         [1]     LDAB  #1
   000c 6c80         [2]     STD   0,SP
-  109:      Packet_Command -= 0x80;  
+  119:      Packet_Command -= 0x80;  
   000e f60000       [3]     LDAB  Packet
   0011 c080         [1]     SUBB  #128
   0013 7b0000       [3]     STAB  Packet
-  110:    }
-  111:    
-  112:    switch (Packet_Command)
+  120:    }
+  121:    
+  122:    switch (Packet_Command)
   0016 f60000       [3]     LDAB  Packet
   0019 c11a         [1]     CMPB  #26
   001b 2277         [3/1]   BHI   *+121 ;abs = 0094
@@ -279,122 +289,122 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0038 62           DC.B  98
   0039 67           DC.B  103
   003a 6c           DC.B  108
-  113:    {
-  114:      case CMD_STARTUP:
-  115:           Packet_CommandOK = HandleStartupPacket();
+  123:    {
+  124:      case CMD_STARTUP:
+  125:           Packet_CommandOK = HandleStartupPacket();
   003b 160000       [4]     JSR   HandleStartupPacket
-  116:      break;
+  126:      break;
   003e 2056         [3]     BRA   *+88 ;abs = 0096
-  117:      case CMD_SPECIAL:
-  118:           Packet_CommandOK = HandleSpecialPacket();
+  127:      case CMD_SPECIAL:
+  128:           Packet_CommandOK = HandleSpecialPacket();
   0040 160000       [4]     JSR   HandleSpecialPacket
-  119:      break;
+  129:      break;
   0043 2051         [3]     BRA   *+83 ;abs = 0096
-  120:      case CMD_MODCON_NB:
-  121:           Packet_CommandOK = HandleNumberPacket();
+  130:      case CMD_MODCON_NB:
+  131:           Packet_CommandOK = HandleNumberPacket();
   0045 160000       [4]     JSR   HandleNumberPacket
-  122:      break;
+  132:      break;
   0048 204c         [3]     BRA   *+78 ;abs = 0096
-  123:      case CMD_MODCON_MODE:
-  124:           Packet_CommandOK = HandleModePacket();
+  133:      case CMD_MODCON_MODE:
+  134:           Packet_CommandOK = HandleModePacket();
   004a 160000       [4]     JSR   HandleModePacket
-  125:      break;
+  135:      break;
   004d 2047         [3]     BRA   *+73 ;abs = 0096
-  126:      case CMD_EEPROM_PROG:
-  127:           Packet_CommandOK = HandleEEPROMProgramPacket();
+  136:      case CMD_EEPROM_PROG:
+  137:           Packet_CommandOK = HandleEEPROMProgramPacket();
   004f 160000       [4]     JSR   HandleEEPROMProgramPacket
-  128:      break;
+  138:      break;
   0052 2042         [3]     BRA   *+68 ;abs = 0096
-  129:      case CMD_EEPROM_GET:
-  130:           Packet_CommandOK = HandleEEPROMGetPacket();
+  139:      case CMD_EEPROM_GET:
+  140:           Packet_CommandOK = HandleEEPROMGetPacket();
   0054 160000       [4]     JSR   HandleEEPROMGetPacket
-  131:      break;
+  141:      break;
   0057 203d         [3]     BRA   *+63 ;abs = 0096
-  132:      case CMD_MODCON_PMODE:
-  133:           Packet_CommandOK = HandlePacketModePacket();
+  142:      case CMD_MODCON_PMODE:
+  143:           Packet_CommandOK = HandlePacketModePacket();
   0059 160000       [4]     JSR   HandlePacketModePacket
-  134:      break;
+  144:      break;
   005c 2038         [3]     BRA   *+58 ;abs = 0096
-  135:      case CMD_TEST_MODE:
-  136:           HandleTestModePack();
+  145:      case CMD_TEST_MODE:
+  146:           HandleTestModePack();
   005e 160000       [4]     JSR   HandleTestModePack
-  137:      break;
+  147:      break;
   0061 2036         [3]     BRA   *+56 ;abs = 0099
-  138:      case CMD_TARRIF:
-  139:           HandleTarrifPacket();
+  148:      case CMD_TARRIF:
+  149:           HandleTarrifPacket();
   0063 160000       [4]     JSR   HandleTarrifPacket
-  140:      break;
+  150:      break;
   0066 2031         [3]     BRA   *+51 ;abs = 0099
-  141:      case CMD_TIME1:
-  142:           Packet_CommandOK = HandleTime1Packet();
+  151:      case CMD_TIME1:
+  152:           Packet_CommandOK = HandleTime1Packet();
   0068 160000       [4]     JSR   HandleTime1Packet
-  143:      break;
+  153:      break;
   006b 2029         [3]     BRA   *+43 ;abs = 0096
-  144:      case CMD_TIME2:
-  145:           Packet_CommandOK = HandleTime2Packet();
+  154:      case CMD_TIME2:
+  155:           Packet_CommandOK = HandleTime2Packet();
   006d 160000       [4]     JSR   HandleTime2Packet
-  146:      break;
+  156:      break;
   0070 2024         [3]     BRA   *+38 ;abs = 0096
-  147:      case CMD_POWER:
-  148:           Packet_CommandOK = HandlePowerPacket();
+  157:      case CMD_POWER:
+  158:           Packet_CommandOK = HandlePowerPacket();
   0072 160000       [4]     JSR   HandlePowerPacket
-  149:      break;
+  159:      break;
   0075 201f         [3]     BRA   *+33 ;abs = 0096
-  150:      case CMD_ENERGY:
-  151:           Packet_CommandOK = HandleEnergyPacket();
+  160:      case CMD_ENERGY:
+  161:           Packet_CommandOK = HandleEnergyPacket();
   0077 160000       [4]     JSR   HandleEnergyPacket
-  152:      break;
+  162:      break;
   007a 201a         [3]     BRA   *+28 ;abs = 0096
-  153:      case CMD_COST:
-  154:           Packet_CommandOK = HandleCostPacket();
+  163:      case CMD_COST:
+  164:           Packet_CommandOK = HandleCostPacket();
   007c 160000       [4]     JSR   HandleCostPacket
-  155:      break;
+  165:      break;
   007f 2015         [3]     BRA   *+23 ;abs = 0096
-  156:      case CMD_FREQUENCY:
-  157:           Packet_CommandOK = HandleFrquencyPacket();
+  166:      case CMD_FREQUENCY:
+  167:           Packet_CommandOK = HandleFrquencyPacket();
   0081 160000       [4]     JSR   HandleFrquencyPacket
-  158:      break;
+  168:      break;
   0084 2010         [3]     BRA   *+18 ;abs = 0096
-  159:      case CMD_VOLRMS:
-  160:           Packet_CommandOK = HandleVRMS();
+  169:      case CMD_VOLRMS:
+  170:           Packet_CommandOK = HandleVRMS();
   0086 160000       [4]     JSR   HandleVRMS
-  161:      break;
+  171:      break;
   0089 200b         [3]     BRA   *+13 ;abs = 0096
-  162:      case CMD_CURRMS:
-  163:           Packet_CommandOK = HandleIRMS();
+  172:      case CMD_CURRMS:
+  173:           Packet_CommandOK = HandleIRMS();
   008b 160000       [4]     JSR   HandleIRMS
-  164:      break;
+  174:      break;
   008e 2006         [3]     BRA   *+8 ;abs = 0096
-  165:      case CMD_POWFAC:
-  166:           Packet_CommandOK = HandlePFactor();
+  175:      case CMD_POWFAC:
+  176:           Packet_CommandOK = HandlePFactor();
   0090 160000       [4]     JSR   HandlePFactor
-  167:      break;
+  177:      break;
   0093 8f           [2]     SKIP2 
-  168:      
-  169:      default:
-  170:           Packet_CommandOK = bFALSE;
+  178:      
+  179:      default:
+  180:           Packet_CommandOK = bFALSE;
   0094 c7           [1]     CLRB  
   0095 87           [1]     CLRA  
   0096 7c0000       [3]     STD   Packet_CommandOK
-  171:      break;
-  172:    }
-  173:           
-  174:    if (bACK && Packet_CommandOK)
+  181:      break;
+  182:    }
+  183:           
+  184:    if (bACK && Packet_CommandOK)
   0099 ec80         [3]     LDD   0,SP
   009b 270f         [3/1]   BEQ   *+17 ;abs = 00ac
   009d fc0000       [3]     LDD   Packet_CommandOK
   00a0 270a         [3/1]   BEQ   *+12 ;abs = 00ac
-  175:    {
-  176:      (void)Packet_Put(Packet_Command += 0x80, Packet_Parameter1, Packet_Parameter2, Packet_Parameter3);
+  185:    {
+  186:      (void)Packet_Put(Packet_Command += 0x80, Packet_Parameter1, Packet_Parameter2, Packet_Parameter3);
   00a2 f60000       [3]     LDAB  Packet
   00a5 cb80         [1]     ADDB  #128
   00a7 7b0000       [3]     STAB  Packet
-  177:    }
+  187:    }
   00aa 2007         [3]     BRA   *+9 ;abs = 00b3
-  178:    else if (bACK)
+  188:    else if (bACK)
   00ac ec80         [3]     LDD   0,SP
   00ae 2714         [3/1]   BEQ   *+22 ;abs = 00c4
-  179:      (void)Packet_Put(Packet_Command, Packet_Parameter1, Packet_Parameter2, Packet_Parameter3);
+  189:      (void)Packet_Put(Packet_Command, Packet_Parameter1, Packet_Parameter2, Packet_Parameter3);
   00b0 f60000       [3]     LDAB  Packet
   00b3 37           [2]     PSHB  
   00b4 f60000       [3]     LDAB  Packet:1
@@ -404,23 +414,23 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   00bc f60000       [3]     LDAB  Packet:2
   00bf 160000       [4]     JSR   Packet_Put
   00c2 1b83         [2]     LEAS  3,SP
-  180:    
-  181:  
-  182:    
-  183:   }
+  190:    
+  191:  
+  192:    
+  193:   }
   00c4 3a           [3]     PULD  
   00c5 3d           [5]     RTS   
-  184:  
-  185:  //---------------------------------
-  186:  //  MCCNT_ISR
-  187:  //
-  188:  //  The ISR for Modulus Count.
-  189:  //  This will send the analog values to the pc
-  190:  //  Input: none
-  191:  //  Output: none
-  192:  //  Conditions: none    
-  193:   void interrupt 26 MCCNT_ISR(void)
-  194:   {
+  194:  
+  195:  //---------------------------------
+  196:  //  MCCNT_ISR
+  197:  //
+  198:  //  The ISR for Modulus Count.
+  199:  //  This will send the analog values to the pc
+  200:  //  Input: none
+  201:  //  Output: none
+  202:  //  Conditions: none    
+  203:   void interrupt 26 MCCNT_ISR(void)
+  204:   {
 *** EVALUATION ***
 
 Function: MCCNT_ISR
@@ -428,191 +438,192 @@ Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Source
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 1b9c         [2]     LEAS  -4,SP
-  195:    INT32 voltage, current;
-  196:    MCFLG_MCZF = 1; // Clear/Ack
+  205:    INT32 voltage, current;
+  206:    MCFLG_MCZF = 1; // Clear/Ack
   0002 4c0080       [4]     BSET  _MCFLG,#128
-  197:    
-  198:    
-  199:    if (Debug)
+  207:    //OS_ISREnter();  
+  208:    
+  209:    if (Debug)
   0005 fc0420       [3]     LDD   1056
   0008 2708         [3/1]   BEQ   *+10 ;abs = 0012
-  200:      PTT_PTT4 ^= 1;
+  210:      PTT_PTT4 ^= 1;
   000a f60000       [3]     LDAB  _PTT
   000d c810         [1]     EORB  #16
   000f 7b0000       [3]     STAB  _PTT
-  201:    
-  202:    Analog_Put(Ch1);
+  211:    
+  212:    Analog_Put(Ch1);
   0012 c7           [1]     CLRB  
   0013 87           [1]     CLRA  
   0014 160000       [4]     JSR   Analog_Put
-  203:    Analog_Get(Ch1);
+  213:    Analog_Get(Ch1);
   0017 c7           [1]     CLRB  
   0018 87           [1]     CLRA  
   0019 160000       [4]     JSR   Analog_Get
-  204:    Analog_Put(Ch2);
+  214:    Analog_Put(Ch2);
   001c c601         [1]     LDAB  #1
   001e 87           [1]     CLRA  
   001f 160000       [4]     JSR   Analog_Put
-  205:    Analog_Get(Ch2);
+  215:    Analog_Get(Ch2);
   0022 c601         [1]     LDAB  #1
   0024 87           [1]     CLRA  
   0025 160000       [4]     JSR   Analog_Get
-  206:    
-  207:    // In ASYNC mode, we send only if the value has changed.
-  208:    if (sControlMode == PACKET_ASYNCHRONOUS)
+  216:    
+  217:    // In ASYNC mode, we send only if the value has changed.
+  218:    if (sControlMode == PACKET_ASYNCHRONOUS)
   0028 fc0404       [3]     LDD   1028
-  002b 2660         [3/1]   BNE   *+98 ;abs = 008d
-  209:    {
-  210:      if (Analog_Input[Ch1].OldValue.l != Analog_Input[Ch1].Value.l)
+  002b 2663         [3/1]   BNE   *+101 ;abs = 0090
+  219:    {
+  220:      if (Analog_Input[Ch1].OldValue.l != Analog_Input[Ch1].Value.l)
   002d fc0000       [3]     LDD   Analog_Input:2
   0030 bc0000       [3]     CPD   Analog_Input
   0033 2705         [3/1]   BEQ   *+7 ;abs = 003a
-  211:        (void)HandleAnalogValPacket(Ch1);
+  221:        (void)HandleAnalogValPacket(Ch1);
   0035 c7           [1]     CLRB  
   0036 87           [1]     CLRA  
   0037 160000       [4]     JSR   HandleAnalogValPacket
-  212:      if (Analog_Input[Ch2].OldValue.l != Analog_Input[Ch2].Value.l)
+  222:      if (Analog_Input[Ch2].OldValue.l != Analog_Input[Ch2].Value.l)
   003a fc0000       [3]     LDD   Analog_Input:12
   003d bc0000       [3]     CPD   Analog_Input:10
   0040 2706         [3/1]   BEQ   *+8 ;abs = 0048
-  213:        (void)HandleAnalogValPacket(Ch2);
+  223:        (void)HandleAnalogValPacket(Ch2);
   0042 c601         [1]     LDAB  #1
   0044 87           [1]     CLRA  
   0045 160000       [4]     JSR   HandleAnalogValPacket
-  214:      
-  215:      if (SampleCount >= DEM_PWRSIZE)
+  224:      
+  225:      if (SampleCount >= DEM_PWRSIZE)
   0048 fc0000       [3]     LDD   SampleCount
   004b 8c0010       [2]     CPD   #16
   004e 250b         [3/1]   BCS   *+13 ;abs = 005b
-  216:      {
-  217:        SampleCount = 0;
+  226:      {
+  227:        SampleCount = 0;
   0050 c7           [1]     CLRB  
   0051 87           [1]     CLRA  
   0052 7c0000       [3]     STD   SampleCount
-  218:        Math_FindEnergy(DEM_AvePower_Array);
+  228:        Math_FindEnergy(DEM_AvePower_Array);
   0055 cc0000       [2]     LDD   #DEM_AvePower_Array
   0058 160000       [4]     JSR   Math_FindEnergy
-  219:      }
-  220:      
-  221:      voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
+  229:      }
+  230:      
+  231:      voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
   005b fc0000       [3]     LDD   Analog_Input
   005e 160000       [4]     JSR   _ILSEXT
   0061 160000       [4]     JSR   Math_ConvertADCValue
-  0064 6c82         [2]     STD   2,SP
-  0066 6e80         [2]     STX   0,SP
-  222:      current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
-  0068 fc0000       [3]     LDD   Analog_Input:10
-  006b 160000       [4]     JSR   _ILSEXT
-  006e 160000       [4]     JSR   Math_ConvertADCValue
-  223:      DEM_AvePower_Array[SampleCount] = Math_FindPower(voltage, current);
-  0071 ee82         [3]     LDX   2,SP
-  0073 34           [2]     PSHX  
-  0074 160000       [4]     JSR   Math_FindPower
-  0077 30           [3]     PULX  
-  0078 b746         [1]     TFR   D,Y
-  007a fc0000       [3]     LDD   SampleCount
-  007d 59           [1]     LSLD  
-  007e b745         [1]     TFR   D,X
-  0080 6de20000     [3]     STY   DEM_AvePower_Array,X
-  224:      SampleCount++;
-  0084 fe0000       [3]     LDX   SampleCount
-  0087 08           [1]     INX   
-  0088 7e0000       [3]     STX   SampleCount
-  225:      
-  226:      
-  227:    }
-  008b 200b         [3]     BRA   *+13 ;abs = 0098
-  228:    // In SYNC mode, we send all the time.
-  229:    else
-  230:    {
-  231:      (void)HandleAnalogValPacket(Ch1);
-  008d c7           [1]     CLRB  
-  008e 87           [1]     CLRA  
-  008f 160000       [4]     JSR   HandleAnalogValPacket
-  232:      (void)HandleAnalogValPacket(Ch2);
-  0092 c601         [1]     LDAB  #1
-  0094 87           [1]     CLRA  
-  0095 160000       [4]     JSR   HandleAnalogValPacket
-  233:    }
-  234:    
-  235:    /*
-  236:    Clock_MilliSeconds += 2;
-  237:    if (Clock_MilliSeconds >= 1000)
-  238:    {
-  239:      if (Debug)
-  240:      {
-  241:        Clock_Hours++;
-  242:        Clock_MilliSeconds -= 1000;  // 1 second has passed
-  243:        
-  244:        if (Clock_Hours >= 24)
-  245:        {
-  246:          Clock_Days++;
-  247:          Clock_Hours -= 24;
-  248:        }
-  249:      }
-  250:      
-  251:      Clock_Seconds++;
-  252:      Clock_Interval++;
-  253:      Clock_MilliSeconds -= 1000;  // 1 second has passed
-  254:      
-  255:      
-  256:      
-  257:      if (Clock_Seconds >= 60)
-  258:      {
-  259:      Clock_Minutes++;               // 1 minute has passed
-  260:      Clock_Seconds -= 60;
-  261:      }
-  262:      
-  263:      if (Clock_Minutes >= 60)
-  264:      {
-  265:        Clock_Hours++;
-  266:        Clock_Minutes -= 60;
-  267:      }
-  268:         
-  269:      if (Clock_Hours >= 24)
-  270:      {
-  271:        Clock_Days++;
-  272:        Clock_Hours -= 24;
-  273:      }
-  274:    }
-  275:    
-  276:    Use later when ditching Clock*/
-  277:    
-  278:    
-  279:   }
-  0098 1b84         [2]     LEAS  4,SP
-  009a 0b           [8]     RTI   
-  280:     
-  281:   
-  282:  
-  283:  //---------------------------------
-  284:  //  HandleStartupPacket
-  285:  //
-  286:  //  Creates the packet that will be in
-  287:  //  response to the startup call by the PC.
-  288:  //  Input: none
-  289:  //  Output: none
-  290:  //  Conditions: none
-  291:  BOOL HandleStartupPacket(void)
-  292:  {
+  0064 160000       [4]     JSR   _ILSEXT
+  0067 6c82         [2]     STD   2,SP
+  0069 6e80         [2]     STX   0,SP
+  232:      current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
+  006b fc0000       [3]     LDD   Analog_Input:10
+  006e 160000       [4]     JSR   _ILSEXT
+  0071 160000       [4]     JSR   Math_ConvertADCValue
+  233:      DEM_AvePower_Array[SampleCount] = Math_FindPower(voltage, current);
+  0074 ee82         [3]     LDX   2,SP
+  0076 34           [2]     PSHX  
+  0077 160000       [4]     JSR   Math_FindPower
+  007a 30           [3]     PULX  
+  007b b746         [1]     TFR   D,Y
+  007d fc0000       [3]     LDD   SampleCount
+  0080 59           [1]     LSLD  
+  0081 b745         [1]     TFR   D,X
+  0083 6de20000     [3]     STY   DEM_AvePower_Array,X
+  234:      SampleCount++;
+  0087 fe0000       [3]     LDX   SampleCount
+  008a 08           [1]     INX   
+  008b 7e0000       [3]     STX   SampleCount
+  235:      
+  236:      
+  237:    }
+  008e 200b         [3]     BRA   *+13 ;abs = 009b
+  238:    // In SYNC mode, we send all the time.
+  239:    else
+  240:    {
+  241:      (void)HandleAnalogValPacket(Ch1);
+  0090 c7           [1]     CLRB  
+  0091 87           [1]     CLRA  
+  0092 160000       [4]     JSR   HandleAnalogValPacket
+  242:      (void)HandleAnalogValPacket(Ch2);
+  0095 c601         [1]     LDAB  #1
+  0097 87           [1]     CLRA  
+  0098 160000       [4]     JSR   HandleAnalogValPacket
+  243:    }
+  244:    
+  245:    /*
+  246:    Clock_MilliSeconds += 2;
+  247:    if (Clock_MilliSeconds >= 1000)
+  248:    {
+  249:      if (Debug)
+  250:      {
+  251:        Clock_Hours++;
+  252:        Clock_MilliSeconds -= 1000;  // 1 second has passed
+  253:        
+  254:        if (Clock_Hours >= 24)
+  255:        {
+  256:          Clock_Days++;
+  257:          Clock_Hours -= 24;
+  258:        }
+  259:      }
+  260:      
+  261:      Clock_Seconds++;
+  262:      Clock_Interval++;
+  263:      Clock_MilliSeconds -= 1000;  // 1 second has passed
+  264:      
+  265:      
+  266:      
+  267:      if (Clock_Seconds >= 60)
+  268:      {
+  269:      Clock_Minutes++;               // 1 minute has passed
+  270:      Clock_Seconds -= 60;
+  271:      }
+  272:      
+  273:      if (Clock_Minutes >= 60)
+  274:      {
+  275:        Clock_Hours++;
+  276:        Clock_Minutes -= 60;
+  277:      }
+  278:         
+  279:      if (Clock_Hours >= 24)
+  280:      {
+  281:        Clock_Days++;
+  282:        Clock_Hours -= 24;
+  283:      }
+  284:    }
+  285:    
+  286:    Use later when ditching Clock*/
+  287:    
+  288:    //OS_ISRExit();
+  289:   }
+  009b 1b84         [2]     LEAS  4,SP
+  009d 0b           [8]     RTI   
+  290:     
+  291:   
+  292:  
+  293:  //---------------------------------
+  294:  //  HandleStartupPacket
+  295:  //
+  296:  //  Creates the packet that will be in
+  297:  //  response to the startup call by the PC.
+  298:  //  Input: none
+  299:  //  Output: none
+  300:  //  Conditions: none
+  301:  BOOL HandleStartupPacket(void)
+  302:  {
 *** EVALUATION ***
 
 Function: HandleStartupPacket
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  293:    if(Packet_Parameter1 != 0 || Packet_Parameter1 != 0 || Packet_Parameter3 != 0)
+  303:    if(Packet_Parameter1 != 0 || Packet_Parameter1 != 0 || Packet_Parameter3 != 0)
   0000 f60000       [3]     LDAB  Packet:1
   0003 2639         [3/1]   BNE   *+59 ;abs = 003e
   0005 f60000       [3]     LDAB  Packet:2
   0008 2702         [3/1]   BEQ   *+4 ;abs = 000c
-  294:    {
-  295:      return bFALSE;  
+  304:    {
+  305:      return bFALSE;  
   000a 2032         [3]     BRA   *+52 ;abs = 003e
-  296:    }
-  297:      
-  298:    
-  299:    return Packet_Put(CMD_STARTUP, 0, 0, 0) && // startup takes 0 for all parameters
+  306:    }
+  307:      
+  308:    
+  309:    return Packet_Put(CMD_STARTUP, 0, 0, 0) && // startup takes 0 for all parameters
   000c c604         [1]     LDAB  #4
   000e 37           [2]     PSHB  
   000f c7           [1]     CLRB  
@@ -621,16 +632,16 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0012 160000       [4]     JSR   Packet_Put
   0015 1b83         [2]     LEAS  3,SP
   0017 044424       [3]     TBEQ  D,*+39 ;abs = 003e
-  300:           HandleSpecialPacket() &&
+  310:           HandleSpecialPacket() &&
   001a 160000       [4]     JSR   HandleSpecialPacket
   001d 04441e       [3]     TBEQ  D,*+33 ;abs = 003e
-  301:           HandleNumberPacket() &&
+  311:           HandleNumberPacket() &&
   0020 160000       [4]     JSR   HandleNumberPacket
   0023 044418       [3]     TBEQ  D,*+27 ;abs = 003e
-  302:           HandleModePacket() &&
+  312:           HandleModePacket() &&
   0026 160000       [4]     JSR   HandleModePacket
   0029 044412       [3]     TBEQ  D,*+21 ;abs = 003e
-  303:           Packet_Put( CMD_MODCON_PMODE, 1, (UINT8)sControlMode, 0 );
+  313:           Packet_Put( CMD_MODCON_PMODE, 1, (UINT8)sControlMode, 0 );
   002c cc010a       [2]     LDD   #266
   002f 37           [2]     PSHB  
   0030 36           [2]     PSHA  
@@ -644,49 +655,49 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   003f 8f           [2]     SKIP2 
   0040 c601         [1]     LDAB  #1
   0042 87           [1]     CLRA  
-  304:  }
+  314:  }
   0043 3d           [5]     RTS   
-  305:  
-  306:  //---------------------------------
-  307:  //  HandleSpecialPacket
-  308:  //
-  309:  //  Creates the packet that will be in
-  310:  //  response to the special call by the PC.
-  311:  //  It responds with the ModCon Version.
-  312:  //  Input: none
-  313:  //  Output: none
-  314:  //  Conditions: none
-  315:  BOOL HandleSpecialPacket(void)
-  316:  {
+  315:  
+  316:  //---------------------------------
+  317:  //  HandleSpecialPacket
+  318:  //
+  319:  //  Creates the packet that will be in
+  320:  //  response to the special call by the PC.
+  321:  //  It responds with the ModCon Version.
+  322:  //  Input: none
+  323:  //  Output: none
+  324:  //  Conditions: none
+  325:  BOOL HandleSpecialPacket(void)
+  326:  {
 *** EVALUATION ***
 
 Function: HandleSpecialPacket
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  317:    switch (Packet_Parameter1)
+  327:    switch (Packet_Parameter1)
   0000 f60000       [3]     LDAB  Packet:1
   0003 c164         [1]     CMPB  #100
   0005 2610         [3/1]   BNE   *+18 ;abs = 0017
-  318:    {
-  319:      case 'v':
-  320:        return Packet_Put(CMD_SPECIAL, 'v', MAJOR_VERSION, MINOR_VERSION);
-  321:        break;
-  322:      case 'd':
-  323:        EEPROM_Write16(&Debug, Debug ^ 1); // Set debug
+  328:    {
+  329:      case 'v':
+  330:        return Packet_Put(CMD_SPECIAL, 'v', MAJOR_VERSION, MINOR_VERSION);
+  331:        break;
+  332:      case 'd':
+  333:        EEPROM_Write16(&Debug, Debug ^ 1); // Set debug
   0007 cc0420       [2]     LDD   #1056
   000a 3b           [2]     PSHD  
   000b fc0420       [3]     LDD   1056
   000e c801         [1]     EORB  #1
   0010 160000       [4]     JSR   EEPROM_Write16
   0013 3a           [3]     PULD  
-  324:        return HandleTimePacket();
+  334:        return HandleTimePacket();
   0014 060000       [3]     JMP   HandleTimePacket
-  325:        break;
-  326:    }
-  327:    
-  328:    // If called by Startup Packet
-  329:    return Packet_Put(CMD_SPECIAL, 'v', MAJOR_VERSION, MINOR_VERSION);
+  335:        break;
+  336:    }
+  337:    
+  338:    // If called by Startup Packet
+  339:    return Packet_Put(CMD_SPECIAL, 'v', MAJOR_VERSION, MINOR_VERSION);
   0017 cc7609       [2]     LDD   #30217
   001a 37           [2]     PSHB  
   001b 36           [2]     PSHA  
@@ -695,21 +706,21 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   001f c7           [1]     CLRB  
   0020 160000       [4]     JSR   Packet_Put
   0023 1b83         [2]     LEAS  3,SP
-  330:  }
+  340:  }
   0025 3d           [5]     RTS   
-  331:  
-  332:  //---------------------------------
-  333:  //  HandleNumberPacket
-  334:  //
-  335:  //  Creates the packet that will be in
-  336:  //  response to the ModCon number call by the PC.
-  337:  //  It responds with the last five digits of our
-  338:  //  student number.
-  339:  //  Input: none
-  340:  //  Output: none
-  341:  //  Conditions: none
-  342:  BOOL HandleNumberPacket(void)
-  343:  {
+  341:  
+  342:  //---------------------------------
+  343:  //  HandleNumberPacket
+  344:  //
+  345:  //  Creates the packet that will be in
+  346:  //  response to the ModCon number call by the PC.
+  347:  //  It responds with the last five digits of our
+  348:  //  student number.
+  349:  //  Input: none
+  350:  //  Output: none
+  351:  //  Conditions: none
+  352:  BOOL HandleNumberPacket(void)
+  353:  {
 *** EVALUATION ***
 
 Function: HandleNumberPacket
@@ -717,29 +728,29 @@ Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Source
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 3b           [2]     PSHD  
-  344:    TUINT16 NbModCon;
-  345:    if (Packet_Parameter1 == 2)
+  354:    TUINT16 NbModCon;
+  355:    if (Packet_Parameter1 == 2)
   0001 f60000       [3]     LDAB  Packet:1
   0004 c102         [1]     CMPB  #2
   0006 260c         [3/1]   BNE   *+14 ;abs = 0014
-  346:    {
-  347:      NbModCon.s.Lo = Packet_Parameter2;
+  356:    {
+  357:      NbModCon.s.Lo = Packet_Parameter2;
   0008 f60000       [3]     LDAB  Packet:3
   000b 6b81         [2]     STAB  1,SP
-  348:      NbModCon.s.Hi = Packet_Parameter3;
+  358:      NbModCon.s.Hi = Packet_Parameter3;
   000d f60000       [3]     LDAB  Packet:2
   0010 6b80         [2]     STAB  0,SP
-  349:      
-  350:    }
+  359:      
+  360:    }
   0012 2005         [3]     BRA   *+7 ;abs = 0019
-  351:    else
-  352:    {
-  353:      NbModCon.l = sModConNb;
+  361:    else
+  362:    {
+  363:      NbModCon.l = sModConNb;
   0014 fc0400       [3]     LDD   1024
   0017 6c80         [2]     STD   0,SP
-  354:    }
-  355:    
-  356:    return Packet_Put(CMD_MODCON_NB, 1, NbModCon.s.Lo, NbModCon.s.Hi);
+  364:    }
+  365:    
+  366:    return Packet_Put(CMD_MODCON_NB, 1, NbModCon.s.Lo, NbModCon.s.Hi);
   0019 cc010b       [2]     LDD   #267
   001c 37           [2]     PSHB  
   001d 36           [2]     PSHA  
@@ -748,33 +759,33 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0021 e683         [3]     LDAB  3,SP
   0023 160000       [4]     JSR   Packet_Put
   0026 1b83         [2]     LEAS  3,SP
-  357:    
-  358:  }
+  367:    
+  368:  }
   0028 30           [3]     PULX  
   0029 3d           [5]     RTS   
-  359:  
-  360:  //---------------------------------
-  361:  //  HandleModePacket
-  362:  //
-  363:  //  Creates the packet that will be in
-  364:  //  response to the ModCon mode call by the PC.
-  365:  //  It responds with the modcon mode
-  366:  //  Input: none
-  367:  //  Output: none
-  368:  //  Conditions: none
-  369:  BOOL HandleModePacket(void)
-  370:  {
+  369:  
+  370:  //---------------------------------
+  371:  //  HandleModePacket
+  372:  //
+  373:  //  Creates the packet that will be in
+  374:  //  response to the ModCon mode call by the PC.
+  375:  //  It responds with the modcon mode
+  376:  //  Input: none
+  377:  //  Output: none
+  378:  //  Conditions: none
+  379:  BOOL HandleModePacket(void)
+  380:  {
 *** EVALUATION ***
 
 Function: HandleModePacket
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  371:    TUINT16 mode;
-  372:    mode.l = sModConMode;
+  381:    TUINT16 mode;
+  382:    mode.l = sModConMode;
   0000 fc0402       [3]     LDD   1026
   0003 3b           [2]     PSHD  
-  373:    return Packet_Put(CMD_MODCON_MODE, 1, mode.s.Lo, mode.s.Hi);
+  383:    return Packet_Put(CMD_MODCON_MODE, 1, mode.s.Lo, mode.s.Hi);
   0004 cc010d       [2]     LDD   #269
   0007 37           [2]     PSHB  
   0008 36           [2]     PSHA  
@@ -783,21 +794,21 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   000c e683         [3]     LDAB  3,SP
   000e 160000       [4]     JSR   Packet_Put
   0011 1b83         [2]     LEAS  3,SP
-  374:  }
+  384:  }
   0013 30           [3]     PULX  
   0014 3d           [5]     RTS   
-  375:  
-  376:  //---------------------------------
-  377:  //  HandleEEPROMProgramPacket
-  378:  //
-  379:  //  Creates the packet that will be in
-  380:  //  response to the ModCon EEPROM Programming call by the PC.
-  381:  //  It responds by writing the data recieved
-  382:  //  Input: none
-  383:  //  Output: none
-  384:  //  Conditions: none
-  385:  BOOL HandleEEPROMProgramPacket(void)
-  386:  {
+  385:  
+  386:  //---------------------------------
+  387:  //  HandleEEPROMProgramPacket
+  388:  //
+  389:  //  Creates the packet that will be in
+  390:  //  response to the ModCon EEPROM Programming call by the PC.
+  391:  //  It responds by writing the data recieved
+  392:  //  Input: none
+  393:  //  Output: none
+  394:  //  Conditions: none
+  395:  BOOL HandleEEPROMProgramPacket(void)
+  396:  {
 *** EVALUATION ***
 
 Function: HandleEEPROMProgramPacket
@@ -805,44 +816,44 @@ Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Source
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 3b           [2]     PSHD  
-  387:    TUINT16 address;
-  388:    address.s.Lo = Packet_Parameter1;    //LSB
+  397:    TUINT16 address;
+  398:    address.s.Lo = Packet_Parameter1;    //LSB
   0001 f60000       [3]     LDAB  Packet:1
   0004 6b81         [2]     STAB  1,SP
-  389:    address.s.Hi = Packet_Parameter2;    //MSB
+  399:    address.s.Hi = Packet_Parameter2;    //MSB
   0006 f60000       [3]     LDAB  Packet:3
   0009 6b80         [2]     STAB  0,SP
-  390:    
-  391:    if (address.s.Hi == 10 && address.s.Lo == 0)
+  400:    
+  401:    if (address.s.Hi == 10 && address.s.Lo == 0)
   000b c10a         [1]     CMPB  #10
   000d 2609         [3/1]   BNE   *+11 ;abs = 0018
   000f e681         [3]     LDAB  1,SP
   0011 2605         [3/1]   BNE   *+7 ;abs = 0018
-  392:      return EEPROM_Erase();
+  402:      return EEPROM_Erase();
   0013 160000       [4]     JSR   EEPROM_Erase
   0016 200b         [3]     BRA   *+13 ;abs = 0023
-  393:  
-  394:    return EEPROM_Write8( (volatile UINT8 *)address.l, Packet_Parameter3 ); 
+  403:  
+  404:    return EEPROM_Write8( (volatile UINT8 *)address.l, Packet_Parameter3 ); 
   0018 ec80         [3]     LDD   0,SP
   001a 3b           [2]     PSHD  
   001b f60000       [3]     LDAB  Packet:2
   001e 160000       [4]     JSR   EEPROM_Write8
   0021 1b82         [2]     LEAS  2,SP
-  395:  }
+  405:  }
   0023 30           [3]     PULX  
   0024 3d           [5]     RTS   
-  396:  
-  397:  //---------------------------------
-  398:  //  HandleEEPROMGetPacket
-  399:  //
-  400:  //  Creates the packet that will be in
-  401:  //  response to the ModCon mode call by the PC.
-  402:  //  It responds with the modcon mode
-  403:  //  Input: none
-  404:  //  Output: none
-  405:  //  Conditions: none
-  406:  BOOL HandleEEPROMGetPacket(void)
-  407:  {
+  406:  
+  407:  //---------------------------------
+  408:  //  HandleEEPROMGetPacket
+  409:  //
+  410:  //  Creates the packet that will be in
+  411:  //  response to the ModCon mode call by the PC.
+  412:  //  It responds with the modcon mode
+  413:  //  Input: none
+  414:  //  Output: none
+  415:  //  Conditions: none
+  416:  BOOL HandleEEPROMGetPacket(void)
+  417:  {
 *** EVALUATION ***
 
 Function: HandleEEPROMGetPacket
@@ -850,25 +861,25 @@ Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Source
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 3b           [2]     PSHD  
-  408:    TUINT16 address;
-  409:    address.s.Lo = Packet_Parameter1;
+  418:    TUINT16 address;
+  419:    address.s.Lo = Packet_Parameter1;
   0001 f60000       [3]     LDAB  Packet:1
   0004 6b81         [2]     STAB  1,SP
-  410:    address.s.Hi = Packet_Parameter2;
+  420:    address.s.Hi = Packet_Parameter2;
   0006 b60000       [3]     LDAA  Packet:3
   0009 6a80         [2]     STAA  0,SP
-  411:    
-  412:    if ( (Packet_Parameter2 > 0x0F) || (Packet_Parameter2 < 0x04) )
+  421:    
+  422:    if ( (Packet_Parameter2 > 0x0F) || (Packet_Parameter2 < 0x04) )
   000b 810f         [1]     CMPA  #15
   000d 2204         [3/1]   BHI   *+6 ;abs = 0013
   000f 8104         [1]     CMPA  #4
   0011 2404         [3/1]   BCC   *+6 ;abs = 0017
-  413:      return bFALSE;
+  423:      return bFALSE;
   0013 c7           [1]     CLRB  
   0014 87           [1]     CLRA  
   0015 2011         [3]     BRA   *+19 ;abs = 0028
-  414:    
-  415:    return Packet_Put( CMD_EEPROM_GET, Packet_Parameter1, Packet_Parameter2, _EB(address.l) ); // cmd, lsb, msb, data
+  424:    
+  425:    return Packet_Put( CMD_EEPROM_GET, Packet_Parameter1, Packet_Parameter2, _EB(address.l) ); // cmd, lsb, msb, data
   0017 c608         [1]     LDAB  #8
   0019 37           [2]     PSHB  
   001a f60000       [3]     LDAB  Packet:1
@@ -878,29 +889,29 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0021 e600         [3]     LDAB  0,X
   0023 160000       [4]     JSR   Packet_Put
   0026 1b83         [2]     LEAS  3,SP
-  416:  }
+  426:  }
   0028 30           [3]     PULX  
   0029 3d           [5]     RTS   
-  417:  
-  418:  //---------------------------------
-  419:  //  HandleTimePacket
-  420:  //
-  421:  //  Creates the packet that will be in
-  422:  //  response to the ModCon time call by the PC.
-  423:  //  It responds with the modcon time
-  424:  //  Input: none
-  425:  //  Output: none
-  426:  //  Conditions: none
-  427:  BOOL HandleTimePacket(void)
-  428:  {
+  427:  
+  428:  //---------------------------------
+  429:  //  HandleTimePacket
+  430:  //
+  431:  //  Creates the packet that will be in
+  432:  //  response to the ModCon time call by the PC.
+  433:  //  It responds with the modcon time
+  434:  //  Input: none
+  435:  //  Output: none
+  436:  //  Conditions: none
+  437:  BOOL HandleTimePacket(void)
+  438:  {
 *** EVALUATION ***
 
 Function: HandleTimePacket
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  429:    // Intervals : 'i', Seconds, Minutes
-  430:    return Packet_Put(CMD_MODCON_TIME, 'i', Clock_Seconds, Clock_Minutes);
+  439:    // Intervals : 'i', Seconds, Minutes
+  440:    return Packet_Put(CMD_MODCON_TIME, 'i', Clock_Seconds, Clock_Minutes);
   0000 cc690c       [2]     LDD   #26892
   0003 37           [2]     PSHB  
   0004 36           [2]     PSHA  
@@ -909,34 +920,34 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0009 f60000       [3]     LDAB  Clock_Minutes
   000c 160000       [4]     JSR   Packet_Put
   000f 1b83         [2]     LEAS  3,SP
-  431:  }
+  441:  }
   0011 3d           [5]     RTS   
-  432:  
-  433:  //---------------------------------
-  434:  //  HandlePacketModePacket
-  435:  //
-  436:  //  Creates the packet that will be in
-  437:  //  response to the ModCon Packet Mode call by the PC.
-  438:  //  It responds with the Packet Mode
-  439:  //  Input: none
-  440:  //  Output: none
-  441:  //  Conditions: none
-  442:  BOOL HandlePacketModePacket(void)
-  443:  {
+  442:  
+  443:  //---------------------------------
+  444:  //  HandlePacketModePacket
+  445:  //
+  446:  //  Creates the packet that will be in
+  447:  //  response to the ModCon Packet Mode call by the PC.
+  448:  //  It responds with the Packet Mode
+  449:  //  Input: none
+  450:  //  Output: none
+  451:  //  Conditions: none
+  452:  BOOL HandlePacketModePacket(void)
+  453:  {
 *** EVALUATION ***
 
 Function: HandlePacketModePacket
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  444:    // p1: 2 = set, 1 = get
-  445:    // p2: 0 = async, 1 = sync
-  446:    // p3: 0
-  447:    if (Packet_Parameter1 == 2)
+  454:    // p1: 2 = set, 1 = get
+  455:    // p2: 0 = async, 1 = sync
+  456:    // p3: 0
+  457:    if (Packet_Parameter1 == 2)
   0000 f60000       [3]     LDAB  Packet:1
   0003 c102         [1]     CMPB  #2
   0005 260e         [3/1]   BNE   *+16 ;abs = 0015
-  448:      return EEPROM_Write16(&sControlMode, Packet_Parameter2);
+  458:      return EEPROM_Write16(&sControlMode, Packet_Parameter2);
   0007 cc0404       [2]     LDD   #1028
   000a 3b           [2]     PSHD  
   000b f60000       [3]     LDAB  Packet:3
@@ -944,9 +955,9 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   000f 160000       [4]     JSR   EEPROM_Write16
   0012 1b82         [2]     LEAS  2,SP
   0014 3d           [5]     RTS   
-  449:    if (Packet_Parameter1 == 1)
+  459:    if (Packet_Parameter1 == 1)
   0015 04210f       [3]     DBNE  B,*+18 ;abs = 0027
-  450:      return Packet_Put( CMD_MODCON_PMODE, 1, (UINT8)sControlMode, 0 ); // cmd, 1, mode, 0;  
+  460:      return Packet_Put( CMD_MODCON_PMODE, 1, (UINT8)sControlMode, 0 ); // cmd, 1, mode, 0;  
   0018 cc010a       [2]     LDD   #266
   001b 37           [2]     PSHB  
   001c 36           [2]     PSHA  
@@ -955,20 +966,20 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0021 c7           [1]     CLRB  
   0022 160000       [4]     JSR   Packet_Put
   0025 1b83         [2]     LEAS  3,SP
-  451:  }
+  461:  }
   0027 3d           [5]     RTS   
-  452:  
-  453:  //---------------------------------
-  454:  //  HandleAnalogValPacket
-  455:  //
-  456:  //  Creates the packet that will be in
-  457:  //  response to the ModCon Analog Value call by the PC.
-  458:  //  It responds with the current Analog Value
-  459:  //  Input: none
-  460:  //  Output: none
-  461:  //  Conditions: none
-  462:  BOOL HandleAnalogValPacket(TChannelNb channelNb)
-  463:  {
+  462:  
+  463:  //---------------------------------
+  464:  //  HandleAnalogValPacket
+  465:  //
+  466:  //  Creates the packet that will be in
+  467:  //  response to the ModCon Analog Value call by the PC.
+  468:  //  It responds with the current Analog Value
+  469:  //  Input: none
+  470:  //  Output: none
+  471:  //  Conditions: none
+  472:  BOOL HandleAnalogValPacket(TChannelNb channelNb)
+  473:  {
 *** EVALUATION ***
 
 Function: HandleAnalogValPacket
@@ -976,8 +987,8 @@ Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Source
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 3b           [2]     PSHD  
-  464:    // cmd, channel, lsb, msb
-  465:    return Packet_Put(CMD_ANALOG_VALUE, (UINT8)channelNb, Analog_Input[channelNb].Value.s.Lo, Analog_Input[channelNb].Value.s.Hi);  
+  474:    // cmd, channel, lsb, msb
+  475:    return Packet_Put(CMD_ANALOG_VALUE, (UINT8)channelNb, Analog_Input[channelNb].Value.s.Lo, Analog_Input[channelNb].Value.s.Hi);  
   0001 c650         [1]     LDAB  #80
   0003 37           [2]     PSHB  
   0004 a682         [3]     LDAA  2,SP
@@ -992,47 +1003,47 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0014 e6e20000     [4]     LDAB  Analog_Input,X
   0018 160000       [4]     JSR   Packet_Put
   001b 1b83         [2]     LEAS  3,SP
-  466:  }
+  476:  }
   001d 30           [3]     PULX  
   001e 3d           [5]     RTS   
-  467:  
-  468:  void HandleTestModePack(void)
-  469:  {
+  477:  
+  478:  void HandleTestModePack(void)
+  479:  {
 *** EVALUATION ***
 
 Function: HandleTestModePack
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  470:    switch(Packet_Parameter1)
+  480:    switch(Packet_Parameter1)
   0000 f60000       [3]     LDAB  Packet:1
   0003 2706         [3/1]   BEQ   *+8 ;abs = 000b
   0005 042108       [3]     DBNE  B,*+11 ;abs = 0010
-  471:    {
-  472:      case 1:
-  473:        Debug = 1;
+  481:    {
+  482:      case 1:
+  483:        Debug = 1;
   0008 c601         [1]     LDAB  #1
-  474:      break;
+  484:      break;
   000a 21           [1]     SKIP1 
-  475:      case 0:
-  476:        Debug = 0;
+  485:      case 0:
+  486:        Debug = 0;
   000b c7           [1]     CLRB  
-  477:      break;
+  487:      break;
   000c 87           [1]     CLRA  
   000d 7c0420       [3]     STD   1056
-  478:    }
-  479:  }
+  488:    }
+  489:  }
   0010 3d           [5]     RTS   
-  480:  
-  481:  void HandleTarrifPacket(void)
-  482:  {
+  490:  
+  491:  void HandleTarrifPacket(void)
+  492:  {
 *** EVALUATION ***
 
 Function: HandleTarrifPacket
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  483:    switch(Packet_Parameter1)
+  493:    switch(Packet_Parameter1)
   0000 f60000       [3]     LDAB  Packet:1
   0003 c103         [1]     CMPB  #3
   0005 221a         [3/1]   BHI   *+28 ;abs = 0021
@@ -1044,45 +1055,45 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   000e 03           DC.B  3
   000f 08           DC.B  8
   0010 0d           DC.B  13
-  484:    {
-  485:      case 1:
-  486:        DEM_Tarrif = sT1OffPeak;
+  494:    {
+  495:      case 1:
+  496:        DEM_Tarrif = sT1OffPeak;
   0011 fc0454       [3]     LDD   1108
-  487:      break;
+  497:      break;
   0014 2008         [3]     BRA   *+10 ;abs = 001e
-  488:      case 2:
-  489:        DEM_Tarrif = sT2NonTOU;
+  498:      case 2:
+  499:        DEM_Tarrif = sT2NonTOU;
   0016 fc0456       [3]     LDD   1110
-  490:      break;
+  500:      break;
   0019 2003         [3]     BRA   *+5 ;abs = 001e
-  491:      case 3:
-  492:        DEM_Tarrif = sT3NonTOU;
+  501:      case 3:
+  502:        DEM_Tarrif = sT3NonTOU;
   001b fc0458       [3]     LDD   1112
   001e 7c0000       [3]     STD   DEM_Tarrif
-  493:      break;
-  494:    }
-  495:    
-  496:    /*if (Packet_Parameter1 == 1 && Packet_Parameter3 == 0)
-  497:      DEM_Tarrif = sT1OffPeak;
-  498:    else if (Packet_Parameter1 == 2 && Packet_Parameter3 == 0)
-  499:      DEM_Tarrif = sT2NonTOU;
-  500:    else if (Packet_Parameter1 == 3 && Packet_Parameter3 == 0) 
-  501:      DEM_Tarrif = sT3NonTOU;*/
-  502:  }
+  503:      break;
+  504:    }
+  505:    
+  506:    /*if (Packet_Parameter1 == 1 && Packet_Parameter3 == 0)
+  507:      DEM_Tarrif = sT1OffPeak;
+  508:    else if (Packet_Parameter1 == 2 && Packet_Parameter3 == 0)
+  509:      DEM_Tarrif = sT2NonTOU;
+  510:    else if (Packet_Parameter1 == 3 && Packet_Parameter3 == 0) 
+  511:      DEM_Tarrif = sT3NonTOU;*/
+  512:  }
   0021 3d           [5]     RTS   
-  503:  
-  504:  BOOL HandleTime1Packet(void)
-  505:  {
+  513:  
+  514:  BOOL HandleTime1Packet(void)
+  515:  {
 *** EVALUATION ***
 
 Function: HandleTime1Packet
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  506:    if (Packet_Parameter3 == 0)
+  516:    if (Packet_Parameter3 == 0)
   0000 f60000       [3]     LDAB  Packet:2
   0003 2612         [3/1]   BNE   *+20 ;abs = 0017
-  507:      return Packet_Put(CMD_TIME1, (UINT8)Clock_Seconds, (UINT8)Clock_Minutes, 0);
+  517:      return Packet_Put(CMD_TIME1, (UINT8)Clock_Seconds, (UINT8)Clock_Minutes, 0);
   0005 c612         [1]     LDAB  #18
   0007 37           [2]     PSHB  
   0008 b60000       [3]     LDAA  Clock_Seconds
@@ -1093,32 +1104,32 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0011 160000       [4]     JSR   Packet_Put
   0014 1b83         [2]     LEAS  3,SP
   0016 3d           [5]     RTS   
-  508:    else
-  509:    {
-  510:      
-  511:      Clock_Seconds = Packet_Parameter1;
+  518:    else
+  519:    {
+  520:      
+  521:      Clock_Seconds = Packet_Parameter1;
   0017 f60000       [3]     LDAB  Packet:1
   001a 7b0000       [3]     STAB  Clock_Seconds
-  512:      Clock_Minutes = Packet_Parameter2;
+  522:      Clock_Minutes = Packet_Parameter2;
   001d f60000       [3]     LDAB  Packet:3
   0020 7b0000       [3]     STAB  Clock_Minutes
-  513:    }
-  514:    
-  515:  }
+  523:    }
+  524:    
+  525:  }
   0023 3d           [5]     RTS   
-  516:  
-  517:  BOOL HandleTime2Packet(void)
-  518:  {
+  526:  
+  527:  BOOL HandleTime2Packet(void)
+  528:  {
 *** EVALUATION ***
 
 Function: HandleTime2Packet
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  519:    if (Packet_Parameter3 == 0)
+  529:    if (Packet_Parameter3 == 0)
   0000 f60000       [3]     LDAB  Packet:2
   0003 2612         [3/1]   BNE   *+20 ;abs = 0017
-  520:      return Packet_Put(CMD_TIME2, (UINT8)Clock_Hours, (UINT8)Clock_Days, 0);
+  530:      return Packet_Put(CMD_TIME2, (UINT8)Clock_Hours, (UINT8)Clock_Days, 0);
   0005 c613         [1]     LDAB  #19
   0007 37           [2]     PSHB  
   0008 b60000       [3]     LDAA  Clock_Hours
@@ -1129,27 +1140,27 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0011 160000       [4]     JSR   Packet_Put
   0014 1b83         [2]     LEAS  3,SP
   0016 3d           [5]     RTS   
-  521:    else
-  522:    {
-  523:      Clock_Hours = Packet_Parameter1;
+  531:    else
+  532:    {
+  533:      Clock_Hours = Packet_Parameter1;
   0017 f60000       [3]     LDAB  Packet:1
   001a 7b0000       [3]     STAB  Clock_Hours
-  524:      Clock_Days = Packet_Parameter2;
+  534:      Clock_Days = Packet_Parameter2;
   001d f60000       [3]     LDAB  Packet:3
   0020 7b0000       [3]     STAB  Clock_Days
-  525:    }
-  526:  }
+  535:    }
+  536:  }
   0023 3d           [5]     RTS   
-  527:  
-  528:  BOOL HandlePowerPacket(void)
-  529:  {
+  537:  
+  538:  BOOL HandlePowerPacket(void)
+  539:  {
 *** EVALUATION ***
 
 Function: HandlePowerPacket
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  530:    return Packet_Put(CMD_POWER, DEM_Average_Power.s.Lo, DEM_Average_Power.s.Hi, 0);
+  540:    return Packet_Put(CMD_POWER, DEM_Average_Power.s.Lo, DEM_Average_Power.s.Hi, 0);
   0000 c614         [1]     LDAB  #20
   0002 37           [2]     PSHB  
   0003 b60000       [3]     LDAA  DEM_Average_Power:1
@@ -1159,18 +1170,18 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   000b c7           [1]     CLRB  
   000c 160000       [4]     JSR   Packet_Put
   000f 1b83         [2]     LEAS  3,SP
-  531:  }
+  541:  }
   0011 3d           [5]     RTS   
-  532:  
-  533:  BOOL HandleEnergyPacket(void)
-  534:  {
+  542:  
+  543:  BOOL HandleEnergyPacket(void)
+  544:  {
 *** EVALUATION ***
 
 Function: HandleEnergyPacket
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  535:    return Packet_Put(CMD_POWER, (UINT8)DEM_Total_Energy.s.Lo, (UINT8)DEM_Total_Energy.s.Hi, 0);
+  545:    return Packet_Put(CMD_POWER, (UINT8)DEM_Total_Energy.s.Lo, (UINT8)DEM_Total_Energy.s.Hi, 0);
   0000 c614         [1]     LDAB  #20
   0002 37           [2]     PSHB  
   0003 b60000       [3]     LDAA  DEM_Total_Energy:3
@@ -1180,18 +1191,18 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   000b c7           [1]     CLRB  
   000c 160000       [4]     JSR   Packet_Put
   000f 1b83         [2]     LEAS  3,SP
-  536:  }
+  546:  }
   0011 3d           [5]     RTS   
-  537:  
-  538:  BOOL HandleCostPacket(void)
-  539:  {
+  547:  
+  548:  BOOL HandleCostPacket(void)
+  549:  {
 *** EVALUATION ***
 
 Function: HandleCostPacket
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
-  540:    return Packet_Put(CMD_COST, (UINT8)Math_FromQN(DEM_Total_Cost, qRight, bFALSE), (UINT8)Math_FromQN(DEM_Total_Cost, qLeft, bFALSE), 0);
+  550:    return Packet_Put(CMD_COST, (UINT8)Math_FromQN(DEM_Total_Cost, qRight, bFALSE), (UINT8)Math_FromQN(DEM_Total_Cost, qLeft, bFALSE), 0);
   0000 c616         [1]     LDAB  #22
   0002 37           [2]     PSHB  
   0003 fc0000       [3]     LDD   DEM_Total_Cost:2
@@ -1216,42 +1227,14 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0025 c7           [1]     CLRB  
   0026 160000       [4]     JSR   Packet_Put
   0029 1b83         [2]     LEAS  3,SP
-  541:  }
-  002b 3d           [5]     RTS   
-  542:  
-  543:  BOOL HandleFrquencyPacket(void)
-  544:  {
-*** EVALUATION ***
-
-Function: HandleFrquencyPacket
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
-
-  545:    return 0;
-  0000 c7           [1]     CLRB  
-  0001 87           [1]     CLRA  
-  546:  }
-  0002 3d           [5]     RTS   
-  547:  
-  548:  BOOL HandleVRMS(void)
-  549:  {
-*** EVALUATION ***
-
-Function: HandleVRMS
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
-
-  550:    return 0;
-  0000 c7           [1]     CLRB  
-  0001 87           [1]     CLRA  
   551:  }
-  0002 3d           [5]     RTS   
+  002b 3d           [5]     RTS   
   552:  
-  553:  BOOL HandleIRMS(void)
+  553:  BOOL HandleFrquencyPacket(void)
   554:  {
 *** EVALUATION ***
 
-Function: HandleIRMS
+Function: HandleFrquencyPacket
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
@@ -1261,11 +1244,11 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   556:  }
   0002 3d           [5]     RTS   
   557:  
-  558:  BOOL HandlePFactor(void)
+  558:  BOOL HandleVRMS(void)
   559:  {
 *** EVALUATION ***
 
-Function: HandlePFactor
+Function: HandleVRMS
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
 
@@ -1273,4 +1256,32 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0000 c7           [1]     CLRB  
   0001 87           [1]     CLRA  
   561:  }
+  0002 3d           [5]     RTS   
+  562:  
+  563:  BOOL HandleIRMS(void)
+  564:  {
+*** EVALUATION ***
+
+Function: HandleIRMS
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
+
+  565:    return 0;
+  0000 c7           [1]     CLRB  
+  0001 87           [1]     CLRA  
+  566:  }
+  0002 3d           [5]     RTS   
+  567:  
+  568:  BOOL HandlePFactor(void)
+  569:  {
+*** EVALUATION ***
+
+Function: HandlePFactor
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\main.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\main.c.o" -WmsgSd1106 -WmsgSd5703
+
+  570:    return 0;
+  0000 c7           [1]     CLRB  
+  0001 87           [1]     CLRA  
+  571:  }
   0002 3d           [5]     RTS   

@@ -245,63 +245,60 @@ Function: Clock_TimeInHours
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\clock.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\clock.c.o" -WmsgSd1106 -WmsgSd5703
 
-  127:    UINT32 minutes, seconds;
-  128:    minutes = Math_ToQN(16, 3) * (Clock_Minutes << 3);
+  127:    UINT16 minutes, seconds;
+  128:    minutes = (UINT16)Math_ToQN(16, 3) * (Clock_Minutes << 3);
   0000 c610         [1]     LDAB  #16
   0002 87           [1]     CLRA  
-  0003 6caa         [2]     STD   6,-SP
+  0003 6cac         [2]     STD   4,-SP
   0005 c7           [1]     CLRB  
   0006 3b           [2]     PSHD  
   0007 c603         [1]     LDAB  #3
   0009 160000       [4]     JSR   Math_ToQN
-  000c 6ca1         [2]     STD   2,+SP
+  000c b746         [1]     TFR   D,Y
   000e f60000       [3]     LDAB  Clock_Minutes
   0011 87           [1]     CLRA  
   0012 59           [1]     LSLD  
   0013 59           [1]     LSLD  
   0014 59           [1]     LSLD  
-  0015 b746         [1]     TFR   D,Y
-  0017 3a           [3]     PULD  
-  0018 160000       [4]     JSR   _LMULU16x32
+  0015 13           [3]     EMUL  
   129:    minutes = minutes >> 3;
-  001b b746         [1]     TFR   D,Y
-  001d c603         [1]     LDAB  #3
-  001f 160000       [4]     JSR   _LSHRU
-  0022 6c82         [2]     STD   2,SP
-  0024 6e80         [2]     STX   0,SP
-  130:    seconds = Math_ToQN(27, 5) * (Clock_Seconds << 5);
-  0026 c61b         [1]     LDAB  #27
-  0028 87           [1]     CLRA  
-  0029 3b           [2]     PSHD  
-  002a 35           [2]     PSHY  
-  002b c605         [1]     LDAB  #5
-  002d 160000       [4]     JSR   Math_ToQN
-  0030 6ca1         [2]     STD   2,+SP
-  0032 c620         [1]     LDAB  #32
-  0034 b60000       [3]     LDAA  Clock_Seconds
-  0037 12           [1]     MUL   
-  0038 b746         [1]     TFR   D,Y
-  003a 3a           [3]     PULD  
-  003b 160000       [4]     JSR   _LMULU16x32
+  0016 49           [1]     LSRD  
+  0017 49           [1]     LSRD  
+  0018 49           [1]     LSRD  
+  0019 6ca3         [2]     STD   4,+SP
+  130:    seconds = (UINT16)Math_ToQN(27, 5) * (Clock_Seconds << 5);
+  001b c61b         [1]     LDAB  #27
+  001d 87           [1]     CLRA  
+  001e 3b           [2]     PSHD  
+  001f c7           [1]     CLRB  
+  0020 3b           [2]     PSHD  
+  0021 c605         [1]     LDAB  #5
+  0023 160000       [4]     JSR   Math_ToQN
+  0026 1b84         [2]     LEAS  4,SP
+  0028 b746         [1]     TFR   D,Y
+  002a c620         [1]     LDAB  #32
+  002c b60000       [3]     LDAA  Clock_Seconds
+  002f 12           [1]     MUL   
+  0030 13           [3]     EMUL  
   131:    seconds = seconds >> 5;
-  003e b746         [1]     TFR   D,Y
-  0040 c605         [1]     LDAB  #5
-  0042 160000       [4]     JSR   _LSHRU
+  0031 b746         [1]     TFR   D,Y
+  0033 c605         [1]     LDAB  #5
+  0035 160000       [4]     JSR   _ISHRU
   132:    // Nfi how I'm gonna do this :S
   133:    //return (Clock_Days * 24) + Clock_Hours + (Clock_Minutes * 0.0166666667)  = (Clock_Seconds * 0.000277777778);
   134:    return (Clock_Days * 24) + Clock_Hours + minutes + seconds;
-  0045 b746         [1]     TFR   D,Y
-  0047 c618         [1]     LDAB  #24
-  0049 b60000       [3]     LDAA  Clock_Days
-  004c 12           [1]     MUL   
-  004d b745         [1]     TFR   D,X
-  004f f60000       [3]     LDAB  Clock_Hours
-  0052 87           [1]     CLRA  
-  0053 1ae6         [2]     LEAX  D,X
-  0055 b754         [1]     TFR   X,D
-  0057 e382         [3]     ADDD  2,SP
-  0059 19ee         [2]     LEAY  D,Y
-  005b b764         [1]     TFR   Y,D
+  0038 b746         [1]     TFR   D,Y
+  003a c618         [1]     LDAB  #24
+  003c b60000       [3]     LDAA  Clock_Days
+  003f 12           [1]     MUL   
+  0040 b745         [1]     TFR   D,X
+  0042 f60000       [3]     LDAB  Clock_Hours
+  0045 87           [1]     CLRA  
+  0046 1ae6         [2]     LEAX  D,X
+  0048 b754         [1]     TFR   X,D
+  004a e380         [3]     ADDD  0,SP
+  004c 19ee         [2]     LEAY  D,Y
+  004e b764         [1]     TFR   Y,D
   135:  }
-  005d 1b84         [2]     LEAS  4,SP
-  005f 3d           [5]     RTS   
+  0050 30           [3]     PULX  
+  0051 3d           [5]     RTS   

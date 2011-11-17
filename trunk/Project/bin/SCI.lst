@@ -113,18 +113,43 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   005e 1b84         [2]     LEAS  4,SP
   0060 3d           [5]     RTS   
    68:  
-   69:  // ----------------------------------------
-   70:  // SCI_InChar
-   71:  // 
-   72:  // Get a character from the receive FIFO if it is not empty
-   73:  // Input:
-   74:  //   dataPtr is a pointer to memory to store the retrieved byte
-   75:  // Output:
-   76:  //   TRUE if the receive FIFO returned a character
-   77:  // Conditions:
-   78:  //   Assumes the receive FIFO has been initialized
-   79:  BOOL SCI_InChar(UINT8 * const dataPtr)
-   80:  { 
+   69:  /*void SCI_Thread(void *pData)
+   70:  {
+   71:    OS_ERROR error;
+   72:    
+   73:    for (;;)  
+   74:    {
+   75:      error = OS_SemaphoreWait(SCIInUse, 0); 
+   76:      OS_TimeDelay(100)
+   77:      //OS_ThreadDelete();
+   78:      OS_ENTER_CRITICAL();
+   79:      (void)SendData();
+   80:      OS_EXIT_CRITICAL();
+   81:      if (error == OS_NO_ERROR)
+   82:      {
+   83:        // signalled
+   84:        return;
+   85:      }
+   86:      else
+   87:      {
+   88:        // overflow 
+   89:        return;
+   90:      }
+   91:    }
+   92:  }*/
+   93:  
+   94:  // ----------------------------------------
+   95:  // SCI_InChar
+   96:  // 
+   97:  // Get a character from the receive FIFO if it is not empty
+   98:  // Input:
+   99:  //   dataPtr is a pointer to memory to store the retrieved byte
+  100:  // Output:
+  101:  //   TRUE if the receive FIFO returned a character
+  102:  // Conditions:
+  103:  //   Assumes the receive FIFO has been initialized
+  104:  BOOL SCI_InChar(UINT8 * const dataPtr)
+  105:  { 
 *** EVALUATION ***
 
 Function: SCI_InChar
@@ -132,28 +157,28 @@ Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Source
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\SCI.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 3b           [2]     PSHD  
-   81:    return FIFO_Get(&RxFIFO, dataPtr);
+  106:    return FIFO_Get(&RxFIFO, dataPtr);
   0001 cc0000       [2]     LDD   #RxFIFO
   0004 3b           [2]     PSHD  
   0005 ec82         [3]     LDD   2,SP
   0007 160000       [4]     JSR   FIFO_Get
   000a 1b82         [2]     LEAS  2,SP
-   82:  }
+  107:  }
   000c 30           [3]     PULX  
   000d 3d           [5]     RTS   
-   83:  
-   84:  // ----------------------------------------
-   85:  // SCI_OutChar
-   86:  //
-   87:  // Put a byte in the transmit FIFO if it is not full
-   88:  // Input:
-   89:  //   data is a byte to be placed in FIFO
-   90:  // Output:
-   91:  //   TRUE if the data was placed in the FIFO
-   92:  // Conditions:
-   93:  //   Assumes receive FIFO has been initialized
-   94:  BOOL SCI_OutChar(const UINT8 data)
-   95:  {
+  108:  
+  109:  // ----------------------------------------
+  110:  // SCI_OutChar
+  111:  //
+  112:  // Put a byte in the transmit FIFO if it is not full
+  113:  // Input:
+  114:  //   data is a byte to be placed in FIFO
+  115:  // Output:
+  116:  //   TRUE if the data was placed in the FIFO
+  117:  // Conditions:
+  118:  //   Assumes receive FIFO has been initialized
+  119:  BOOL SCI_OutChar(const UINT8 data)
+  120:  {
 *** EVALUATION ***
 
 Function: SCI_OutChar
@@ -161,41 +186,41 @@ Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Source
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\SCI.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 37           [2]     PSHB  
-   96:    if(FIFO_Put(&TxFIFO, data))
+  121:    if(FIFO_Put(&TxFIFO, data))
   0001 cc0000       [2]     LDD   #TxFIFO
   0004 3b           [2]     PSHD  
   0005 e682         [3]     LDAB  2,SP
   0007 160000       [4]     JSR   FIFO_Put
   000a 1b82         [2]     LEAS  2,SP
   000c 044403       [3]     TBEQ  D,*+6 ;abs = 0012
-   97:      return SendData();
+  122:      return SendData();
   000f 160000       [4]     JSR   SendData
-   98:    
-   99:    return bFALSE;
-  100:  }
+  123:    
+  124:    return bFALSE;
+  125:  }
   0012 1b81         [2]     LEAS  1,SP
   0014 3d           [5]     RTS   
-  101:  
-  102:  // ----------------------------------------
-  103:  // SendData
-  104:  //
-  105:  // Place a byte into the SCI0DRL register
-  106:  // Input:
-  107:  //   None.
-  108:  // Output:
-  109:  //   TRUE if the data was placed in the register
-  110:  //   FALSE if there is no data to place or unable to place
-  111:  // Conditions:
-  112:  //   Assumes receive FIFO has been initialized
-  113:  BOOL SendData(void)
-  114:  {
+  126:  
+  127:  // ----------------------------------------
+  128:  // SendData
+  129:  //
+  130:  // Place a byte into the SCI0DRL register
+  131:  // Input:
+  132:  //   None.
+  133:  // Output:
+  134:  //   TRUE if the data was placed in the register
+  135:  //   FALSE if there is no data to place or unable to place
+  136:  // Conditions:
+  137:  //   Assumes receive FIFO has been initialized
+  138:  BOOL SendData(void)
+  139:  {
 *** EVALUATION ***
 
 Function: SendData
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\SCI.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\SCI.c.o" -WmsgSd1106 -WmsgSd5703
 
-  115:    if ( SCI0SR1_TDRE && !FIFO_Get(&TxFIFO, &SCI0DRL) )
+  140:    if ( SCI0SR1_TDRE && !FIFO_Get(&TxFIFO, &SCI0DRL) )
   0000 4f00801c     [4]     BRCLR _SCI0SR1,#128,*+32 ;abs = 0020
   0004 cc0000       [2]     LDD   #TxFIFO
   0007 3b           [2]     PSHD  
@@ -203,153 +228,158 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   000b 160000       [4]     JSR   FIFO_Get
   000e 1b82         [2]     LEAS  2,SP
   0010 04640d       [3]     TBNE  D,*+16 ;abs = 0020
-  116:    {
-  117:      Timer_Enable(TIMER_Ch7, bFALSE); // Stop interrupts from occuring
+  141:    {
+  142:      Timer_Enable(TIMER_Ch7, bFALSE); // Stop interrupts from occuring
   0013 c607         [1]     LDAB  #7
   0015 87           [1]     CLRA  
   0016 3b           [2]     PSHD  
   0017 c7           [1]     CLRB  
   0018 160000       [4]     JSR   Timer_Enable
   001b 1b82         [2]     LEAS  2,SP
-  118:      return bFALSE;
+  143:      return bFALSE;
   001d c7           [1]     CLRB  
   001e 200e         [3]     BRA   *+16 ;abs = 002e
-  119:    }
-  120:    Timer_Set(TIMER_Ch7, Timer_Ch7_Delay);
+  144:    }
+  145:    Timer_Set(TIMER_Ch7, Timer_Ch7_Delay);
   0020 c607         [1]     LDAB  #7
   0022 87           [1]     CLRA  
   0023 3b           [2]     PSHD  
   0024 fc0000       [3]     LDD   Timer_Ch7_Delay
   0027 160000       [4]     JSR   Timer_Set
   002a 1b82         [2]     LEAS  2,SP
-  121:    return bTRUE;
+  146:    return bTRUE;
   002c c601         [1]     LDAB  #1
   002e 87           [1]     CLRA  
-  122:  }
+  147:  }
   002f 3d           [5]     RTS   
-  123:  
-  124:  // ----------------------------------------
-  125:  // SCI0_ISR
-  126:  //
-  127:  // The interrupt called when the RDRF flag is set
-  128:  // Input:
-  129:  //   none
-  130:  // Output:
-  131:  //   none
-  132:  // Conditions:
-  133:  //   Assumes transmit FIFO have been initialized
-  134:  void interrupt 20 SCI0_ISR(void)
-  135:  {
+  148:  
+  149:  // ----------------------------------------
+  150:  // SCI0_ISR
+  151:  //
+  152:  // The interrupt called when the RDRF flag is set
+  153:  // Input:
+  154:  //   none
+  155:  // Output:
+  156:  //   none
+  157:  // Conditions:
+  158:  //   Assumes transmit FIFO have been initialized
+  159:  void interrupt 20 SCI0_ISR(void)
+  160:  {
 *** EVALUATION ***
 
 Function: SCI0_ISR
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\SCI.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\SCI.c.o" -WmsgSd1106 -WmsgSd5703
 
-  136:    if (SCI0SR1_RDRF)
+  161:    //OS_ISREnter();
+  162:    if (SCI0SR1_RDRF)
   0000 4f00200b     [4]     BRCLR _SCI0SR1,#32,*+15 ;abs = 000f
-  137:      // Saves recieved data to data, clears RDRF
-  138:      (void)FIFO_Put(&RxFIFO, SCI0DRL);
+  163:      // Saves recieved data to data, clears RDRF
+  164:      (void)FIFO_Put(&RxFIFO, SCI0DRL);
   0004 cc0000       [2]     LDD   #RxFIFO
   0007 3b           [2]     PSHD  
   0008 d600         [3]     LDAB  _SCI0DRL
   000a 160000       [4]     JSR   FIFO_Put
   000d 1b82         [2]     LEAS  2,SP
-  139:  }
+  165:    //OS_ISRExit();
+  166:  }
   000f 0b           [8]     RTI   
-  140:  
-  141:  // ----------------------------------------
-  142:  // TIE7_ISR
-  143:  //
-  144:  // The interrupt called when the Channel 7 timer
-  145:  // has triggered. It will kick start the packet sending
-  146:  // Input:
-  147:  //   none
-  148:  // Output:
-  149:  //   none
-  150:  // Conditions:
-  151:  //   Assumes receive FIFO have been initialized
-  152:  void interrupt 15 TIE7_ISR(void)
-  153:  {
+  167:  
+  168:  // ----------------------------------------
+  169:  // TIE7_ISR
+  170:  //
+  171:  // The interrupt called when the Channel 7 timer
+  172:  // has triggered. It will kick start the packet sending
+  173:  // Input:
+  174:  //   none
+  175:  // Output:
+  176:  //   none
+  177:  // Conditions:
+  178:  //   Assumes receive FIFO have been initialized
+  179:  void interrupt 15 TIE7_ISR(void)
+  180:  {
 *** EVALUATION ***
 
 Function: TIE7_ISR
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\SCI.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\SCI.c.o" -WmsgSd1106 -WmsgSd5703
 
-  154:    TFLG1_C7F = 1; // Clear flag to say it was done.
+  181:    TFLG1_C7F = 1; // Clear flag to say it was done.
   0000 4c0080       [4]     BSET  _TFLG1,#128
-  155:    
-  156:    if (Debug)
+  182:    //OS_ISREnter();
+  183:    
+  184:    if (Debug)
   0003 fc0420       [3]     LDD   1056
   0006 2708         [3/1]   BEQ   *+10 ;abs = 0010
-  157:      PTT_PTT6 ^= 1;
+  185:      PTT_PTT6 ^= 1;
   0008 f60000       [3]     LDAB  _PTT
   000b c840         [1]     EORB  #64
   000d 7b0000       [3]     STAB  _PTT
-  158:    
-  159:    // Kick start the process
-  160:    (void)SendData();
+  186:    
+  187:    // Kick start the process
+  188:    (void)SendData();
   0010 0700         [4]     BSR   SendData
-  161:  }
+  189:    
+  190:    //OS_ISRExit();
+  191:  }
   0012 0b           [8]     RTI   
-  162:  
-  163:  // ----------------------------------------
-  164:  // SCI_Poll
-  165:  //
-  166:  // Poll the SCI status to see whether to receive
-  167:  //   or transmit a single byte
-  168:  // Input:
-  169:  //   none
-  170:  // Output:
-  171:  //   none
-  172:  // Conditions:
-  173:  //   Assumes transmit and receive FIFOs have been initialized
-  174:  void SCI_Poll(void) 
-  175:  {  
+  192:  
+  193:  // ----------------------------------------
+  194:  // SCI_Poll
+  195:  //
+  196:  // Poll the SCI status to see whether to receive
+  197:  //   or transmit a single byte
+  198:  // Input:
+  199:  //   none
+  200:  // Output:
+  201:  //   none
+  202:  // Conditions:
+  203:  //   Assumes transmit and receive FIFOs have been initialized
+  204:  void SCI_Poll(void) 
+  205:  {  
 *** EVALUATION ***
 
 Function: SCI_Poll
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\SCI.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\SCI.c.o" -WmsgSd1106 -WmsgSd5703
 
-  176:    // Recieving data
-  177:    if (SCI0SR1_RDRF)
+  206:    // Recieving data
+  207:    if (SCI0SR1_RDRF)
   0000 4f00200b     [4]     BRCLR _SCI0SR1,#32,*+15 ;abs = 000f
-  178:      // Saves recieved data to data, clears RDRF
-  179:      (void)FIFO_Put(&RxFIFO, SCI0DRL);
+  208:      // Saves recieved data to data, clears RDRF
+  209:      (void)FIFO_Put(&RxFIFO, SCI0DRL);
   0004 cc0000       [2]     LDD   #RxFIFO
   0007 3b           [2]     PSHD  
   0008 d600         [3]     LDAB  _SCI0DRL
   000a 160000       [4]     JSR   FIFO_Put
   000d 1b82         [2]     LEAS  2,SP
-  180:    
-  181:    // Transfer data
-  182:    if (SCI0SR1_TDRE && TxFIFO.NbBytes > 0)
+  210:    
+  211:    // Transfer data
+  212:    if (SCI0SR1_TDRE && TxFIFO.NbBytes > 0)
   000f 4f008011     [4]     BRCLR _SCI0SR1,#128,*+21 ;abs = 0024
   0013 fc0000       [3]     LDD   TxFIFO:4
   0016 270c         [3/1]   BEQ   *+14 ;abs = 0024
-  183:      (void)FIFO_Get(&TxFIFO, &SCI0DRL);
+  213:      (void)FIFO_Get(&TxFIFO, &SCI0DRL);
   0018 cc0000       [2]     LDD   #TxFIFO
   001b 3b           [2]     PSHD  
   001c cc0000       [2]     LDD   #_SCI0DRL
   001f 160000       [4]     JSR   FIFO_Get
   0022 1b82         [2]     LEAS  2,SP
-  184:  }
+  214:  }
   0024 3d           [5]     RTS   
-  185:  
-  186:  // ----------------------------------------
-  187:  // SCI_WaitForChar
-  188:  // 
-  189:  // Waits for a character to be received from the SCI until a timeout occurs
-  190:  // Input:
-  191:  //   dataPtr is a pointer to memory to store the retrieved byte
-  192:  // Output:
-  193:  //   TRUE if the receive FIFO returned a character within the timeout time
-  194:  // Conditions:
-  195:  //   Assumes the receive FIFO has been initialized
-  196:  BOOL SCI_WaitForChar(UINT8 * const dataPtr)
-  197:  {
+  215:  
+  216:  // ----------------------------------------
+  217:  // SCI_WaitForChar
+  218:  // 
+  219:  // Waits for a character to be received from the SCI until a timeout occurs
+  220:  // Input:
+  221:  //   dataPtr is a pointer to memory to store the retrieved byte
+  222:  // Output:
+  223:  //   TRUE if the receive FIFO returned a character within the timeout time
+  224:  // Conditions:
+  225:  //   Assumes the receive FIFO has been initialized
+  226:  BOOL SCI_WaitForChar(UINT8 * const dataPtr)
+  227:  {
 *** EVALUATION ***
 
 Function: SCI_WaitForChar
@@ -357,30 +387,25 @@ Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Source
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\SCI.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 3b           [2]     PSHD  
-  198:    
-  199:    while (i < SCI_Timeout)
-  0001 200f         [3]     BRA   *+17 ;abs = 0012
-  200:    {
-  201:      i++;
-  0003 720000       [4]     INC   i
-  202:      if(SCI_InChar(dataPtr))
-  0006 ec80         [3]     LDD   0,SP
-  0008 160000       [4]     JSR   SCI_InChar
-  000b 044404       [3]     TBEQ  D,*+7 ;abs = 0012
-  203:        return bTRUE;
-  000e c601         [1]     LDAB  #1
-  0010 200b         [3]     BRA   *+13 ;abs = 001d
-  0012 f60000       [3]     LDAB  i
-  0015 c1ff         [1]     CMPB  #255
-  0017 25ea         [3/1]   BCS   *-20 ;abs = 0003
-  204:    }
-  205:    i = 0;
-  0019 790000       [3]     CLR   i
-  206:    return bFALSE;
-  001c c7           [1]     CLRB  
-  001d 87           [1]     CLRA  
-  207:    
-  208:    
-  209:  }
-  001e 30           [3]     PULX  
-  001f 3d           [5]     RTS   
+  228:    
+  229:    for(i = 0; i < SCI_Timeout; i++)
+  0001 790000       [3]     CLR   i
+  230:    {
+  231:      if(SCI_InChar(dataPtr))
+  0004 ec80         [3]     LDD   0,SP
+  0006 160000       [4]     JSR   SCI_InChar
+  0009 044404       [3]     TBEQ  D,*+7 ;abs = 0010
+  232:        return bTRUE;
+  000c c601         [1]     LDAB  #1
+  000e 200b         [3]     BRA   *+13 ;abs = 001b
+  0010 720000       [4]     INC   i
+  0013 f60000       [3]     LDAB  i
+  0016 c1ff         [1]     CMPB  #255
+  0018 25ea         [3/1]   BCS   *-20 ;abs = 0004
+  233:    }
+  234:    return bFALSE;
+  001a c7           [1]     CLRB  
+  001b 87           [1]     CLRA  
+  235:  }
+  001c 30           [3]     PULX  
+  001d 3d           [5]     RTS   

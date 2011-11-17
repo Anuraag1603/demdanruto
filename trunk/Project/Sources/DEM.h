@@ -23,6 +23,8 @@ extern INT16 DEM_AvePower_Array[DEM_PWRSIZE];
 extern TUINT32 DEM_Total_Energy;
 extern UINT32 DEM_Total_Cost;
 extern UINT16 DEM_Tarrif;
+extern UINT16 DEM_VRMS;
+extern UINT16 DEM_IRMS;
 
 void DEM_SetTarrif(void);
 
