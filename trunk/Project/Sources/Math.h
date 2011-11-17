@@ -28,5 +28,6 @@ void Math_FindCost(void);
 
 UINT16 Math_SQRT(INT16 number, INT16 guess);
 
+void Math_FindFrequency(void)
 
 #endif

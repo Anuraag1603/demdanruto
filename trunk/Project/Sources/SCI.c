@@ -66,6 +66,31 @@ void SCI_Setup(const UINT32 baudRate, const UINT32 busClk)
   i = 0;
 }
 
+/*void SCI_Thread(void *pData)
+{
+  OS_ERROR error;
+  
+  for (;;)  
+  {
+    error = OS_SemaphoreWait(SCIInUse, 0); 
+    OS_TimeDelay(100)
+    //OS_ThreadDelete();
+    OS_ENTER_CRITICAL();
+    (void)SendData();
+    OS_EXIT_CRITICAL();
+    if (error == OS_NO_ERROR)
+    {
+      // signalled
+      return;
+    }
+    else
+    {
+      // overflow 
+      return;
+    }
+  }
+}*/
+
 // ----------------------------------------
 // SCI_InChar
 // 
@@ -133,9 +158,11 @@ BOOL SendData(void)
 //   Assumes transmit FIFO have been initialized
 void interrupt 20 SCI0_ISR(void)
 {
+  //OS_ISREnter();
   if (SCI0SR1_RDRF)
     // Saves recieved data to data, clears RDRF
     (void)FIFO_Put(&RxFIFO, SCI0DRL);
+  //OS_ISRExit();
 }
 
 // ----------------------------------------
@@ -152,12 +179,15 @@ void interrupt 20 SCI0_ISR(void)
 void interrupt 15 TIE7_ISR(void)
 {
   TFLG1_C7F = 1; // Clear flag to say it was done.
+  //OS_ISREnter();
   
   if (Debug)
     PTT_PTT6 ^= 1;
   
   // Kick start the process
   (void)SendData();
+  
+  //OS_ISRExit();
 }
 
 // ----------------------------------------
@@ -196,14 +226,10 @@ void SCI_Poll(void)
 BOOL SCI_WaitForChar(UINT8 * const dataPtr)
 {
   
-  while (i < SCI_Timeout)
+  for(i = 0; i < SCI_Timeout; i++)
   {
-    i++;
     if(SCI_InChar(dataPtr))
       return bTRUE;
   }
-  i = 0;
   return bFALSE;
-  
-  
 }

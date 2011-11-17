@@ -192,6 +192,7 @@ void HMI_Update(void)
 void interrupt 13 TIE5_ISR(void)
 {
   TFLG1_C5F = 1; // Clear flag to say it was done.  
+  //OS_ISREnter();
   
   Buttons_Get(&PBState); 
   
@@ -206,6 +207,8 @@ void interrupt 13 TIE5_ISR(void)
     LCDState = Dormant;
   }
   PrevPBState = PBState;
+  
+  //OS_ISRExit();
 }
 
 // ----------------------------------------
