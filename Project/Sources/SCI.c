@@ -63,7 +63,7 @@ void SCI_Setup(const UINT32 baudRate, const UINT32 busClk)
   FIFO_Init(&RxFIFO);
   FIFO_Init(&TxFIFO);
   
-  i = 0;
+  
 }
 
 /*void SCI_Thread(void *pData)

@@ -87,9 +87,9 @@ INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const BOOL bas
   }
 }
 
-INT32 Math_ConvertADCValue(const INT32 number)
+INT16 Math_ConvertADCValue(const INT32 number)
 {
-  return Math_ToQN( ( (61 * number) + 25 ) / 50, DefaultBase );
+  return (INT16)Math_ToQN( ( (61 * number) + 25 ) / 50, DefaultBase );
 }
 
 
@@ -104,9 +104,9 @@ INT32 Math_ConvertADCValue(const INT32 number)
 //  The instantaneous power
 // Conditions:
 //  none
-UINT16 Math_FindPower(const INT16 voltage, const INT16 current)
+INT16 Math_FindPower(const INT16 voltage, const INT16 current)
 {
-  return voltage * current;
+  return (INT16)voltage * current;
 }
 
 // ----------------------------------------
@@ -162,7 +162,7 @@ void Math_FindCost(void)
 //  none
 // Conditions:
 //  none
-UINT16 Math_SQRT(INT16 number, INT16 guess)
+UINT16 Math_SQRT(const INT16 number, const INT16 guess)
 {
   return (UINT16) ( ((number + guess) + guess) / 2);
 }
@@ -173,7 +173,7 @@ void Math_FindFrequency(void)
     
 }
 
-INT16 Math_FindRMS(INT16 number)
+INT16 Math_FindRMS(const INT16 number)
 {
-  return number / MathSQRT(2, 1);
+  return number / Math_SQRT(2, 1);
 }
