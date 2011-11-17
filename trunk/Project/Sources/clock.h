@@ -11,6 +11,7 @@
 // new types
 #include "types.h"
 #include "CRG.h"
+#include "Math.h"
 #include <mc9s12a256.h>     /* derivative information */
 
 extern UINT8 Clock_Seconds, Clock_Minutes, Clock_Hours, Clock_Days;

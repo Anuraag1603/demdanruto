@@ -1,5 +1,5 @@
 *** EVALUATION ***
-ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
 
     1:  // ----------------------------------------
     2:  // Filename: HMI.c
@@ -42,8 +42,8 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
 *** EVALUATION ***
 
 Function: HMI_Setup
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\HMI.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\HMI.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
 
    39:    UINT8 i;
    40:    // Port K - Push Buttons
@@ -144,10 +144,10 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: HMI_Update
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\HMI.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\HMI.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
 
-   86:    UINT16 tarrifL = Math_FromQNotation(DEM_Tarrif, qLeft, bTRUE);
+   86:    UINT16 tarrifL = Math_FromQN(DEM_Tarrif, qLeft, bTRUE);
   0000 fc0000       [3]     LDD   DEM_Tarrif
   0003 6caa         [2]     STD   6,-SP
   0005 c7           [1]     CLRB  
@@ -155,10 +155,10 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   0007 3b           [2]     PSHD  
   0008 3b           [2]     PSHD  
   0009 52           [1]     INCB  
-  000a 160000       [4]     JSR   Math_FromQNotation
+  000a 160000       [4]     JSR   Math_FromQN
   000d 1b86         [2]     LEAS  6,SP
   000f 6c82         [2]     STD   2,SP
-   87:    UINT16 tarrifR = Math_FromQNotation(DEM_Tarrif, qRight, bTRUE);
+   87:    UINT16 tarrifR = Math_FromQN(DEM_Tarrif, qRight, bTRUE);
   0011 fc0000       [3]     LDD   DEM_Tarrif
   0014 3b           [2]     PSHD  
   0015 c7           [1]     CLRB  
@@ -166,7 +166,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   0017 3b           [2]     PSHD  
   0018 52           [1]     INCB  
   0019 3b           [2]     PSHD  
-  001a 160000       [4]     JSR   Math_FromQNotation
+  001a 160000       [4]     JSR   Math_FromQN
   001d 6ca5         [2]     STD   6,+SP
    88:    
    89:    switch(LCDState)
@@ -248,18 +248,18 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   008d 160000       [4]     JSR   Math_FindPower
   0090 1b82         [2]     LEAS  2,SP
   0092 7c0000       [3]     STD   DEM_Average_Power
-  121:        LCD_OutInteger(Math_FromQNotation(DEM_Average_Power.l, qLeft, bFALSE));
+  121:        LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qLeft, bFALSE));
   0095 160000       [4]     JSR   _ILSEXT
   0098 3b           [2]     PSHD  
   0099 34           [2]     PSHX  
   009a c7           [1]     CLRB  
   009b 87           [1]     CLRA  
   009c 3b           [2]     PSHD  
-  009d 160000       [4]     JSR   Math_FromQNotation
+  009d 160000       [4]     JSR   Math_FromQN
   00a0 1b86         [2]     LEAS  6,SP
   00a2 160000       [4]     JSR   HMI_Update:0x0185
   122:        (void)LCD_OutChar('.');
-  123:        LCD_OutInteger(Math_FromQNotation(DEM_Average_Power.l, qRight, bFALSE));
+  123:        LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qRight, bFALSE));
   00a5 fc0000       [3]     LDD   DEM_Average_Power
   00a8 160000       [4]     JSR   _ILSEXT
   00ab 3b           [2]     PSHD  
@@ -268,7 +268,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   00af 87           [1]     CLRA  
   00b0 3b           [2]     PSHD  
   00b1 c7           [1]     CLRB  
-  00b2 160000       [4]     JSR   Math_FromQNotation
+  00b2 160000       [4]     JSR   Math_FromQN
   00b5 1b86         [2]     LEAS  6,SP
   00b7 160000       [4]     JSR   HMI_Update:0x015c
   124:        
@@ -298,7 +298,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   137:        {
   138:          (void)LCD_OutChar(' ');
   00d7 160000       [4]     JSR   HMI_Update:0x0196
-  139:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qLeft, bFALSE) );
+  139:          LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qLeft, bFALSE) );
   00da fc0000       [3]     LDD   DEM_Total_Energy:2
   00dd 3b           [2]     PSHD  
   00de fc0000       [3]     LDD   DEM_Total_Energy
@@ -306,11 +306,11 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   00e2 c7           [1]     CLRB  
   00e3 87           [1]     CLRA  
   00e4 3b           [2]     PSHD  
-  00e5 160000       [4]     JSR   Math_FromQNotation
+  00e5 160000       [4]     JSR   Math_FromQN
   00e8 1b86         [2]     LEAS  6,SP
   00ea 160000       [4]     JSR   HMI_Update:0x0185
   140:          (void)LCD_OutChar('.');
-  141:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qRight, bFALSE) );
+  141:          LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qRight, bFALSE) );
   00ed fc0000       [3]     LDD   DEM_Total_Energy:2
   00f0 3b           [2]     PSHD  
   00f1 fc0000       [3]     LDD   DEM_Total_Energy
@@ -319,7 +319,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   00f7 87           [1]     CLRA  
   00f8 3b           [2]     PSHD  
   00f9 c7           [1]     CLRB  
-  00fa 160000       [4]     JSR   Math_FromQNotation
+  00fa 160000       [4]     JSR   Math_FromQN
   00fd 1b86         [2]     LEAS  6,SP
   00ff 075b         [4]     BSR   *+93 ;abs = 015c
   142:          
@@ -356,7 +356,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   159:        {
   160:          (void)LCD_OutChar(' ');
   0124 0770         [4]     BSR   *+114 ;abs = 0196
-  161:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qLeft, bFALSE) );
+  161:          LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, bFALSE) );
   0126 fc0000       [3]     LDD   DEM_Total_Cost:2
   0129 3b           [2]     PSHD  
   012a fc0000       [3]     LDD   DEM_Total_Cost
@@ -364,11 +364,11 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   012e c7           [1]     CLRB  
   012f 87           [1]     CLRA  
   0130 3b           [2]     PSHD  
-  0131 160000       [4]     JSR   Math_FromQNotation
+  0131 160000       [4]     JSR   Math_FromQN
   0134 1b86         [2]     LEAS  6,SP
   0136 074d         [4]     BSR   *+79 ;abs = 0185
   162:          (void)LCD_OutChar('.');
-  163:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qRight, bFALSE) );
+  163:          LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, bFALSE) );
   0138 fc0000       [3]     LDD   DEM_Total_Cost:2
   013b 3b           [2]     PSHD  
   013c fc0000       [3]     LDD   DEM_Total_Cost
@@ -377,7 +377,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   0142 87           [1]     CLRA  
   0143 3b           [2]     PSHD  
   0144 c7           [1]     CLRB  
-  0145 160000       [4]     JSR   Math_FromQNotation
+  0145 160000       [4]     JSR   Math_FromQN
   0148 1b86         [2]     LEAS  6,SP
   014a 0710         [4]     BSR   *+18 ;abs = 015c
   164:          
@@ -445,8 +445,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: TIE5_ISR
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\HMI.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\HMI.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
 
   194:    TFLG1_C5F = 1; // Clear flag to say it was done.  
   0000 4c0020       [4]     BSET  _TFLG1,#32
@@ -508,11 +508,11 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: CreateMenu
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\HMI.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\HMI.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 6caa         [2]     STD   6,-SP
-  223:    UINT16 tarrifL = Math_FromQNotation(DEM_Tarrif, qLeft, bTRUE);
+  223:    UINT16 tarrifL = Math_FromQN(DEM_Tarrif, qLeft, bTRUE);
   0002 fc0000       [3]     LDD   DEM_Tarrif
   0005 3b           [2]     PSHD  
   0006 c7           [1]     CLRB  
@@ -520,10 +520,10 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   0008 3b           [2]     PSHD  
   0009 3b           [2]     PSHD  
   000a 52           [1]     INCB  
-  000b 160000       [4]     JSR   Math_FromQNotation
+  000b 160000       [4]     JSR   Math_FromQN
   000e 1b86         [2]     LEAS  6,SP
   0010 6c84         [2]     STD   4,SP
-  224:    UINT16 tarrifR = Math_FromQNotation(DEM_Tarrif, qRight, bTRUE);
+  224:    UINT16 tarrifR = Math_FromQN(DEM_Tarrif, qRight, bTRUE);
   0012 fc0000       [3]     LDD   DEM_Tarrif
   0015 3b           [2]     PSHD  
   0016 c7           [1]     CLRB  
@@ -531,7 +531,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   0018 3b           [2]     PSHD  
   0019 52           [1]     INCB  
   001a 3b           [2]     PSHD  
-  001b 160000       [4]     JSR   Math_FromQNotation
+  001b 160000       [4]     JSR   Math_FromQN
   001e 1b86         [2]     LEAS  6,SP
   0020 6c82         [2]     STD   2,SP
   225:        
@@ -739,7 +739,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   321:        {
   322:          (void)LCD_OutChar(' ');
   013f 160000       [4]     JSR   CreateMenu:0x0256
-  323:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qLeft, bFALSE) );
+  323:          LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qLeft, bFALSE) );
   0142 fc0000       [3]     LDD   DEM_Total_Energy:2
   0145 3b           [2]     PSHD  
   0146 fc0000       [3]     LDD   DEM_Total_Energy
@@ -747,11 +747,11 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   014a c7           [1]     CLRB  
   014b 87           [1]     CLRA  
   014c 3b           [2]     PSHD  
-  014d 160000       [4]     JSR   Math_FromQNotation
+  014d 160000       [4]     JSR   Math_FromQN
   0150 1b86         [2]     LEAS  6,SP
   0152 160000       [4]     JSR   CreateMenu:0x0240
   324:          (void)LCD_OutChar('.');
-  325:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Energy.l, qRight, bFALSE) );
+  325:          LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qRight, bFALSE) );
   0155 fc0000       [3]     LDD   DEM_Total_Energy:2
   0158 3b           [2]     PSHD  
   0159 fc0000       [3]     LDD   DEM_Total_Energy
@@ -760,7 +760,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   015f 87           [1]     CLRA  
   0160 3b           [2]     PSHD  
   0161 c7           [1]     CLRB  
-  0162 160000       [4]     JSR   Math_FromQNotation
+  0162 160000       [4]     JSR   Math_FromQN
   0165 1b86         [2]     LEAS  6,SP
   0167 160000       [4]     JSR   LCD_OutInteger
   326:        } 
@@ -821,7 +821,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   353:        {
   354:          (void)LCD_OutChar(' ');
   01b6 160000       [4]     JSR   CreateMenu:0x0256
-  355:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qLeft, bFALSE) );
+  355:          LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, bFALSE) );
   01b9 fc0000       [3]     LDD   DEM_Total_Cost:2
   01bc 3b           [2]     PSHD  
   01bd fc0000       [3]     LDD   DEM_Total_Cost
@@ -829,11 +829,11 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   01c1 c7           [1]     CLRB  
   01c2 87           [1]     CLRA  
   01c3 3b           [2]     PSHD  
-  01c4 160000       [4]     JSR   Math_FromQNotation
+  01c4 160000       [4]     JSR   Math_FromQN
   01c7 1b86         [2]     LEAS  6,SP
   01c9 0775         [4]     BSR   *+119 ;abs = 0240
   356:          (void)LCD_OutChar('.');
-  357:          LCD_OutInteger( Math_FromQNotation(DEM_Total_Cost, qRight, bFALSE) );
+  357:          LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, bFALSE) );
   01cb fc0000       [3]     LDD   DEM_Total_Cost:2
   01ce 3b           [2]     PSHD  
   01cf fc0000       [3]     LDD   DEM_Total_Cost
@@ -842,7 +842,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   01d5 87           [1]     CLRA  
   01d6 3b           [2]     PSHD  
   01d7 c7           [1]     CLRB  
-  01d8 160000       [4]     JSR   Math_FromQNotation
+  01d8 160000       [4]     JSR   Math_FromQN
   01db 1b86         [2]     LEAS  6,SP
   01dd 160000       [4]     JSR   LCD_OutInteger
   358:        } 
@@ -878,10 +878,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   01fe cc0000       [2]     LDD   #"$------CYC-----$"
   0201 160000       [4]     JSR   LCD_OutString
   376:      break;
-  377:      
-  378:      
-  379:    }
-  380:  }
+  377:    }
+  378:  }
   0204 1b86         [2]     LEAS  6,SP
   0206 3d           [5]     RTS   
   0207 160000       [4]     JSR   LCD_OutString
@@ -917,27 +915,27 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   0253 060000       [3]     JMP   LCD_OutChar
   0256 c620         [1]     LDAB  #32
   0258 060000       [3]     JMP   LCD_OutChar
-  381:  
-  382:  // ----------------------------------------
-  383:  // HandleButtonPress
-  384:  // 
-  385:  // Determines which functions to call/what to do when a button is pressed
-  386:  // Input:
-  387:  //   PBState is the push button state that was most recent
-  388:  //   LCDState is the menu currently displayed on the LCD
-  389:  // Output:
-  390:  //   none
-  391:  // Conditions:
-  392:  //   LCD and Buttons have been setup
-  393:  void HandleButtonPress(TButtonInputs PBState, TLCDState LCDState)
-  394:  {
+  379:  
+  380:  // ----------------------------------------
+  381:  // HandleButtonPress
+  382:  // 
+  383:  // Determines which functions to call/what to do when a button is pressed
+  384:  // Input:
+  385:  //   PBState is the push button state that was most recent
+  386:  //   LCDState is the menu currently displayed on the LCD
+  387:  // Output:
+  388:  //   none
+  389:  // Conditions:
+  390:  //   LCD and Buttons have been setup
+  391:  void HandleButtonPress(TButtonInputs PBState, TLCDState LCDState)
+  392:  {
 *** EVALUATION ***
 
 Function: HandleButtonPress
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\HMI.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\HMI.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
 
-  395:    switch(LCDState)
+  393:    switch(LCDState)
   0000 160000       [4]     JSR   _CASE_CHECKED_BYTE
   0003 05           DC.B  5
   0004 3d           DC.B  61
@@ -946,9 +944,9 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   0007 23           DC.B  35
   0008 2b           DC.B  43
   0009 33           DC.B  51
-  396:    {
-  397:      case Dormant:
-  398:        switch(PBState)
+  394:    {
+  395:      case Dormant:
+  396:        switch(PBState)
   000a ec82         [3]     LDD   2,SP
   000c 160000       [4]     JSR   _CASE_SEARCH_8_BYTE
   000f 80           DC.B  128
@@ -963,77 +961,77 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   0018 04           DC.B  4
   0019 80           DC.B  128
   001a 02           DC.B  2
-  399:        {
-  400:          case Button0:
-  401:          case Button1:
-  402:          case Button2:
-  403:          case Button3:
-  404:          case Button4:
-  405:            LCD_DisplayOn();
+  397:        {
+  398:          case Button0:
+  399:          case Button1:
+  400:          case Button2:
+  401:          case Button3:
+  402:          case Button4:
+  403:            LCD_DisplayOn();
   001b 160000       [4]     JSR   LCD_DisplayOn
-  406:            CreateMenu(MeteringTime);
-  407:          break;
+  404:            CreateMenu(MeteringTime);
+  405:          break;
   001e 201c         [3]     BRA   *+30 ;abs = 003c
-  408:        }
-  409:      break;
-  410:      
-  411:      case MeteringTime:
-  412:        switch(PBState)
+  406:        }
+  407:      break;
+  408:      
+  409:      case MeteringTime:
+  410:        switch(PBState)
   0020 0721         [4]     BSR   *+35 ;abs = 0043
   0022 261e         [3/1]   BNE   *+32 ;abs = 0042
-  413:        {
-  414:          case Button2:
-  415:            CreateMenu(AveragePower);
+  411:        {
+  412:          case Button2:
+  413:            CreateMenu(AveragePower);
   0024 c602         [1]     LDAB  #2
-  416:          break;
+  414:          break;
   0026 2016         [3]     BRA   *+24 ;abs = 003e
-  417:        }
-  418:      break;
-  419:      
-  420:      case AveragePower:
-  421:        switch(PBState)
+  415:        }
+  416:      break;
+  417:      
+  418:      case AveragePower:
+  419:        switch(PBState)
   0028 0719         [4]     BSR   *+27 ;abs = 0043
   002a 2616         [3/1]   BNE   *+24 ;abs = 0042
-  422:        {
-  423:          case Button2:
-  424:            CreateMenu(TotalEnergy);  
+  420:        {
+  421:          case Button2:
+  422:            CreateMenu(TotalEnergy);  
   002c c603         [1]     LDAB  #3
-  425:          break;
+  423:          break;
   002e 200e         [3]     BRA   *+16 ;abs = 003e
-  426:        }
-  427:      break;
-  428:      
-  429:      case TotalEnergy:
-  430:        switch(PBState)
+  424:        }
+  425:      break;
+  426:      
+  427:      case TotalEnergy:
+  428:        switch(PBState)
   0030 0711         [4]     BSR   *+19 ;abs = 0043
   0032 260e         [3/1]   BNE   *+16 ;abs = 0042
-  431:        {
-  432:          case Button2:
-  433:            CreateMenu(TotalCost);
+  429:        {
+  430:          case Button2:
+  431:            CreateMenu(TotalCost);
   0034 c604         [1]     LDAB  #4
-  434:          break;
+  432:          break;
   0036 2006         [3]     BRA   *+8 ;abs = 003e
-  435:        }
-  436:      break;
-  437:      
-  438:      case TotalCost:
-  439:        switch(PBState)
+  433:        }
+  434:      break;
+  435:      
+  436:      case TotalCost:
+  437:        switch(PBState)
   0038 0709         [4]     BSR   *+11 ;abs = 0043
   003a 2606         [3/1]   BNE   *+8 ;abs = 0042
-  440:        {
-  441:          case Button2:
-  442:            CreateMenu(MeteringTime);
+  438:        {
+  439:          case Button2:
+  440:            CreateMenu(MeteringTime);
   003c c601         [1]     LDAB  #1
   003e 87           [1]     CLRA  
   003f 160000       [4]     JSR   CreateMenu
-  443:          break;
-  444:        }
-  445:      break;
-  446:    }
-  447:    
-  448:  }
+  441:          break;
+  442:        }
+  443:      break;
+  444:    }
+  445:    
+  446:  }
   0042 3d           [5]     RTS   
   0043 ec84         [3]     LDD   4,SP
   0045 8c0010       [2]     CPD   #16
   0048 3d           [5]     RTS   
-  449:  
+  447:  

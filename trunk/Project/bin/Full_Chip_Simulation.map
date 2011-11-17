@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\evildansta\Dropbox\S11\Embedded Software\Assignments\Project\bin\Full_Chip_Simulation.abs"
+PROGRAM "F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin\Full_Chip_Simulation.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -16,8 +16,6 @@ mc9s12a256.c.o                          Model: SMALL,         Lang: ANSI-C
 main.c.o                                Model: SMALL,         Lang: ANSI-C
 Start12.c.o                             Model: SMALL,         Lang: ANSI-C
 rtshc12.c.o (ansisi.lib)                Model: SMALL,         Lang: ANSI-C
-OS.c.o (OS.lib)                         Model: SMALL,         Lang: ANSI-C
-clock.c.o (OS.lib)                      Model: SMALL,         Lang: ANSI-C
 analog.c.o                              Model: SMALL,         Lang: ANSI-C
 CRG.c.o                                 Model: SMALL,         Lang: ANSI-C
 EEPROM.c.o                              Model: SMALL,         Lang: ANSI-C
@@ -30,6 +28,8 @@ buttons.c.o                             Model: SMALL,         Lang: ANSI-C
 HMI.c.o                                 Model: SMALL,         Lang: ANSI-C
 LCD.c.o                                 Model: SMALL,         Lang: ANSI-C
 Math.c.o                                Model: SMALL,         Lang: ANSI-C
+clock.c.o                               Model: SMALL,         Lang: ANSI-C
+DEM.c.o                                 Model: SMALL,         Lang: ANSI-C
 
 *********************************************************************************************
 STARTUP SECTION
@@ -38,8 +38,8 @@ Entry point: 0xC029 (_Startup)
 _startupData is allocated at 0xC031 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x900     719
-  _Copy    *toCopyDownBeg 0xDA03
+  _Range   pZeroOut       0x900     699
+  _Copy    *toCopyDownBeg 0xE0AD
 } _startupData;
 
 *********************************************************************************************
@@ -49,9 +49,9 @@ Section Name                    Size  Type     From       To       Segment
 .init                             49     R     0xC000     0xC030   ROM_C000
 .startData                        10     R     0xC031     0xC03A   ROM_C000
 .rodata                            2     R     0xC03B     0xC03C   ROM_C000
-.rodata1                         657     R     0xC03D     0xC2CD   ROM_C000
-.text                           5673     R     0xC2CE     0xD8F6   ROM_C000
-.copy                              2     R     0xDA03     0xDA04   ROM_C000
+.rodata1                         723     R     0xC03D     0xC30F   ROM_C000
+.text                           7122     R     0xC310     0xDEE1   ROM_C000
+.copy                              2     R     0xE0AD     0xE0AE   ROM_C000
 .stack                           256   R/W      0x800      0x8FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -277,20 +277,19 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_13c                   2   N/I      0x13C      0x13D   .absSeg221
 .abs_section_13e                   2   N/I      0x13E      0x13F   .absSeg222
 .abs_section_ffca                  2     R     0xFFCA     0xFFCB   .absSeg223
-.abs_section_fff6                  2     R     0xFFF6     0xFFF7   .absSeg224
-.abs_section_fff0                  2     R     0xFFF0     0xFFF1   .absSeg225
+.abs_section_fff0                  2     R     0xFFF0     0xFFF1   .absSeg224
+.abs_section_ffe6                  2     R     0xFFE6     0xFFE7   .absSeg225
 .abs_section_ffd6                  2     R     0xFFD6     0xFFD7   .absSeg226
 .abs_section_ffe0                  2     R     0xFFE0     0xFFE1   .absSeg227
 .abs_section_ffe4                  2     R     0xFFE4     0xFFE5   .absSeg228
-.abs_section_ffe8                  2     R     0xFFE8     0xFFE9   .absSeg229
-.bss                             551   R/W      0x900      0xB26   RAM
-.common                          168   R/W      0xB27      0xBCE   RAM
-RUNTIME                          268     R     0xD8F7     0xDA02   ROM_C000
-.vectSeg230_vect                   2     R     0xFFFE     0xFFFF   .vectSeg230
+.bss                             553   R/W      0x900      0xB28   RAM
+.common                          146   R/W      0xB29      0xBBA   RAM
+RUNTIME                          459     R     0xDEE2     0xE0AC   ROM_C000
+.vectSeg229_vect                   2     R     0xFFFE     0xFFFF   .vectSeg229
 
 Summary of section sizes per section type:
-READ_ONLY (R):        1A15 (dec:     6677)
-READ_WRITE (R/W):      3CF (dec:      975)
+READ_ONLY (R):        20BD (dec:     8381)
+READ_WRITE (R/W):      3BB (dec:      955)
 NO_INIT (N/I):         116 (dec:      278)
 
 *********************************************************************************************
@@ -306,7 +305,7 @@ OBJECT-ALLOCATION SECTION
 MODULE:                 -- mc9s12a256.c.o --
 - PROCEDURES:
 - VARIABLES:
-     _PORTE                                       8       1       1       1   .abs_section_8
+     _PORTE                                       8       1       1       3   .abs_section_8
      _DDRE                                        9       1       1       1   .abs_section_9
      _PEAR                                        A       1       1       0   .abs_section_a
      _MODE                                        B       1       1       0   .abs_section_b
@@ -332,7 +331,7 @@ MODULE:                 -- mc9s12a256.c.o --
      _BKP1H                                      2E       1       1       0   .abs_section_2e
      _BKP1L                                      2F       1       1       0   .abs_section_2f
      _PPAGE                                      30       1       1       0   .abs_section_30
-     _PORTK                                      32       1       1       2   .abs_section_32
+     _PORTK                                      32       1       1       1   .abs_section_32
      _DDRK                                       33       1       1       5   .abs_section_33
      _SYNR                                       34       1       1       1   .abs_section_34
      _REFDV                                      35       1       1       1   .abs_section_35
@@ -340,7 +339,7 @@ MODULE:                 -- mc9s12a256.c.o --
      _CRGINT                                     38       1       1       1   .abs_section_38
      _CLKSEL                                     39       1       1       1   .abs_section_39
      _PLLCTL                                     3A       1       1       1   .abs_section_3a
-     _RTICTL                                     3B       1       1       3   .abs_section_3b
+     _RTICTL                                     3B       1       1       1   .abs_section_3b
      _COPCTL                                     3C       1       1       5   .abs_section_3c
      _ARMCOP                                     3F       1       1       4   .abs_section_3f
      _TIOS                                       40       1       1      16   .abs_section_40
@@ -355,29 +354,29 @@ MODULE:                 -- mc9s12a256.c.o --
      _TCTL4                                      4B       1       1      32   .abs_section_4b
      _TIE                                        4C       1       1      40   .abs_section_4c
      _TSCR2                                      4D       1       1       0   .abs_section_4d
-     _TFLG1                                      4E       1       1       2   .abs_section_4e
+     _TFLG1                                      4E       1       1       5   .abs_section_4e
      _TFLG2                                      4F       1       1       0   .abs_section_4f
-     _PACTL                                      60       1       1       0   .abs_section_60
+     _PACTL                                      60       1       1       8   .abs_section_60
      _PAFLG                                      61       1       1       0   .abs_section_61
      _MCCTL                                      66       1       1       9   .abs_section_66
      _MCFLG                                      67       1       1       1   .abs_section_67
-     _ICPAR                                      68       1       1       0   .abs_section_68
-     _DLYCT                                      69       1       1       0   .abs_section_69
+     _ICPAR                                      68       1       1       4   .abs_section_68
+     _DLYCT                                      69       1       1       1   .abs_section_69
      _ICOVW                                      6A       1       1       0   .abs_section_6a
      _ICSYS                                      6B       1       1       0   .abs_section_6b
-     _PBCTL                                      70       1       1       0   .abs_section_70
+     _PBCTL                                      70       1       1       3   .abs_section_70
      _PBFLG                                      71       1       1       0   .abs_section_71
      _ATD0STAT0                                  86       1       1       0   .abs_section_86
      _ATD0TEST1                                  89       1       1       0   .abs_section_89
      _ATD0STAT1                                  8B       1       1       0   .abs_section_8b
      _ATD0DIEN                                   8D       1       1       0   .abs_section_8d
      _PORTAD0                                    8F       1       1       0   .abs_section_8f
-     _PWME                                       A0       1       1       2   .abs_section_a0
-     _PWMPOL                                     A1       1       1       2   .abs_section_a1
-     _PWMCLK                                     A2       1       1       2   .abs_section_a2
+     _PWME                                       A0       1       1       6   .abs_section_a0
+     _PWMPOL                                     A1       1       1       6   .abs_section_a1
+     _PWMCLK                                     A2       1       1       6   .abs_section_a2
      _PWMPRCLK                                   A3       1       1       2   .abs_section_a3
-     _PWMCAE                                     A4       1       1       0   .abs_section_a4
-     _PWMCTL                                     A5       1       1       3   .abs_section_a5
+     _PWMCAE                                     A4       1       1       6   .abs_section_a4
+     _PWMCTL                                     A5       1       1       5   .abs_section_a5
      _PWMSCLA                                    A8       1       1       0   .abs_section_a8
      _PWMSCLB                                    A9       1       1       0   .abs_section_a9
      _PWMSDN                                     C4       1       1       0   .abs_section_c4
@@ -429,7 +428,7 @@ MODULE:                 -- mc9s12a256.c.o --
      _ATD1STAT1                                 12B       1       1       0   .abs_section_12b
      _ATD1DIEN                                  12D       1       1       0   .abs_section_12d
      _PORTAD1                                   12F       1       1       0   .abs_section_12f
-     _PTT                                       240       1       1       7   .abs_section_240
+     _PTT                                       240       1       1       9   .abs_section_240
      _PTIT                                      241       1       1       0   .abs_section_241
      _DDRT                                      242       1       1       3   .abs_section_242
      _RDRT                                      243       1       1       0   .abs_section_243
@@ -458,7 +457,7 @@ MODULE:                 -- mc9s12a256.c.o --
      _PPSP                                      25D       1       1       0   .abs_section_25d
      _PIEP                                      25E       1       1       0   .abs_section_25e
      _PIFP                                      25F       1       1       0   .abs_section_25f
-     _PTH                                       260       1       1      13   .abs_section_260
+     _PTH                                       260       1       1      14   .abs_section_260
      _PTIH                                      261       1       1       0   .abs_section_261
      _DDRH                                      262       1       1       3   .abs_section_262
      _RDRH                                      263       1       1       0   .abs_section_263
@@ -474,7 +473,7 @@ MODULE:                 -- mc9s12a256.c.o --
      _PPSJ                                      26D       1       1       0   .abs_section_26d
      _PIEJ                                      26E       1       1       0   .abs_section_26e
      _PIFJ                                      26F       1       1       0   .abs_section_26f
-     _PORTAB                                      0       2       2      18   .abs_section_0
+     _PORTAB                                      0       2       2      27   .abs_section_0
      _DDRAB                                       2       2       2      21   .abs_section_2
      _PARTID                                     1A       2       2       0   .abs_section_1a
      _TCNT                                       44       2       2       1   .abs_section_44
@@ -505,17 +504,17 @@ MODULE:                 -- mc9s12a256.c.o --
      _ATD0DR5                                    9A       2       2       0   .abs_section_9a
      _ATD0DR6                                    9C       2       2       0   .abs_section_9c
      _ATD0DR7                                    9E       2       2       0   .abs_section_9e
-     _PWMCNT01                                   AC       2       2       2   .abs_section_ac
-     _PWMCNT23                                   AE       2       2       0   .abs_section_ae
-     _PWMCNT45                                   B0       2       2       0   .abs_section_b0
+     _PWMCNT01                                   AC       2       2       6   .abs_section_ac
+     _PWMCNT23                                   AE       2       2       6   .abs_section_ae
+     _PWMCNT45                                   B0       2       2       4   .abs_section_b0
      _PWMCNT67                                   B2       2       2       0   .abs_section_b2
      _PWMPER01                                   B4       2       2       2   .abs_section_b4
-     _PWMPER23                                   B6       2       2       0   .abs_section_b6
-     _PWMPER45                                   B8       2       2       0   .abs_section_b8
+     _PWMPER23                                   B6       2       2       2   .abs_section_b6
+     _PWMPER45                                   B8       2       2       2   .abs_section_b8
      _PWMPER67                                   BA       2       2       0   .abs_section_ba
      _PWMDTY01                                   BC       2       2       2   .abs_section_bc
-     _PWMDTY23                                   BE       2       2       0   .abs_section_be
-     _PWMDTY45                                   C0       2       2       0   .abs_section_c0
+     _PWMDTY23                                   BE       2       2       2   .abs_section_be
+     _PWMDTY45                                   C0       2       2       2   .abs_section_c0
      _PWMDTY67                                   C2       2       2       0   .abs_section_c2
      _SCI0BD                                     C8       2       2       1   .abs_section_c8
      _SCI1BD                                     D0       2       2       0   .abs_section_d0
@@ -531,29 +530,43 @@ MODULE:                 -- mc9s12a256.c.o --
      _ATD1DR7                                   13E       2       2       0   .abs_section_13e
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                      C2CE      DD     221       1   .text       
-     HandlePacket                              C3AB      82     130       1   .text       
-     MCCNT_ISR                                 C42D      46      70       1   .text       
-     HandleStartupPacket                       C473      44      68       2   .text       
-     HandleSpecialPacket                       C4B7      24      36       2   .text       
-     HandleNumberPacket                        C4DB      2A      42       2   .text       
-     HandleModePacket                          C505      15      21       2   .text       
-     HandleEEPROMProgramPacket                 C51A      25      37       1   .text       
-     HandleEEPROMGetPacket                     C53F      2A      42       1   .text       
-     HandleTimePacket                          C569      12      18       2   .text       
-     HandlePacketModePacket                    C57B      28      40       1   .text       
-     HandleAnalogValPacket                     C5A3      1F      31       3   .text       
+     main                                      C310      F1     241       1   .text       
+     HandlePacket                              C401      C6     198       1   .text       
+     MCCNT_ISR                                 C4C7      9B     155       1   .text       
+     HandleStartupPacket                       C562      44      68       2   .text       
+     HandleSpecialPacket                       C5A6      26      38       2   .text       
+     HandleNumberPacket                        C5CC      2A      42       2   .text       
+     HandleModePacket                          C5F6      15      21       2   .text       
+     HandleEEPROMProgramPacket                 C60B      25      37       1   .text       
+     HandleEEPROMGetPacket                     C630      2A      42       1   .text       
+     HandleTimePacket                          C65A      12      18       2   .text       
+     HandlePacketModePacket                    C66C      28      40       1   .text       
+     HandleAnalogValPacket                     C694      1F      31       4   .text       
+     HandleTestModePack                        C6B3      11      17       1   .text       
+     HandleTarrifPacket                        C6C4      22      34       1   .text       
+     HandleTime1Packet                         C6E6      24      36       1   .text       
+     HandleTime2Packet                         C70A      24      36       1   .text       
+     HandlePowerPacket                         C72E      12      18       1   .text       
+     HandleEnergyPacket                        C740      12      18       1   .text       
+     HandleCostPacket                          C752      2C      44       1   .text       
+     HandleFrquencyPacket                      C77E       3       3       1   .text       
+     HandleVRMS                                C781       3       3       1   .text       
+     HandleIRMS                                C784       3       3       1   .text       
+     HandlePFactor                             C787       3       3       1   .text       
 - VARIABLES:
      Timer_Ch7_Delay                           C03B       2       2       1   .rodata     
+     SampleCount                                900       2       2       6   .bss        
      _Vector_26                                FFCA       2       2       0   .abs_section_ffca
-     Packet                                     B27       4       4      28   .common     
-     Packet_CommandOK                           B2B       2       2       2   .common     
-     Analog_Input                               B2D      50      80      17   .common     
-     NbAnalogInputs                             B7D       2       2       1   .common     
-     NbAnalogOutputs                            B7F       2       2       1   .common     
-     Clock_Seconds                              B81       1       1       5   .common     
-     Clock_Minutes                              B82       1       1       3   .common     
-     Clock_MicroSeconds                         B83       4       4      10   .common     
+     Packet                                     B29       4       4      36   .common     
+     Packet_CommandOK                           B2D       2       2       2   .common     
+     Analog_Input                               B2F      50      80      21   .common     
+     NbAnalogInputs                             B7F       2       2       1   .common     
+     NbAnalogOutputs                            B81       2       2       1   .common     
+     Clock_Seconds                              B83       1       1      10   .common     
+     Clock_Minutes                              B84       1       1      10   .common     
+     Clock_Hours                                B85       1       1      12   .common     
+     Clock_Days                                 B86       1       1       8   .common     
+     Clock_MicroSeconds                         B87       4       4      11   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
      Init                                      C000      29      41       1   .init       
@@ -564,196 +577,205 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                           900       0       0       1               
 MODULE:                 -- rtshc12.c.o (ansisi.lib) --
 - PROCEDURES:
-     _BDIVMODU                                 D8F7       A      10       2   RUNTIME     
-     _ISHL                                     D901       B      11       1   RUNTIME     
-     _LINC                                     D90C       5       5       1   RUNTIME     
-     _lDivMod                                  D911      BE     190       1   RUNTIME     
-     _LDIVU                                    D9CF       E      14       4   RUNTIME     
-     _ILSEXT                                   D9DD       7       7       1   RUNTIME     
-     _CASE_CHECKED                             D9E4       B      11       2   RUNTIME     
-     _CASE_CHECKED_BYTE                        D9EF      14      20      21   RUNTIME     
-- VARIABLES:
-MODULE:                 -- OS.c.o (OS.lib) --
-- PROCEDURES:
-     OS_ISREnter                               C5C2       6       6       1   .text       
-     OS_ISRExit                                C5C8       8       8       1   .text       
-     FindFirstSet                              C5D0      2A      42       1   .text       
-     Schedule                                  C5FA      20      32       1   .text       
-     TimeTick                                  C61A      43      67       1   .text       
-     ContextSwitch                             C65D       E      14       1   .text       
-     Clock_RTI_ISR                             C66B      23      35       1   .text       
-- VARIABLES:
-     _Vector_4                                 FFF6       2       2       0   .abs_section_fff6
-     _Vector_7                                 FFF0       2       2       0   .abs_section_fff0
-     pTCBAllocatedList                          B87       2       2       1   .common     
-     pTCBPriorityTable                          B89      20      32       1   .common     
-     pTCBRunning                                BA9       2       2       3   .common     
-     pTCBHighestReady                           BAB       2       2       2   .common     
-     ReadyList                                  BAD       2       2       4   .common     
-     Ticks                                      BAF       4       4       4   .common     
-     HeartBeatCntr                              BB3       1       1       3   .common     
-     ISRNestLevel                               BB4       1       1       3   .common     
-MODULE:                 -- clock.c.o (OS.lib) --
-- PROCEDURES:
-     Clock_Setup                               C68E      27      39       1   .text       
-     Clock_Update                              C6B5      49      73       2   .text       
+     _LSHL                                     DEE2      11      17       1   RUNTIME     
+     _LSHRU                                    DEF3      11      17       4   RUNTIME     
+     _LCMP                                     DF04      19      25       1   RUNTIME     
+     _LNEG                                     DF1D       D      13       1   RUNTIME     
+     _LINC                                     DF2A       5       5       1   RUNTIME     
+     _LMULU16x32                               DF2F       F      15       2   RUNTIME     
+     _LMULS16x32                               DF3E      1F      31       1   RUNTIME     
+     _lDivMod                                  DF5D      BE     190       3   RUNTIME     
+     _LDIVU                                    E01B       E      14       4   RUNTIME     
+     _NEG_P                                    E029       F      15       4   RUNTIME     
+     _LDIVS                                    E038      35      53       2   RUNTIME     
+     _ILSEXT                                   E06D       7       7       5   RUNTIME     
+     _CASE_CHECKED                             E074       B      11       3   RUNTIME     
+     _CASE_CHECKED_BYTE                        E07F      14      20      22   RUNTIME     
+     _CASE_SEARCH_8_BYTE                       E093      1A      26       1   RUNTIME     
 - VARIABLES:
 MODULE:                 -- analog.c.o --
 - PROCEDURES:
-     Analog_Setup                              C6FE      44      68       1   .text       
-     PWM_Setup                                 C742      2F      47       1   .text       
-     Analog_Get                                C771      C6     198       2   .text       
-     Analog_Put                                C837      40      64       1   .text       
+     Analog_Setup                              C78A      3D      61       1   .text       
+     PWM_Setup                                 C7C7      7D     125       1   .text       
+     Analog_Get                                C844      C6     198       2   .text       
+     Analog_Put                                C90A      CB     203       5   .text       
 - VARIABLES:
 MODULE:                 -- CRG.c.o --
 - PROCEDURES:
-     CRG_SetupPLL                              C877      51      81       1   .text       
-     CRG_SetupCOP                              C8C8      21      33       1   .text       
+     CRG_SetupPLL                              C9D5      51      81       1   .text       
+     CRG_SetupCOP                              CA26      21      33       1   .text       
+     CRG_SetupRTI                              CA47       E      14       1   .text       
+     CRG_RTI_ISR                               CA55      24      36       1   .text       
 - VARIABLES:
+     _Vector_7                                 FFF0       2       2       0   .abs_section_fff0
 MODULE:                 -- EEPROM.c.o --
 - PROCEDURES:
-     EEPROM_Setup                              C8E9     123     291       6   .text       
-     EEPROM_Write32                            CA0C      50      80       1   .text       
-     EEPROM_Write16                            CA5C      43      67      14   .text       
-     EEPROM_Write8                             CA9F      2C      44       1   .text       
-     EEPROM_Erase                              CACB      36      54       1   .text       
-     Write                                     CB01      37      55       5   .text       
+     EEPROM_Setup                              CA79     13A     314       7   .text       
+     EEPROM_Write32                            CBB3      50      80       1   .text       
+     EEPROM_Write16                            CC03      43      67      14   .text       
+     EEPROM_Write8                             CC46      2C      44       1   .text       
+     EEPROM_Erase                              CC72      36      54       1   .text       
+     Write                                     CCA8      37      55       5   .text       
 - VARIABLES:
 MODULE:                 -- FIFO.c.o --
 - PROCEDURES:
-     FIFO_Init                                 CB38       F      15       2   .text       
-     FIFO_Put                                  CB47      3F      63       2   .text       
-     FIFO_Get                                  CB86      3D      61       2   .text       
+     FIFO_Init                                 CCDF       F      15       2   .text       
+     FIFO_Put                                  CCEE      3F      63       2   .text       
+     FIFO_Get                                  CD2D      3D      61       2   .text       
 - VARIABLES:
 MODULE:                 -- packet.c.o --
 - PROCEDURES:
-     Packet_Setup                              CBC3      1B      27       1   .text       
-     Packet_Put                                CBDE      4B      75      10   .text       
-     Packet_Get                                CC29      6A     106       1   .text       
-     shuffleFSM                                CC93      27      39       1   .text       
+     Packet_Setup                              CD6A      1B      27       1   .text       
+     Packet_Put                                CD85      4B      75      15   .text       
+     Packet_Get                                CDD0      64     100       1   .text       
+     shuffleFSM                                CE34      2C      44       1   .text       
 - VARIABLES:
-     FSM                                        900       F      15      12   .bss        
-     StateIndex                                 90F       1       1       5   .bss        
-     bSwapFlag                                  910       2       2       3   .bss        
+     FSM                                        902       F      15      12   .bss        
+     StateIndex                                 911       1       1       5   .bss        
+     bSwapFlag                                  912       2       2       3   .bss        
 MODULE:                 -- SPI.c.o --
 - PROCEDURES:
-     SPI_Setup                                 CCBA      67     103       1   .text       
-     SPI_ExchangeChar                          CD21      15      21       6   .text       
+     SPI_Setup                                 CE60      67     103       1   .text       
+     SPI_ExchangeChar                          CEC7      15      21       5   .text       
 - VARIABLES:
 MODULE:                 -- timer.c.o --
 - PROCEDURES:
-     Timer_SetupPeriodicTimer                  CD36      2E      46       1   .text       
-     Timer_PeriodicTimerEnable                 CD64      1B      27       1   .text       
-     Timer_Setup                               CD7F      22      34       1   .text       
-     Timer_Init                                CDA1     3A7     935      20   .text       
-     Timer_Enable                              D148      80     128       7   .text       
-     Timer_Enabled                             D1C8      62      98       1   .text       
-     Timer_Set                                 D22A      37      55       4   .text       
+     Timer_SetupPulseAccumulators              CEDC      31      49       1   .text       
+     Timer_SetupPeriodicTimer                  CF0D      2E      46       1   .text       
+     Timer_PeriodicTimerEnable                 CF3B      1B      27       1   .text       
+     Timer_Setup                               CF56      22      34       1   .text       
+     Timer_Init                                CF78     3A7     935      20   .text       
+     Timer_Enable                              D31F      80     128       4   .text       
+     Timer_Enabled                             D39F      62      98       1   .text       
+     Timer_Set                                 D401      37      55       4   .text       
+     TI6_ISR                                   D438       8       8       1   .text       
 - VARIABLES:
+     _Vector_12                                FFE6       2       2       0   .abs_section_ffe6
 MODULE:                 -- SCI.c.o --
 - PROCEDURES:
-     SCI_Setup                                 D261      5A      90       1   .text       
-     SCI_InChar                                D2BB       E      14       1   .text       
-     SCI_OutChar                               D2C9      15      21       5   .text       
-     SendData                                  D2DE      30      48       2   .text       
-     SCI0_ISR                                  D30E      10      16       1   .text       
-     TIE7_ISR                                  D31E      13      19       1   .text       
+     SCI_Setup                                 D440      61      97       1   .text       
+     SCI_InChar                                D4A1       E      14       1   .text       
+     SCI_OutChar                               D4AF      15      21       5   .text       
+     SendData                                  D4C4      30      48       2   .text       
+     SCI0_ISR                                  D4F4      10      16       1   .text       
+     TIE7_ISR                                  D504      13      19       1   .text       
 - VARIABLES:
-     RxFIFO                                     912     106     262       3   .bss        
-     TxFIFO                                     A18     106     262       3   .bss        
-     i                                          B1E       1       1       1   .bss        
+     RxFIFO                                     914     106     262       3   .bss        
+     TxFIFO                                     A1A     106     262       3   .bss        
+     i                                          B20       1       1       1   .bss        
      _Vector_20                                FFD6       2       2       0   .abs_section_ffd6
      _Vector_15                                FFE0       2       2       0   .abs_section_ffe0
 MODULE:                 -- buttons.c.o --
 - PROCEDURES:
-     Buttons_Get                               D331      12      18       1   .text       
+     Buttons_Get                               D517      19      25       1   .text       
 - VARIABLES:
 MODULE:                 -- HMI.c.o --
 - PROCEDURES:
-     HMI_Setup                                 D343      66     102       1   .text       
-     TIE5_ISR                                  D3A9      4F      79       1   .text       
-     CreateMenu                                D3F8     211     529      40   .text       
-     HandleButtonPress                         D609      35      53       1   .text       
+     HMI_Setup                                 D530      7C     124       1   .text       
+     HMI_Update                                D5AC     19B     411      21   .text       
+     TIE5_ISR                                  D747      42      66       1   .text       
+     CreateMenu                                D789     25B     603      42   .text       
+     HandleButtonPress                         D9E4      49      73       1   .text       
 - VARIABLES:
-     STRING..................1                 C03D      11      17       1   .rodata1    
-     STRING..................2                 C04E      11      17       1   .rodata1    
-     STRING..................3                 C05F      11      17       1   .rodata1    
-     STRING..................4                 C070      11      17       1   .rodata1    
-     STRING..................5                 C081      11      17       1   .rodata1    
-     STRING..................6                 C092      11      17       1   .rodata1    
-     STRING..................7                 C0A3      11      17       1   .rodata1    
-     STRING..................8                 C0B4      11      17       1   .rodata1    
-     STRING.DEMMetering.Time.9                 C0C5      11      17       1   .rodata1    
-     STRING..................10                C0D6      11      17       1   .rodata1    
-     STRING.xx.xx.xx.xx....11                  C0E7       F      15       1   .rodata1    
-     STRING..................12                C0F6      11      17       1   .rodata1    
-     STRING..................13                C107      11      17       1   .rodata1    
-     STRING..................14                C118      11      17       1   .rodata1    
-     STRING..................15                C129      11      17       1   .rodata1    
-     STRING........CYC.......16                C13A      11      17       1   .rodata1    
-     STRING.Ave.Power.Consum.17                C14B      11      17       1   .rodata1    
-     STRING..................18                C15C      11      17       1   .rodata1    
-     STRING..................19                C16D      11      17       1   .rodata1    
-     STRING..................20                C17E      11      17       1   .rodata1    
-     STRING..................21                C18F      11      17       1   .rodata1    
-     STRING..................22                C1A0      11      17       1   .rodata1    
-     STRING........CYC.......23                C1B1      11      17       1   .rodata1    
-     STRING...Total.Energy...24                C1C2      11      17       1   .rodata1    
-     STRING..................25                C1D3      11      17       1   .rodata1    
-     STRING.xxx.xxx........26                  C1E4       F      15       1   .rodata1    
-     STRING..................27                C1F3      11      17       1   .rodata1    
-     STRING..................28                C204      11      17       1   .rodata1    
-     STRING..................29                C215      11      17       1   .rodata1    
-     STRING..................30                C226      11      17       1   .rodata1    
-     STRING........CYC.......31                C237      11      17       1   .rodata1    
-     STRING....Total.Cost....32                C248      11      17       1   .rodata1    
-     STRING..................33                C259      11      17       1   .rodata1    
-     STRING.xxxx.xx........34                  C26A       F      15       1   .rodata1    
-     STRING..................35                C279      11      17       1   .rodata1    
-     STRING..................36                C28A      11      17       1   .rodata1    
-     STRING..................37                C29B      11      17       1   .rodata1    
-     STRING..................38                C2AC      11      17       1   .rodata1    
-     STRING........CYC.......39                C2BD      11      17       1   .rodata1    
-     X                                          B1F       1       1       1   .bss        
-     Y                                          B20       1       1       2   .bss        
-     PBState                                    B21       2       2       3   .bss        
-     PrevPBState                                B23       2       2       2   .bss        
-     LCDState                                   B25       2       2       2   .bss        
+     STRING..Tarrif..1                         C03D       9       9       1   .rodata1    
+     STRING..xx.xx.xx.xx...2                   C046       F      15       1   .rodata1    
+     STRING..Tarrif..3                         C055       9       9       1   .rodata1    
+     STRING..Tarrif..4                         C05E       9       9       1   .rodata1    
+     STRING..xxx.xxx.......5                   C067       F      15       1   .rodata1    
+     STRING..Tarrif..6                         C076       9       9       1   .rodata1    
+     STRING..xxxx.xx.......7                   C07F       F      15       1   .rodata1    
+     STRING..................8                 C08E      11      17       1   .rodata1    
+     STRING..................9                 C09F      11      17       1   .rodata1    
+     STRING..................10                C0B0      11      17       1   .rodata1    
+     STRING..................11                C0C1      11      17       1   .rodata1    
+     STRING..................12                C0D2      11      17       1   .rodata1    
+     STRING..................13                C0E3      11      17       1   .rodata1    
+     STRING..................14                C0F4      11      17       1   .rodata1    
+     STRING..................15                C105      11      17       1   .rodata1    
+     STRING..................16                C116      11      17       1   .rodata1    
+     STRING..Metering.Time...17                C127      11      17       1   .rodata1    
+     STRING..xx.xx.xx.xx...18                  C138       F      15       1   .rodata1    
+     STRING..Tarrif..19                        C147       9       9       1   .rodata1    
+     STRING..................20                C150      11      17       1   .rodata1    
+     STRING..................21                C161      11      17       1   .rodata1    
+     STRING..................22                C172      11      17       1   .rodata1    
+     STRING........CYC.......23                C183      11      17       1   .rodata1    
+     STRING..................24                C194      11      17       1   .rodata1    
+     STRING.....Ave.Power....25                C1A5      11      17       1   .rodata1    
+     STRING..Tarrif..26                        C1B6       9       9       1   .rodata1    
+     STRING..................27                C1BF      11      17       1   .rodata1    
+     STRING..................28                C1D0      11      17       1   .rodata1    
+     STRING..................29                C1E1      11      17       1   .rodata1    
+     STRING........CYC.......30                C1F2      11      17       1   .rodata1    
+     STRING..................31                C203      11      17       1   .rodata1    
+     STRING...Total.Energy...32                C214      11      17       1   .rodata1    
+     STRING..xxx.xxx.......33                  C225       F      15       1   .rodata1    
+     STRING..Tarrif..34                        C234       9       9       1   .rodata1    
+     STRING..................35                C23D      11      17       1   .rodata1    
+     STRING..................36                C24E      11      17       1   .rodata1    
+     STRING..................37                C25F      11      17       1   .rodata1    
+     STRING........CYC.......38                C270      11      17       1   .rodata1    
+     STRING..................39                C281      11      17       1   .rodata1    
+     STRING....Total.Cost....40                C292      11      17       1   .rodata1    
+     STRING..xxxx.xx.......41                  C2A3       F      15       1   .rodata1    
+     STRING..Tarrif..42                        C2B2       9       9       1   .rodata1    
+     STRING..................43                C2BB      11      17       1   .rodata1    
+     STRING..................44                C2CC      11      17       1   .rodata1    
+     STRING..................45                C2DD      11      17       1   .rodata1    
+     STRING........CYC.......46                C2EE      11      17       1   .rodata1    
+     X                                          B21       1       1       1   .bss        
+     Y                                          B22       1       1       2   .bss        
+     PBState                                    B23       2       2       3   .bss        
+     PrevPBState                                B25       2       2       2   .bss        
+     LCDState                                   B27       2       2       5   .bss        
      _Vector_13                                FFE4       2       2       0   .abs_section_ffe4
-     Clock_Interval                             BB5       4       4       6   .common     
-     DEM_Metering_Time                          BB9       2       2       1   .common     
-     DEM_MeteringTimeDay                        BBB       2       2       2   .common     
-     DEM_MeteringTimeHour                       BBD       2       2       1   .common     
-     DEM_MeteringTimeMin                        BBF       2       2       1   .common     
-     DEM_MeteringTimeSec                        BC1       4       4       1   .common     
-     DEM_Average_Power                          BC5       2       2       2   .common     
-     DEM_Total_Energy                           BC7       4       4       8   .common     
-     DEM_Total_Cost                             BCB       4       4       8   .common     
+     Clock_Interval                             B8B       4       4      10   .common     
+     DEM_Average_Power                          B8F       2       2       7   .common     
+     DEM_AvePower_Array                         B91      20      32       3   .common     
+     DEM_Total_Energy                           BB1       4       4      22   .common     
+     DEM_Total_Cost                             BB5       4       4      23   .common     
+     DEM_Tarrif                                 BB9       2       2       7   .common     
 MODULE:                 -- LCD.c.o --
 - PROCEDURES:
-     LCD_Setup                                 D63E      91     145       1   .text       
-     TIE3_ISR                                  D6CF      1F      31       1   .text       
-     LCD_Clear                                 D6EE      19      25       2   .text       
-     LCD_CursorHome                            D707       8       8       1   .text       
-     LCD_TextHome                              D70F       D      13       1   .text       
-     LCD_TextArea                              D71C       C      12       1   .text       
-     LCD_OutChar                               D728      14      20       8   .text       
-     LCD_OutInteger                            D73C      95     149       6   .text       
-     LCD_OutString                             D7D1      1F      31      12   .text       
-     LCD_SetLine                               D7F0       B      11      13   .text       
-     LCD_SetCursor                             D7FB       B      11       1   .text       
-     LCD_DisplayOff                            D806       5       5       1   .text       
-     SetCGAddress                              D80B      12      18       2   .text       
-     SetRAMAddress                             D81D      12      18       4   .text       
-     StatusCheck                               D82F      1E      30       1   .text       
-     WaitForReady                              D84D       7       7       2   .text       
-     WriteCommand                              D854      1A      26       9   .text       
-     WriteData                                 D86E      1A      26       9   .text       
+     LCD_Setup                                 DA2D      9A     154       1   .text       
+     LCD_Clear                                 DAC7      19      25       2   .text       
+     LCD_ClearLine                             DAE0       9       9       2   .text       
+     LCD_CursorHome                            DAE9       8       8       1   .text       
+     LCD_TextHome                              DAF1       D      13       1   .text       
+     LCD_TextArea                              DAFE       C      12       1   .text       
+     LCD_OutChar                               DB0A      14      20      16   .text       
+     LCD_OutInteger                            DB1E      C2     194      15   .text       
+     LCD_OutString                             DBE0      1F      31      17   .text       
+     LCD_SetFunction                           DBFF      2C      44       1   .text       
+     LCD_SetLine                               DC2B       B      11      17   .text       
+     LCD_DisplayOff                            DC36       5       5       1   .text       
+     LCD_DisplayOn                             DC3B       5       5       1   .text       
+     SetCGAddress                              DC40      12      18       1   .text       
+     SetRAMAddress                             DC52      12      18       4   .text       
+     StatusCheck                               DC64      1E      30       1   .text       
+     WaitForReady                              DC82       7       7       2   .text       
+     WriteCommand                              DC89      1A      26      10   .text       
+     WriteData                                 DCA3      1A      26       9   .text       
 - VARIABLES:
-     _Vector_11                                FFE8       2       2       0   .abs_section_ffe8
+     STRING..................1                 C2FF      11      17       1   .rodata1    
 MODULE:                 -- Math.c.o --
 - PROCEDURES:
-     Math_FromQNotation                        D888      6F     111       4   .text       
+     Math_ToQN                                 DCBD       8       8       4   .text       
+     Math_FromQN                               DCC5      3F      63      16   .text       
+     Math_ConvertADCValue                      DD04      28      40       2   .text       
+     Math_FindPower                            DD2C       8       8       2   .text       
+     Math_FindEnergy                           DD34      27      39       1   .text       
+     Math_FindCost                             DD5B      22      34       2   .text       
+- VARIABLES:
+MODULE:                 -- clock.c.o --
+- PROCEDURES:
+     Clock_Setup                               DD7D      11      17       1   .text       
+     Clock_Update                              DD8E      C7     199       1   .text       
+     Clock_TimeInHours                         DE55      60      96       1   .text       
+- VARIABLES:
+MODULE:                 -- DEM.c.o --
+- PROCEDURES:
+     DEM_SetTarrif                             DEB5      2D      45       1   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -761,23 +783,23 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12a256.c.o                             278      0      0
-  main.c.o                                    96    756      4
+  main.c.o                                   100   1146      4
   Start12.c.o                                  0     49      0
-  rtshc12.c.o (ansisi.lib)                     0    268      0
-  OS.c.o (OS.lib)                             46    204      4
-  clock.c.o (OS.lib)                           0    112      0
-  analog.c.o                                   0    377      0
-  CRG.c.o                                      0    114      0
-  EEPROM.c.o                                   0    591      0
+  rtshc12.c.o (ansisi.lib)                     0    459      0
+  analog.c.o                                   0    587      0
+  CRG.c.o                                      0    164      2
+  EEPROM.c.o                                   0    614      0
   FIFO.c.o                                     0    139      0
-  packet.c.o                                  18    247      0
+  packet.c.o                                  18    246      0
   SPI.c.o                                      0    124      0
-  timer.c.o                                    0   1323      0
-  SCI.c.o                                    525    208      4
-  buttons.c.o                                  0     18      0
-  HMI.c.o                                     34    763    659
-  LCD.c.o                                      0    586      2
-  Math.c.o                                     0    111      0
+  timer.c.o                                    0   1380      2
+  SCI.c.o                                    525    215      4
+  buttons.c.o                                  0     25      0
+  HMI.c.o                                     56   1277    708
+  LCD.c.o                                      0    656     17
+  Math.c.o                                     0    192      0
+  clock.c.o                                    0    312      0
+  DEM.c.o                                      0     45      0
   other                                      256     12      2
 
 *********************************************************************************************
@@ -787,43 +809,50 @@ SECTION: ".text"
   main HandlePacket MCCNT_ISR HandleStartupPacket HandleSpecialPacket 
   HandleNumberPacket HandleModePacket HandleEEPROMProgramPacket 
   HandleEEPROMGetPacket HandleTimePacket HandlePacketModePacket 
-  HandleAnalogValPacket OS_ISREnter OS_ISRExit FindFirstSet Schedule TimeTick 
-  ContextSwitch Clock_RTI_ISR Clock_Setup Clock_Update Analog_Setup PWM_Setup 
-  Analog_Get Analog_Put CRG_SetupPLL CRG_SetupCOP EEPROM_Setup EEPROM_Write32 
-  EEPROM_Write16 EEPROM_Write8 EEPROM_Erase Write FIFO_Init FIFO_Put FIFO_Get 
-  Packet_Setup Packet_Put Packet_Get shuffleFSM SPI_Setup SPI_ExchangeChar 
+  HandleAnalogValPacket HandleTestModePack HandleTarrifPacket HandleTime1Packet 
+  HandleTime2Packet HandlePowerPacket HandleEnergyPacket HandleCostPacket 
+  HandleFrquencyPacket HandleVRMS HandleIRMS HandlePFactor Analog_Setup 
+  PWM_Setup Analog_Get Analog_Put CRG_SetupPLL CRG_SetupCOP CRG_SetupRTI 
+  CRG_RTI_ISR EEPROM_Setup EEPROM_Write32 EEPROM_Write16 EEPROM_Write8 
+  EEPROM_Erase Write FIFO_Init FIFO_Put FIFO_Get Packet_Setup Packet_Put 
+  Packet_Get shuffleFSM SPI_Setup SPI_ExchangeChar Timer_SetupPulseAccumulators 
   Timer_SetupPeriodicTimer Timer_PeriodicTimerEnable Timer_Setup Timer_Init 
-  Timer_Enable Timer_Enabled Timer_Set SCI_Setup SCI_InChar SCI_OutChar 
-  SendData SCI0_ISR TIE7_ISR Buttons_Get HMI_Setup TIE5_ISR CreateMenu 
-  HandleButtonPress LCD_Setup TIE3_ISR LCD_Clear LCD_CursorHome LCD_TextHome 
-  LCD_TextArea LCD_OutChar LCD_OutInteger LCD_OutString LCD_SetLine 
-  LCD_SetCursor LCD_DisplayOff SetCGAddress SetRAMAddress StatusCheck 
-  WaitForReady WriteCommand WriteData Math_FromQNotation 
+  Timer_Enable Timer_Enabled Timer_Set TI6_ISR SCI_Setup SCI_InChar SCI_OutChar 
+  SendData SCI0_ISR TIE7_ISR Buttons_Get HMI_Setup HMI_Update TIE5_ISR 
+  CreateMenu HandleButtonPress LCD_Setup LCD_Clear LCD_ClearLine LCD_CursorHome 
+  LCD_TextHome LCD_TextArea LCD_OutChar LCD_OutInteger LCD_OutString 
+  LCD_SetFunction LCD_SetLine LCD_DisplayOff LCD_DisplayOn SetCGAddress 
+  SetRAMAddress StatusCheck WaitForReady WriteCommand WriteData Math_ToQN 
+  Math_FromQN Math_ConvertADCValue Math_FindPower Math_FindEnergy Math_FindCost 
+  Clock_Setup Clock_Update Clock_TimeInHours DEM_SetTarrif 
 SECTION: ".bss"
-  FSM StateIndex bSwapFlag RxFIFO TxFIFO i X Y PBState PrevPBState LCDState 
+  SampleCount FSM StateIndex bSwapFlag RxFIFO TxFIFO i X Y PBState PrevPBState 
+  LCDState 
 SECTION: ".init"
   Init _Startup 
 SECTION: ".rodata"
   Timer_Ch7_Delay 
 SECTION: ".rodata1"
-  STRING..................1 STRING..................2 
-  STRING..................3 STRING..................4 STRING..................5 
-  STRING..................6 STRING..................7 STRING..................8 
-  STRING.DEMMetering.Time.9 STRING..................10 STRING.xx.xx.xx.xx....11 
+  STRING..Tarrif..1 STRING..xx.xx.xx.xx...2 STRING..Tarrif..3 
+  STRING..Tarrif..4 STRING..xxx.xxx.......5 STRING..Tarrif..6 
+  STRING..xxxx.xx.......7 STRING..................8 STRING..................9 
+  STRING..................10 STRING..................11 
   STRING..................12 STRING..................13 
   STRING..................14 STRING..................15 
-  STRING........CYC.......16 STRING.Ave.Power.Consum.17 
-  STRING..................18 STRING..................19 
-  STRING..................20 STRING..................21 
-  STRING..................22 STRING........CYC.......23 
-  STRING...Total.Energy...24 STRING..................25 
-  STRING.xxx.xxx........26 STRING..................27 
+  STRING..................16 STRING..Metering.Time...17 
+  STRING..xx.xx.xx.xx...18 STRING..Tarrif..19 STRING..................20 
+  STRING..................21 STRING..................22 
+  STRING........CYC.......23 STRING..................24 
+  STRING.....Ave.Power....25 STRING..Tarrif..26 STRING..................27 
   STRING..................28 STRING..................29 
-  STRING..................30 STRING........CYC.......31 
-  STRING....Total.Cost....32 STRING..................33 
-  STRING.xxxx.xx........34 STRING..................35 
-  STRING..................36 STRING..................37 
-  STRING..................38 STRING........CYC.......39 
+  STRING........CYC.......30 STRING..................31 
+  STRING...Total.Energy...32 STRING..xxx.xxx.......33 STRING..Tarrif..34 
+  STRING..................35 STRING..................36 
+  STRING..................37 STRING........CYC.......38 
+  STRING..................39 STRING....Total.Cost....40 
+  STRING..xxxx.xx.......41 STRING..Tarrif..42 STRING..................43 
+  STRING..................44 STRING..................45 
+  STRING........CYC.......46 STRING..................1 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -1274,34 +1303,30 @@ SECTION: ".abs_section_ffca"
   _Vector_26 
 SECTION: ".common"
   Packet Packet_CommandOK Analog_Input NbAnalogInputs NbAnalogOutputs 
-  Clock_Seconds Clock_Minutes Clock_MicroSeconds pTCBAllocatedList 
-  pTCBPriorityTable pTCBRunning pTCBHighestReady ReadyList Ticks HeartBeatCntr 
-  ISRNestLevel Clock_Interval DEM_Metering_Time DEM_MeteringTimeDay 
-  DEM_MeteringTimeHour DEM_MeteringTimeMin DEM_MeteringTimeSec 
-  DEM_Average_Power DEM_Total_Energy DEM_Total_Cost 
+  Clock_Seconds Clock_Minutes Clock_Hours Clock_Days Clock_MicroSeconds 
+  Clock_Interval DEM_Average_Power DEM_AvePower_Array DEM_Total_Energy 
+  DEM_Total_Cost DEM_Tarrif 
 SECTION: "RUNTIME"
-  _BDIVMODU _ISHL _LINC _lDivMod _LDIVU _ILSEXT _CASE_CHECKED 
-  _CASE_CHECKED_BYTE 
-SECTION: ".abs_section_fff6"
-  _Vector_4 
+  _LSHL _LSHRU _LCMP _LNEG _LINC _LMULU16x32 _LMULS16x32 _lDivMod _LDIVU 
+  _NEG_P _LDIVS _ILSEXT _CASE_CHECKED _CASE_CHECKED_BYTE _CASE_SEARCH_8_BYTE 
 SECTION: ".abs_section_fff0"
   _Vector_7 
+SECTION: ".abs_section_ffe6"
+  _Vector_12 
 SECTION: ".abs_section_ffd6"
   _Vector_20 
 SECTION: ".abs_section_ffe0"
   _Vector_15 
 SECTION: ".abs_section_ffe4"
   _Vector_13 
-SECTION: ".abs_section_ffe8"
-  _Vector_11 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
      Name                                      Addr   hSize   dSize     Ref    Section   RLIB
 ---------------------------------------------------------------------------------------------
-     _PORTAB                                      0       2       2      18   .abs_section_0
+     _PORTAB                                      0       2       2      27   .abs_section_0
      _DDRAB                                       2       2       2      21   .abs_section_2
-     _PORTE                                       8       1       1       1   .abs_section_8
+     _PORTE                                       8       1       1       3   .abs_section_8
      _DDRE                                        9       1       1       1   .abs_section_9
      _PEAR                                        A       1       1       0   .abs_section_a
      _MODE                                        B       1       1       0   .abs_section_b
@@ -1328,7 +1353,7 @@ OBJECT LIST SORTED BY ADDRESS
      _BKP1H                                      2E       1       1       0   .abs_section_2e
      _BKP1L                                      2F       1       1       0   .abs_section_2f
      _PPAGE                                      30       1       1       0   .abs_section_30
-     _PORTK                                      32       1       1       2   .abs_section_32
+     _PORTK                                      32       1       1       1   .abs_section_32
      _DDRK                                       33       1       1       5   .abs_section_33
      _SYNR                                       34       1       1       1   .abs_section_34
      _REFDV                                      35       1       1       1   .abs_section_35
@@ -1336,7 +1361,7 @@ OBJECT LIST SORTED BY ADDRESS
      _CRGINT                                     38       1       1       1   .abs_section_38
      _CLKSEL                                     39       1       1       1   .abs_section_39
      _PLLCTL                                     3A       1       1       1   .abs_section_3a
-     _RTICTL                                     3B       1       1       3   .abs_section_3b
+     _RTICTL                                     3B       1       1       1   .abs_section_3b
      _COPCTL                                     3C       1       1       5   .abs_section_3c
      _ARMCOP                                     3F       1       1       4   .abs_section_3f
      _TIOS                                       40       1       1      16   .abs_section_40
@@ -1352,7 +1377,7 @@ OBJECT LIST SORTED BY ADDRESS
      _TCTL4                                      4B       1       1      32   .abs_section_4b
      _TIE                                        4C       1       1      40   .abs_section_4c
      _TSCR2                                      4D       1       1       0   .abs_section_4d
-     _TFLG1                                      4E       1       1       2   .abs_section_4e
+     _TFLG1                                      4E       1       1       5   .abs_section_4e
      _TFLG2                                      4F       1       1       0   .abs_section_4f
      _TC0                                        50       2       2       1   .abs_section_50
      _TC1                                        52       2       2       1   .abs_section_52
@@ -1362,17 +1387,17 @@ OBJECT LIST SORTED BY ADDRESS
      _TC5                                        5A       2       2       1   .abs_section_5a
      _TC6                                        5C       2       2       1   .abs_section_5c
      _TC7                                        5E       2       2       1   .abs_section_5e
-     _PACTL                                      60       1       1       0   .abs_section_60
+     _PACTL                                      60       1       1       8   .abs_section_60
      _PAFLG                                      61       1       1       0   .abs_section_61
      _PACN32                                     62       2       2       0   .abs_section_62
      _PACN10                                     64       2       2       0   .abs_section_64
      _MCCTL                                      66       1       1       9   .abs_section_66
      _MCFLG                                      67       1       1       1   .abs_section_67
-     _ICPAR                                      68       1       1       0   .abs_section_68
-     _DLYCT                                      69       1       1       0   .abs_section_69
+     _ICPAR                                      68       1       1       4   .abs_section_68
+     _DLYCT                                      69       1       1       1   .abs_section_69
      _ICOVW                                      6A       1       1       0   .abs_section_6a
      _ICSYS                                      6B       1       1       0   .abs_section_6b
-     _PBCTL                                      70       1       1       0   .abs_section_70
+     _PBCTL                                      70       1       1       3   .abs_section_70
      _PBFLG                                      71       1       1       0   .abs_section_71
      _PA32H                                      72       2       2       0   .abs_section_72
      _PA10H                                      74       2       2       0   .abs_section_74
@@ -1396,25 +1421,25 @@ OBJECT LIST SORTED BY ADDRESS
      _ATD0DR5                                    9A       2       2       0   .abs_section_9a
      _ATD0DR6                                    9C       2       2       0   .abs_section_9c
      _ATD0DR7                                    9E       2       2       0   .abs_section_9e
-     _PWME                                       A0       1       1       2   .abs_section_a0
-     _PWMPOL                                     A1       1       1       2   .abs_section_a1
-     _PWMCLK                                     A2       1       1       2   .abs_section_a2
+     _PWME                                       A0       1       1       6   .abs_section_a0
+     _PWMPOL                                     A1       1       1       6   .abs_section_a1
+     _PWMCLK                                     A2       1       1       6   .abs_section_a2
      _PWMPRCLK                                   A3       1       1       2   .abs_section_a3
-     _PWMCAE                                     A4       1       1       0   .abs_section_a4
-     _PWMCTL                                     A5       1       1       3   .abs_section_a5
+     _PWMCAE                                     A4       1       1       6   .abs_section_a4
+     _PWMCTL                                     A5       1       1       5   .abs_section_a5
      _PWMSCLA                                    A8       1       1       0   .abs_section_a8
      _PWMSCLB                                    A9       1       1       0   .abs_section_a9
-     _PWMCNT01                                   AC       2       2       2   .abs_section_ac
-     _PWMCNT23                                   AE       2       2       0   .abs_section_ae
-     _PWMCNT45                                   B0       2       2       0   .abs_section_b0
+     _PWMCNT01                                   AC       2       2       6   .abs_section_ac
+     _PWMCNT23                                   AE       2       2       6   .abs_section_ae
+     _PWMCNT45                                   B0       2       2       4   .abs_section_b0
      _PWMCNT67                                   B2       2       2       0   .abs_section_b2
      _PWMPER01                                   B4       2       2       2   .abs_section_b4
-     _PWMPER23                                   B6       2       2       0   .abs_section_b6
-     _PWMPER45                                   B8       2       2       0   .abs_section_b8
+     _PWMPER23                                   B6       2       2       2   .abs_section_b6
+     _PWMPER45                                   B8       2       2       2   .abs_section_b8
      _PWMPER67                                   BA       2       2       0   .abs_section_ba
      _PWMDTY01                                   BC       2       2       2   .abs_section_bc
-     _PWMDTY23                                   BE       2       2       0   .abs_section_be
-     _PWMDTY45                                   C0       2       2       0   .abs_section_c0
+     _PWMDTY23                                   BE       2       2       2   .abs_section_be
+     _PWMDTY45                                   C0       2       2       2   .abs_section_c0
      _PWMDTY67                                   C2       2       2       0   .abs_section_c2
      _PWMSDN                                     C4       1       1       0   .abs_section_c4
      _SCI0BD                                     C8       2       2       1   .abs_section_c8
@@ -1477,7 +1502,7 @@ OBJECT LIST SORTED BY ADDRESS
      _ATD1DR5                                   13A       2       2       0   .abs_section_13a
      _ATD1DR6                                   13C       2       2       0   .abs_section_13c
      _ATD1DR7                                   13E       2       2       0   .abs_section_13e
-     _PTT                                       240       1       1       7   .abs_section_240
+     _PTT                                       240       1       1       9   .abs_section_240
      _PTIT                                      241       1       1       0   .abs_section_241
      _DDRT                                      242       1       1       3   .abs_section_242
      _RDRT                                      243       1       1       0   .abs_section_243
@@ -1506,7 +1531,7 @@ OBJECT LIST SORTED BY ADDRESS
      _PPSP                                      25D       1       1       0   .abs_section_25d
      _PIEP                                      25E       1       1       0   .abs_section_25e
      _PIFP                                      25F       1       1       0   .abs_section_25f
-     _PTH                                       260       1       1      13   .abs_section_260
+     _PTH                                       260       1       1      14   .abs_section_260
      _PTIH                                      261       1       1       0   .abs_section_261
      _DDRH                                      262       1       1       3   .abs_section_262
      _RDRH                                      263       1       1       0   .abs_section_263
@@ -1522,207 +1547,217 @@ OBJECT LIST SORTED BY ADDRESS
      _PPSJ                                      26D       1       1       0   .abs_section_26d
      _PIEJ                                      26E       1       1       0   .abs_section_26e
      _PIFJ                                      26F       1       1       0   .abs_section_26f
-     FSM                                        900       F      15      12   .bss        
-     StateIndex                                 90F       1       1       5   .bss        
-     bSwapFlag                                  910       2       2       3   .bss        
-     RxFIFO                                     912     106     262       3   .bss        
-     TxFIFO                                     A18     106     262       3   .bss        
-     i                                          B1E       1       1       1   .bss        
-     X                                          B1F       1       1       1   .bss        
-     Y                                          B20       1       1       2   .bss        
-     PBState                                    B21       2       2       3   .bss        
-     PrevPBState                                B23       2       2       2   .bss        
-     LCDState                                   B25       2       2       2   .bss        
-     Packet                                     B27       4       4      28   .common     
-     Packet_CommandOK                           B2B       2       2       2   .common     
-     Analog_Input                               B2D      50      80      17   .common     
-     NbAnalogInputs                             B7D       2       2       1   .common     
-     NbAnalogOutputs                            B7F       2       2       1   .common     
-     Clock_Seconds                              B81       1       1       5   .common     
-     Clock_Minutes                              B82       1       1       3   .common     
-     Clock_MicroSeconds                         B83       4       4      10   .common     
-     pTCBAllocatedList                          B87       2       2       1   .common     
-     pTCBPriorityTable                          B89      20      32       1   .common     
-     pTCBRunning                                BA9       2       2       3   .common     
-     pTCBHighestReady                           BAB       2       2       2   .common     
-     ReadyList                                  BAD       2       2       4   .common     
-     Ticks                                      BAF       4       4       4   .common     
-     HeartBeatCntr                              BB3       1       1       3   .common     
-     ISRNestLevel                               BB4       1       1       3   .common     
-     Clock_Interval                             BB5       4       4       6   .common     
-     DEM_Metering_Time                          BB9       2       2       1   .common     
-     DEM_MeteringTimeDay                        BBB       2       2       2   .common     
-     DEM_MeteringTimeHour                       BBD       2       2       1   .common     
-     DEM_MeteringTimeMin                        BBF       2       2       1   .common     
-     DEM_MeteringTimeSec                        BC1       4       4       1   .common     
-     DEM_Average_Power                          BC5       2       2       2   .common     
-     DEM_Total_Energy                           BC7       4       4       8   .common     
-     DEM_Total_Cost                             BCB       4       4       8   .common     
+     SampleCount                                900       2       2       6   .bss        
+     FSM                                        902       F      15      12   .bss        
+     StateIndex                                 911       1       1       5   .bss        
+     bSwapFlag                                  912       2       2       3   .bss        
+     RxFIFO                                     914     106     262       3   .bss        
+     TxFIFO                                     A1A     106     262       3   .bss        
+     i                                          B20       1       1       1   .bss        
+     X                                          B21       1       1       1   .bss        
+     Y                                          B22       1       1       2   .bss        
+     PBState                                    B23       2       2       3   .bss        
+     PrevPBState                                B25       2       2       2   .bss        
+     LCDState                                   B27       2       2       5   .bss        
+     Packet                                     B29       4       4      36   .common     
+     Packet_CommandOK                           B2D       2       2       2   .common     
+     Analog_Input                               B2F      50      80      21   .common     
+     NbAnalogInputs                             B7F       2       2       1   .common     
+     NbAnalogOutputs                            B81       2       2       1   .common     
+     Clock_Seconds                              B83       1       1      10   .common     
+     Clock_Minutes                              B84       1       1      10   .common     
+     Clock_Hours                                B85       1       1      12   .common     
+     Clock_Days                                 B86       1       1       8   .common     
+     Clock_MicroSeconds                         B87       4       4      11   .common     
+     Clock_Interval                             B8B       4       4      10   .common     
+     DEM_Average_Power                          B8F       2       2       7   .common     
+     DEM_AvePower_Array                         B91      20      32       3   .common     
+     DEM_Total_Energy                           BB1       4       4      22   .common     
+     DEM_Total_Cost                             BB5       4       4      23   .common     
+     DEM_Tarrif                                 BB9       2       2       7   .common     
      Init                                      C000      29      41       1   .init       
      _Startup                                  C029       8       8       0   .init       
      Timer_Ch7_Delay                           C03B       2       2       1   .rodata     
-     STRING..................1                 C03D      11      17       1   .rodata1    
-     STRING..................2                 C04E      11      17       1   .rodata1    
-     STRING..................3                 C05F      11      17       1   .rodata1    
-     STRING..................4                 C070      11      17       1   .rodata1    
-     STRING..................5                 C081      11      17       1   .rodata1    
-     STRING..................6                 C092      11      17       1   .rodata1    
-     STRING..................7                 C0A3      11      17       1   .rodata1    
-     STRING..................8                 C0B4      11      17       1   .rodata1    
-     STRING.DEMMetering.Time.9                 C0C5      11      17       1   .rodata1    
-     STRING..................10                C0D6      11      17       1   .rodata1    
-     STRING.xx.xx.xx.xx....11                  C0E7       F      15       1   .rodata1    
-     STRING..................12                C0F6      11      17       1   .rodata1    
-     STRING..................13                C107      11      17       1   .rodata1    
-     STRING..................14                C118      11      17       1   .rodata1    
-     STRING..................15                C129      11      17       1   .rodata1    
-     STRING........CYC.......16                C13A      11      17       1   .rodata1    
-     STRING.Ave.Power.Consum.17                C14B      11      17       1   .rodata1    
-     STRING..................18                C15C      11      17       1   .rodata1    
-     STRING..................19                C16D      11      17       1   .rodata1    
-     STRING..................20                C17E      11      17       1   .rodata1    
-     STRING..................21                C18F      11      17       1   .rodata1    
-     STRING..................22                C1A0      11      17       1   .rodata1    
-     STRING........CYC.......23                C1B1      11      17       1   .rodata1    
-     STRING...Total.Energy...24                C1C2      11      17       1   .rodata1    
-     STRING..................25                C1D3      11      17       1   .rodata1    
-     STRING.xxx.xxx........26                  C1E4       F      15       1   .rodata1    
-     STRING..................27                C1F3      11      17       1   .rodata1    
-     STRING..................28                C204      11      17       1   .rodata1    
-     STRING..................29                C215      11      17       1   .rodata1    
-     STRING..................30                C226      11      17       1   .rodata1    
-     STRING........CYC.......31                C237      11      17       1   .rodata1    
-     STRING....Total.Cost....32                C248      11      17       1   .rodata1    
-     STRING..................33                C259      11      17       1   .rodata1    
-     STRING.xxxx.xx........34                  C26A       F      15       1   .rodata1    
-     STRING..................35                C279      11      17       1   .rodata1    
-     STRING..................36                C28A      11      17       1   .rodata1    
-     STRING..................37                C29B      11      17       1   .rodata1    
-     STRING..................38                C2AC      11      17       1   .rodata1    
-     STRING........CYC.......39                C2BD      11      17       1   .rodata1    
-     main                                      C2CE      DD     221       1   .text       
-     HandlePacket                              C3AB      82     130       1   .text       
-     MCCNT_ISR                                 C42D      46      70       1   .text       
-     HandleStartupPacket                       C473      44      68       2   .text       
-     HandleSpecialPacket                       C4B7      24      36       2   .text       
-     HandleNumberPacket                        C4DB      2A      42       2   .text       
-     HandleModePacket                          C505      15      21       2   .text       
-     HandleEEPROMProgramPacket                 C51A      25      37       1   .text       
-     HandleEEPROMGetPacket                     C53F      2A      42       1   .text       
-     HandleTimePacket                          C569      12      18       2   .text       
-     HandlePacketModePacket                    C57B      28      40       1   .text       
-     HandleAnalogValPacket                     C5A3      1F      31       3   .text       
-     OS_ISREnter                               C5C2       6       6       1   .text       
-     OS_ISRExit                                C5C8       8       8       1   .text       
-     FindFirstSet                              C5D0      2A      42       1   .text       
-     Schedule                                  C5FA      20      32       1   .text       
-     TimeTick                                  C61A      43      67       1   .text       
-     ContextSwitch                             C65D       E      14       1   .text       
-     Clock_RTI_ISR                             C66B      23      35       1   .text       
-     Clock_Setup                               C68E      27      39       1   .text       
-     Clock_Update                              C6B5      49      73       2   .text       
-     Analog_Setup                              C6FE      44      68       1   .text       
-     PWM_Setup                                 C742      2F      47       1   .text       
-     Analog_Get                                C771      C6     198       2   .text       
-     Analog_Put                                C837      40      64       1   .text       
-     CRG_SetupPLL                              C877      51      81       1   .text       
-     CRG_SetupCOP                              C8C8      21      33       1   .text       
-     EEPROM_Setup                              C8E9     123     291       6   .text       
-     EEPROM_Write32                            CA0C      50      80       1   .text       
-     EEPROM_Write16                            CA5C      43      67      14   .text       
-     EEPROM_Write8                             CA9F      2C      44       1   .text       
-     EEPROM_Erase                              CACB      36      54       1   .text       
-     Write                                     CB01      37      55       5   .text       
-     FIFO_Init                                 CB38       F      15       2   .text       
-     FIFO_Put                                  CB47      3F      63       2   .text       
-     FIFO_Get                                  CB86      3D      61       2   .text       
-     Packet_Setup                              CBC3      1B      27       1   .text       
-     Packet_Put                                CBDE      4B      75      10   .text       
-     Packet_Get                                CC29      6A     106       1   .text       
-     shuffleFSM                                CC93      27      39       1   .text       
-     SPI_Setup                                 CCBA      67     103       1   .text       
-     SPI_ExchangeChar                          CD21      15      21       6   .text       
-     Timer_SetupPeriodicTimer                  CD36      2E      46       1   .text       
-     Timer_PeriodicTimerEnable                 CD64      1B      27       1   .text       
-     Timer_Setup                               CD7F      22      34       1   .text       
-     Timer_Init                                CDA1     3A7     935      20   .text       
-     Timer_Enable                              D148      80     128       7   .text       
-     Timer_Enabled                             D1C8      62      98       1   .text       
-     Timer_Set                                 D22A      37      55       4   .text       
-     SCI_Setup                                 D261      5A      90       1   .text       
-     SCI_InChar                                D2BB       E      14       1   .text       
-     SCI_OutChar                               D2C9      15      21       5   .text       
-     SendData                                  D2DE      30      48       2   .text       
-     SCI0_ISR                                  D30E      10      16       1   .text       
-     TIE7_ISR                                  D31E      13      19       1   .text       
-     Buttons_Get                               D331      12      18       1   .text       
-     HMI_Setup                                 D343      66     102       1   .text       
-     TIE5_ISR                                  D3A9      4F      79       1   .text       
-     CreateMenu                                D3F8     211     529      40   .text       
-     HandleButtonPress                         D609      35      53       1   .text       
-     LCD_Setup                                 D63E      91     145       1   .text       
-     TIE3_ISR                                  D6CF      1F      31       1   .text       
-     LCD_Clear                                 D6EE      19      25       2   .text       
-     LCD_CursorHome                            D707       8       8       1   .text       
-     LCD_TextHome                              D70F       D      13       1   .text       
-     LCD_TextArea                              D71C       C      12       1   .text       
-     LCD_OutChar                               D728      14      20       8   .text       
-     LCD_OutInteger                            D73C      95     149       6   .text       
-     LCD_OutString                             D7D1      1F      31      12   .text       
-     LCD_SetLine                               D7F0       B      11      13   .text       
-     LCD_SetCursor                             D7FB       B      11       1   .text       
-     LCD_DisplayOff                            D806       5       5       1   .text       
-     SetCGAddress                              D80B      12      18       2   .text       
-     SetRAMAddress                             D81D      12      18       4   .text       
-     StatusCheck                               D82F      1E      30       1   .text       
-     WaitForReady                              D84D       7       7       2   .text       
-     WriteCommand                              D854      1A      26       9   .text       
-     WriteData                                 D86E      1A      26       9   .text       
-     Math_FromQNotation                        D888      6F     111       4   .text       
-     _BDIVMODU                                 D8F7       A      10       2   RUNTIME     
-     _ISHL                                     D901       B      11       1   RUNTIME     
-     _LINC                                     D90C       5       5       1   RUNTIME     
-     _lDivMod                                  D911      BE     190       1   RUNTIME     
-     _LDIVU                                    D9CF       E      14       4   RUNTIME     
-     _ILSEXT                                   D9DD       7       7       1   RUNTIME     
-     _CASE_CHECKED                             D9E4       B      11       2   RUNTIME     
-     _CASE_CHECKED_BYTE                        D9EF      14      20      21   RUNTIME     
+     STRING..Tarrif..1                         C03D       9       9       1   .rodata1    
+     STRING..xx.xx.xx.xx...2                   C046       F      15       1   .rodata1    
+     STRING..Tarrif..3                         C055       9       9       1   .rodata1    
+     STRING..Tarrif..4                         C05E       9       9       1   .rodata1    
+     STRING..xxx.xxx.......5                   C067       F      15       1   .rodata1    
+     STRING..Tarrif..6                         C076       9       9       1   .rodata1    
+     STRING..xxxx.xx.......7                   C07F       F      15       1   .rodata1    
+     STRING..................8                 C08E      11      17       1   .rodata1    
+     STRING..................9                 C09F      11      17       1   .rodata1    
+     STRING..................10                C0B0      11      17       1   .rodata1    
+     STRING..................11                C0C1      11      17       1   .rodata1    
+     STRING..................12                C0D2      11      17       1   .rodata1    
+     STRING..................13                C0E3      11      17       1   .rodata1    
+     STRING..................14                C0F4      11      17       1   .rodata1    
+     STRING..................15                C105      11      17       1   .rodata1    
+     STRING..................16                C116      11      17       1   .rodata1    
+     STRING..Metering.Time...17                C127      11      17       1   .rodata1    
+     STRING..xx.xx.xx.xx...18                  C138       F      15       1   .rodata1    
+     STRING..Tarrif..19                        C147       9       9       1   .rodata1    
+     STRING..................20                C150      11      17       1   .rodata1    
+     STRING..................21                C161      11      17       1   .rodata1    
+     STRING..................22                C172      11      17       1   .rodata1    
+     STRING........CYC.......23                C183      11      17       1   .rodata1    
+     STRING..................24                C194      11      17       1   .rodata1    
+     STRING.....Ave.Power....25                C1A5      11      17       1   .rodata1    
+     STRING..Tarrif..26                        C1B6       9       9       1   .rodata1    
+     STRING..................27                C1BF      11      17       1   .rodata1    
+     STRING..................28                C1D0      11      17       1   .rodata1    
+     STRING..................29                C1E1      11      17       1   .rodata1    
+     STRING........CYC.......30                C1F2      11      17       1   .rodata1    
+     STRING..................31                C203      11      17       1   .rodata1    
+     STRING...Total.Energy...32                C214      11      17       1   .rodata1    
+     STRING..xxx.xxx.......33                  C225       F      15       1   .rodata1    
+     STRING..Tarrif..34                        C234       9       9       1   .rodata1    
+     STRING..................35                C23D      11      17       1   .rodata1    
+     STRING..................36                C24E      11      17       1   .rodata1    
+     STRING..................37                C25F      11      17       1   .rodata1    
+     STRING........CYC.......38                C270      11      17       1   .rodata1    
+     STRING..................39                C281      11      17       1   .rodata1    
+     STRING....Total.Cost....40                C292      11      17       1   .rodata1    
+     STRING..xxxx.xx.......41                  C2A3       F      15       1   .rodata1    
+     STRING..Tarrif..42                        C2B2       9       9       1   .rodata1    
+     STRING..................43                C2BB      11      17       1   .rodata1    
+     STRING..................44                C2CC      11      17       1   .rodata1    
+     STRING..................45                C2DD      11      17       1   .rodata1    
+     STRING........CYC.......46                C2EE      11      17       1   .rodata1    
+     STRING..................1                 C2FF      11      17       1   .rodata1    
+     main                                      C310      F1     241       1   .text       
+     HandlePacket                              C401      C6     198       1   .text       
+     MCCNT_ISR                                 C4C7      9B     155       1   .text       
+     HandleStartupPacket                       C562      44      68       2   .text       
+     HandleSpecialPacket                       C5A6      26      38       2   .text       
+     HandleNumberPacket                        C5CC      2A      42       2   .text       
+     HandleModePacket                          C5F6      15      21       2   .text       
+     HandleEEPROMProgramPacket                 C60B      25      37       1   .text       
+     HandleEEPROMGetPacket                     C630      2A      42       1   .text       
+     HandleTimePacket                          C65A      12      18       2   .text       
+     HandlePacketModePacket                    C66C      28      40       1   .text       
+     HandleAnalogValPacket                     C694      1F      31       4   .text       
+     HandleTestModePack                        C6B3      11      17       1   .text       
+     HandleTarrifPacket                        C6C4      22      34       1   .text       
+     HandleTime1Packet                         C6E6      24      36       1   .text       
+     HandleTime2Packet                         C70A      24      36       1   .text       
+     HandlePowerPacket                         C72E      12      18       1   .text       
+     HandleEnergyPacket                        C740      12      18       1   .text       
+     HandleCostPacket                          C752      2C      44       1   .text       
+     HandleFrquencyPacket                      C77E       3       3       1   .text       
+     HandleVRMS                                C781       3       3       1   .text       
+     HandleIRMS                                C784       3       3       1   .text       
+     HandlePFactor                             C787       3       3       1   .text       
+     Analog_Setup                              C78A      3D      61       1   .text       
+     PWM_Setup                                 C7C7      7D     125       1   .text       
+     Analog_Get                                C844      C6     198       2   .text       
+     Analog_Put                                C90A      CB     203       5   .text       
+     CRG_SetupPLL                              C9D5      51      81       1   .text       
+     CRG_SetupCOP                              CA26      21      33       1   .text       
+     CRG_SetupRTI                              CA47       E      14       1   .text       
+     CRG_RTI_ISR                               CA55      24      36       1   .text       
+     EEPROM_Setup                              CA79     13A     314       7   .text       
+     EEPROM_Write32                            CBB3      50      80       1   .text       
+     EEPROM_Write16                            CC03      43      67      14   .text       
+     EEPROM_Write8                             CC46      2C      44       1   .text       
+     EEPROM_Erase                              CC72      36      54       1   .text       
+     Write                                     CCA8      37      55       5   .text       
+     FIFO_Init                                 CCDF       F      15       2   .text       
+     FIFO_Put                                  CCEE      3F      63       2   .text       
+     FIFO_Get                                  CD2D      3D      61       2   .text       
+     Packet_Setup                              CD6A      1B      27       1   .text       
+     Packet_Put                                CD85      4B      75      15   .text       
+     Packet_Get                                CDD0      64     100       1   .text       
+     shuffleFSM                                CE34      2C      44       1   .text       
+     SPI_Setup                                 CE60      67     103       1   .text       
+     SPI_ExchangeChar                          CEC7      15      21       5   .text       
+     Timer_SetupPulseAccumulators              CEDC      31      49       1   .text       
+     Timer_SetupPeriodicTimer                  CF0D      2E      46       1   .text       
+     Timer_PeriodicTimerEnable                 CF3B      1B      27       1   .text       
+     Timer_Setup                               CF56      22      34       1   .text       
+     Timer_Init                                CF78     3A7     935      20   .text       
+     Timer_Enable                              D31F      80     128       4   .text       
+     Timer_Enabled                             D39F      62      98       1   .text       
+     Timer_Set                                 D401      37      55       4   .text       
+     TI6_ISR                                   D438       8       8       1   .text       
+     SCI_Setup                                 D440      61      97       1   .text       
+     SCI_InChar                                D4A1       E      14       1   .text       
+     SCI_OutChar                               D4AF      15      21       5   .text       
+     SendData                                  D4C4      30      48       2   .text       
+     SCI0_ISR                                  D4F4      10      16       1   .text       
+     TIE7_ISR                                  D504      13      19       1   .text       
+     Buttons_Get                               D517      19      25       1   .text       
+     HMI_Setup                                 D530      7C     124       1   .text       
+     HMI_Update                                D5AC     19B     411      21   .text       
+     TIE5_ISR                                  D747      42      66       1   .text       
+     CreateMenu                                D789     25B     603      42   .text       
+     HandleButtonPress                         D9E4      49      73       1   .text       
+     LCD_Setup                                 DA2D      9A     154       1   .text       
+     LCD_Clear                                 DAC7      19      25       2   .text       
+     LCD_ClearLine                             DAE0       9       9       2   .text       
+     LCD_CursorHome                            DAE9       8       8       1   .text       
+     LCD_TextHome                              DAF1       D      13       1   .text       
+     LCD_TextArea                              DAFE       C      12       1   .text       
+     LCD_OutChar                               DB0A      14      20      16   .text       
+     LCD_OutInteger                            DB1E      C2     194      15   .text       
+     LCD_OutString                             DBE0      1F      31      17   .text       
+     LCD_SetFunction                           DBFF      2C      44       1   .text       
+     LCD_SetLine                               DC2B       B      11      17   .text       
+     LCD_DisplayOff                            DC36       5       5       1   .text       
+     LCD_DisplayOn                             DC3B       5       5       1   .text       
+     SetCGAddress                              DC40      12      18       1   .text       
+     SetRAMAddress                             DC52      12      18       4   .text       
+     StatusCheck                               DC64      1E      30       1   .text       
+     WaitForReady                              DC82       7       7       2   .text       
+     WriteCommand                              DC89      1A      26      10   .text       
+     WriteData                                 DCA3      1A      26       9   .text       
+     Math_ToQN                                 DCBD       8       8       4   .text       
+     Math_FromQN                               DCC5      3F      63      16   .text       
+     Math_ConvertADCValue                      DD04      28      40       2   .text       
+     Math_FindPower                            DD2C       8       8       2   .text       
+     Math_FindEnergy                           DD34      27      39       1   .text       
+     Math_FindCost                             DD5B      22      34       2   .text       
+     Clock_Setup                               DD7D      11      17       1   .text       
+     Clock_Update                              DD8E      C7     199       1   .text       
+     Clock_TimeInHours                         DE55      60      96       1   .text       
+     DEM_SetTarrif                             DEB5      2D      45       1   .text       
+     _LSHL                                     DEE2      11      17       1   RUNTIME     
+     _LSHRU                                    DEF3      11      17       4   RUNTIME     
+     _LCMP                                     DF04      19      25       1   RUNTIME     
+     _LNEG                                     DF1D       D      13       1   RUNTIME     
+     _LINC                                     DF2A       5       5       1   RUNTIME     
+     _LMULU16x32                               DF2F       F      15       2   RUNTIME     
+     _LMULS16x32                               DF3E      1F      31       1   RUNTIME     
+     _lDivMod                                  DF5D      BE     190       3   RUNTIME     
+     _LDIVU                                    E01B       E      14       4   RUNTIME     
+     _NEG_P                                    E029       F      15       4   RUNTIME     
+     _LDIVS                                    E038      35      53       2   RUNTIME     
+     _ILSEXT                                   E06D       7       7       5   RUNTIME     
+     _CASE_CHECKED                             E074       B      11       3   RUNTIME     
+     _CASE_CHECKED_BYTE                        E07F      14      20      22   RUNTIME     
+     _CASE_SEARCH_8_BYTE                       E093      1A      26       1   RUNTIME     
      _Vector_26                                FFCA       2       2       0   .abs_section_ffca
      _Vector_20                                FFD6       2       2       0   .abs_section_ffd6
      _Vector_15                                FFE0       2       2       0   .abs_section_ffe0
      _Vector_13                                FFE4       2       2       0   .abs_section_ffe4
-     _Vector_11                                FFE8       2       2       0   .abs_section_ffe8
+     _Vector_12                                FFE6       2       2       0   .abs_section_ffe6
      _Vector_7                                 FFF0       2       2       0   .abs_section_fff0
-     _Vector_4                                 FFF6       2       2       0   .abs_section_fff6
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
-main.c.o:
-  HandleTestModePack HandleTarrifPacket HandleTime1Packet HandleTime2Packet 
-  HandlePowerPacket HandleEnergyPacket HandleCostPacket HandleFrquencyPacket 
-  HandleVRMS HandleIRMS HandlePFactor 
 rtshc12.c.o (ansisi.lib):
-  _BSHL _BSHRS _BSHRU _BDIVMODS _ISHRU _ISHRS _LSHL _LSHRU _LSHRS _LADD _LSUB 
-  _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LNEG _LCOM _LDEC _LMUL _LMULU16x32 
-  _LMULS16x32 _NEG_P _LDIVS _LMODU _LMODS _COPY _CASE_DIRECT _CASE_DIRECT_BYTE 
-  _CASE_SEARCH _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL 
-  _FPCMP 
-OS.c.o (OS.lib):
-  OS_Init OS_SemaphoreCreate OS_SemaphoreSignal OS_SemaphoreWait OS_Start 
-  OS_ThreadCreate OS_ThreadDelete OS_TimeDelay OS_TimeGet OS_TimeSet 
-  EventThreadReady EventThreadWait EventTimeout Idle TCBInit 
-CRG.c.o:
-  CRG_SetupRTI 
-timer.c.o:
-  Timer_SetupPulseAccumulators 
+  _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHRS _LADD 
+  _LSUB _LAND _LOR _LXOR _LCMP_P _LCMP_PP _LCOM _LDEC _LMUL _LMODU _LMODS _COPY 
+  _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_SEARCH _CASE_SEARCH_BYTE _CASE_SEARCH_8 
+  _FCALL _FPCMP 
 SCI.c.o:
   SCI_Poll SCI_WaitForChar 
 LCD.c.o:
-  LCD_ClearLine LCD_SetFunction InChar 
+  LCD_SetCursor InChar 
 Math.c.o:
-  Math_ToQNotation 
+  Math_SQRT 
 NOT USED VARIABLES
 main.c.o:
   MAJOR_VERSION MINOR_VERSION CMD_STARTUP CMD_EEPROM_PROG CMD_EEPROM_GET 
@@ -1730,12 +1765,9 @@ main.c.o:
   CMD_ANALOG_VALUE CMD_TEST_MODE CMD_TARRIF CMD_TIME1 CMD_TIME2 CMD_POWER 
   CMD_ENERGY CMD_COST CMD_FREQUENCY CMD_VOLRMS CMD_CURRMS CMD_POWFAC baudRate 
   busClk oscClk refClk watchDogRate prescaleRate modulusCount Periodic_Delay 
-  copReset copEnd Packet_Mode Clock_Hours Clock_Days 
+  copReset copEnd Packet_Mode 
 rtshc12.c.o (ansisi.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
-OS.c.o (OS.lib):
-  osTickPeriod TCBUnusedMain TCBTable pTCBFreeList ECBTable NextECBFree 
-  IdleCounter IdleStack 
 analog.c.o:
   ADC_OFFSET 
 EEPROM.c.o:
@@ -1747,14 +1779,11 @@ LCD.c.o:
   SET_TEXT_HOME SET_TEXTAREA SET_CURSOR SET_RAM DISPLAY_MODE TXT_GFX_ON 
   SET_ONE_L SET_TWO_L SET_THREE_L SET_FOUR_L DATA_WRITE DATA_READ LCD_CLEAR 
   MODE_SET CURSOR_SELECT DISPLAY_OFF COLUMN_SIZE Timer_Ch5_Delay 
-  Timer_Ch3_Delay STRING..................1 
-Math.c.o:
-  Base 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xDA03 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xE0AD ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -1764,16 +1793,21 @@ OBJECT-DEPENDENCIES SECTION
 Init                      USES _startupData 
 _Startup                  USES __SEG_END_SSTACK Init main 
 main                      USES Packet_Setup EEPROM_Setup CRG_SetupPLL 
-                                CRG_SetupCOP Clock_Setup Analog_Setup Timer_Setup 
-                                Timer_PeriodicTimerEnable Timer_SetupPeriodicTimer Timer_Init Timer_Set 
-                                HMI_Setup _DDRE _PORTE HandleStartupPacket _ARMCOP 
-                                Packet_Get HandlePacket Clock_Update HandleTimePacket 
+                                CRG_SetupCOP Clock_Setup Analog_Setup PWM_Setup Timer_Setup 
+                                Timer_PeriodicTimerEnable Timer_SetupPeriodicTimer 
+                                Timer_SetupPulseAccumulators Timer_Init Timer_Set HMI_Setup _DDRE _PORTE 
+                                HandleStartupPacket SampleCount _ARMCOP Packet_Get HandlePacket 
+                                Clock_Update HandleTimePacket HMI_Update 
 HandlePacket              USES Packet _CASE_CHECKED_BYTE HandleStartupPacket 
                                 HandleSpecialPacket HandleNumberPacket HandleModePacket 
                                 HandleEEPROMProgramPacket HandleEEPROMGetPacket HandlePacketModePacket 
-                                Packet_CommandOK Packet_Put 
+                                HandleTestModePack HandleTarrifPacket HandleTime1Packet 
+                                HandleTime2Packet HandlePowerPacket HandleEnergyPacket 
+                                HandleCostPacket HandleFrquencyPacket HandleVRMS HandleIRMS 
+                                HandlePFactor Packet_CommandOK Packet_Put 
 MCCNT_ISR                 USES _MCFLG _PTT Analog_Put Analog_Get Analog_Input 
-                                HandleAnalogValPacket 
+                                HandleAnalogValPacket SampleCount DEM_AvePower_Array Math_FindEnergy 
+                                _ILSEXT Math_ConvertADCValue Math_FindPower 
 HandleStartupPacket       USES Packet Packet_Put HandleSpecialPacket 
                                 HandleNumberPacket HandleModePacket 
 HandleSpecialPacket       USES Packet EEPROM_Write16 HandleTimePacket 
@@ -1785,26 +1819,25 @@ HandleEEPROMGetPacket     USES Packet Packet_Put
 HandleTimePacket          USES Clock_Seconds Clock_Minutes Packet_Put 
 HandlePacketModePacket    USES Packet EEPROM_Write16 Packet_Put 
 HandleAnalogValPacket     USES Analog_Input Packet_Put 
-OS_ISREnter               USES ISRNestLevel 
-OS_ISRExit                USES ISRNestLevel Schedule 
-Schedule                  USES ISRNestLevel ReadyList FindFirstSet 
-                                pTCBPriorityTable pTCBHighestReady pTCBRunning 
-TimeTick                  USES Ticks _LINC pTCBAllocatedList _ISHL ReadyList 
-ContextSwitch             USES pTCBRunning pTCBHighestReady 
-Clock_RTI_ISR             USES _CRGFLG OS_ISREnter TimeTick Clock_MicroSeconds 
-                                Clock_Update HeartBeatCntr OS_ISRExit 
-Clock_Setup               USES _RTICTL _CRGINT Clock_MicroSeconds 
-                                Clock_Seconds Clock_Minutes 
-Clock_Update              USES Clock_Seconds Clock_MicroSeconds Clock_Minutes 
-Analog_Setup              USES NbAnalogInputs NbAnalogOutputs PWM_Setup 
-                                SPI_Setup _PTH 
-PWM_Setup                 USES _PWME _PWMPOL _PWMCLK _PWMPRCLK _PWMCTL 
-                                _PWMPER01 _PWMDTY01 
+HandleTestModePack        USES Packet 
+HandleTarrifPacket        USES Packet _CASE_CHECKED_BYTE DEM_Tarrif 
+HandleTime1Packet         USES Packet Clock_Seconds Clock_Minutes Packet_Put 
+HandleTime2Packet         USES Packet Clock_Hours Clock_Days Packet_Put 
+HandlePowerPacket         USES DEM_Average_Power Packet_Put 
+HandleEnergyPacket        USES DEM_Total_Energy Packet_Put 
+HandleCostPacket          USES DEM_Total_Cost Math_FromQN Packet_Put 
+Analog_Setup              USES NbAnalogInputs NbAnalogOutputs SPI_Setup _PTH 
+PWM_Setup                 USES _PWMPOL _PWMCLK _PWMCAE _PWMPRCLK _PWMCTL 
+                                _PWMPER01 _PWMPER23 _PWMPER45 _PWMDTY01 _PWMDTY23 
+                                _PWMDTY45 _PWME 
 Analog_Get                USES _PTH SPI_ExchangeChar Analog_Input 
-Analog_Put                USES _PTH SPI_ExchangeChar _PWMCNT01 
+Analog_Put                USES Analog_Put _PWMCNT23 _PWMCNT01 _PWMCNT45 _PTH 
+                                SPI_ExchangeChar 
 CRG_SetupPLL              USES _LDIVU _SYNR _REFDV _PLLCTL _CRGFLG _CLKSEL 
 CRG_SetupCOP              USES _COPCTL 
-EEPROM_Setup              USES EEPROM_Setup _ECLKDIV EEPROM_Write16 
+CRG_SetupRTI              USES _RTICTL _CRGINT 
+CRG_RTI_ISR               USES _CRGFLG _PTT Clock_MicroSeconds 
+EEPROM_Setup              USES EEPROM_Setup _ECLKDIV EEPROM_Write16 Math_ToQN 
 EEPROM_Write32            USES Write 
 EEPROM_Write16            USES EEPROM_Write32 
 EEPROM_Write8             USES EEPROM_Write16 
@@ -1817,6 +1850,7 @@ Packet_Get                USES StateIndex FSM SCI_InChar Packet shuffleFSM
 shuffleFSM                USES FSM StateIndex bSwapFlag 
 SPI_Setup                 USES _SPI0BR _SPI0CR1 _SPI0CR2 _DDRH 
 SPI_ExchangeChar          USES _SPI0SR _SPI0DR 
+Timer_SetupPulseAccumulators USES _PACTL _PBCTL _DLYCT _ICPAR 
 Timer_SetupPeriodicTimer  USES _MCCTL _LDIVU _MCCNT 
 Timer_PeriodicTimerEnable USES _MCCTL 
 Timer_Setup               USES _TSCR1 _DDRT _PTT 
@@ -1826,75 +1860,97 @@ Timer_Enable              USES _CASE_CHECKED_BYTE _TIE
 Timer_Enabled             USES _CASE_CHECKED_BYTE _TIE 
 Timer_Set                 USES _CASE_CHECKED_BYTE _TC0 _TC1 _TC2 _TC3 _TC4 
                                 _TC5 _TC6 _TC7 _TCNT 
-SCI_Setup                 USES _LDIVU _SCI0BD _SCI0CR1 _SCI0CR2 _PTM _DDRM 
-                                RxFIFO FIFO_Init TxFIFO i 
+TI6_ISR                   USES _TFLG1 
+SCI_Setup                 USES _LDIVU _LSHRU _SCI0BD _SCI0CR1 _SCI0CR2 _PTM 
+                                _DDRM RxFIFO FIFO_Init TxFIFO i 
 SCI_InChar                USES RxFIFO FIFO_Get 
 SCI_OutChar               USES TxFIFO FIFO_Put SendData 
 SendData                  USES _SCI0SR1 TxFIFO _SCI0DRL FIFO_Get Timer_Enable 
                                 Timer_Ch7_Delay Timer_Set 
 SCI0_ISR                  USES _SCI0SR1 RxFIFO _SCI0DRL FIFO_Put 
 TIE7_ISR                  USES _TFLG1 _PTT SendData 
-Buttons_Get               USES _PORTK 
-HMI_Setup                 USES _DDRK _DDRAB LCD_Setup Y CreateMenu 
-                                Clock_Interval DEM_Metering_Time DEM_Average_Power 
-                                DEM_Total_Energy DEM_Total_Cost 
-TIE5_ISR                  USES _TFLG1 Timer_Enable PBState Buttons_Get 
-                                PrevPBState LCDState HandleButtonPress Clock_Interval 
-                                LCD_DisplayOff 
-CreateMenu                USES LCD_SetCursor X Y LCD_Clear LCDState 
+Buttons_Get               USES _PORTK Timer_Enable _TFLG1 
+HMI_Setup                 USES _DDRK _DDRAB LCD_Setup Y LCDState CreateMenu 
+                                Clock_Interval DEM_Average_Power DEM_Total_Energy 
+                                DEM_Total_Cost DEM_SetTarrif DEM_AvePower_Array 
+HMI_Update                USES DEM_Tarrif Math_FromQN LCDState _CASE_CHECKED 
+                                HMI_Update Clock_Days LCD_OutInteger LCD_OutChar 
+                                Clock_Hours Clock_Minutes Clock_Seconds STRING..Tarrif..1 
+                                LCD_OutString STRING..xx.xx.xx.xx...2 Analog_Input 
+                                Math_FindPower DEM_Average_Power _ILSEXT STRING..Tarrif..3 
+                                DEM_Total_Energy STRING..Tarrif..4 STRING..xxx.xxx.......5 
+                                Math_FindCost DEM_Total_Cost STRING..Tarrif..6 
+                                STRING..xxxx.xx.......7 LCD_ClearLine LCD_SetLine 
+TIE5_ISR                  USES _TFLG1 PBState Buttons_Get PrevPBState LCDState 
+                                HandleButtonPress Clock_Interval LCD_DisplayOff 
+CreateMenu                USES DEM_Tarrif Math_FromQN X Y LCD_Clear LCDState 
                                 _CASE_CHECKED CreateMenu LCD_SetLine 
-                                STRING..................1 STRING..................2 
-                                STRING..................3 LCD_OutString STRING..................4 
-                                STRING..................5 STRING..................6 
-                                STRING..................7 STRING..................8 
-                                STRING.DEMMetering.Time.9 STRING..................10 DEM_MeteringTimeDay 
-                                DEM_MeteringTimeHour DEM_MeteringTimeMin DEM_MeteringTimeSec 
-                                LCD_OutInteger STRING.xx.xx.xx.xx....11 
+                                STRING..................8 STRING..................9 
+                                STRING..................10 LCD_OutString STRING..................11 
                                 STRING..................12 STRING..................13 
                                 STRING..................14 STRING..................15 
-                                STRING........CYC.......16 STRING.Ave.Power.Consum.17 
-                                STRING..................18 DEM_Average_Power STRING..................19 
+                                STRING..................16 STRING..Metering.Time...17 Clock_Days 
+                                LCD_OutInteger LCD_OutChar Clock_Hours Clock_Minutes 
+                                Clock_Seconds STRING..xx.xx.xx.xx...18 STRING..Tarrif..19 
                                 STRING..................20 STRING..................21 
                                 STRING..................22 STRING........CYC.......23 
-                                STRING...Total.Energy...24 STRING..................25 DEM_Total_Energy 
-                                Math_FromQNotation STRING.xxx.xxx........26 
-                                STRING..................27 STRING..................28 
-                                STRING..................29 STRING..................30 
-                                STRING........CYC.......31 STRING....Total.Cost....32 
-                                STRING..................33 DEM_Total_Cost STRING.xxxx.xx........34 
-                                STRING..................35 STRING..................36 
-                                STRING..................37 STRING..................38 
-                                STRING........CYC.......39 LCD_OutChar 
-HandleButtonPress         USES _CASE_CHECKED_BYTE CreateMenu 
-LCD_Setup                 USES _PORTAB SetRAMAddress LCD_CursorHome 
-                                LCD_TextHome LCD_TextArea WriteCommand LCD_Clear Timer_Init 
-                                Timer_Set Timer_Enable 
-TIE3_ISR                  USES Timer_Enable Timer_Set 
+                                STRING..................24 STRING.....Ave.Power....25 DEM_Average_Power 
+                                STRING..Tarrif..26 STRING..................27 
+                                STRING..................28 STRING..................29 
+                                STRING........CYC.......30 STRING..................31 
+                                STRING...Total.Energy...32 DEM_Total_Energy STRING..xxx.xxx.......33 
+                                STRING..Tarrif..34 STRING..................35 
+                                STRING..................36 STRING..................37 
+                                STRING........CYC.......38 STRING..................39 
+                                STRING....Total.Cost....40 Math_FindCost DEM_Total_Cost 
+                                STRING..xxxx.xx.......41 STRING..Tarrif..42 STRING..................43 
+                                STRING..................44 STRING..................45 
+                                STRING........CYC.......46 
+HandleButtonPress         USES _CASE_CHECKED_BYTE _CASE_SEARCH_8_BYTE 
+                                LCD_DisplayOn CreateMenu 
+LCD_Setup                 USES _PORTAB LCD_SetFunction SetRAMAddress 
+                                LCD_CursorHome LCD_TextHome LCD_TextArea WriteCommand 
+                                LCD_Clear Timer_Init Timer_Set Timer_Enable 
 LCD_Clear                 USES SetRAMAddress LCD_OutChar 
+LCD_ClearLine             USES LCD_SetLine STRING..................1 
+                                LCD_OutString 
 LCD_CursorHome            USES SetCGAddress 
 LCD_TextHome              USES WriteData WriteCommand 
 LCD_TextArea              USES WriteData WriteCommand 
 LCD_OutChar               USES WriteData WriteCommand 
-LCD_OutInteger            USES _BDIVMODU LCD_OutChar 
+LCD_OutInteger            USES LCD_OutChar 
 LCD_OutString             USES LCD_OutChar 
+LCD_SetFunction           USES _PORTAB 
 LCD_SetLine               USES SetRAMAddress 
-LCD_SetCursor             USES SetCGAddress 
 LCD_DisplayOff            USES WriteCommand 
+LCD_DisplayOn             USES WriteCommand 
 SetCGAddress              USES WriteData WriteCommand 
 SetRAMAddress             USES WriteData WriteCommand 
 StatusCheck               USES _DDRAB _PORTAB 
 WaitForReady              USES StatusCheck 
 WriteCommand              USES WaitForReady _DDRAB _PORTAB 
 WriteData                 USES WaitForReady _DDRAB _PORTAB 
-Math_FromQNotation        USES _ILSEXT 
+Math_ToQN                 USES _LSHL 
+Math_FromQN               USES _LSHRU _LDIVS 
+Math_ConvertADCValue      USES _LMULS16x32 _LDIVS Math_ToQN 
+Math_FindEnergy           USES _ILSEXT DEM_Total_Energy 
+Math_FindCost             USES Clock_TimeInHours DEM_Total_Energy DEM_Tarrif 
+                                DEM_Total_Cost 
+Clock_Setup               USES Clock_Minutes Clock_Seconds CRG_SetupRTI 
+Clock_Update              USES Clock_MicroSeconds _LCMP _PORTE Clock_Hours 
+                                Clock_Seconds Clock_Interval _LINC Clock_Minutes Clock_Days 
+Clock_TimeInHours         USES Math_ToQN Clock_Minutes _LMULU16x32 _LSHRU 
+                                Clock_Seconds Clock_Days Clock_Hours 
+DEM_SetTarrif             USES DEM_Average_Power Clock_Hours DEM_Tarrif 
+_LMULS16x32               USES _LNEG 
 _LDIVU                    USES _lDivMod 
+_LDIVS                    USES _NEG_P _lDivMod 
 _Vector_26                USES MCCNT_ISR 
 _Vector_20                USES SCI0_ISR 
 _Vector_15                USES TIE7_ISR 
 _Vector_13                USES TIE5_ISR 
-_Vector_11                USES TIE3_ISR 
-_Vector_7                 USES Clock_RTI_ISR 
-_Vector_4                 USES ContextSwitch 
+_Vector_12                USES TI6_ISR 
+_Vector_7                 USES CRG_RTI_ISR 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -1911,16 +1967,22 @@ DEPENDENCY TREE
  |  |     |  | 
  |  |     |  +- _lDivMod            
  |  |     |       
+ |  |     +- _LSHRU              
+ |  |     |    
  |  |     +- FIFO_Init           
  |  |          
  |  +- EEPROM_Setup        
  |  |  | 
  |  |  +- EEPROM_Write16      
+ |  |  |  | 
+ |  |  |  +- EEPROM_Write32      
+ |  |  |     | 
+ |  |  |     +- Write               
+ |  |  |          
+ |  |  +- Math_ToQN           
  |  |     | 
- |  |     +- EEPROM_Write32      
- |  |        | 
- |  |        +- Write               
- |  |             
+ |  |     +- _LSHL               
+ |  |          
  |  +- CRG_SetupPLL        
  |  |  | 
  |  |  +- _LDIVU               (see above)
@@ -1928,13 +1990,15 @@ DEPENDENCY TREE
  |  +- CRG_SetupCOP        
  |  |    
  |  +- Clock_Setup         
- |  |    
+ |  |  | 
+ |  |  +- CRG_SetupRTI        
+ |  |       
  |  +- Analog_Setup        
  |  |  | 
- |  |  +- PWM_Setup           
- |  |  |    
  |  |  +- SPI_Setup           
  |  |       
+ |  +- PWM_Setup           
+ |  |    
  |  +- Timer_Setup         
  |  |    
  |  +- Timer_PeriodicTimerEnable
@@ -1943,6 +2007,8 @@ DEPENDENCY TREE
  |  |  | 
  |  |  +- _LDIVU               (see above)
  |  |     
+ |  +- Timer_SetupPulseAccumulators
+ |  |    
  |  +- Timer_Init          
  |  |  | 
  |  |  +- _CASE_CHECKED       
@@ -1957,6 +2023,8 @@ DEPENDENCY TREE
  |  |  | 
  |  |  +- LCD_Setup           
  |  |  |  | 
+ |  |  |  +- LCD_SetFunction     
+ |  |  |  |    
  |  |  |  +- SetRAMAddress       
  |  |  |  |  | 
  |  |  |  |  +- WriteData           
@@ -2010,35 +2078,47 @@ DEPENDENCY TREE
  |  |  |     +- _CASE_CHECKED_BYTE   (see above)
  |  |  |        
  |  |  +- CreateMenu          
- |  |     | 
- |  |     +- LCD_SetCursor       
- |  |     |  | 
- |  |     |  +- SetCGAddress         (see above)
- |  |     |     
- |  |     +- LCD_Clear            (see above)
- |  |     |  
- |  |     +- _CASE_CHECKED        (see above)
- |  |     |  
- |  |     +- LCD_SetLine         
- |  |     |  | 
- |  |     |  +- SetRAMAddress        (see above)
- |  |     |     
- |  |     +- LCD_OutString       
- |  |     |  | 
- |  |     |  +- LCD_OutChar          (see above)
- |  |     |     
- |  |     +- LCD_OutInteger      
- |  |     |  | 
- |  |     |  +- _BDIVMODU           
- |  |     |  |    
- |  |     |  +- LCD_OutChar          (see above)
- |  |     |     
- |  |     +- Math_FromQNotation  
- |  |     |  | 
- |  |     |  +- _ILSEXT             
- |  |     |       
- |  |     +- LCD_OutChar          (see above)
- |  |        
+ |  |  |  | 
+ |  |  |  +- Math_FromQN         
+ |  |  |  |  | 
+ |  |  |  |  +- _LSHRU               (see above)
+ |  |  |  |  |  
+ |  |  |  |  +- _LDIVS              
+ |  |  |  |     | 
+ |  |  |  |     +- _NEG_P              
+ |  |  |  |     |    
+ |  |  |  |     +- _lDivMod             (see above)
+ |  |  |  |        
+ |  |  |  +- LCD_Clear            (see above)
+ |  |  |  |  
+ |  |  |  +- _CASE_CHECKED        (see above)
+ |  |  |  |  
+ |  |  |  +- LCD_SetLine         
+ |  |  |  |  | 
+ |  |  |  |  +- SetRAMAddress        (see above)
+ |  |  |  |     
+ |  |  |  +- LCD_OutString       
+ |  |  |  |  | 
+ |  |  |  |  +- LCD_OutChar          (see above)
+ |  |  |  |     
+ |  |  |  +- LCD_OutInteger      
+ |  |  |  |  | 
+ |  |  |  |  +- LCD_OutChar          (see above)
+ |  |  |  |     
+ |  |  |  +- LCD_OutChar          (see above)
+ |  |  |  |  
+ |  |  |  +- Math_FindCost       
+ |  |  |     | 
+ |  |  |     +- Clock_TimeInHours   
+ |  |  |        | 
+ |  |  |        +- Math_ToQN            (see above)
+ |  |  |        |  
+ |  |  |        +- _LMULU16x32         
+ |  |  |        |    
+ |  |  |        +- _LSHRU               (see above)
+ |  |  |           
+ |  |  +- DEM_SetTarrif       
+ |  |       
  |  +- HandleStartupPacket 
  |  |  | 
  |  |  +- Packet_Put          
@@ -2119,12 +2199,78 @@ DEPENDENCY TREE
  |  |  |  |  
  |  |  |  +- Packet_Put           (see above)
  |  |  |     
+ |  |  +- HandleTestModePack  
+ |  |  |    
+ |  |  +- HandleTarrifPacket  
+ |  |  |  | 
+ |  |  |  +- _CASE_CHECKED_BYTE   (see above)
+ |  |  |     
+ |  |  +- HandleTime1Packet   
+ |  |  |  | 
+ |  |  |  +- Packet_Put           (see above)
+ |  |  |     
+ |  |  +- HandleTime2Packet   
+ |  |  |  | 
+ |  |  |  +- Packet_Put           (see above)
+ |  |  |     
+ |  |  +- HandlePowerPacket   
+ |  |  |  | 
+ |  |  |  +- Packet_Put           (see above)
+ |  |  |     
+ |  |  +- HandleEnergyPacket  
+ |  |  |  | 
+ |  |  |  +- Packet_Put           (see above)
+ |  |  |     
+ |  |  +- HandleCostPacket    
+ |  |  |  | 
+ |  |  |  +- Math_FromQN          (see above)
+ |  |  |  |  
+ |  |  |  +- Packet_Put           (see above)
+ |  |  |     
+ |  |  +- HandleFrquencyPacket
+ |  |  |    
+ |  |  +- HandleVRMS          
+ |  |  |    
+ |  |  +- HandleIRMS          
+ |  |  |    
+ |  |  +- HandlePFactor       
+ |  |  |    
  |  |  +- Packet_Put           (see above)
  |  |     
  |  +- Clock_Update        
- |  |    
+ |  |  | 
+ |  |  +- _LCMP               
+ |  |  |    
+ |  |  +- _LINC               
+ |  |       
  |  +- HandleTimePacket     (see above)
- |     
+ |  |  
+ |  +- HMI_Update          
+ |     | 
+ |     +- Math_FromQN          (see above)
+ |     |  
+ |     +- _CASE_CHECKED        (see above)
+ |     |  
+ |     +- LCD_OutInteger       (see above)
+ |     |  
+ |     +- LCD_OutChar          (see above)
+ |     |  
+ |     +- LCD_OutString        (see above)
+ |     |  
+ |     +- Math_FindPower      
+ |     |    
+ |     +- _ILSEXT             
+ |     |    
+ |     +- Math_FindCost        (see above)
+ |     |  
+ |     +- LCD_ClearLine       
+ |     |  | 
+ |     |  +- LCD_SetLine          (see above)
+ |     |  |  
+ |     |  +- LCD_OutString        (see above)
+ |     |     
+ |     +- LCD_SetLine          (see above)
+ |        
  +- _Startup            
     | 
     +- Init                
@@ -2144,33 +2290,35 @@ DEPENDENCY TREE
     |  +- SPI_ExchangeChar     (see above)
     |     
     +- HandleAnalogValPacket
-       | 
-       +- Packet_Put           (see above)
-          
- _Vector_4           
- | 
- +- ContextSwitch       
-      
+    |  | 
+    |  +- Packet_Put           (see above)
+    |     
+    +- Math_FindEnergy     
+    |  | 
+    |  +- _ILSEXT              (see above)
+    |     
+    +- _ILSEXT              (see above)
+    |  
+    +- Math_ConvertADCValue
+    |  | 
+    |  +- _LMULS16x32         
+    |  |  | 
+    |  |  +- _LNEG               
+    |  |       
+    |  +- _LDIVS               (see above)
+    |  |  
+    |  +- Math_ToQN            (see above)
+    |     
+    +- Math_FindPower       (see above)
+       
  _Vector_7           
  | 
- +- Clock_RTI_ISR       
-    | 
-    +- OS_ISREnter         
-    |    
-    +- TimeTick            
-    |  | 
-    |  +- _LINC               
-    |  |    
-    |  +- _ISHL               
-    |       
-    +- Clock_Update         (see above)
-    |  
-    +- OS_ISRExit          
-       | 
-       +- Schedule            
-          | 
-          +- FindFirstSet        
-               
+ +- CRG_RTI_ISR         
+      
+ _Vector_12          
+ | 
+ +- TI6_ISR             
+      
  _Vector_20          
  | 
  +- SCI0_ISR            
@@ -2187,28 +2335,26 @@ DEPENDENCY TREE
  | 
  +- TIE5_ISR            
     | 
-    +- Timer_Enable         (see above)
-    |  
     +- Buttons_Get         
-    |    
+    |  | 
+    |  +- Timer_Enable         (see above)
+    |     
     +- HandleButtonPress   
     |  | 
     |  +- _CASE_CHECKED_BYTE   (see above)
     |  |  
+    |  +- _CASE_SEARCH_8_BYTE 
+    |  |    
+    |  +- LCD_DisplayOn       
+    |  |  | 
+    |  |  +- WriteCommand         (see above)
+    |  |     
     |  +- CreateMenu           (see above)
     |     
     +- LCD_DisplayOff      
        | 
        +- WriteCommand         (see above)
           
- _Vector_11          
- | 
- +- TIE3_ISR            
-    | 
-    +- Timer_Enable         (see above)
-    |  
-    +- Timer_Set            (see above)
-       
 *********************************************************************************************
 STATISTIC SECTION
 ---------------------------------------------------------------------------------------------
@@ -2216,5 +2362,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 14
-Total size of all blocks to be downloaded: 6677
+Total size of all blocks to be downloaded: 8381
 

@@ -71,19 +71,19 @@ BOOL EEPROM_Setup(const UINT32 oscClk, const UINT32 busClk)
     (void)EEPROM_Write16(&sLCDContrast, 50);
   
   if (sT1Peak == 0xFFFF)
-    (void)EEPROM_Write16( &sT1Peak, (UINT16)Math_ToQNotation(22235, Base) );
+    (void)EEPROM_Write16( &sT1Peak, (UINT16)Math_ToQN(22235, DefaultBase) );
   
   if (sT1Shoulder == 0xFFFF)
-    (void)EEPROM_Write16(&sT1Shoulder, (UINT16)Math_ToQNotation(4400, Base) );
+    (void)EEPROM_Write16(&sT1Shoulder, (UINT16)Math_ToQN(4400, DefaultBase) );
   
   if (sT1OffPeak == 0xFFFF)
-    (void)EEPROM_Write16(&sT1OffPeak, (UINT16)Math_ToQNotation(2109, Base) );
+    (void)EEPROM_Write16(&sT1OffPeak, (UINT16)Math_ToQN(2109, DefaultBase) );
   
   if (sT2NonTOU == 0xFFFF)
-    (void)EEPROM_Write16(&sT2NonTOU, (UINT16)Math_ToQNotation(1713, Base) );
+    (void)EEPROM_Write16(&sT2NonTOU, (UINT16)Math_ToQN(1713, DefaultBase) );
   
   if (sT3NonTOU == 0xFFFF)
-    (void)EEPROM_Write16(&sT3NonTOU, (UINT16)Math_ToQNotation(4100, Base) );
+    (void)EEPROM_Write16(&sT3NonTOU, (UINT16)Math_ToQN(4100, DefaultBase) );
   
   
   

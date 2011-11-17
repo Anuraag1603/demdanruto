@@ -13,9 +13,17 @@
 
 // *8 ~= << 3
 // /8 ~= >> 3
+/* 
+    5/4095 = 0.00122
+    122mv	1	122
+		5000
+
+    5000*N/4095
+    61*N+25/50             */
+
 
 // ----------------------------------------
-// Math_ToQNotation
+// Math_ToQN
 // 
 // Converts the given number to Q Notation based on a base given
 // Input:
@@ -25,13 +33,13 @@
 //  The QNotated form of the number
 // Conditions:
 //  none
-UINT32 Math_ToQNotation(const UINT32 number, const UINT8 base)
+INT32 Math_ToQN(const UINT32 number, const UINT8 base)
 {
   return number << base;
 }
 
 // ----------------------------------------
-// Math_FromQNotation
+// Math_FromQN
 // 
 // Determines the total energy usage
 // Input:
@@ -41,24 +49,24 @@ UINT32 Math_ToQNotation(const UINT32 number, const UINT8 base)
 //  The number on the side. Useful for display on the LCD.
 // Conditions:
 //  none
-UINT16 Math_FromQNotation(UINT32 const number, const TQNotationSide side, const BOOL base)
+INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const BOOL base)
 {
-  UINT32 tempNumber;
-  UINT8 hundredThousand, tenThousand, thousand;
+  INT32 tempNumber;
+  INT8 hundredThousand, tenThousand, thousand;
   hundredThousand, tenThousand, thousand = 0;
   
   if (base)
-    tempNumber = (UINT32)(number >> Base);
+    tempNumber = (INT32)(number >> DefaultBase);
   else
     tempNumber = number;
   
   switch(side)
   {
     case qLeft:
-      return (UINT16) (tempNumber / 1000);   // Change base back to 2
+      return (INT16) (tempNumber / 1000);   // Change base back to 2
     break;
     case qRight:
-      if (tempNumber >= 100000)
+      /*if (tempNumber >= 100000)
       {
         hundredThousand = (UINT8)(number / 1000);
         tempNumber -= (hundredThousand * 1000);  
@@ -72,12 +80,18 @@ UINT16 Math_FromQNotation(UINT32 const number, const TQNotationSide side, const 
       {
         thousand = (UINT8)(tempNumber / 1000);
         tempNumber -= (thousand * 1000);
-      }
-      return (UINT16)tempNumber;              // Only take the last 3 digits as the base is 1000
+      }*/
+      return (INT16)tempNumber % 1000;              // Only take the last 3 digits as the base is 1000
     break;
     
   }
 }
+
+INT32 Math_ConvertADCValue(const INT32 number)
+{
+  return Math_ToQN( ( (61 * number) + 25 ) / 50, DefaultBase );
+}
+
 
 // ----------------------------------------
 // Math_FindPower
@@ -148,7 +162,7 @@ void Math_FindCost(void)
 //  none
 // Conditions:
 //  none
-UINT32 Math_SQRT(INT16 number, INT16 guess)
+UINT16 Math_SQRT(INT16 number, INT16 guess)
 {
-  return 0;
+  return (UINT16) ( ((number + guess) + guess) / 2);
 }
