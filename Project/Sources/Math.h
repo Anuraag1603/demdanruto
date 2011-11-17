@@ -11,7 +11,7 @@
 #define MATH_H
 
 #include "DEM.h"
-#define Base 3 // default base because i cbf changing shit.
+#define DefaultBase 3
 
 typedef enum
 {
@@ -19,13 +19,14 @@ typedef enum
   qRight
 } TQNotationSide;
 
-UINT32 Math_ToQNotation(const UINT32 number, const UINT8 base);
-UINT16 Math_FromQNotation(UINT32 const number, const TQNotationSide side, const BOOL base);
+INT32 Math_ToQN(const UINT32 number, const UINT8 base);
+INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const BOOL base);
+INT32 Math_ConvertADCValue(const INT32 number);
 UINT16 Math_FindPower(const INT16 voltage, const INT16 current);
 void Math_FindEnergy(const INT16 DEM_AvePower_Array[]);
 void Math_FindCost(void);
 
-UINT32 Math_SQRT(INT16 number, INT16 guess);
+UINT16 Math_SQRT(INT16 number, INT16 guess);
 
 
 #endif

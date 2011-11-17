@@ -164,6 +164,8 @@ void Analog_Get(const TChannelNb channelNb)
   // Use median filter with sliding window of the 3 most recent samples
   Analog_Input[channelNb].Value3 = Analog_Input[channelNb].Value2;
   Analog_Input[channelNb].Value2 = Analog_Input[channelNb].Value1;
+  //The term 'bipolar' indicates that the signal swings above and below some reference level. 
+  //In single-ended systems, the input is typically referenced to analog ground, so a bipolar signal is one that swings above and below ground.
   Analog_Input[channelNb].Value1 = ADC_OFFSET - (INT16)conversionResult.l;
   
   

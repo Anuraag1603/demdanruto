@@ -192,7 +192,9 @@ void HandlePacket(void)
 //  Conditions: none    
  void interrupt 26 MCCNT_ISR(void)
  {
+  INT32 voltage, current;
   MCFLG_MCZF = 1; // Clear/Ack
+  
   
   if (Debug)
     PTT_PTT4 ^= 1;
@@ -215,7 +217,10 @@ void HandlePacket(void)
       SampleCount = 0;
       Math_FindEnergy(DEM_AvePower_Array);
     }
-    DEM_AvePower_Array[SampleCount] = Math_FindPower(Analog_Input[Ch1].Value.l*10, Analog_Input[Ch2].Value.l*10);
+    
+    voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
+    current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
+    DEM_AvePower_Array[SampleCount] = Math_FindPower(voltage, current);
     SampleCount++;
     
     
@@ -532,7 +537,7 @@ BOOL HandleEnergyPacket(void)
 
 BOOL HandleCostPacket(void)
 {
-  return Packet_Put(CMD_COST, (UINT8)Math_FromQNotation(DEM_Total_Cost, qRight, bFALSE), (UINT8)Math_FromQNotation(DEM_Total_Cost, qLeft, bFALSE), 0);
+  return Packet_Put(CMD_COST, (UINT8)Math_FromQN(DEM_Total_Cost, qRight, bFALSE), (UINT8)Math_FromQN(DEM_Total_Cost, qLeft, bFALSE), 0);
 }
 
 BOOL HandleFrquencyPacket(void)

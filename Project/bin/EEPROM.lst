@@ -1,5 +1,5 @@
 *** EVALUATION ***
-ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
 
     1:  // ----------------------------------------
     2:  // Filename: EEPROM.c
@@ -43,8 +43,8 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
 *** EVALUATION ***
 
 Function: EEPROM_Setup
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\EEPROM.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\EEPROM.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\EEPROM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\EEPROM.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 3b           [2]     PSHD  
   0001 34           [2]     PSHX  
@@ -155,7 +155,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
    73:    if (sT1Peak == 0xFFFF)
   00b1 fc0450       [3]     LDD   1104
   00b4 04a40e       [3]     IBNE  D,*+17 ;abs = 00c5
-   74:      (void)EEPROM_Write16( &sT1Peak, (UINT16)Math_ToQNotation(22235, Base) );
+   74:      (void)EEPROM_Write16( &sT1Peak, (UINT16)Math_ToQN(22235, DefaultBase) );
   00b7 cc0450       [2]     LDD   #1104
   00ba 3b           [2]     PSHD  
   00bb ce56db       [2]     LDX   #22235
@@ -166,7 +166,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
    76:    if (sT1Shoulder == 0xFFFF)
   00c5 fc0452       [3]     LDD   1106
   00c8 04a40e       [3]     IBNE  D,*+17 ;abs = 00d9
-   77:      (void)EEPROM_Write16(&sT1Shoulder, (UINT16)Math_ToQNotation(4400, Base) );
+   77:      (void)EEPROM_Write16(&sT1Shoulder, (UINT16)Math_ToQN(4400, DefaultBase) );
   00cb cc0452       [2]     LDD   #1106
   00ce 3b           [2]     PSHD  
   00cf ce1130       [2]     LDX   #4400
@@ -177,7 +177,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
    79:    if (sT1OffPeak == 0xFFFF)
   00d9 fc0454       [3]     LDD   1108
   00dc 04a40e       [3]     IBNE  D,*+17 ;abs = 00ed
-   80:      (void)EEPROM_Write16(&sT1OffPeak, (UINT16)Math_ToQNotation(2109, Base) );
+   80:      (void)EEPROM_Write16(&sT1OffPeak, (UINT16)Math_ToQN(2109, DefaultBase) );
   00df cc0454       [2]     LDD   #1108
   00e2 3b           [2]     PSHD  
   00e3 ce083d       [2]     LDX   #2109
@@ -188,7 +188,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
    82:    if (sT2NonTOU == 0xFFFF)
   00ed fc0456       [3]     LDD   1110
   00f0 04a40e       [3]     IBNE  D,*+17 ;abs = 0101
-   83:      (void)EEPROM_Write16(&sT2NonTOU, (UINT16)Math_ToQNotation(1713, Base) );
+   83:      (void)EEPROM_Write16(&sT2NonTOU, (UINT16)Math_ToQN(1713, DefaultBase) );
   00f3 cc0456       [2]     LDD   #1110
   00f6 3b           [2]     PSHD  
   00f7 ce06b1       [2]     LDX   #1713
@@ -199,7 +199,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
    85:    if (sT3NonTOU == 0xFFFF)
   0101 fc0458       [3]     LDD   1112
   0104 04a40e       [3]     IBNE  D,*+17 ;abs = 0115
-   86:      (void)EEPROM_Write16(&sT3NonTOU, (UINT16)Math_ToQNotation(4100, Base) );
+   86:      (void)EEPROM_Write16(&sT3NonTOU, (UINT16)Math_ToQN(4100, DefaultBase) );
   0107 cc0458       [2]     LDD   #1112
   010a 3b           [2]     PSHD  
   010b ce1004       [2]     LDX   #4100
@@ -220,7 +220,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
   011d 87           [1]     CLRA  
   011e 3b           [2]     PSHD  
   011f c603         [1]     LDAB  #3
-  0121 160000       [4]     JSR   Math_ToQNotation
+  0121 160000       [4]     JSR   Math_ToQN
   0124 1b84         [2]     LEAS  4,SP
   0126 3d           [5]     RTS   
   0127 3b           [2]     PSHD  
@@ -255,8 +255,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: EEPROM_Write32
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\EEPROM.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\EEPROM.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\EEPROM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\EEPROM.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 1b98         [2]     LEAS  -8,SP
   0002 3b           [2]     PSHD  
@@ -335,8 +335,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: EEPROM_Write16
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\EEPROM.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\EEPROM.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\EEPROM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\EEPROM.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 6ca8         [2]     STD   8,-SP
   141:    TUINT32 data32;
@@ -415,8 +415,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: EEPROM_Write8
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\EEPROM.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\EEPROM.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\EEPROM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\EEPROM.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 6bab         [2]     STAB  5,-SP
   183:  
@@ -480,8 +480,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: EEPROM_Erase
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\EEPROM.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\EEPROM.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\EEPROM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\EEPROM.c.o" -WmsgSd1106 -WmsgSd5703
 
   219:    EPROT_EPDIS  = 1;          // EEPROM protection disabled
   0000 1c000008     [4]     BSET  _EPROT,#8
@@ -538,8 +538,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: Write
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\EEPROM.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\EEPROM.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\EEPROM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\EEPROM.c.o" -WmsgSd1106 -WmsgSd5703
 
   246:    ESTAT_PVIOL = 1;
   0000 1c000020     [4]     BSET  _ESTAT,#32
