@@ -588,5 +588,7 @@ void Timer_Set(const TTimerChannel channelNb, const UINT16 busClkCyclesDelay)
 void interrupt 12 TI6_ISR(void)
 {
   TFLG1_C6F = 1;  // ACK
+  //OS_ISREnter();
   while(TFLG1_C6F);
+  //OS_ISRExit();
 }

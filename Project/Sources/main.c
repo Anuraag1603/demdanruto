@@ -13,6 +13,9 @@
 #include "main.h"
 
 static UINT16 SampleCount;
+//OS_ECB SCIInUse;
+//UINT8 *SCI0Stack[1024];
+
 
 // ----------------------------------------
 // main
@@ -68,6 +71,13 @@ void main(void)
   (void)HandleStartupPacket();
   
   SampleCount = 0;
+  
+  //OS_Init();
+  //
+  //SCIInUse = OS_SemaphoreCreate(1); 
+  //error = OS_ThreadCreate(SCIThread, (void *)&SCI0DR, &SCI0Stack[1024], 10);
+   
+  //OS_Start();
   
   // Main loop
   for (;;)
@@ -194,7 +204,7 @@ void HandlePacket(void)
  {
   INT32 voltage, current;
   MCFLG_MCZF = 1; // Clear/Ack
-  
+  //OS_ISREnter();  
   
   if (Debug)
     PTT_PTT4 ^= 1;
@@ -275,7 +285,7 @@ void HandlePacket(void)
   
   Use later when ditching Clock*/
   
-  
+  //OS_ISRExit();
  }
    
  

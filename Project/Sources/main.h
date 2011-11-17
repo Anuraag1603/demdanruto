@@ -89,7 +89,7 @@ const UINT8 modulusCount      = 15; //0x0F;
 
 // ----------------------------------------
 // Timer Delays
-const UINT16 Periodic_Delay   = 20000; // 10ms
+const UINT16 Periodic_Delay   = 1000; // 1ms
 const UINT16 Timer_Ch7_Delay  = 2000;  // We need enough delay for 10 bits.
 
 // ----------------------------------------

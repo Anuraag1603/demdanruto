@@ -166,3 +166,14 @@ UINT16 Math_SQRT(INT16 number, INT16 guess)
 {
   return (UINT16) ( ((number + guess) + guess) / 2);
 }
+
+void Math_FindFrequency(void)
+{
+  // F = 1/T
+    
+}
+
+INT16 Math_FindRMS(INT16 number)
+{
+  return number / MathSQRT(2, 1);
+}
