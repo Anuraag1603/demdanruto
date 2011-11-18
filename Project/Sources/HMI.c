@@ -10,8 +10,7 @@
 
 #include "HMI.h"
 
-// Position of the cursors
-static UINT8 Y;
+// Position of the cursors;
 static TButtonInputs PBState, PrevPBState;
 static TLCDState LCDState;
 
@@ -65,6 +64,16 @@ void HMI_Setup(void)
   
 }
 
+// ----------------------------------------
+// HMI_Update
+// 
+// Updates the LCD display with the new values of Power, Energy, Cost and Time
+// Input:
+//   none
+// Output:
+//   none
+// Conditions:
+//   none
 void HMI_Update(void)
 {
   UINT16 tarrifL = Math_FromQN(DEM_Tarrif, qLeft, DefaultBase);
