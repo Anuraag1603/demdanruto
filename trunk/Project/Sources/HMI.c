@@ -9,22 +9,12 @@
 // Date Last Modified: 2-11-2011
 
 #include "HMI.h"
-#include "timer.h"
 
 // Position of the cursors
-static UINT8 X, Y;
+static UINT8 Y;
 static TButtonInputs PBState, PrevPBState;
 static TLCDState LCDState;
-UINT32 Clock_Interval;
 
-
-TINT16 DEM_Average_Power;
-INT16 DEM_AvePower_Array[DEM_PWRSIZE];
-TUINT32 DEM_Total_Energy;
-UINT32 DEM_Total_Cost;
-UINT16 DEM_Tarrif;
-TUINT16 DEM_VRMS;
-TUINT16 DEM_IRMS;
 
 // ----------------------------------------
 // HMI_Setup
@@ -38,7 +28,6 @@ TUINT16 DEM_IRMS;
 //  none
 void HMI_Setup(void)
 {
-  UINT8 i;
   // Port K - Push Buttons
   DDRK_BIT2 = 0;    // 0: Input, PK2
   DDRK_BIT3 = 0;    // 0: Input, PK3
@@ -67,19 +56,13 @@ void HMI_Setup(void)
   DDRB_BIT7 = 1;    // 1: Output, PB7
   
   LCD_Setup();
-  X, Y = 0;
+  DEM_Setup();
+    
   LCDState = MeteringTime;
   CreateMenu(MeteringTime);
   
   Clock_Interval      = 0;
-  DEM_Average_Power.l = 0;
-  DEM_Total_Energy.l  = 0;
-  DEM_Total_Cost      = 0;
   
-  for (i = 0; i < DEM_PWRSIZE; i++)
-  {
-    DEM_AvePower_Array[i] = 0;
-  }
 }
 
 void HMI_Update(void)
@@ -167,9 +150,9 @@ void HMI_Update(void)
       {
         (void)LCD_OutChar(' ');
         (void)LCD_OutChar('$');
-        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, 9) );
+        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, DefaultBase) );
         (void)LCD_OutChar('.');
-        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, 9) );
+        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, DefaultBase) );
         
         LCD_ClearLine(3);
         LCD_SetLine(3);
@@ -236,9 +219,7 @@ void CreateMenu(TLCDState menu)
   UINT16 tarrifL = Math_FromQN(DEM_Tarrif, qLeft, DefaultBase);
   UINT16 tarrifR = Math_FromQN(DEM_Tarrif, qRight, DefaultBase);
   //INT16 voltage, current;
-      
-  X = 0;
-  Y = 1;
+  
   LCD_Clear();
   
   LCDState = menu;
@@ -369,14 +350,14 @@ void CreateMenu(TLCDState menu)
       LCD_SetLine(1);
       LCD_OutString("|  Total Cost  |");
       LCD_SetLine(2);
-      Math_FindCost();
+      
       if (DEM_Total_Cost <= MAX_COST)
       {
         (void)LCD_OutChar(' ');
         (void)LCD_OutChar('$');
-        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, 9) );
+        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, DefaultBase) );
         (void)LCD_OutChar('.');
-        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, 9) );
+        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, DefaultBase) );
       } 
       else
       {

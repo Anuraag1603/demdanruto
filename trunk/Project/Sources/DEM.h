@@ -28,6 +28,7 @@ extern TUINT16 DEM_VRMS;
 extern TUINT16 DEM_IRMS;
 extern TUINT16 DEM_Frequency;
 
+void DEM_Setup(void);
 void DEM_SetTarrif(void);
 
 #endif
