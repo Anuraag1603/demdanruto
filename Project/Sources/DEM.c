@@ -9,6 +9,22 @@
 
 #include "DEM.h"
 
+void DEM_Setup(void)
+{
+  UINT8 i;
+  
+  DEM_Average_Power.l = 0;
+  DEM_Total_Energy.l  = 0;
+  DEM_Total_Cost      = 0;
+  DEM_VRMS.l          = 0;
+  DEM_IRMS.l          = 0;
+  
+  for (i = 0; i < DEM_PWRSIZE; i++)
+  {
+    DEM_AvePower_Array[i] = 0;
+  }
+}
+
 void DEM_SetTarrif(void)
 {
   /*

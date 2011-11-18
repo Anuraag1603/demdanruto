@@ -1,5 +1,5 @@
 *** EVALUATION ***
-ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
 
     1:  // ----------------------------------------
     2:  // Filename: LCD.c
@@ -53,8 +53,8 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
 *** EVALUATION ***
 
 Function: LCD_Setup
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 1b92         [2]     LEAS  -14,SP
    50:    TTimerSetup timerSetup;
@@ -206,8 +206,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_Clear
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   120:    UINT8 i;  
   121:    SetRAMAddress(0);
@@ -250,8 +250,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_ClearLine
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   143:    LCD_SetLine(line);
   0000 160000       [4]     JSR   LCD_SetLine
@@ -275,8 +275,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_CursorHome
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   159:    // Set cursor pointer to home address
   160:    SetCGAddress(0, 1);
@@ -303,8 +303,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_TextHome
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   175:    // Set text home address (start of RAM)
   176:    WriteData(0x00);
@@ -333,8 +333,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_TextArea
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   193:    // Set text area (16 columns)
   194:    WriteData(column);
@@ -363,8 +363,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_OutChar
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   212:    if (data == '\0' || data == 0)
   0000 046103       [3]     TBNE  B,*+6 ;abs = 0006
@@ -399,8 +399,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_OutInteger
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 1b99         [2]     LEAS  -7,SP
   0002 3b           [2]     PSHD  
@@ -566,8 +566,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_OutString
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 6cad         [2]     STD   3,-SP
   303:    INT8 i;
@@ -608,8 +608,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_SetFunction
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 37           [2]     PSHB  
   324:    INT8 i;
@@ -663,8 +663,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_SetLine
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 37           [2]     PSHB  
   354:    // This is due to the fact that each new line starts
@@ -696,8 +696,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_SetCursor
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 37           [2]     PSHB  
   374:    SetCGAddress(x, y);
@@ -714,8 +714,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_DisplayOff
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   379:    WriteCommand(DISPLAY_OFF);
   0000 c690         [1]     LDAB  #144
@@ -727,8 +727,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: LCD_DisplayOn
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   384:    WriteCommand(DISPLAY_MODE);
   0000 c694         [1]     LDAB  #148
@@ -751,8 +751,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: InChar
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 3b           [2]     PSHD  
   400:    DDRA = Output;
@@ -794,8 +794,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: SetCGAddress
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 37           [2]     PSHB  
   423:    WriteData(x);
@@ -827,8 +827,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: SetRAMAddress
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   441:    TUINT16 address16;
   442:    address16.l = address;
@@ -861,8 +861,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: StatusCheck
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   460:    UINT8 status;
   461:   
@@ -921,8 +921,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: WaitForReady
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   498:    // Wait until STA0 & STA1 are set
   499:    while ( (StatusCheck()) != 0x03);
@@ -950,8 +950,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: WriteCommand
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 37           [2]     PSHB  
   517:    WaitForReady();
@@ -1001,8 +1001,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: WriteData
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\LCD.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\LCD.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\LCD.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 37           [2]     PSHB  
   548:    WaitForReady();

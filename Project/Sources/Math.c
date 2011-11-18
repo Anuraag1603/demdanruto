@@ -128,6 +128,7 @@ void Math_FindEnergy(const INT16 DEM_AvePower_Array[])
   {
     DEM_Total_Energy.l += DEM_AvePower_Array[i];
   }
+  DEM_Total_Energy.l = (DEM_Total_Energy.l >> 3) * (Clock_RunningTimeInHours() << 3) ;
 }
 
 // ----------------------------------------
@@ -143,9 +144,11 @@ void Math_FindEnergy(const INT16 DEM_AvePower_Array[])
 void Math_FindCost(void)
 {
   // Energy in kWh * Tarrif
-  // Cost base 0:               Energy base3:      Hours: 3                Tarrif: 3
-  DEM_Total_Cost += (UINT16) ( (DEM_Total_Energy.l >> 3) * (Clock_RunningTimeInHours() << 3) * DEM_Tarrif);
-  //return 0;
+  // Energy is in base 6, so upscale Tarrif to base 6 first.
+  DEM_Total_Cost += (UINT16) DEM_Total_Energy * (DEM_Tarrif << 3);
+  
+  // Then normalise back down to base 3
+  DEM_Total_Cost = DEM_Total_Cost >> 3;
 }
 
 // ----------------------------------------

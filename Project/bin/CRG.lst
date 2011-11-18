@@ -1,5 +1,5 @@
 *** EVALUATION ***
-ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
 
     1:  // ----------------------------------------
     2:  // Filename: CRG.c
@@ -32,8 +32,8 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
 *** EVALUATION ***
 
 Function: CRG_SetupPLL
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\CRG.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\CRG.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\CRG.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\CRG.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 6cac         [2]     STD   4,-SP
   0002 34           [2]     PSHX  
@@ -113,8 +113,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: CRG_SetupCOP
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\CRG.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\CRG.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\CRG.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\CRG.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 37           [2]     PSHB  
    62:     // Cannot exceed 7 in binary; Cannot be disabled
@@ -159,8 +159,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: CRG_SetupRTI
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\CRG.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\CRG.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\CRG.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\CRG.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 37           [2]     PSHB  
    85:    // 2^16 = 65353. So RTR[6:4] (Prescale) = 111 and RTR[3:0] (Mod) = 1111.
@@ -181,8 +181,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Pro
 *** EVALUATION ***
 
 Function: CRG_RTI_ISR
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\CRG.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\CRG.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\CRG.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\CRG.c.o" -WmsgSd1106 -WmsgSd5703
 
    93:    CRGFLG_RTIF = 1;             // Clears the flag stupidly... needs to be written 1.
   0000 4c0080       [4]     BSET  _CRGFLG,#128
