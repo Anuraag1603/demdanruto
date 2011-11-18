@@ -11,6 +11,7 @@
 // new types
 #include "clock.h"
 
+static INT32 OldTimeInHours;
 
 
 
@@ -33,6 +34,7 @@ void Clock_Setup(const UINT8 prescaleRate, const UINT8 modulusCount)
   // 2^16 = 63536. So RTR[6:4] (Prescale) = 111 and RTR[3:0] (Mod) = 0000.
   Clock_Minutes = 0;
   Clock_Seconds = 0;
+  OldTimeInHours = 0;
   CRG_SetupRTI(prescaleRate, modulusCount);
 }
 
@@ -59,6 +61,7 @@ BOOL Clock_Update(void)
   minute = 60;
   hour   = 60;
   day    = 24;
+  
   
   // Save current state to allow us to modify these sections
   EnterCritical();
@@ -122,14 +125,20 @@ BOOL Clock_Update(void)
   return bFALSE;  
 }
 
-UINT16 Clock_TimeInHours(void)
+UINT16 Clock_RunningTimeInHours(void)
 {
   UINT16 minutes, seconds;
+  INT32 timeInHours, currentTime;
   minutes = (UINT16)Math_ToQN(16, 3) * (Clock_Minutes << 3);
-  minutes = minutes >> 3;
+  minutes = minutes >> 6;
   seconds = (UINT16)Math_ToQN(27, 5) * (Clock_Seconds << 5);
-  seconds = seconds >> 5;
+  seconds = seconds >> 10;
   // Nfi how I'm gonna do this :S
   //return (Clock_Days * 24) + Clock_Hours + (Clock_Minutes * 0.0166666667)  = (Clock_Seconds * 0.000277777778);
-  return (Clock_Days * 24) + Clock_Hours + minutes + seconds;
+  
+  currentTime = (Clock_Days * 24) + Clock_Hours + minutes + seconds;
+  timeInHours = currentTime - OldTimeInHours;
+  OldTimeInHours = currentTime;
+  
+  return timeInHours;
 }

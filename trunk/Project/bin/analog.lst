@@ -1,5 +1,5 @@
 *** EVALUATION ***
-ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
+ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
 
     1:                                                                                                                          // ----------------------------------------
     2:  // Filename: analog.c
@@ -31,8 +31,8 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
 *** EVALUATION ***
 
 Function: Analog_Setup
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\analog.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\analog.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\analog.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\analog.c.o -WmsgSd1106 -WmsgSd5703
 
   0000 1b94         [2]     LEAS  -12,SP
   0002 3b           [2]     PSHD  
@@ -64,234 +64,233 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
    38:    NbAnalogOutputs.l           = 2;
   0020 7c0000       [3]     STD   NbAnalogOutputs
    39:    
-   40:    
-   41:    SPI_Setup(&aSPISetup, busClk);
+   40:    SPI_Setup(&aSPISetup, busClk);
   0023 1984         [2]     LEAY  4,SP
   0025 35           [2]     PSHY  
   0026 ec84         [3]     LDD   4,SP
   0028 ee82         [3]     LDX   2,SP
   002a 160000       [4]     JSR   SPI_Setup
-   42:    
-   43:    // Init 0 for ADC
-   44:    PTH_PTH4 = 0;
+   41:    
+   42:    // Init 0 for ADC
+   43:    PTH_PTH4 = 0;
   002d 1d000010     [4]     BCLR  _PTH,#16
-   45:    PTH_PTH5 = 0;
+   44:    PTH_PTH5 = 0;
   0031 1d000020     [4]     BCLR  _PTH,#32
-   46:    PTH_PTH6 = 0;
+   45:    PTH_PTH6 = 0;
   0035 1d000040     [4]     BCLR  _PTH,#64
-   47:  }
+   46:  }
   0039 1bf012       [2]     LEAS  18,SP
   003c 3d           [5]     RTS   
-   48:  
-   49:  // ----------------------------------------
-   50:  // PWM_Setup
-   51:  // 
-   52:  // Sets up the Pulse Width Modulators for use with the DAC (missing LPFilter)
-   53:  // Input:
-   54:  //   busClk is the bus clock speed
-   55:  // Output:
-   56:  //   none
-   57:  // Conditions:
-   58:  //   none
-   59:  void PWM_Setup(const UINT32 busClk)
-   60:  {
+   47:  
+   48:  // ----------------------------------------
+   49:  // PWM_Setup
+   50:  // 
+   51:  // Sets up the Pulse Width Modulators for use with the DAC (missing LPFilter)
+   52:  // Input:
+   53:  //   busClk is the bus clock speed
+   54:  // Output:
+   55:  //   none
+   56:  // Conditions:
+   57:  //   none
+   58:  void PWM_Setup(const UINT32 busClk)
+   59:  {
 *** EVALUATION ***
 
 Function: PWM_Setup
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\analog.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\analog.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\analog.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\analog.c.o -WmsgSd1106 -WmsgSd5703
 
-   61:    // 50 Duty Cycle => PWMDTY = 128, PWMPER = 256
-   62:    // Setup 2 PWMs, one for Voltage, one for Current
-   63:    
-   64:    // PWM Setups
-   65:    
-   66:    PWMPOL_PPOL0  = 1;    // Low to High 50
+   60:    // 50 Duty Cycle => PWMDTY = 128, PWMPER = 256
+   61:    // Setup 2 PWMs, one for Voltage, one for Current
+   62:    
+   63:    // PWM Setups
+   64:    
+   65:    PWMPOL_PPOL0  = 1;    // Low to High 50
   0000 4c0001       [4]     BSET  _PWMPOL,#1
-   67:    PWMPOL_PPOL1  = 1;    // Low to High 25
+   66:    PWMPOL_PPOL1  = 1;    // Low to High 25
   0003 4c0002       [4]     BSET  _PWMPOL,#2
-   68:    PWMPOL_PPOL2  = 1;    // Low to High 0
+   67:    PWMPOL_PPOL2  = 1;    // Low to High 0
   0006 4c0004       [4]     BSET  _PWMPOL,#4
-   69:    PWMPOL_PPOL3  = 0;    // High to Low 50
+   68:    PWMPOL_PPOL3  = 0;    // High to Low 50
   0009 4d0008       [4]     BCLR  _PWMPOL,#8
-   70:    PWMPOL_PPOL4  = 0;    // High to Low 25
+   69:    PWMPOL_PPOL4  = 0;    // High to Low 25
   000c 4d0010       [4]     BCLR  _PWMPOL,#16
-   71:    PWMPOL_PPOL5  = 0;    // High to Low 0
+   70:    PWMPOL_PPOL5  = 0;    // High to Low 0
   000f 4d0020       [4]     BCLR  _PWMPOL,#32
-   72:    
-   73:    PWMCLK_PCLK0  = 1;    // Clock A
+   71:    
+   72:    PWMCLK_PCLK0  = 1;    // Clock A
   0012 4c0001       [4]     BSET  _PWMCLK,#1
-   74:    PWMCLK_PCLK1  = 1;    // Clock A
+   73:    PWMCLK_PCLK1  = 1;    // Clock A
   0015 4c0002       [4]     BSET  _PWMCLK,#2
-   75:    PWMCLK_PCLK2  = 1;    // Clock B
+   74:    PWMCLK_PCLK2  = 1;    // Clock B
   0018 4c0004       [4]     BSET  _PWMCLK,#4
-   76:    PWMCLK_PCLK3  = 1;    // Clock B
+   75:    PWMCLK_PCLK3  = 1;    // Clock B
   001b 4c0008       [4]     BSET  _PWMCLK,#8
-   77:    PWMCLK_PCLK4  = 1;    // Clock A
+   76:    PWMCLK_PCLK4  = 1;    // Clock A
   001e 4c0010       [4]     BSET  _PWMCLK,#16
-   78:    PWMCLK_PCLK5  = 1;    // Clock A
+   77:    PWMCLK_PCLK5  = 1;    // Clock A
   0021 4c0020       [4]     BSET  _PWMCLK,#32
-   79:    
-   80:    PWMCAE_CAE0   = 0;    // Left Align
+   78:    
+   79:    PWMCAE_CAE0   = 0;    // Left Align
   0024 4d0001       [4]     BCLR  _PWMCAE,#1
-   81:    PWMCAE_CAE1   = 0;    // Left Align
+   80:    PWMCAE_CAE1   = 0;    // Left Align
   0027 4d0002       [4]     BCLR  _PWMCAE,#2
-   82:    PWMCAE_CAE2   = 0;    // Left Align
+   81:    PWMCAE_CAE2   = 0;    // Left Align
   002a 4d0004       [4]     BCLR  _PWMCAE,#4
-   83:    PWMCAE_CAE3   = 0;    // Left Align
+   82:    PWMCAE_CAE3   = 0;    // Left Align
   002d 4d0008       [4]     BCLR  _PWMCAE,#8
-   84:    PWMCAE_CAE4   = 0;    // Left Align
+   83:    PWMCAE_CAE4   = 0;    // Left Align
   0030 4d0010       [4]     BCLR  _PWMCAE,#16
-   85:    PWMCAE_CAE5   = 0;    // Left Align
+   84:    PWMCAE_CAE5   = 0;    // Left Align
   0033 4d0020       [4]     BCLR  _PWMCAE,#32
-   86:    
-   87:    PWMPRCLK_PCKA = 7;    // busClk / 128 prescale
+   85:    
+   86:    PWMPRCLK_PCKA = 7;    // busClk / 128 prescale
   0036 4c0007       [4]     BSET  _PWMPRCLK,#7
-   88:    PWMPRCLK_PCKB = 7;    // busClk / 128 prescale
+   87:    PWMPRCLK_PCKB = 7;    // busClk / 128 prescale
   0039 4c0070       [4]     BSET  _PWMPRCLK,#112
+   88:    
    89:    
-   90:    
-   91:    PWMCTL_CON01  = 0;    // Seperate Channel
+   90:    PWMCTL_CON01  = 0;    // Seperate Channel
   003c 4d0010       [4]     BCLR  _PWMCTL,#16
-   92:    PWMCTL_CON23  = 0;    // Seperate Channel
+   91:    PWMCTL_CON23  = 0;    // Seperate Channel
   003f 4d0020       [4]     BCLR  _PWMCTL,#32
-   93:    PWMCTL_CON45  = 0;    // Seperate Channel
+   92:    PWMCTL_CON45  = 0;    // Seperate Channel
   0042 4d0040       [4]     BCLR  _PWMCTL,#64
-   94:    
-   95:    PWMCTL_PSWAI  = 1;    // PWM Stops in Wait Mode           :: 1 Stop Input Clock
+   93:    
+   94:    PWMCTL_PSWAI  = 1;    // PWM Stops in Wait Mode           :: 1 Stop Input Clock
   0045 4c0008       [4]     BSET  _PWMCTL,#8
-   96:    PWMCTL_PFRZ   = 1;    // PWM Counters Stop in Freeze Mode :: 1 Disable PWM Input Clock
+   95:    PWMCTL_PFRZ   = 1;    // PWM Counters Stop in Freeze Mode :: 1 Disable PWM Input Clock
   0048 4c0004       [4]     BSET  _PWMCTL,#4
-   97:    
-   98:    PWMPER0       = 255;
+   96:    
+   97:    PWMPER0       = 255;
   004b cc7fff       [2]     LDD   #32767
   004e 5b00         [2]     STAB  _PWMPER01
-   99:    PWMPER1       = 255;
+   98:    PWMPER1       = 255;
   0050 5b00         [2]     STAB  _PWMPER01:1
-  100:    PWMPER2       = 255;
+   99:    PWMPER2       = 255;
   0052 5b00         [2]     STAB  _PWMPER23
-  101:    PWMPER3       = 255;
+  100:    PWMPER3       = 255;
   0054 5b00         [2]     STAB  _PWMPER23:1
-  102:    PWMPER4       = 255;
+  101:    PWMPER4       = 255;
   0056 5b00         [2]     STAB  _PWMPER45
-  103:    PWMPER5       = 255;
+  102:    PWMPER5       = 255;
   0058 5b00         [2]     STAB  _PWMPER45:1
-  104:    
-  105:    PWMDTY0       = 127;  // 50 Duty Cycle
+  103:    
+  104:    PWMDTY0       = 127;  // 50 Duty Cycle
   005a 54           [1]     LSRB  
   005b 5b00         [2]     STAB  _PWMDTY01
-  106:    PWMDTY1       = 63;   // 25 Duty Cycle
+  105:    PWMDTY1       = 63;   // 25 Duty Cycle
   005d 57           [1]     ASRB  
   005e 5b00         [2]     STAB  _PWMDTY01:1
-  107:    PWMDTY2       = 0;    // 0  Duty Cycle
+  106:    PWMDTY2       = 0;    // 0  Duty Cycle
   0060 790000       [3]     CLR   _PWMDTY23
-  108:    PWMDTY3       = 127;  // 50 Duty Cycle
+  107:    PWMDTY3       = 127;  // 50 Duty Cycle
   0063 5a00         [2]     STAA  _PWMDTY23:1
-  109:    PWMDTY4       = 63;   // 25 Duty Cycle
+  108:    PWMDTY4       = 63;   // 25 Duty Cycle
   0065 5b00         [2]     STAB  _PWMDTY45
-  110:    PWMDTY5       = 0;    // 0  Duty Cycle
+  109:    PWMDTY5       = 0;    // 0  Duty Cycle
   0067 790000       [3]     CLR   _PWMDTY45:1
-  111:    
-  112:    PWME_PWME0    = 1;    // PWM 0 Enable
+  110:    
+  111:    PWME_PWME0    = 1;    // PWM 0 Enable
   006a 4c0001       [4]     BSET  _PWME,#1
-  113:    PWME_PWME1    = 1;    // PWM 1 Enable
+  112:    PWME_PWME1    = 1;    // PWM 1 Enable
   006d 4c0002       [4]     BSET  _PWME,#2
-  114:    PWME_PWME2    = 1;    // PWM 2 Enable
+  113:    PWME_PWME2    = 1;    // PWM 2 Enable
   0070 4c0004       [4]     BSET  _PWME,#4
-  115:    PWME_PWME3    = 1;    // PWM 3 Enable
+  114:    PWME_PWME3    = 1;    // PWM 3 Enable
   0073 4c0008       [4]     BSET  _PWME,#8
-  116:    PWME_PWME4    = 1;    // PWM 4 Enable
+  115:    PWME_PWME4    = 1;    // PWM 4 Enable
   0076 4c0010       [4]     BSET  _PWME,#16
-  117:    PWME_PWME5    = 1;    // PWM 5 Enable
+  116:    PWME_PWME5    = 1;    // PWM 5 Enable
   0079 4c0020       [4]     BSET  _PWME,#32
-  118:  }
+  117:  }
   007c 3d           [5]     RTS   
-  119:  
-  120:  // ----------------------------------------
-  121:  // Analog_Get
-  122:  // 
-  123:  // Gets an analog input channel's value based on the mode
-  124:  // Input:
-  125:  //   channelNb is the number of the anlog input channel to read
-  126:  // Output:
-  127:  //   none
-  128:  // Conditions:
-  129:  //   Assumes that the ADC has been set up
-  130:  
-  131:  void Analog_Get(const TChannelNb channelNb)
-  132:  {
+  118:  
+  119:  // ----------------------------------------
+  120:  // Analog_Get
+  121:  // 
+  122:  // Gets an analog input channel's value based on the mode
+  123:  // Input:
+  124:  //   channelNb is the number of the anlog input channel to read
+  125:  // Output:
+  126:  //   none
+  127:  // Conditions:
+  128:  //   Assumes that the ADC has been set up
+  129:  
+  130:  void Analog_Get(const TChannelNb channelNb)
+  131:  {
 *** EVALUATION ***
 
 Function: Analog_Get
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\analog.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\analog.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\analog.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\analog.c.o -WmsgSd1106 -WmsgSd5703
 
   0000 1b92         [2]     LEAS  -14,SP
   0002 3b           [2]     PSHD  
   0003 3b           [2]     PSHD  
-  133:    TUINT16 conversionResult;
-  134:    INT16 medianArray[3];
-  135:    INT16 x, y, temp = 0;
-  136:    
-  137:    UINT8 txByte, txByte2, txByte3;
-  138:    txByte = 0x06; // Masking out D2 and don't cares [0000 0110]
-  139:    
-  140:    // 0000 00(d1)(d0)
-  141:    // (d1)(d0)00 0000
-  142:    txByte2 = channelNb << 6;   // Channel Select
+  132:    TUINT16 conversionResult;
+  133:    INT16 medianArray[3];
+  134:    INT16 x, y, temp = 0;
+  135:    
+  136:    UINT8 txByte, txByte2, txByte3;
+  137:    txByte = 0x06; // Masking out D2 and don't cares [0000 0110]
+  138:    
+  139:    // 0000 00(d1)(d0)
+  140:    // (d1)(d0)00 0000
+  141:    txByte2 = channelNb << 6;   // Channel Select
   0004 c640         [1]     LDAB  #64
   0006 a683         [3]     LDAA  3,SP
   0008 12           [1]     MUL   
   0009 6b8b         [2]     STAB  11,SP
-  143:    
-  144:    txByte3 = 0; // Don't cares
+  142:    
+  143:    txByte3 = 0; // Don't cares
   000b 6984         [2]     CLR   4,SP
-  145:    
-  146:    // Value: 3 for Analog IO (Transmission, data to Rx)
-  147:    // Value: 0 for NULL since we don't send anything to the SPI.
-  148:    
-  149:    // 3 Low (Inverted) for transfer (CS3) - ADC
-  150:    PTH_PTH4 = 1; 
+  144:    
+  145:    // Value: 3 for Analog IO (Transmission, data to Rx)
+  146:    // Value: 0 for NULL since we don't send anything to the SPI.
+  147:    
+  148:    // 3 Low (Inverted) for transfer (CS3) - ADC
+  149:    PTH_PTH4 = 1; 
   000d c606         [1]     LDAB  #6
   000f 1c000010     [4]     BSET  _PTH,#16
-  151:    PTH_PTH5 = 1;
+  150:    PTH_PTH5 = 1;
   0013 1c000020     [4]     BSET  _PTH,#32
-  152:    PTH_PTH6 = 0;
+  151:    PTH_PTH6 = 0;
   0017 1d000040     [4]     BCLR  _PTH,#64
-  153:    
-  154:    SPI_ExchangeChar(txByte,  &conversionResult.s.Hi);  // Rx Values are '?' so discard.
+  152:    
+  153:    SPI_ExchangeChar(txByte,  &conversionResult.s.Hi);  // Rx Values are '?' so discard.
   001b 37           [2]     PSHB  
   001c 1a88         [2]     LEAX  8,SP
   001e b754         [1]     TFR   X,D
   0020 6e81         [2]     STX   1,SP
   0022 160000       [4]     JSR   SPI_ExchangeChar
   0025 32           [3]     PULA  
-  155:    SPI_ExchangeChar(txByte2, &conversionResult.s.Hi);  // Rx Values are NULL, B11->B8
+  154:    SPI_ExchangeChar(txByte2, &conversionResult.s.Hi);  // Rx Values are NULL, B11->B8
   0026 e68b         [3]     LDAB  11,SP
   0028 37           [2]     PSHB  
   0029 ec81         [3]     LDD   1,SP
   002b 160000       [4]     JSR   SPI_ExchangeChar
   002e 32           [3]     PULA  
-  156:    SPI_ExchangeChar(txByte3, &conversionResult.s.Lo);  // Rx Values are B7->B0
+  155:    SPI_ExchangeChar(txByte3, &conversionResult.s.Lo);  // Rx Values are B7->B0
   002f e684         [3]     LDAB  4,SP
   0031 37           [2]     PSHB  
   0032 1a89         [2]     LEAX  9,SP
   0034 b754         [1]     TFR   X,D
   0036 160000       [4]     JSR   SPI_ExchangeChar
   0039 32           [3]     PULA  
-  157:    conversionResult.s.Hi &= 0x0F;                      // Mask out the NULL bit [? ? ? 0 B11 B10 B09 B08]
+  156:    conversionResult.s.Hi &= 0x0F;                      // Mask out the NULL bit [? ? ? 0 B11 B10 B09 B08]
   003a 0d87f0       [4]     BCLR  7,SP,#240
-  158:    
-  159:    // 0 High (Inverted) for no transfer
-  160:    PTH_PTH4 = 0;
+  157:    
+  158:    // 0 High (Inverted) for no transfer
+  159:    PTH_PTH4 = 0;
   003d 1d000010     [4]     BCLR  _PTH,#16
-  161:    PTH_PTH5 = 0;
+  160:    PTH_PTH5 = 0;
   0041 1d000020     [4]     BCLR  _PTH,#32
-  162:    PTH_PTH6 = 0;
+  161:    PTH_PTH6 = 0;
   0045 1d000040     [4]     BCLR  _PTH,#64
-  163:    
-  164:    // Use median filter with sliding window of the 3 most recent samples
-  165:    Analog_Input[channelNb].Value3 = Analog_Input[channelNb].Value2;
+  162:    
+  163:    // Use median filter with sliding window of the 3 most recent samples
+  164:    Analog_Input[channelNb].Value3 = Analog_Input[channelNb].Value2;
   0049 c60a         [1]     LDAB  #10
   004b 87           [1]     CLRA  
   004c ed82         [3]     LDY   2,SP
@@ -299,44 +298,44 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   004f b745         [1]     TFR   D,X
   0051 ede20000     [4]     LDY   Analog_Input:6,X
   0055 6de20000     [3]     STY   Analog_Input:8,X
-  166:    Analog_Input[channelNb].Value2 = Analog_Input[channelNb].Value1;
+  165:    Analog_Input[channelNb].Value2 = Analog_Input[channelNb].Value1;
   0059 ede20000     [4]     LDY   Analog_Input:4,X
   005d 6de20000     [3]     STY   Analog_Input:6,X
-  167:    //The term 'bipolar' indicates that the signal swings above and below some reference level. 
-  168:    //In single-ended systems, the input is typically referenced to analog ground, so a bipolar signal is one that swings above and below ground.
-  169:    Analog_Input[channelNb].Value1 = ADC_OFFSET - (INT16)conversionResult.l;
+  166:    //The term 'bipolar' indicates that the signal swings above and below some reference level. 
+  167:    //In single-ended systems, the input is typically referenced to analog ground, so a bipolar signal is one that swings above and below ground.
+  168:    Analog_Input[channelNb].Value1 = ADC_OFFSET - (INT16)conversionResult.l;
   0061 8608         [1]     LDAA  #8
   0063 c7           [1]     CLRB  
   0064 a387         [3]     SUBD  7,SP
   0066 6ce20000     [3]     STD   Analog_Input:4,X
+  169:    
   170:    
-  171:    
-  172:    Analog_Input[channelNb].OldValue.l = Analog_Input[channelNb].Value.l;
+  171:    Analog_Input[channelNb].OldValue.l = Analog_Input[channelNb].Value.l;
   006a ece20000     [4]     LDD   Analog_Input,X
   006e 6ce20000     [3]     STD   Analog_Input:2,X
-  173:    
-  174:    medianArray[0] = Analog_Input[channelNb].Value1;
+  172:    
+  173:    medianArray[0] = Analog_Input[channelNb].Value1;
   0072 ece20000     [4]     LDD   Analog_Input:4,X
   0076 6c8c         [2]     STD   12,SP
-  175:    medianArray[1] = Analog_Input[channelNb].Value2;
+  174:    medianArray[1] = Analog_Input[channelNb].Value2;
   0078 ece20000     [4]     LDD   Analog_Input:6,X
   007c 6c8e         [2]     STD   14,SP
-  176:    medianArray[2] = Analog_Input[channelNb].Value3;
+  175:    medianArray[2] = Analog_Input[channelNb].Value3;
   007e ece20000     [4]     LDD   Analog_Input:8,X
   0082 6cf010       [3]     STD   16,SP
-  177:    
-  178:    // B.Sort. Low to High. Find Mid, yo
-  179:    for (x = 0; x < 3; x++)
+  176:    
+  177:    // B.Sort. Low to High. Find Mid, yo
+  178:    for (x = 0; x < 3; x++)
   0085 c7           [1]     CLRB  
   0086 87           [1]     CLRA  
   0087 6c89         [2]     STD   9,SP
-  180:    {
-  181:      for(y = 0; y < 2; y++)
+  179:    {
+  180:      for(y = 0; y < 2; y++)
   0089 c7           [1]     CLRB  
   008a 87           [1]     CLRA  
   008b 6c85         [2]     STD   5,SP
-  182:      {
-  183:        if(medianArray[y] > medianArray[y+1])
+  181:      {
+  182:        if(medianArray[y] > medianArray[y+1])
   008d ec85         [3]     LDD   5,SP
   008f 59           [1]     LSLD  
   0090 1a8c         [2]     LEAX  12,SP
@@ -344,12 +343,12 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0094 ec00         [3]     LDD   0,X
   0096 ac02         [3]     CPD   2,X
   0098 2f06         [3/1]   BLE   *+8 ;abs = 00a0
-  184:        {// swap vars
-  185:          temp = medianArray[y];
-  186:          medianArray[y] = medianArray[y+1];
+  183:        {// swap vars
+  184:          temp = medianArray[y];
+  185:          medianArray[y] = medianArray[y+1];
   009a ed02         [3]     LDY   2,X
   009c 6d00         [2]     STY   0,X
-  187:          medianArray[y+1] = temp;  
+  186:          medianArray[y+1] = temp;  
   009e 6c02         [2]     STD   2,X
   00a0 ee85         [3]     LDX   5,SP
   00a2 08           [1]     INX   
@@ -361,11 +360,11 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   00ad 6e89         [2]     STX   9,SP
   00af 8e0003       [2]     CPX   #3
   00b2 2dd5         [3/1]   BLT   *-41 ;abs = 0089
-  188:        } 
-  189:      }
-  190:    }
-  191:  	
-  192:  	Analog_Input[channelNb].Value.l = medianArray[1]; // Middle Value of B.Sort
+  187:        } 
+  188:      }
+  189:    }
+  190:  	
+  191:  	Analog_Input[channelNb].Value.l = medianArray[1]; // Middle Value of B.Sort
   00b4 c60a         [1]     LDAB  #10
   00b6 87           [1]     CLRA  
   00b7 ed82         [3]     LDY   2,SP
@@ -373,54 +372,56 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   00ba ee8e         [3]     LDX   14,SP
   00bc b746         [1]     TFR   D,Y
   00be 6eea0000     [3]     STX   Analog_Input,Y
-  193:    
-  194:  }
+  192:    
+  193:  }
   00c2 1bf012       [2]     LEAS  18,SP
   00c5 3d           [5]     RTS   
-  195:  
-  196:  // ----------------------------------------
-  197:  // Analog_Put
-  198:  // 
-  199:  // Places a PWM cycle into the ADC for output
-  200:  // Input:
-  201:  //   channelNb is the number of the anlog input channel to output to
-  202:  // Output:
-  203:  //   none
-  204:  // Conditions:
-  205:  //   Assumes that the DAC has been set up
-  206:  void Analog_Put(const TChannelNb channelNb)
-  207:  {
+  194:  
+  195:  // ----------------------------------------
+  196:  // Analog_Put
+  197:  // 
+  198:  // Places a PWM cycle into the ADC for output
+  199:  // Input:
+  200:  //   channelNb is the number of the anlog input channel to output to
+  201:  // Output:
+  202:  //   none
+  203:  // Conditions:
+  204:  //   Assumes that the DAC has been set up
+  205:  void Analog_Put(const TChannelNb channelNb)
+  206:  {
 *** EVALUATION ***
 
 Function: Analog_Put
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\analog.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\analog.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : D:\Profiles\10824579\Desktop\Project\Sources\analog.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\analog.c.o -WmsgSd1106 -WmsgSd5703
 
-  0000 1b9d         [2]     LEAS  -3,SP
-  208:    // PWM into a filter(Low)
-  209:    // PWMCNTn(counter) -> Duty -> Pin Logic -> PWMn
-  210:    // 50 Duty Cycle => PWMDTY = 128, PWMPER = 256
-  211:    // To simulate a sine wave, modify the duty cycles e.g.
-  212:    // 0-> 25 -> 50 -> 25 -> 0
-  213:    // Have the values hold over the period and it should display a sine wave
-  214:    // 12 bit DAC
-  215:    UINT8 channelNbHex, i;
-  216:    TUINT16 rxByte;
+  0000 1b9c         [2]     LEAS  -4,SP
+  207:    // PWM into a filter(Low)
+  208:    // PWMCNTn(counter) -> Duty -> Pin Logic -> PWMn
+  209:    // 50 Duty Cycle => PWMDTY = 128, PWMPER = 256
+  210:    // To simulate a sine wave, modify the duty cycles e.g.
+  211:    // 0-> 25 -> 50 -> 25 -> 0
+  212:    // Have the values hold over the period and it should display a sine wave
+  213:    // 12 bit DAC
+  214:    UINT8 channelNbHex, i;
+  215:    TUINT16 rxByte;
+  216:    UINT8 test = 0x00;
+  0002 6983         [2]     CLR   3,SP
   217:    
   218:    switch (channelNb)
-  0002 044405       [3]     TBEQ  D,*+8 ;abs = 000a
-  0005 040405       [3]     DBEQ  D,*+8 ;abs = 000d
-  0008 2007         [3]     BRA   *+9 ;abs = 0011
+  0004 044405       [3]     TBEQ  D,*+8 ;abs = 000c
+  0007 040405       [3]     DBEQ  D,*+8 ;abs = 000f
+  000a 2007         [3]     BRA   *+9 ;abs = 0013
   219:    {
   220:      case Ch1:
   221:        channelNbHex = 0x20;
-  000a c620         [1]     LDAB  #32
+  000c c620         [1]     LDAB  #32
   222:      break;
-  000c 8f           [2]     SKIP2 
+  000e 8f           [2]     SKIP2 
   223:      case Ch2:
   224:        channelNbHex = 0x60;
-  000d c660         [1]     LDAB  #96
-  000f 6b82         [2]     STAB  2,SP
+  000f c660         [1]     LDAB  #96
+  0011 6b82         [2]     STAB  2,SP
   225:      break;
   226:    }
   227:    // DAC Data Structure:
@@ -432,250 +433,238 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   233:    // PWM2
   234:    // 4 Low (Inverted) for transfer (CS4) - DAC
   235:    for (i = 0; i < 50; i++);
-  0011 c7           [1]     CLRB  
-  0012 52           [1]     INCB  
-  0013 c132         [1]     CMPB  #50
-  0015 25fb         [3/1]   BCS   *-3 ;abs = 0012
+  0013 c7           [1]     CLRB  
+  0014 52           [1]     INCB  
+  0015 c132         [1]     CMPB  #50
+  0017 25fb         [3/1]   BCS   *-3 ;abs = 0014
   236:    
   237:    PTH_PTH4 = 0;
-  0017 160000       [4]     JSR   Analog_Put:0x00bb
+  0019 075f         [4]     BSR   *+97 ;abs = 007a
   238:    PTH_PTH5 = 0;
   239:    PTH_PTH6 = 1;
   240:    
   241:    
   242:    // Output Chan + Normal Operation + Input register updated [0110 0000]
-  243:    SPI_ExchangeChar( ((PWMCNT2 & 0x0F) | channelNbHex),  &rxByte.s.Hi);      
-  001a d600         [3]     LDAB  _PWMCNT23
-  001c 160000       [4]     JSR   Analog_Put:0x00ac
-  244:    SPI_ExchangeChar(PWMCNT2, &rxByte.s.Lo);
-  001f d600         [3]     LDAB  _PWMCNT23
-  0021 0778         [4]     BSR   *+122 ;abs = 009b
-  245:    
+  243:    SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  244:    //SPI_ExchangeChar( ((PWMCNT2 & 0x0F) | channelNbHex),  &rxByte.s.Hi);      
+  245:    SPI_ExchangeChar(~PWMCNT2, &rxByte.s.Lo);
+  001b d600         [3]     LDAB  _PWMCNT23
+  001d 0770         [4]     BSR   *+114 ;abs = 008f
   246:    
-  247:      // 0 High (Inverted) for no transfer
-  248:    PTH_PTH4 = 0;
-  249:    PTH_PTH5 = 0;
-  250:    PTH_PTH6 = 0;
-  251:    
+  247:    
+  248:      // 0 High (Inverted) for no transfer
+  249:    PTH_PTH4 = 0;
+  250:    PTH_PTH5 = 0;
+  251:    PTH_PTH6 = 0;
   252:    
-  253:    //------------------------------------------------------------------------
-  254:    // PWM1
-  255:    for (i = 0; i < 50; i++);
-  0023 c7           [1]     CLRB  
-  0024 52           [1]     INCB  
-  0025 c132         [1]     CMPB  #50
-  0027 25fb         [3/1]   BCS   *-3 ;abs = 0024
-  256:    
-  257:      // 4 Low (Inverted) for transfer (CS4) - DAC
-  258:    PTH_PTH4 = 0;
-  0029 160000       [4]     JSR   Analog_Put:0x00bb
-  259:    PTH_PTH5 = 0;
-  260:    PTH_PTH6 = 1;
-  261:    
+  253:    
+  254:    //------------------------------------------------------------------------
+  255:    // PWM1
+  256:    for (i = 0; i < 50; i++);
+  001f c7           [1]     CLRB  
+  0020 52           [1]     INCB  
+  0021 c132         [1]     CMPB  #50
+  0023 25fb         [3/1]   BCS   *-3 ;abs = 0020
+  257:    
+  258:      // 4 Low (Inverted) for transfer (CS4) - DAC
+  259:    PTH_PTH4 = 0;
+  0025 0753         [4]     BSR   *+85 ;abs = 007a
+  260:    PTH_PTH5 = 0;
+  261:    PTH_PTH6 = 1;
   262:    
-  263:    SPI_ExchangeChar( ((PWMCNT1 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  002c d600         [3]     LDAB  _PWMCNT01:1
-  002e 077c         [4]     BSR   *+126 ;abs = 00ac
-  264:    SPI_ExchangeChar(PWMCNT1, &rxByte.s.Lo);
-  0030 d600         [3]     LDAB  _PWMCNT01:1
-  0032 0767         [4]     BSR   *+105 ;abs = 009b
-  265:    
+  263:    SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  264:    //SPI_ExchangeChar( ((PWMCNT1 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  265:    SPI_ExchangeChar(~PWMCNT1, &rxByte.s.Lo);
+  0027 d600         [3]     LDAB  _PWMCNT01:1
+  0029 0764         [4]     BSR   *+102 ;abs = 008f
   266:    
-  267:    // 0 High (Inverted) for no transfer
-  268:    PTH_PTH4 = 0;
-  269:    PTH_PTH5 = 0;
-  270:    PTH_PTH6 = 0;
-  271:    
+  267:    
+  268:    // 0 High (Inverted) for no transfer
+  269:    PTH_PTH4 = 0;
+  270:    PTH_PTH5 = 0;
+  271:    PTH_PTH6 = 0;
   272:    
-  273:    //------------------------------------------------------------------------
-  274:    // PWM0
-  275:    for (i = 0; i < 60; i++);
-  0034 c7           [1]     CLRB  
-  0035 52           [1]     INCB  
-  0036 c13c         [1]     CMPB  #60
-  0038 25fb         [3/1]   BCS   *-3 ;abs = 0035
-  276:    
-  277:      // 4 Low (Inverted) for transfer (CS4) - DAC
-  278:    PTH_PTH4 = 0;
-  003a 077f         [4]     BSR   *+129 ;abs = 00bb
-  279:    PTH_PTH5 = 0;
-  280:    PTH_PTH6 = 1;
-  281:    
+  273:    
+  274:    //------------------------------------------------------------------------
+  275:    // PWM0
+  276:    for (i = 0; i < 60; i++);
+  002b c7           [1]     CLRB  
+  002c 52           [1]     INCB  
+  002d c13c         [1]     CMPB  #60
+  002f 25fb         [3/1]   BCS   *-3 ;abs = 002c
+  277:    
+  278:      // 4 Low (Inverted) for transfer (CS4) - DAC
+  279:    PTH_PTH4 = 0;
+  0031 0747         [4]     BSR   *+73 ;abs = 007a
+  280:    PTH_PTH5 = 0;
+  281:    PTH_PTH6 = 1;
   282:    
-  283:    SPI_ExchangeChar( ((PWMCNT0 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  003c d600         [3]     LDAB  _PWMCNT01
-  003e 076c         [4]     BSR   *+110 ;abs = 00ac
-  284:    SPI_ExchangeChar(PWMCNT0, &rxByte.s.Lo);
-  0040 d600         [3]     LDAB  _PWMCNT01
-  0042 0757         [4]     BSR   *+89 ;abs = 009b
-  285:    
+  283:    SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  284:    //SPI_ExchangeChar( ((PWMCNT0 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  285:    SPI_ExchangeChar(~PWMCNT0, &rxByte.s.Lo);
+  0033 d600         [3]     LDAB  _PWMCNT01
+  0035 0758         [4]     BSR   *+90 ;abs = 008f
   286:    
-  287:    // 0 High (Inverted) for no transfer
-  288:    PTH_PTH4 = 0;
-  289:    PTH_PTH5 = 0;
-  290:    PTH_PTH6 = 0;
-  291:    
-  292:    for (i = 0; i < 100; i++);
-  0044 c7           [1]     CLRB  
-  0045 52           [1]     INCB  
-  0046 c164         [1]     CMPB  #100
-  0048 25fb         [3/1]   BCS   *-3 ;abs = 0045
-  293:    
-  294:      // 4 Low (Inverted) for transfer (CS4) - DAC
-  295:    PTH_PTH4 = 0;
-  004a 076f         [4]     BSR   *+113 ;abs = 00bb
-  296:    PTH_PTH5 = 0;
-  297:    PTH_PTH6 = 1;
-  298:    
+  287:    
+  288:    // 0 High (Inverted) for no transfer
+  289:    PTH_PTH4 = 0;
+  290:    PTH_PTH5 = 0;
+  291:    PTH_PTH6 = 0;
+  292:    
+  293:    for (i = 0; i < 100; i++);
+  0037 c7           [1]     CLRB  
+  0038 52           [1]     INCB  
+  0039 c164         [1]     CMPB  #100
+  003b 25fb         [3/1]   BCS   *-3 ;abs = 0038
+  294:    
+  295:      // 4 Low (Inverted) for transfer (CS4) - DAC
+  296:    PTH_PTH4 = 0;
+  003d 073b         [4]     BSR   *+61 ;abs = 007a
+  297:    PTH_PTH5 = 0;
+  298:    PTH_PTH6 = 1;
   299:    
-  300:    SPI_ExchangeChar( ((PWMCNT0 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  004c d600         [3]     LDAB  _PWMCNT01
-  004e 075c         [4]     BSR   *+94 ;abs = 00ac
-  301:    SPI_ExchangeChar(PWMCNT0, &rxByte.s.Lo);
-  0050 d600         [3]     LDAB  _PWMCNT01
-  0052 0747         [4]     BSR   *+73 ;abs = 009b
-  302:    
+  300:    SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  301:    //SPI_ExchangeChar( ((PWMCNT0 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  302:    SPI_ExchangeChar(~PWMCNT0, &rxByte.s.Lo);
+  003f d600         [3]     LDAB  _PWMCNT01
+  0041 074c         [4]     BSR   *+78 ;abs = 008f
   303:    
-  304:    // 0 High (Inverted) for no transfer
-  305:    PTH_PTH4 = 0;
-  306:    PTH_PTH5 = 0;
-  307:    PTH_PTH6 = 0;
-  308:    
-  309:    //------------------------------------------------------------------------
-  310:    // PWM3
-  311:    for (i = 0; i < 100; i++);
-  0054 c7           [1]     CLRB  
-  0055 52           [1]     INCB  
-  0056 c164         [1]     CMPB  #100
-  0058 25fb         [3/1]   BCS   *-3 ;abs = 0055
-  312:      // 4 Low (Inverted) for transfer (CS4) - DAC
-  313:    PTH_PTH4 = 0;
-  005a 075f         [4]     BSR   *+97 ;abs = 00bb
-  314:    PTH_PTH5 = 0;
-  315:    PTH_PTH6 = 1;
-  316:    
+  304:    
+  305:    // 0 High (Inverted) for no transfer
+  306:    PTH_PTH4 = 0;
+  307:    PTH_PTH5 = 0;
+  308:    PTH_PTH6 = 0;
+  309:    
+  310:    //------------------------------------------------------------------------
+  311:    // PWM3
+  312:    for (i = 0; i < 100; i++);
+  0043 c7           [1]     CLRB  
+  0044 52           [1]     INCB  
+  0045 c164         [1]     CMPB  #100
+  0047 25fb         [3/1]   BCS   *-3 ;abs = 0044
+  313:      // 4 Low (Inverted) for transfer (CS4) - DAC
+  314:    PTH_PTH4 = 0;
+  0049 072f         [4]     BSR   *+49 ;abs = 007a
+  315:    PTH_PTH5 = 0;
+  316:    PTH_PTH6 = 1;
   317:    
-  318:    SPI_ExchangeChar( ((PWMCNT3 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  005c d600         [3]     LDAB  _PWMCNT23:1
-  005e 074c         [4]     BSR   *+78 ;abs = 00ac
-  319:    SPI_ExchangeChar(PWMCNT3, &rxByte.s.Lo);
-  0060 d600         [3]     LDAB  _PWMCNT23:1
-  0062 0737         [4]     BSR   *+57 ;abs = 009b
-  320:    
+  318:    SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  319:    //SPI_ExchangeChar( ((PWMCNT3 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  320:    SPI_ExchangeChar(~PWMCNT3, &rxByte.s.Lo);
+  004b d600         [3]     LDAB  _PWMCNT23:1
+  004d 0740         [4]     BSR   *+66 ;abs = 008f
   321:    
-  322:    // 0 High (Inverted) for no transfer
-  323:    PTH_PTH4 = 0;
-  324:    PTH_PTH5 = 0;
-  325:    PTH_PTH6 = 0;
-  326:    
+  322:    
+  323:    // 0 High (Inverted) for no transfer
+  324:    PTH_PTH4 = 0;
+  325:    PTH_PTH5 = 0;
+  326:    PTH_PTH6 = 0;
   327:    
-  328:    for (i = 0; i < 60; i++);
-  0064 c7           [1]     CLRB  
-  0065 52           [1]     INCB  
-  0066 c13c         [1]     CMPB  #60
-  0068 25fb         [3/1]   BCS   *-3 ;abs = 0065
-  329:      // 4 Low (Inverted) for transfer (CS4) - DAC
-  330:    PTH_PTH4 = 0;
-  006a 074f         [4]     BSR   *+81 ;abs = 00bb
-  331:    PTH_PTH5 = 0;
-  332:    PTH_PTH6 = 1;
-  333:    
+  328:    
+  329:    for (i = 0; i < 60; i++);
+  004f c7           [1]     CLRB  
+  0050 52           [1]     INCB  
+  0051 c13c         [1]     CMPB  #60
+  0053 25fb         [3/1]   BCS   *-3 ;abs = 0050
+  330:      // 4 Low (Inverted) for transfer (CS4) - DAC
+  331:    PTH_PTH4 = 0;
+  0055 0723         [4]     BSR   *+37 ;abs = 007a
+  332:    PTH_PTH5 = 0;
+  333:    PTH_PTH6 = 1;
   334:    
-  335:    SPI_ExchangeChar( ((PWMCNT3 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  006c d600         [3]     LDAB  _PWMCNT23:1
-  006e 073c         [4]     BSR   *+62 ;abs = 00ac
-  336:    SPI_ExchangeChar(PWMCNT3, &rxByte.s.Lo);
-  0070 d600         [3]     LDAB  _PWMCNT23:1
-  0072 0727         [4]     BSR   *+41 ;abs = 009b
-  337:    
-  338:    
-  339:    // 0 High (Inverted) for no transfer
-  340:    PTH_PTH4 = 0;
-  341:    PTH_PTH5 = 0;
-  342:    PTH_PTH6 = 0;
-  343:    
-  344:    
-  345:    //------------------------------------------------------------------------
-  346:    // PWM4
-  347:    for (i = 0; i < 50; i++);
-  0074 c7           [1]     CLRB  
-  0075 52           [1]     INCB  
-  0076 c132         [1]     CMPB  #50
-  0078 25fb         [3/1]   BCS   *-3 ;abs = 0075
-  348:    
-  349:      // 4 Low (Inverted) for transfer (CS4) - DAC
-  350:    PTH_PTH4 = 0;
-  007a 073f         [4]     BSR   *+65 ;abs = 00bb
-  351:    PTH_PTH5 = 0;
-  352:    PTH_PTH6 = 1;
-  353:    
-  354:    
-  355:    SPI_ExchangeChar( ((PWMCNT4 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  007c d600         [3]     LDAB  _PWMCNT45
-  007e 072c         [4]     BSR   *+46 ;abs = 00ac
-  356:    SPI_ExchangeChar(PWMCNT4, &rxByte.s.Lo);
-  0080 d600         [3]     LDAB  _PWMCNT45
-  0082 0717         [4]     BSR   *+25 ;abs = 009b
-  357:    
-  358:    
-  359:    // 0 High (Inverted) for no transfer
-  360:    PTH_PTH4 = 0;
-  361:    PTH_PTH5 = 0;
-  362:    PTH_PTH6 = 0;
-  363:    PTH_PTH6 = 0;
-  0084 1d000040     [4]     BCLR  _PTH,#64
-  364:    
-  365:    //------------------------------------------------------------------------
-  366:    // PWM5
-  367:    for (i = 0; i < 50; i++);
-  0088 c7           [1]     CLRB  
-  0089 52           [1]     INCB  
-  008a c132         [1]     CMPB  #50
-  008c 25fb         [3/1]   BCS   *-3 ;abs = 0089
-  368:    
-  369:    // 4 Low (Inverted) for transfer (CS4) - DAC
-  370:    PTH_PTH4 = 0;
-  008e 072b         [4]     BSR   *+45 ;abs = 00bb
-  371:    PTH_PTH5 = 0;
-  372:    PTH_PTH6 = 1;
-  373:    
-  374:    SPI_ExchangeChar( ((PWMCNT5 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  0090 d600         [3]     LDAB  _PWMCNT45:1
-  0092 0718         [4]     BSR   *+26 ;abs = 00ac
-  375:    SPI_ExchangeChar(PWMCNT5, &rxByte.s.Lo);
-  0094 d600         [3]     LDAB  _PWMCNT45:1
-  0096 0703         [4]     BSR   *+5 ;abs = 009b
+  335:    
+  336:    SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  337:    //SPI_ExchangeChar( ((PWMCNT3 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  338:    SPI_ExchangeChar(~PWMCNT3, &rxByte.s.Lo);
+  0057 d600         [3]     LDAB  _PWMCNT23:1
+  0059 0734         [4]     BSR   *+54 ;abs = 008f
+  339:    
+  340:    
+  341:    // 0 High (Inverted) for no transfer
+  342:    PTH_PTH4 = 0;
+  343:    PTH_PTH5 = 0;
+  344:    PTH_PTH6 = 0;
+  345:    
+  346:    
+  347:    //------------------------------------------------------------------------
+  348:    // PWM4
+  349:    for (i = 0; i < 50; i++);
+  005b c7           [1]     CLRB  
+  005c 52           [1]     INCB  
+  005d c132         [1]     CMPB  #50
+  005f 25fb         [3/1]   BCS   *-3 ;abs = 005c
+  350:    
+  351:      // 4 Low (Inverted) for transfer (CS4) - DAC
+  352:    PTH_PTH4 = 0;
+  0061 0717         [4]     BSR   *+25 ;abs = 007a
+  353:    PTH_PTH5 = 0;
+  354:    PTH_PTH6 = 1;
+  355:    
+  356:    
+  357:    SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  358:    //SPI_ExchangeChar( ((PWMCNT4 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  359:    SPI_ExchangeChar(~PWMCNT4, &rxByte.s.Lo);
+  0063 d600         [3]     LDAB  _PWMCNT45
+  0065 0728         [4]     BSR   *+42 ;abs = 008f
+  360:    
+  361:    
+  362:    // 0 High (Inverted) for no transfer
+  363:    PTH_PTH4 = 0;
+  364:    PTH_PTH5 = 0;
+  365:    PTH_PTH6 = 0;
+  366:    PTH_PTH6 = 0;
+  0067 1d000040     [4]     BCLR  _PTH,#64
+  367:    
+  368:    //------------------------------------------------------------------------
+  369:    // PWM5
+  370:    for (i = 0; i < 50; i++);
+  006b c7           [1]     CLRB  
+  006c 52           [1]     INCB  
+  006d c132         [1]     CMPB  #50
+  006f 25fb         [3/1]   BCS   *-3 ;abs = 006c
+  371:    
+  372:    // 4 Low (Inverted) for transfer (CS4) - DAC
+  373:    PTH_PTH4 = 0;
+  0071 0707         [4]     BSR   *+9 ;abs = 007a
+  374:    PTH_PTH5 = 0;
+  375:    PTH_PTH6 = 1;
   376:    
-  377:    
-  378:    // 0 High (Inverted) for no transfer
-  379:    PTH_PTH4 = 0;
-  380:    PTH_PTH5 = 0;
-  381:    PTH_PTH6 = 0;
-  382:  
-  383:    
-  384:  }
-  0098 1b83         [2]     LEAS  3,SP
-  009a 3d           [5]     RTS   
-  009b 37           [2]     PSHB  
-  009c 1a84         [2]     LEAX  4,SP
-  009e b754         [1]     TFR   X,D
-  00a0 160000       [4]     JSR   SPI_ExchangeChar
-  00a3 1b81         [2]     LEAS  1,SP
-  00a5 071b         [4]     BSR   *+29 ;abs = 00c2
-  00a7 1d000040     [4]     BCLR  _PTH,#64
-  00ab 3d           [5]     RTS   
-  00ac c40f         [1]     ANDB  #15
-  00ae ea84         [3]     ORAB  4,SP
-  00b0 37           [2]     PSHB  
-  00b1 1a83         [2]     LEAX  3,SP
-  00b3 b754         [1]     TFR   X,D
-  00b5 160000       [4]     JSR   SPI_ExchangeChar
-  00b8 1b81         [2]     LEAS  1,SP
-  00ba 3d           [5]     RTS   
-  00bb 0705         [4]     BSR   *+7 ;abs = 00c2
-  00bd 1c000040     [4]     BSET  _PTH,#64
-  00c1 3d           [5]     RTS   
-  00c2 1d000010     [4]     BCLR  _PTH,#16
-  00c6 1d000020     [4]     BCLR  _PTH,#32
-  00ca 3d           [5]     RTS   
-  385:  
+  377:    SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  378:    //SPI_ExchangeChar( ((PWMCNT5 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  379:    SPI_ExchangeChar(~PWMCNT5, &rxByte.s.Lo);
+  0073 d600         [3]     LDAB  _PWMCNT45:1
+  0075 0718         [4]     BSR   *+26 ;abs = 008f
+  380:    
+  381:    
+  382:    // 0 High (Inverted) for no transfer
+  383:    PTH_PTH4 = 0;
+  384:    PTH_PTH5 = 0;
+  385:    PTH_PTH6 = 0;
+  386:  
+  387:    
+  388:  }
+  0077 1b84         [2]     LEAS  4,SP
+  0079 3d           [5]     RTS   
+  007a 0725         [4]     BSR   *+39 ;abs = 00a1
+  007c 1c000040     [4]     BSET  _PTH,#64
+  0080 e684         [3]     LDAB  4,SP
+  0082 ea85         [3]     ORAB  5,SP
+  0084 37           [2]     PSHB  
+  0085 1a83         [2]     LEAX  3,SP
+  0087 b754         [1]     TFR   X,D
+  0089 160000       [4]     JSR   SPI_ExchangeChar
+  008c 1b81         [2]     LEAS  1,SP
+  008e 3d           [5]     RTS   
+  008f 51           [1]     COMB  
+  0090 37           [2]     PSHB  
+  0091 1a84         [2]     LEAX  4,SP
+  0093 b754         [1]     TFR   X,D
+  0095 160000       [4]     JSR   SPI_ExchangeChar
+  0098 1b81         [2]     LEAS  1,SP
+  009a 0705         [4]     BSR   *+7 ;abs = 00a1
+  009c 1d000040     [4]     BCLR  _PTH,#64
+  00a0 3d           [5]     RTS   
+  00a1 1d000010     [4]     BCLR  _PTH,#16
+  00a5 1d000020     [4]     BCLR  _PTH,#32
+  00a9 3d           [5]     RTS   
+  389:  

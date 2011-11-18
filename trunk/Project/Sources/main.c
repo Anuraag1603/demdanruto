@@ -58,6 +58,11 @@ void main(void)
   Timer_SetupPulseAccumulators();
   Timer_Init(TIMER_Ch7, &timerSetup);
   Timer_Set(TIMER_Ch7, Timer_Ch7_Delay);
+  
+  Timer_Init(TIMER_Ch4, &timerSetup);
+  Timer_Set(TIMER_Ch4, Timer_Ch4_Delay);
+  Timer_Enable(TIMER_Ch4, bTRUE);
+  
   HMI_Setup();
   
   if (bSetupState)
@@ -191,6 +196,20 @@ void HandlePacket(void)
 
   
  }
+ 
+void interrupt 12 TIE4_ISR(void)
+{
+  TFLG1_C4F = 1; // Clear flag to say it was done.
+  //OS_ISREnter();
+  
+  if (Debug)
+  {
+    Analog_Put(Ch1);
+    Analog_Put(Ch2);
+  }
+  
+  //OS_ISRExit();
+}
 
 //---------------------------------
 //  MCCNT_ISR
@@ -202,16 +221,14 @@ void HandlePacket(void)
 //  Conditions: none    
  void interrupt 26 MCCNT_ISR(void)
  {
-  INT32 voltage, current;
+  INT32 voltage, current, i;
   MCFLG_MCZF = 1; // Clear/Ack
   //OS_ISREnter();  
   
   if (Debug)
     PTT_PTT4 ^= 1;
   
-  Analog_Put(Ch1);
   Analog_Get(Ch1);
-  Analog_Put(Ch2);
   Analog_Get(Ch2);
   
   // In ASYNC mode, we send only if the value has changed.
@@ -221,19 +238,6 @@ void HandlePacket(void)
       (void)HandleAnalogValPacket(Ch1);
     if (Analog_Input[Ch2].OldValue.l != Analog_Input[Ch2].Value.l)
       (void)HandleAnalogValPacket(Ch2);
-    
-    if (SampleCount >= DEM_PWRSIZE)
-    {
-      SampleCount = 0;
-      Math_FindEnergy(DEM_AvePower_Array);
-    }
-    
-    voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
-    current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
-    DEM_AvePower_Array[SampleCount] = Math_FindPower(voltage, current);
-    SampleCount++;
-    
-    
   }
   // In SYNC mode, we send all the time.
   else
@@ -241,7 +245,24 @@ void HandlePacket(void)
     (void)HandleAnalogValPacket(Ch1);
     (void)HandleAnalogValPacket(Ch2);
   }
-  
+  if (SampleCount >= DEM_PWRSIZE)
+  {
+    SampleCount = 0;
+    Math_FindEnergy(DEM_AvePower_Array);
+    DEM_Average_Power.l = 0;
+    for (i = 0; i < DEM_PWRSIZE; i++)
+    {
+      DEM_Average_Power.l += DEM_AvePower_Array[i];
+    }
+    
+    DEM_Average_Power.l = DEM_Average_Power.l >> 4;
+  }
+    
+  voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
+  current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
+  DEM_AvePower_Array[SampleCount] = Math_FindPower(voltage, current);
+  //DEM_Average_Power.l = DEM_AvePower_Array[SampleCount];
+  SampleCount++;
   /*
   Clock_MilliSeconds += 2;
   if (Clock_MilliSeconds >= 1000)
@@ -477,15 +498,11 @@ BOOL HandleAnalogValPacket(TChannelNb channelNb)
 
 void HandleTestModePack(void)
 {
-  switch(Packet_Parameter1)
-  {
-    case 1:
-      Debug = 1;
-    break;
-    case 0:
-      Debug = 0;
-    break;
-  }
+  if(Packet_Parameter1)
+    EEPROM_Write16(&Debug, 1);
+  else
+    EEPROM_Write16(&Debug, 0);
+
 }
 
 void HandleTarrifPacket(void)
@@ -547,22 +564,23 @@ BOOL HandleEnergyPacket(void)
 
 BOOL HandleCostPacket(void)
 {
-  return Packet_Put(CMD_COST, (UINT8)Math_FromQN(DEM_Total_Cost, qRight, bFALSE), (UINT8)Math_FromQN(DEM_Total_Cost, qLeft, bFALSE), 0);
+  return Packet_Put(CMD_COST, (UINT8)Math_FromQN(DEM_Total_Cost, qRight, 9), (UINT8)Math_FromQN(DEM_Total_Cost, qLeft, 9), 0);
 }
 
 BOOL HandleFrquencyPacket(void)
 {
-  return 0;
+  Math_FindFrequency();
+  return Packet_Put(CMD_FREQUENCY, DEM_Frequency.s.Lo, DEM_Frequency.s.Hi, 0);
 }
 
 BOOL HandleVRMS(void)
 {
-  return 0;
+  return Packet_Put(CMD_VOLRMS, DEM_VRMS.s.Lo, DEM_VRMS.s.Hi, 0);
 }
 
 BOOL HandleIRMS(void)
 {
-  return 0;
+  return Packet_Put(CMD_CURRMS, DEM_IRMS.s.Lo, DEM_IRMS.s.Hi, 0);
 }
 
 BOOL HandlePFactor(void)

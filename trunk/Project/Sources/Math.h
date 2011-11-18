@@ -20,7 +20,7 @@ typedef enum
 } TQNotationSide;
 
 INT32 Math_ToQN(const UINT32 number, const UINT8 base);
-INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const BOOL base);
+INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const UINT8 base);
 INT16 Math_ConvertADCValue(const INT32 number);
 INT16 Math_FindPower(const INT16 voltage, const INT16 current);
 void Math_FindEnergy(const INT16 DEM_AvePower_Array[]);
