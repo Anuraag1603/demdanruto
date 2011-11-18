@@ -23,14 +23,7 @@
 #include <mc9s12a256.h>     /* derivative information */
 
                                                               
-UINT32 Clock_Interval;
-TINT16 DEM_Average_Power;
-INT16 DEM_AvePower_Array[DEM_PWRSIZE];
-TUINT32 DEM_Total_Energy;
-UINT32 DEM_Total_Cost;
-UINT16 DEM_Tarrif;
-TUINT16 DEM_VRMS;
-TUINT16 DEM_IRMS;
+
 
 // ----------------------------------------
 // HMI_Setup
@@ -44,6 +37,16 @@ TUINT16 DEM_IRMS;
 //   none
 void HMI_Setup(void);
 
+// ----------------------------------------
+// HMI_Update
+// 
+// Updates the LCD display with the new values of Power, Energy, Cost and Time
+// Input:
+//   none
+// Output:
+//   none
+// Conditions:
+//   none
 void HMI_Update(void);
 
 // ----------------------------------------

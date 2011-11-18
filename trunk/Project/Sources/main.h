@@ -116,6 +116,14 @@ UINT8 Clock_Hours;
 UINT8 Clock_Days;
 UINT32 Clock_MicroSeconds;
 TUINT16 DEM_Frequency;
+UINT32 Clock_Interval;
+TINT16 DEM_Average_Power;
+INT16 DEM_AvePower_Array[DEM_PWRSIZE];
+TUINT32 DEM_Total_Energy;
+UINT32 DEM_Total_Cost;
+UINT16 DEM_Tarrif;
+TUINT16 DEM_VRMS;
+TUINT16 DEM_IRMS;
 
 
 

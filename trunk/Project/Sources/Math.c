@@ -145,7 +145,7 @@ void Math_FindCost(void)
 {
   // Energy in kWh * Tarrif
   // Energy is in base 6, so upscale Tarrif to base 6 first.
-  DEM_Total_Cost += (UINT16) DEM_Total_Energy * (DEM_Tarrif << 3);
+  DEM_Total_Cost += (UINT16) (DEM_Total_Energy.l * (DEM_Tarrif << 3));
   
   // Then normalise back down to base 3
   DEM_Total_Cost = DEM_Total_Cost >> 3;
@@ -164,7 +164,7 @@ void Math_FindCost(void)
 //  none
 UINT16 Math_SQRT(const INT16 number, const INT16 guess)
 {
-  return (UINT16) ( ((number + guess) + guess) / 2);
+  return (UINT16) ( ((number + guess) + guess) >> 1);
 }
 
 void Math_FindFrequency(void)

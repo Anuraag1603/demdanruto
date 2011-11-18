@@ -9,6 +9,16 @@
 
 #include "DEM.h"
 
+// ----------------------------------------
+// DEM_Setup
+// 
+// Sets up the variables for the DEM
+// Input:
+//   none
+// Output:
+//   none
+// Conditions:
+//   none
 void DEM_Setup(void)
 {
   UINT8 i;
@@ -25,6 +35,17 @@ void DEM_Setup(void)
   }
 }
 
+// ----------------------------------------
+// DEM_SetTarrif
+// 
+// Updates the tarrif variable to the correct one
+// based on the time
+// Input:
+//   none
+// Output:
+//   none
+// Conditions:
+//   none
 void DEM_SetTarrif(void)
 {
   /*

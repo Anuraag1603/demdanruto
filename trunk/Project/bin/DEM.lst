@@ -1,5 +1,5 @@
 *** EVALUATION ***
-ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
+ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
 
     1:  // ----------------------------------------
     2:  // Filename:     DEM.c
@@ -12,50 +12,113 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.38 Build 9056, Feb 26 2009
     9:  
    10:  #include "DEM.h"
    11:  
-   12:  void DEM_SetTarrif(void)
-   13:  {
+   12:  // ----------------------------------------
+   13:  // DEM_Setup
+   14:  // 
+   15:  // Sets up the variables for the DEM
+   16:  // Input:
+   17:  //   none
+   18:  // Output:
+   19:  //   none
+   20:  // Conditions:
+   21:  //   none
+   22:  void DEM_Setup(void)
+   23:  {
+*** EVALUATION ***
+
+Function: DEM_Setup
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\DEM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\DEM.c.o" -WmsgSd1106 -WmsgSd5703
+
+   24:    UINT8 i;
+   25:    
+   26:    DEM_Average_Power.l = 0;
+  0000 c7           [1]     CLRB  
+  0001 87           [1]     CLRA  
+  0002 7c0000       [3]     STD   DEM_Average_Power
+   27:    DEM_Total_Energy.l  = 0;
+  0005 7c0000       [3]     STD   DEM_Total_Energy:2
+  0008 7c0000       [3]     STD   DEM_Total_Energy
+   28:    DEM_Total_Cost      = 0;
+  000b 7c0000       [3]     STD   DEM_Total_Cost:2
+  000e 7c0000       [3]     STD   DEM_Total_Cost
+   29:    DEM_VRMS.l          = 0;
+  0011 7c0000       [3]     STD   DEM_VRMS
+   30:    DEM_IRMS.l          = 0;
+  0014 7c0000       [3]     STD   DEM_IRMS
+   31:    
+   32:    for (i = 0; i < DEM_PWRSIZE; i++)
+   33:    {
+   34:      DEM_AvePower_Array[i] = 0;
+  0017 87           [1]     CLRA  
+  0018 37           [2]     PSHB  
+  0019 59           [1]     LSLD  
+  001a b745         [1]     TFR   D,X
+  001c cd0000       [2]     LDY   #0
+  001f 6de20000     [3]     STY   DEM_AvePower_Array,X
+  0023 33           [3]     PULB  
+  0024 52           [1]     INCB  
+  0025 c110         [1]     CMPB  #16
+  0027 25ee         [3/1]   BCS   *-16 ;abs = 0017
+   35:    }
+   36:  }
+  0029 3d           [5]     RTS   
+   37:  
+   38:  // ----------------------------------------
+   39:  // DEM_SetTarrif
+   40:  // 
+   41:  // Updates the tarrif variable to the correct one
+   42:  // based on the time
+   43:  // Input:
+   44:  //   none
+   45:  // Output:
+   46:  //   none
+   47:  // Conditions:
+   48:  //   none
+   49:  void DEM_SetTarrif(void)
+   50:  {
 *** EVALUATION ***
 
 Function: DEM_SetTarrif
-Source  : D:\Profiles\10824579\Desktop\Project\Sources\DEM.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=D:\Profiles\10824579\Desktop\Project;D:\Profiles\10824579\Desktop\Project\bin;D:\Profiles\10824579\Desktop\Project\prm;D:\Profiles\10824579\Desktop\Project\cmd;D:\Profiles\10824579\Desktop\Project\Sources;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\lib;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\src;C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CodeWarrior for S12(X) V5.0\lib\HC12c\include" -EnvOBJPATH=D:\Profiles\10824579\Desktop\Project\bin -EnvTEXTPATH=D:\Profiles\10824579\Desktop\Project\bin -Lasm=%n.lst -Ms -ObjN=D:\Profiles\10824579\Desktop\Project\Project_Data\ModCon_Board\ObjectCode\DEM.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\DEM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\DEM.c.o" -WmsgSd1106 -WmsgSd5703
 
-   14:    /*
-   15:    Peak 14-20
-   16:    Shoulder 7-14
-   17:    Off Peak every
-   18:    */
-   19:    
-   20:    // Time of Use
-   21:    if (DEM_Average_Power.l > 0)
+   51:    /*
+   52:    Peak 14-20
+   53:    Shoulder 7-14
+   54:    Off Peak every
+   55:    */
+   56:    
+   57:    // Time of Use
+   58:    if (DEM_Average_Power.l > 0)
   0000 fc0000       [3]     LDD   DEM_Average_Power
   0003 2f21         [3/1]   BLE   *+35 ;abs = 0026
-   22:    {
-   23:      
-   24:      if (Clock_Hours >= 14 && Clock_Hours <= 20)
+   59:    {
+   60:      
+   61:      if (Clock_Hours >= 14 && Clock_Hours <= 20)
   0005 f60000       [3]     LDAB  Clock_Hours
   0008 c00e         [1]     SUBB  #14
   000a c106         [1]     CMPB  #6
   000c 2205         [3/1]   BHI   *+7 ;abs = 0013
-   25:        DEM_Tarrif = sT1Peak;  
+   62:        DEM_Tarrif = sT1Peak;  
   000e fc0450       [3]     LDD   1104
   0011 2016         [3]     BRA   *+24 ;abs = 0029
-   26:      else if (Clock_Hours >= 7 && Clock_Hours < 14)
+   63:      else if (Clock_Hours >= 7 && Clock_Hours < 14)
   0013 f60000       [3]     LDAB  Clock_Hours
   0016 c007         [1]     SUBB  #7
   0018 c106         [1]     CMPB  #6
   001a 2205         [3/1]   BHI   *+7 ;abs = 0021
-   27:        DEM_Tarrif = sT1Shoulder;
+   64:        DEM_Tarrif = sT1Shoulder;
   001c fc0452       [3]     LDD   1106
   001f 2008         [3]     BRA   *+10 ;abs = 0029
-   28:      else
-   29:        DEM_Tarrif = sT1OffPeak;
+   65:      else
+   66:        DEM_Tarrif = sT1OffPeak;
   0021 fc0454       [3]     LDD   1108
   0024 2003         [3]     BRA   *+5 ;abs = 0029
-   30:    }
-   31:    else
-   32:      DEM_Tarrif = sT2NonTOU;
+   67:    }
+   68:    else
+   69:      DEM_Tarrif = sT2NonTOU;
   0026 fc0456       [3]     LDD   1110
   0029 7c0000       [3]     STD   DEM_Tarrif
-   33:  }
+   70:  }
   002c 3d           [5]     RTS   
