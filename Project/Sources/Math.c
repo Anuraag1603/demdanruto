@@ -49,16 +49,12 @@ INT32 Math_ToQN(const UINT32 number, const UINT8 base)
 //  The number on the side. Useful for display on the LCD.
 // Conditions:
 //  none
-INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const BOOL base)
+INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const UINT8 base)
 {
   INT32 tempNumber;
   INT8 hundredThousand, tenThousand, thousand;
   hundredThousand, tenThousand, thousand = 0;
-  
-  if (base)
-    tempNumber = (INT32)(number >> DefaultBase);
-  else
-    tempNumber = number;
+  tempNumber = (INT32)(number >> base);
   
   switch(side)
   {
@@ -89,7 +85,7 @@ INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const BOOL bas
 
 INT16 Math_ConvertADCValue(const INT32 number)
 {
-  return (INT16)Math_ToQN( ( (61 * number) + 25 ) / 50, DefaultBase );
+  return (INT16)Math_ToQN(( (61 * number) + 25 ) / 50, DefaultBase);
 }
 
 
@@ -128,7 +124,7 @@ void Math_FindEnergy(const INT16 DEM_AvePower_Array[])
   // so 20/16 = 1.25, so sample approx every 1ms
   UINT8 i;
   
-  for (i = 0; i < 15; i++)
+  for (i = 0; i < DEM_PWRSIZE; i++)
   {
     DEM_Total_Energy.l += DEM_AvePower_Array[i];
   }
@@ -147,7 +143,8 @@ void Math_FindEnergy(const INT16 DEM_AvePower_Array[])
 void Math_FindCost(void)
 {
   // Energy in kWh * Tarrif
-  DEM_Total_Cost += (UINT16) ( DEM_Total_Energy.l * Clock_TimeInHours() ) * DEM_Tarrif;
+  // Cost base 0:               Energy base3:      Hours: 3                Tarrif: 3
+  DEM_Total_Cost += (UINT16) ( (DEM_Total_Energy.l >> 3) * (Clock_RunningTimeInHours() << 3) * DEM_Tarrif);
   //return 0;
 }
 
@@ -170,6 +167,7 @@ UINT16 Math_SQRT(const INT16 number, const INT16 guess)
 void Math_FindFrequency(void)
 {
   // F = 1/T
+  DEM_Frequency.l = 0;
     
 }
 

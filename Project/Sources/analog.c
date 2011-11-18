@@ -37,7 +37,6 @@ void Analog_Setup(const UINT32 busClk)
   NbAnalogInputs.l            = 2;
   NbAnalogOutputs.l           = 2;
   
-  
   SPI_Setup(&aSPISetup, busClk);
   
   // Init 0 for ADC
@@ -214,6 +213,7 @@ void Analog_Put(const TChannelNb channelNb)
   // 12 bit DAC
   UINT8 channelNbHex, i;
   TUINT16 rxByte;
+  UINT8 test = 0x00;
   
   switch (channelNb)
   {
@@ -240,8 +240,9 @@ void Analog_Put(const TChannelNb channelNb)
   
   
   // Output Chan + Normal Operation + Input register updated [0110 0000]
-  SPI_ExchangeChar( ((PWMCNT2 & 0x0F) | channelNbHex),  &rxByte.s.Hi);      
-  SPI_ExchangeChar(PWMCNT2, &rxByte.s.Lo);
+  SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  //SPI_ExchangeChar( ((PWMCNT2 & 0x0F) | channelNbHex),  &rxByte.s.Hi);      
+  SPI_ExchangeChar(~PWMCNT2, &rxByte.s.Lo);
   
   
     // 0 High (Inverted) for no transfer
@@ -259,9 +260,9 @@ void Analog_Put(const TChannelNb channelNb)
   PTH_PTH5 = 0;
   PTH_PTH6 = 1;
   
-  
-  SPI_ExchangeChar( ((PWMCNT1 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  SPI_ExchangeChar(PWMCNT1, &rxByte.s.Lo);
+  SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  //SPI_ExchangeChar( ((PWMCNT1 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  SPI_ExchangeChar(~PWMCNT1, &rxByte.s.Lo);
   
   
   // 0 High (Inverted) for no transfer
@@ -279,9 +280,9 @@ void Analog_Put(const TChannelNb channelNb)
   PTH_PTH5 = 0;
   PTH_PTH6 = 1;
   
-  
-  SPI_ExchangeChar( ((PWMCNT0 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  SPI_ExchangeChar(PWMCNT0, &rxByte.s.Lo);
+  SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  //SPI_ExchangeChar( ((PWMCNT0 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  SPI_ExchangeChar(~PWMCNT0, &rxByte.s.Lo);
   
   
   // 0 High (Inverted) for no transfer
@@ -296,9 +297,9 @@ void Analog_Put(const TChannelNb channelNb)
   PTH_PTH5 = 0;
   PTH_PTH6 = 1;
   
-  
-  SPI_ExchangeChar( ((PWMCNT0 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  SPI_ExchangeChar(PWMCNT0, &rxByte.s.Lo);
+  SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  //SPI_ExchangeChar( ((PWMCNT0 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  SPI_ExchangeChar(~PWMCNT0, &rxByte.s.Lo);
   
   
   // 0 High (Inverted) for no transfer
@@ -314,9 +315,9 @@ void Analog_Put(const TChannelNb channelNb)
   PTH_PTH5 = 0;
   PTH_PTH6 = 1;
   
-  
-  SPI_ExchangeChar( ((PWMCNT3 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  SPI_ExchangeChar(PWMCNT3, &rxByte.s.Lo);
+  SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  //SPI_ExchangeChar( ((PWMCNT3 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  SPI_ExchangeChar(~PWMCNT3, &rxByte.s.Lo);
   
   
   // 0 High (Inverted) for no transfer
@@ -332,8 +333,9 @@ void Analog_Put(const TChannelNb channelNb)
   PTH_PTH6 = 1;
   
   
-  SPI_ExchangeChar( ((PWMCNT3 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  SPI_ExchangeChar(PWMCNT3, &rxByte.s.Lo);
+  SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  //SPI_ExchangeChar( ((PWMCNT3 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  SPI_ExchangeChar(~PWMCNT3, &rxByte.s.Lo);
   
   
   // 0 High (Inverted) for no transfer
@@ -352,8 +354,9 @@ void Analog_Put(const TChannelNb channelNb)
   PTH_PTH6 = 1;
   
   
-  SPI_ExchangeChar( ((PWMCNT4 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  SPI_ExchangeChar(PWMCNT4, &rxByte.s.Lo);
+  SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  //SPI_ExchangeChar( ((PWMCNT4 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  SPI_ExchangeChar(~PWMCNT4, &rxByte.s.Lo);
   
   
   // 0 High (Inverted) for no transfer
@@ -371,8 +374,9 @@ void Analog_Put(const TChannelNb channelNb)
   PTH_PTH5 = 0;
   PTH_PTH6 = 1;
   
-  SPI_ExchangeChar( ((PWMCNT5 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
-  SPI_ExchangeChar(PWMCNT5, &rxByte.s.Lo);
+  SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  //SPI_ExchangeChar( ((PWMCNT5 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
+  SPI_ExchangeChar(~PWMCNT5, &rxByte.s.Lo);
   
   
   // 0 High (Inverted) for no transfer

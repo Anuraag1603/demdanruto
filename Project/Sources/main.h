@@ -89,8 +89,9 @@ const UINT8 modulusCount      = 15; //0x0F;
 
 // ----------------------------------------
 // Timer Delays
-const UINT16 Periodic_Delay   = 1000; // 1ms
+const UINT16 Periodic_Delay   = 20000; // 20ms
 const UINT16 Timer_Ch7_Delay  = 2000;  // We need enough delay for 10 bits.
+const UINT16 Timer_Ch4_Delay  = 10000;
 
 // ----------------------------------------
 // Command setups
@@ -114,6 +115,7 @@ UINT8 Clock_Minutes;
 UINT8 Clock_Hours;
 UINT8 Clock_Days;
 UINT32 Clock_MicroSeconds;
+TUINT16 DEM_Frequency;
 
 
 
