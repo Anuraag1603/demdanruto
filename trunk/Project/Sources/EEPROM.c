@@ -70,6 +70,9 @@ BOOL EEPROM_Setup(const UINT32 oscClk, const UINT32 busClk)
   if (sLCDContrast == 0xFFFF)
     (void)EEPROM_Write16(&sLCDContrast, 50);
   
+  if (sTarrifMode == 0xFFFF)
+    (void)EEPROM_Write16(&sTarrifMode, 1);
+  
   if (sT1Peak == 0xFFFF)
     (void)EEPROM_Write16( &sT1Peak, (UINT16)Math_ToQN(22235, DefaultBase) );
   
@@ -229,7 +232,7 @@ BOOL EEPROM_Erase(void)
 }
 
 // ----------------------------------------
-// EEPROM_Action
+// Write
 // 
 // Performs commands: program, sector erase, mass erase and erase verify
 // Input:

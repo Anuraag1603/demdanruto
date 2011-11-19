@@ -28,7 +28,7 @@ void Math_FindCost(void);
 
 UINT16 Math_SQRT(const INT16 number, const INT16 guess);
 
-void Math_FindFrequency(void);
+void Math_FindFrequency(const UINT16 delay);
 INT16 Math_FindRMS(const INT16 number);
 
 #endif

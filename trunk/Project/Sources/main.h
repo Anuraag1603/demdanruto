@@ -5,7 +5,7 @@
 //
 // Author: Danny Sok
 // Date:   3-11-2011
-// Date LM: 3-11-2011
+// Date LM: 19-11-2011
 
 #ifndef MAIN_H
 #define MAIN_H
@@ -17,8 +17,10 @@
 
 // include files here
 
+// Types
 #include "types.h"
 
+// LCD interfacing
 #include "HMI.h"
 
 // Serial Communication Interface
@@ -42,13 +44,15 @@
 // SPI Connection to ADC
 #include "SPI.h"
 
+// DEM constants
 #include "DEM.h"
 
+// Clock timings
 #include "clock.h"
 
 // Version number
-const UINT8 MAJOR_VERSION   = 1;
-const UINT8 MINOR_VERSION   = 0;
+const UINT8 MAJOR_VERSION     = 1;
+const UINT8 MINOR_VERSION     = 0;
 
 // ----------------------------------------
 // Packet_Commands
@@ -95,8 +99,8 @@ const UINT16 Timer_Ch4_Delay  = 10000;
 
 // ----------------------------------------
 // Command setups
-const UINT8 copReset = 0x55;
-const UINT8 copEnd   = 0xAA;
+const UINT8 copReset          = 0x55;
+const UINT8 copEnd            = 0xAA;
 
 // enumerated types here
 // ----------------------------------------
