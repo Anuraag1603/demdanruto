@@ -46,6 +46,16 @@ extern TAnalogInput Analog_Input[NB_INPUT_CHANNELS];
 
 void Analog_Setup(const UINT32 busClk);
 
+// ----------------------------------------
+// PWM_Setup
+// 
+// Sets up the Pulse Width Modulators for use with the DAC (missing LPFilter)
+// Input:
+//   busClk is the bus clock speed
+// Output:
+//   none
+// Conditions:
+//   none
 void PWM_Setup(const UINT32 busClk);
 
 // ----------------------------------------
@@ -61,6 +71,16 @@ void PWM_Setup(const UINT32 busClk);
 
 void Analog_Get(const TChannelNb channelNb);
 
+// ----------------------------------------
+// Analog_Put
+// 
+// Places a PWM cycle into the ADC for output
+// Input:
+//   channelNb is the number of the anlog input channel to output to
+// Output:
+//   none
+// Conditions:
+//   Assumes that the DAC has been set up
 void Analog_Put(const TChannelNb channelNb);
 
 #endif

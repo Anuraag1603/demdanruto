@@ -5,7 +5,7 @@
 //
 // Author: Danny Sok
 // Date:   14-11-2011
-// Date LM: 14-11-2011
+// Date LM: 19-11-2011
 
 #include "DEM.h"
 
@@ -28,6 +28,7 @@ void DEM_Setup(void)
   DEM_Total_Cost      = 0;
   DEM_VRMS.l          = 0;
   DEM_IRMS.l          = 0;
+  
   
   for (i = 0; i < DEM_PWRSIZE; i++)
   {
@@ -55,7 +56,7 @@ void DEM_SetTarrif(void)
   */
   
   // Time of Use
-  if (DEM_Average_Power.l > 0)
+  if (DEM_Average_Power.l > 0 && sTarrifMode == 1)
   {
     
     if (Clock_Hours >= 14 && Clock_Hours <= 20)
@@ -65,6 +66,9 @@ void DEM_SetTarrif(void)
     else
       DEM_Tarrif = sT1OffPeak;
   }
-  else
+  else if (sTarrifMode == 2)
     DEM_Tarrif = sT2NonTOU;
+  
+  else
+    DEM_Tarrif = sT3NonTOU;
 }

@@ -45,14 +45,15 @@
 #define    sLCDContrast     _EW(0x440)
                             
 // Tarrifs
+#define    sTarrifMode      _EW(0x460)
 // :1
-#define sT1Peak             _EW(0x450)
-#define sT1Shoulder         _EW(0x452)
-#define sT1OffPeak          _EW(0x454)
+#define    sT1Peak          _EW(0x450)
+#define    sT1Shoulder      _EW(0x452)
+#define    sT1OffPeak       _EW(0x454)
 // :2
-#define sT2NonTOU           _EW(0x456)
+#define    sT2NonTOU        _EW(0x456)
 // :3
-#define sT3NonTOU           _EW(0x458)
+#define    sT3NonTOU        _EW(0x458)
 
 // Control reference
 #define    sRefLo           _EW(0x500)
@@ -169,6 +170,18 @@ BOOL EEPROM_Write8(UINT8 volatile * const address, const UINT8 data);
 
 BOOL EEPROM_Erase(void);
 
+// ----------------------------------------
+// Write
+// 
+// Performs commands: program, sector erase, mass erase and erase verify
+// Input:
+//   command is the EEPROM command
+//   address is the address of the data,
+//   data is the data to write
+// Output:
+//   TRUE if EEPROM command was successful
+// Conditions:
+//   none
 BOOL Write(UINT8 const command, UINT16 volatile * const address, const UINT16 data);
 
 #endif

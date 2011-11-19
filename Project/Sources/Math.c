@@ -52,8 +52,7 @@ INT32 Math_ToQN(const UINT32 number, const UINT8 base)
 INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const UINT8 base)
 {
   INT32 tempNumber;
-  INT8 hundredThousand, tenThousand, thousand;
-  hundredThousand, tenThousand, thousand = 0;
+  //INT8 hundredThousand, tenThousand, thousand = 0;
   tempNumber = (INT32)(number >> base);
   
   switch(side)
@@ -64,13 +63,13 @@ INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const UINT8 ba
     case qRight:
       /*if (tempNumber >= 100000)
       {
-        hundredThousand = (UINT8)(number / 1000);
-        tempNumber -= (hundredThousand * 1000);  
+        hundredThousand = (UINT8)(number / 100000);
+        tempNumber -= (hundredThousand * 100000;  
       }
       if (tempNumber >= 10000)
       {
-        tenThousand = (UINT8)(tempNumber / 1000);
-        tempNumber -= (tenThousand * 1000);
+        tenThousand = (UINT8)(tempNumber / 10000);
+        tempNumber -= (tenThousand * 10000);
       }
       if (tempNumber >= 1000)
       {
@@ -128,7 +127,7 @@ void Math_FindEnergy(const INT16 DEM_AvePower_Array[])
   {
     DEM_Total_Energy.l += DEM_AvePower_Array[i];
   }
-  DEM_Total_Energy.l = (DEM_Total_Energy.l >> 3) * (Clock_RunningTimeInHours() << 3) ;
+  //DEM_Total_Energy.l = (DEM_Total_Energy.l >> 3) * (Clock_RunningTimeInHours() << 3) ;
 }
 
 // ----------------------------------------
@@ -144,11 +143,11 @@ void Math_FindEnergy(const INT16 DEM_AvePower_Array[])
 void Math_FindCost(void)
 {
   // Energy in kWh * Tarrif
-  // Energy is in base 6, so upscale Tarrif to base 6 first.
-  DEM_Total_Cost += (UINT16) (DEM_Total_Energy.l * (DEM_Tarrif << 3));
+  // Downscale energy to base 3, upscale time to 3, tarrif by default is 3.
+  DEM_Total_Cost += (UINT16) ((DEM_Total_Energy.l >> 3) * (Clock_RunningTimeInHours() << 3) * (DEM_Tarrif));
   
-  // Then normalise back down to base 3
-  DEM_Total_Cost = DEM_Total_Cost >> 3;
+  // Then normalise back down to base 3   (9-6 = 3)
+  DEM_Total_Cost = DEM_Total_Cost >> 6;
 }
 
 // ----------------------------------------
@@ -167,10 +166,10 @@ UINT16 Math_SQRT(const INT16 number, const INT16 guess)
   return (UINT16) ( ((number + guess) + guess) >> 1);
 }
 
-void Math_FindFrequency(void)
+void Math_FindFrequency(UINT16 delay)
 {
   // F = 1/T
-  DEM_Frequency.l = 0;
+  DEM_Frequency.l = 1 / (delay << 4);
     
 }
 

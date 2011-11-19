@@ -34,7 +34,7 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
 
 Function: HMI_Setup
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\HMI.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
 
    30:    // Port K - Push Buttons
    31:    DDRK_BIT2 = 0;    // 0: Input, PK2
@@ -101,29 +101,28 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   004f 87           [1]     CLRA  
   0050 7c0000       [3]     STD   Clock_Interval:2
   0053 7c0000       [3]     STD   Clock_Interval
-   64:    
-   65:  }
+   64:  }
   0056 3d           [5]     RTS   
-   66:  
-   67:  // ----------------------------------------
-   68:  // HMI_Update
-   69:  // 
-   70:  // Updates the LCD display with the new values of Power, Energy, Cost and Time
-   71:  // Input:
-   72:  //   none
-   73:  // Output:
-   74:  //   none
-   75:  // Conditions:
-   76:  //   none
-   77:  void HMI_Update(void)
-   78:  {
+   65:  
+   66:  // ----------------------------------------
+   67:  // HMI_Update
+   68:  // 
+   69:  // Updates the LCD display with the new values of Power, Energy, Cost and Time
+   70:  // Input:
+   71:  //   none
+   72:  // Output:
+   73:  //   none
+   74:  // Conditions:
+   75:  //   none
+   76:  void HMI_Update(void)
+   77:  {
 *** EVALUATION ***
 
 Function: HMI_Update
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\HMI.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
 
-   79:    UINT16 tarrifL = Math_FromQN(DEM_Tarrif, qLeft, DefaultBase);
+   78:    UINT16 tarrifL = Math_FromQN(DEM_Tarrif, qLeft, DefaultBase);
   0000 fc0000       [3]     LDD   DEM_Tarrif
   0003 6caa         [2]     STD   6,-SP
   0005 c7           [1]     CLRB  
@@ -134,7 +133,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   000b 160000       [4]     JSR   Math_FromQN
   000e 1b86         [2]     LEAS  6,SP
   0010 6c82         [2]     STD   2,SP
-   80:    UINT16 tarrifR = Math_FromQN(DEM_Tarrif, qRight, DefaultBase);
+   79:    UINT16 tarrifR = Math_FromQN(DEM_Tarrif, qRight, DefaultBase);
   0012 fc0000       [3]     LDD   DEM_Tarrif
   0015 3b           [2]     PSHD  
   0016 c7           [1]     CLRB  
@@ -145,22 +144,22 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   001b c603         [1]     LDAB  #3
   001d 160000       [4]     JSR   Math_FromQN
   0020 6ca5         [2]     STD   6,+SP
-   81:    //INT16 voltage, current;
-   82:    DEM_SetTarrif();
+   80:    //INT16 voltage, current;
+   81:    DEM_SetTarrif();
   0022 160000       [4]     JSR   DEM_SetTarrif
-   83:    Math_FindCost();
+   82:    Math_FindCost();
   0025 160000       [4]     JSR   Math_FindCost
-   84:    
-   85:    DEM_VRMS.l = Math_FindRMS(DEM_Average_Power.l);
+   83:    
+   84:    DEM_VRMS.l = Math_FindRMS(DEM_Average_Power.l);
   0028 fc0000       [3]     LDD   DEM_Average_Power
   002b 160000       [4]     JSR   Math_FindRMS
   002e 7c0000       [3]     STD   DEM_VRMS
-   86:    DEM_IRMS.l = Math_FindRMS(Analog_Input[Ch2].Value.l);
+   85:    DEM_IRMS.l = Math_FindRMS(Analog_Input[Ch2].Value.l);
   0031 fc0000       [3]     LDD   Analog_Input:10
   0034 160000       [4]     JSR   Math_FindRMS
   0037 7c0000       [3]     STD   DEM_IRMS
-   87:    
-   88:    switch(LCDState)
+   86:    
+   87:    switch(LCDState)
   003a fc0000       [3]     LDD   LCDState
   003d 830001       [2]     SUBD  #1
   0040 160000       [4]     JSR   _CASE_CHECKED
@@ -170,70 +169,70 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0049 0000         DC.W  HMI_Update:0x0098
   004b 0000         DC.W  HMI_Update:0x00dc
   004d 0000         DC.W  HMI_Update:0x0136
-   89:    {
-   90:      case MeteringTime:
-   91:        if (Clock_Days <= MAX_DAYS)
+   88:    {
+   89:      case MeteringTime:
+   90:        if (Clock_Days <= MAX_DAYS)
   004f f60000       [3]     LDAB  Clock_Days
   0052 c163         [1]     CMPB  #99
   0054 223c         [3/1]   BHI   *+62 ;abs = 0092
-   92:        {
-   93:          LCD_ClearLine(2);
+   91:        {
+   92:          LCD_ClearLine(2);
   0056 160000       [4]     JSR   HMI_Update:0x01a1
-   94:          LCD_SetLine(2);
-   95:          (void)LCD_OutChar(' ');
+   93:          LCD_SetLine(2);
+   94:          (void)LCD_OutChar(' ');
   0059 160000       [4]     JSR   HMI_Update:0x01c4
-   96:          LCD_OutInteger(Clock_Days);
+   95:          LCD_OutInteger(Clock_Days);
   005c f60000       [3]     LDAB  Clock_Days
   005f 87           [1]     CLRA  
   0060 160000       [4]     JSR   LCD_OutInteger
-   97:          (void)LCD_OutChar(':');
+   96:          (void)LCD_OutChar(':');
   0063 c63a         [1]     LDAB  #58
   0065 160000       [4]     JSR   LCD_OutChar
-   98:          LCD_OutInteger(Clock_Hours);
+   97:          LCD_OutInteger(Clock_Hours);
   0068 f60000       [3]     LDAB  Clock_Hours
   006b 160000       [4]     JSR   HMI_Update:0x01bb
-   99:          (void)LCD_OutChar(':');
-  100:          LCD_OutInteger(Clock_Minutes);
+   98:          (void)LCD_OutChar(':');
+   99:          LCD_OutInteger(Clock_Minutes);
   006e f60000       [3]     LDAB  Clock_Minutes
   0071 160000       [4]     JSR   HMI_Update:0x01bb
-  101:          (void)LCD_OutChar(':');
-  102:          LCD_OutInteger((UINT16)Clock_Seconds);
+  100:          (void)LCD_OutChar(':');
+  101:          LCD_OutInteger((UINT16)Clock_Seconds);
   0074 f60000       [3]     LDAB  Clock_Seconds
   0077 87           [1]     CLRA  
   0078 160000       [4]     JSR   LCD_OutInteger
-  103:          
-  104:          LCD_ClearLine(3);
+  102:          
+  103:          LCD_ClearLine(3);
   007b c603         [1]     LDAB  #3
   007d 160000       [4]     JSR   HMI_Update:0x01b3
-  105:          LCD_SetLine(3);
-  106:          LCD_OutString(" Tarrif:");
+  104:          LCD_SetLine(3);
+  105:          LCD_OutString(" Tarrif:");
   0080 cc0000       [2]     LDD   #" Tarrif:"
   0083 160000       [4]     JSR   LCD_OutString
-  107:          LCD_OutInteger(tarrifL);
+  106:          LCD_OutInteger(tarrifL);
   0086 ec82         [3]     LDD   2,SP
   0088 160000       [4]     JSR   HMI_Update:0x01ab
-  108:          (void)LCD_OutChar('.');
-  109:          LCD_OutInteger(tarrifR);
+  107:          (void)LCD_OutChar('.');
+  108:          LCD_OutInteger(tarrifR);
   008b ec80         [3]     LDD   0,SP
   008d 160000       [4]     JSR   LCD_OutInteger
-  110:        }
+  109:        }
   0090 2048         [3]     BRA   *+74 ;abs = 00da
-  111:        else
-  112:          LCD_OutString(" xx:xx:xx:xx  ");
+  110:        else
+  111:          LCD_OutString(" xx:xx:xx:xx  ");
   0092 cc0000       [2]     LDD   #" xx:xx:xx:xx  "
   0095 060000       [3]     JMP   HMI_Update:0x0189
-  113:      break;
-  114:      
-  115:      case AveragePower:
-  116:        LCD_ClearLine(2);
+  112:      break;
+  113:      
+  114:      case AveragePower:
+  115:        LCD_ClearLine(2);
   0098 160000       [4]     JSR   HMI_Update:0x01a1
-  117:        LCD_SetLine(2);
-  118:        (void)LCD_OutChar(' ');
+  116:        LCD_SetLine(2);
+  117:        (void)LCD_OutChar(' ');
   009b 160000       [4]     JSR   HMI_Update:0x01c4
-  119:        //voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
-  120:        //current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
-  121:        //DEM_Average_Power.l = Math_FindPower(voltage, current);
-  122:        LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qLeft, DefaultBase << 1));
+  118:        //voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
+  119:        //current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
+  120:        //DEM_Average_Power.l = Math_FindPower(voltage, current);
+  121:        LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qLeft, DefaultBase << 1));
   009e fc0000       [3]     LDD   DEM_Average_Power
   00a1 160000       [4]     JSR   _ILSEXT
   00a4 3b           [2]     PSHD  
@@ -245,8 +244,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   00ab 160000       [4]     JSR   Math_FromQN
   00ae 1b86         [2]     LEAS  6,SP
   00b0 160000       [4]     JSR   HMI_Update:0x01ab
-  123:        (void)LCD_OutChar('.');
-  124:        LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qRight, DefaultBase << 1));
+  122:        (void)LCD_OutChar('.');
+  123:        LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qRight, DefaultBase << 1));
   00b3 fc0000       [3]     LDD   DEM_Average_Power
   00b6 160000       [4]     JSR   _ILSEXT
   00b9 3b           [2]     PSHD  
@@ -258,27 +257,27 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   00c1 160000       [4]     JSR   Math_FromQN
   00c4 1b86         [2]     LEAS  6,SP
   00c6 160000       [4]     JSR   LCD_OutInteger
-  125:        LCD_OutString("kW");
+  124:        LCD_OutString("kW");
   00c9 cc0000       [2]     LDD   #"kW"
   00cc 160000       [4]     JSR   LCD_OutString
-  126:        LCD_ClearLine(3);
+  125:        LCD_ClearLine(3);
   00cf c603         [1]     LDAB  #3
   00d1 160000       [4]     JSR   HMI_Update:0x01b3
-  127:        LCD_SetLine(3);
-  128:        LCD_OutString(" Tarrif:");
+  126:        LCD_SetLine(3);
+  127:        LCD_OutString(" Tarrif:");
   00d4 cc0000       [2]     LDD   #" Tarrif:"
   00d7 160000       [4]     JSR   HMI_Update:0x018f
-  129:        LCD_OutInteger(tarrifL);
-  130:        (void)LCD_OutChar('.');
-  131:        LCD_OutInteger(tarrifR);
-  132:      break;
+  128:        LCD_OutInteger(tarrifL);
+  129:        (void)LCD_OutChar('.');
+  130:        LCD_OutInteger(tarrifR);
+  131:      break;
   00da 2053         [3]     BRA   *+85 ;abs = 012f
-  133:      
-  134:      case TotalEnergy:
-  135:        LCD_ClearLine(2);
+  132:      
+  133:      case TotalEnergy:
+  134:        LCD_ClearLine(2);
   00dc 160000       [4]     JSR   HMI_Update:0x01a1
-  136:        LCD_SetLine(2);
-  137:        if (DEM_Total_Energy.l <= MAX_ENERGY)
+  135:        LCD_SetLine(2);
+  136:        if (DEM_Total_Energy.l <= MAX_ENERGY)
   00df fc0000       [3]     LDD   DEM_Total_Energy
   00e2 8c261b       [2]     CPD   #9755
   00e5 250a         [3/1]   BCS   *+12 ;abs = 00f1
@@ -286,10 +285,10 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   00e9 fc0000       [3]     LDD   DEM_Total_Energy:2
   00ec 8c7e40       [2]     CPD   #32320
   00ef 2240         [3/1]   BHI   *+66 ;abs = 0131
-  138:        {
-  139:          (void)LCD_OutChar(' ');
+  137:        {
+  138:          (void)LCD_OutChar(' ');
   00f1 160000       [4]     JSR   HMI_Update:0x01c4
-  140:          LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qLeft, DefaultBase << 1) );
+  139:          LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qLeft, DefaultBase << 1) );
   00f4 fc0000       [3]     LDD   DEM_Total_Energy:2
   00f7 3b           [2]     PSHD  
   00f8 fc0000       [3]     LDD   DEM_Total_Energy
@@ -301,8 +300,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0101 160000       [4]     JSR   Math_FromQN
   0104 1b86         [2]     LEAS  6,SP
   0106 160000       [4]     JSR   HMI_Update:0x01ab
-  141:          (void)LCD_OutChar('.');
-  142:          LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qRight, DefaultBase << 1) );
+  140:          (void)LCD_OutChar('.');
+  141:          LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qRight, DefaultBase << 1) );
   0109 fc0000       [3]     LDD   DEM_Total_Energy:2
   010c 3b           [2]     PSHD  
   010d fc0000       [3]     LDD   DEM_Total_Energy
@@ -314,32 +313,32 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0117 160000       [4]     JSR   Math_FromQN
   011a 1b86         [2]     LEAS  6,SP
   011c 160000       [4]     JSR   LCD_OutInteger
-  143:          LCD_OutString("kWh");
+  142:          LCD_OutString("kWh");
   011f cc0000       [2]     LDD   #"kWh"
   0122 160000       [4]     JSR   LCD_OutString
-  144:          LCD_ClearLine(3);
+  143:          LCD_ClearLine(3);
   0125 c603         [1]     LDAB  #3
   0127 160000       [4]     JSR   HMI_Update:0x01b3
-  145:          LCD_SetLine(3);
-  146:          LCD_OutString(" Tarrif:");
+  144:          LCD_SetLine(3);
+  145:          LCD_OutString(" Tarrif:");
   012a cc0000       [2]     LDD   #" Tarrif:"
   012d 0760         [4]     BSR   *+98 ;abs = 018f
-  147:          LCD_OutInteger(tarrifL);
-  148:          (void)LCD_OutChar('.');
-  149:          LCD_OutInteger(tarrifR);
-  150:        } 
+  146:          LCD_OutInteger(tarrifL);
+  147:          (void)LCD_OutChar('.');
+  148:          LCD_OutInteger(tarrifR);
+  149:        } 
   012f 205b         [3]     BRA   *+93 ;abs = 018c
-  151:        else
-  152:          LCD_OutString(" xxx.xxx      ");
+  150:        else
+  151:          LCD_OutString(" xxx.xxx      ");
   0131 cc0000       [2]     LDD   #" xxx.xxx      "
   0134 2053         [3]     BRA   *+85 ;abs = 0189
-  153:      break;
-  154:      
-  155:      case TotalCost:
-  156:        LCD_ClearLine(2);
+  152:      break;
+  153:      
+  154:      case TotalCost:
+  155:        LCD_ClearLine(2);
   0136 0769         [4]     BSR   *+107 ;abs = 01a1
-  157:        LCD_SetLine(2);
-  158:        if (DEM_Total_Cost <= MAX_COST)
+  156:        LCD_SetLine(2);
+  157:        if (DEM_Total_Cost <= MAX_COST)
   0138 fc0000       [3]     LDD   DEM_Total_Cost
   013b 8c007a       [2]     CPD   #122
   013e 250a         [3/1]   BCS   *+12 ;abs = 014a
@@ -347,13 +346,13 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0142 fc0000       [3]     LDD   DEM_Total_Cost:2
   0145 8c11f8       [2]     CPD   #4600
   0148 223c         [3/1]   BHI   *+62 ;abs = 0186
-  159:        {
-  160:          (void)LCD_OutChar(' ');
+  158:        {
+  159:          (void)LCD_OutChar(' ');
   014a 0778         [4]     BSR   *+122 ;abs = 01c4
-  161:          (void)LCD_OutChar('$');
+  160:          (void)LCD_OutChar('$');
   014c c624         [1]     LDAB  #36
   014e 160000       [4]     JSR   LCD_OutChar
-  162:          LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, DefaultBase) );
+  161:          LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, DefaultBase) );
   0151 fc0000       [3]     LDD   DEM_Total_Cost:2
   0154 3b           [2]     PSHD  
   0155 fc0000       [3]     LDD   DEM_Total_Cost
@@ -365,8 +364,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   015e 160000       [4]     JSR   Math_FromQN
   0161 1b86         [2]     LEAS  6,SP
   0163 0746         [4]     BSR   *+72 ;abs = 01ab
-  163:          (void)LCD_OutChar('.');
-  164:          LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, DefaultBase) );
+  162:          (void)LCD_OutChar('.');
+  163:          LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, DefaultBase) );
   0165 fc0000       [3]     LDD   DEM_Total_Cost:2
   0168 3b           [2]     PSHD  
   0169 fc0000       [3]     LDD   DEM_Total_Cost
@@ -378,28 +377,28 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0173 160000       [4]     JSR   Math_FromQN
   0176 1b86         [2]     LEAS  6,SP
   0178 160000       [4]     JSR   LCD_OutInteger
-  165:          
-  166:          LCD_ClearLine(3);
+  164:          
+  165:          LCD_ClearLine(3);
   017b c603         [1]     LDAB  #3
   017d 0734         [4]     BSR   *+54 ;abs = 01b3
-  167:          LCD_SetLine(3);
-  168:          LCD_OutString(" Tarrif:");
+  166:          LCD_SetLine(3);
+  167:          LCD_OutString(" Tarrif:");
   017f cc0000       [2]     LDD   #" Tarrif:"
   0182 070b         [4]     BSR   *+13 ;abs = 018f
-  169:          LCD_OutInteger(tarrifL);
-  170:          (void)LCD_OutChar('.');
-  171:          LCD_OutInteger(tarrifR);
-  172:        } 
+  168:          LCD_OutInteger(tarrifL);
+  169:          (void)LCD_OutChar('.');
+  170:          LCD_OutInteger(tarrifR);
+  171:        } 
   0184 2006         [3]     BRA   *+8 ;abs = 018c
-  173:        else
-  174:        {
-  175:          LCD_OutString(" xxxx.xx      ");
+  172:        else
+  173:        {
+  174:          LCD_OutString(" xxxx.xx      ");
   0186 cc0000       [2]     LDD   #" xxxx.xx      "
   0189 160000       [4]     JSR   LCD_OutString
-  176:        }
-  177:      break;
-  178:    }
-  179:  }
+  175:        }
+  176:      break;
+  177:    }
+  178:  }
   018c 1b84         [2]     LEAS  4,SP
   018e 3d           [5]     RTS   
   018f 160000       [4]     JSR   LCD_OutString
@@ -425,102 +424,102 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   01c1 060000       [3]     JMP   LCD_OutChar
   01c4 c620         [1]     LDAB  #32
   01c6 060000       [3]     JMP   LCD_OutChar
-  180:  
-  181:  // ----------------------------------------
-  182:  // TIE5_ISR
-  183:  // 
-  184:  // The interrupt service routine for Timer Channel 5.
-  185:  // It will determine if a pushbutton has been pressed and will
-  186:  // allow for the button event to be handled.
-  187:  // Input:
-  188:  //   
-  189:  // Output:
-  190:  //   none
-  191:  // Conditions:
-  192:  //  none
-  193:  void interrupt 13 TIE5_ISR(void)
-  194:  {
+  179:  
+  180:  // ----------------------------------------
+  181:  // TIE5_ISR
+  182:  // 
+  183:  // The interrupt service routine for Timer Channel 5.
+  184:  // It will determine if a pushbutton has been pressed and will
+  185:  // allow for the button event to be handled.
+  186:  // Input:
+  187:  //   
+  188:  // Output:
+  189:  //   none
+  190:  // Conditions:
+  191:  //  none
+  192:  void interrupt 13 TIE5_ISR(void)
+  193:  {
 *** EVALUATION ***
 
 Function: TIE5_ISR
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\HMI.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
 
-  195:    TFLG1_C5F = 1; // Clear flag to say it was done.  
+  194:    TFLG1_C5F = 1; // Clear flag to say it was done.  
   0000 4c0020       [4]     BSET  _TFLG1,#32
-  196:    //OS_ISREnter();
-  197:    
-  198:    Buttons_Get(&PBState); 
+  195:    //OS_ISREnter();
+  196:    
+  197:    Buttons_Get(&PBState); 
   0003 cc0000       [2]     LDD   #PBState
   0006 160000       [4]     JSR   Buttons_Get
-  199:    
-  200:    if (PBState != PrevPBState)
+  198:    
+  199:    if (PBState != PrevPBState)
   0009 fc0000       [3]     LDD   PBState
   000c bc0000       [3]     CPD   PrevPBState
   000f 2712         [3/1]   BEQ   *+20 ;abs = 0023
-  201:    {
-  202:      HandleButtonPress(PBState, LCDState);
+  200:    {
+  201:      HandleButtonPress(PBState, LCDState);
   0011 3b           [2]     PSHD  
   0012 fc0000       [3]     LDD   LCDState
   0015 160000       [4]     JSR   HandleButtonPress
   0018 3a           [3]     PULD  
-  203:      Clock_Interval = 0;
+  202:      Clock_Interval = 0;
   0019 c7           [1]     CLRB  
   001a 87           [1]     CLRA  
   001b 7c0000       [3]     STD   Clock_Interval:2
   001e 7c0000       [3]     STD   Clock_Interval
-  204:    }
+  203:    }
   0021 2018         [3]     BRA   *+26 ;abs = 003b
-  205:    else if (PBState == ButtonIdle && Clock_Interval >= 15) // 15 seconds
+  204:    else if (PBState == ButtonIdle && Clock_Interval >= 15) // 15 seconds
   0023 046415       [3]     TBNE  D,*+24 ;abs = 003b
   0026 fc0000       [3]     LDD   Clock_Interval
   0029 2608         [3/1]   BNE   *+10 ;abs = 0033
   002b fc0000       [3]     LDD   Clock_Interval:2
   002e 8c000f       [2]     CPD   #15
   0031 2508         [3/1]   BCS   *+10 ;abs = 003b
-  206:    {
-  207:      LCD_DisplayOff();
+  205:    {
+  206:      LCD_DisplayOff();
   0033 160000       [4]     JSR   LCD_DisplayOff
-  208:      LCDState = Dormant;
+  207:      LCDState = Dormant;
   0036 c7           [1]     CLRB  
   0037 87           [1]     CLRA  
   0038 7c0000       [3]     STD   LCDState
-  209:    }
-  210:    PrevPBState = PBState;
+  208:    }
+  209:    PrevPBState = PBState;
   003b fc0000       [3]     LDD   PBState
   003e 7c0000       [3]     STD   PrevPBState
-  211:    
-  212:    Timer_Enable(TIMER_Ch6, bFALSE);
+  210:    
+  211:    Timer_Enable(TIMER_Ch6, bFALSE);
   0041 c606         [1]     LDAB  #6
   0043 87           [1]     CLRA  
   0044 3b           [2]     PSHD  
   0045 c7           [1]     CLRB  
   0046 160000       [4]     JSR   Timer_Enable
   0049 3a           [3]     PULD  
-  213:    //OS_ISRExit();
-  214:  }
+  212:    //OS_ISRExit();
+  213:  }
   004a 0b           [8]     RTI   
-  215:  
-  216:  // ----------------------------------------
-  217:  // CreateMenu
-  218:  // 
-  219:  // Creates the menu to display on the LCD
-  220:  // Input:
-  221:  //   menu is the state to display on the LCD e.g. DefaultMenu
-  222:  // Output:
-  223:  //   none
-  224:  // Conditions:
-  225:  //   LCD and HMI have been setup
-  226:  void CreateMenu(TLCDState menu)
-  227:  {
+  214:  
+  215:  // ----------------------------------------
+  216:  // CreateMenu
+  217:  // 
+  218:  // Creates the menu to display on the LCD
+  219:  // Input:
+  220:  //   menu is the state to display on the LCD e.g. DefaultMenu
+  221:  // Output:
+  222:  //   none
+  223:  // Conditions:
+  224:  //   LCD and HMI have been setup
+  225:  void CreateMenu(TLCDState menu)
+  226:  {
 *** EVALUATION ***
 
 Function: CreateMenu
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\HMI.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 6caa         [2]     STD   6,-SP
-  228:    UINT16 tarrifL = Math_FromQN(DEM_Tarrif, qLeft, DefaultBase);
+  227:    UINT16 tarrifL = Math_FromQN(DEM_Tarrif, qLeft, DefaultBase);
   0002 fc0000       [3]     LDD   DEM_Tarrif
   0005 3b           [2]     PSHD  
   0006 c7           [1]     CLRB  
@@ -531,7 +530,7 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   000c 160000       [4]     JSR   Math_FromQN
   000f 1b86         [2]     LEAS  6,SP
   0011 6c84         [2]     STD   4,SP
-  229:    UINT16 tarrifR = Math_FromQN(DEM_Tarrif, qRight, DefaultBase);
+  228:    UINT16 tarrifR = Math_FromQN(DEM_Tarrif, qRight, DefaultBase);
   0013 fc0000       [3]     LDD   DEM_Tarrif
   0016 3b           [2]     PSHD  
   0017 c7           [1]     CLRB  
@@ -543,16 +542,16 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   001e 160000       [4]     JSR   Math_FromQN
   0021 1b86         [2]     LEAS  6,SP
   0023 6c82         [2]     STD   2,SP
-  230:    //INT16 voltage, current;
-  231:    
-  232:    LCD_Clear();
+  229:    //INT16 voltage, current;
+  230:    
+  231:    LCD_Clear();
   0025 160000       [4]     JSR   LCD_Clear
-  233:    
-  234:    LCDState = menu;
+  232:    
+  233:    LCDState = menu;
   0028 ec80         [3]     LDD   0,SP
   002a 7c0000       [3]     STD   LCDState
-  235:    
-  236:    switch(menu)
+  234:    
+  235:    switch(menu)
   002d 160000       [4]     JSR   _CASE_CHECKED
   0030 0005         DC.W  5
   0032 0000         DC.W  CreateMenu:0x0249
@@ -561,140 +560,140 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0038 0000         DC.W  CreateMenu:0x00df
   003a 0000         DC.W  CreateMenu:0x0157
   003c 0000         DC.W  CreateMenu:0x01d2
-  237:    {
-  238:      case Dormant:
-  239:        LCD_SetLine(0);
+  236:    {
+  237:      case Dormant:
+  238:        LCD_SetLine(0);
   003e c7           [1]     CLRB  
   003f 160000       [4]     JSR   LCD_SetLine
-  240:        LCD_OutString("                ");
+  239:        LCD_OutString("                ");
   0042 cc0000       [2]     LDD   #"                "
   0045 160000       [4]     JSR   CreateMenu:0x0258
-  241:        LCD_SetLine(1);
-  242:        LCD_OutString("                ");
+  240:        LCD_SetLine(1);
+  241:        LCD_OutString("                ");
   0048 cc0000       [2]     LDD   #"                "
   004b 160000       [4]     JSR   CreateMenu:0x0270
-  243:        LCD_SetLine(2);
-  244:        LCD_OutString("                ");
+  242:        LCD_SetLine(2);
+  243:        LCD_OutString("                ");
   004e cc0000       [2]     LDD   #"                "
   0051 160000       [4]     JSR   LCD_OutString
-  245:        LCD_SetLine(3);
+  244:        LCD_SetLine(3);
   0054 160000       [4]     JSR   CreateMenu:0x0288
-  246:        LCD_OutString("                ");
+  245:        LCD_OutString("                ");
   0057 cc0000       [2]     LDD   #"                "
   005a 160000       [4]     JSR   LCD_OutString
-  247:        LCD_SetLine(4);
+  246:        LCD_SetLine(4);
   005d c604         [1]     LDAB  #4
   005f 160000       [4]     JSR   LCD_SetLine
-  248:        LCD_OutString("                ");
+  247:        LCD_OutString("                ");
   0062 cc0000       [2]     LDD   #"                "
   0065 160000       [4]     JSR   CreateMenu:0x0260
-  249:        LCD_SetLine(5);
-  250:        LCD_OutString("                ");
+  248:        LCD_SetLine(5);
+  249:        LCD_OutString("                ");
   0068 cc0000       [2]     LDD   #"                "
   006b 160000       [4]     JSR   CreateMenu:0x0278
-  251:        LCD_SetLine(6);
-  252:        LCD_OutString("                ");
+  250:        LCD_SetLine(6);
+  251:        LCD_OutString("                ");
   006e cc0000       [2]     LDD   #"                "
   0071 160000       [4]     JSR   CreateMenu:0x0268
-  253:        LCD_SetLine(7);
-  254:        LCD_OutString("                ");
+  252:        LCD_SetLine(7);
+  253:        LCD_OutString("                ");
   0074 cc0000       [2]     LDD   #"                "
-  255:      break;
+  254:      break;
   0077 2064         [3]     BRA   *+102 ;abs = 00dd
-  256:      
-  257:      case MeteringTime:
-  258:        
-  259:        LCD_SetLine(0);
+  255:      
+  256:      case MeteringTime:
+  257:        
+  258:        LCD_SetLine(0);
   0079 c7           [1]     CLRB  
   007a 160000       [4]     JSR   LCD_SetLine
-  260:        LCD_OutString("$--------------$");
+  259:        LCD_OutString("$--------------$");
   007d cc0000       [2]     LDD   #"$--------------$"
   0080 160000       [4]     JSR   CreateMenu:0x0258
-  261:        LCD_SetLine(1);
-  262:        LCD_OutString("|Metering Time |");
+  260:        LCD_SetLine(1);
+  261:        LCD_OutString("|Metering Time |");
   0083 cc0000       [2]     LDD   #"|Metering Time |"
   0086 160000       [4]     JSR   LCD_OutString
-  263:        
-  264:        if (Clock_Days <= MAX_DAYS)
+  262:        
+  263:        if (Clock_Days <= MAX_DAYS)
   0089 f60000       [3]     LDAB  Clock_Days
   008c c163         [1]     CMPB  #99
   008e 2229         [3/1]   BHI   *+43 ;abs = 00b9
-  265:        {
-  266:          LCD_SetLine(2);
+  264:        {
+  265:          LCD_SetLine(2);
   0090 c602         [1]     LDAB  #2
   0092 160000       [4]     JSR   LCD_SetLine
-  267:          (void)LCD_OutChar(' ');
+  266:          (void)LCD_OutChar(' ');
   0095 160000       [4]     JSR   CreateMenu:0x0296
-  268:          LCD_OutInteger(Clock_Days);
+  267:          LCD_OutInteger(Clock_Days);
   0098 f60000       [3]     LDAB  Clock_Days
   009b 87           [1]     CLRA  
   009c 160000       [4]     JSR   LCD_OutInteger
-  269:          (void)LCD_OutChar(':');
+  268:          (void)LCD_OutChar(':');
   009f c63a         [1]     LDAB  #58
   00a1 160000       [4]     JSR   LCD_OutChar
-  270:          LCD_OutInteger(Clock_Hours);
+  269:          LCD_OutInteger(Clock_Hours);
   00a4 f60000       [3]     LDAB  Clock_Hours
   00a7 160000       [4]     JSR   CreateMenu:0x028d
-  271:          (void)LCD_OutChar(':');
-  272:          LCD_OutInteger(Clock_Minutes);
+  270:          (void)LCD_OutChar(':');
+  271:          LCD_OutInteger(Clock_Minutes);
   00aa f60000       [3]     LDAB  Clock_Minutes
   00ad 160000       [4]     JSR   CreateMenu:0x028d
-  273:          (void)LCD_OutChar(':');
-  274:          LCD_OutInteger((UINT16)Clock_Seconds);
+  272:          (void)LCD_OutChar(':');
+  273:          LCD_OutInteger((UINT16)Clock_Seconds);
   00b0 f60000       [3]     LDAB  Clock_Seconds
   00b3 87           [1]     CLRA  
   00b4 160000       [4]     JSR   LCD_OutInteger
-  275:        }
+  274:        }
   00b7 2006         [3]     BRA   *+8 ;abs = 00bf
-  276:        else
-  277:          LCD_OutString(" xx:xx:xx:xx  ");
+  275:        else
+  276:          LCD_OutString(" xx:xx:xx:xx  ");
   00b9 cc0000       [2]     LDD   #" xx:xx:xx:xx  "
   00bc 160000       [4]     JSR   LCD_OutString
-  278:        
-  279:        LCD_SetLine(3);
+  277:        
+  278:        LCD_SetLine(3);
   00bf 160000       [4]     JSR   CreateMenu:0x0288
-  280:        LCD_OutString(" Tarrif:");
+  279:        LCD_OutString(" Tarrif:");
   00c2 cc0000       [2]     LDD   #" Tarrif:"
   00c5 160000       [4]     JSR   CreateMenu:0x024c
-  281:        LCD_OutInteger(tarrifL);
-  282:        (void)LCD_OutChar('.');
-  283:        LCD_OutInteger(tarrifR);
-  284:        LCD_SetLine(4);
-  285:        LCD_OutString("|              |");
+  280:        LCD_OutInteger(tarrifL);
+  281:        (void)LCD_OutChar('.');
+  282:        LCD_OutInteger(tarrifR);
+  283:        LCD_SetLine(4);
+  284:        LCD_OutString("|              |");
   00c8 cc0000       [2]     LDD   #"|              |"
   00cb 160000       [4]     JSR   CreateMenu:0x0260
-  286:        LCD_SetLine(5);
-  287:        LCD_OutString("|              |");
+  285:        LCD_SetLine(5);
+  286:        LCD_OutString("|              |");
   00ce cc0000       [2]     LDD   #"|              |"
   00d1 160000       [4]     JSR   CreateMenu:0x0278
-  288:        LCD_SetLine(6);
-  289:        LCD_OutString("|              |");
+  287:        LCD_SetLine(6);
+  288:        LCD_OutString("|              |");
   00d4 cc0000       [2]     LDD   #"|              |"
   00d7 160000       [4]     JSR   CreateMenu:0x0268
-  290:        LCD_SetLine(7);
-  291:        LCD_OutString("$------CYC-----$");
+  289:        LCD_SetLine(7);
+  290:        LCD_OutString("$------CYC-----$");
   00da cc0000       [2]     LDD   #"$------CYC-----$"
-  292:      break;
+  291:      break;
   00dd 2076         [3]     BRA   *+120 ;abs = 0155
-  293:      
-  294:      case AveragePower:
-  295:        LCD_SetLine(0);
+  292:      
+  293:      case AveragePower:
+  294:        LCD_SetLine(0);
   00df c7           [1]     CLRB  
   00e0 160000       [4]     JSR   LCD_SetLine
-  296:        LCD_OutString("$--------------$");
+  295:        LCD_OutString("$--------------$");
   00e3 cc0000       [2]     LDD   #"$--------------$"
   00e6 160000       [4]     JSR   CreateMenu:0x0258
-  297:        LCD_SetLine(1);
-  298:        LCD_OutString("|   Ave Power  |");
+  296:        LCD_SetLine(1);
+  297:        LCD_OutString("|   Ave Power  |");
   00e9 cc0000       [2]     LDD   #"|   Ave Power  |"
   00ec 160000       [4]     JSR   CreateMenu:0x0270
-  299:        LCD_SetLine(2);
-  300:        (void)LCD_OutChar(' ');
+  298:        LCD_SetLine(2);
+  299:        (void)LCD_OutChar(' ');
   00ef 160000       [4]     JSR   CreateMenu:0x0296
-  301:        //voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
-  302:        //current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
-  303:        //DEM_Average_Power.l = Math_FindPower(voltage, current);
-  304:        LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qLeft, DefaultBase << 1));
+  300:        //voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
+  301:        //current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
+  302:        //DEM_Average_Power.l = Math_FindPower(voltage, current);
+  303:        LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qLeft, DefaultBase << 1));
   00f2 fc0000       [3]     LDD   DEM_Average_Power
   00f5 160000       [4]     JSR   _ILSEXT
   00f8 3b           [2]     PSHD  
@@ -706,8 +705,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   00ff 160000       [4]     JSR   Math_FromQN
   0102 1b86         [2]     LEAS  6,SP
   0104 160000       [4]     JSR   CreateMenu:0x0280
-  305:        (void)LCD_OutChar('.');
-  306:        LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qRight, DefaultBase << 1));
+  304:        (void)LCD_OutChar('.');
+  305:        LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qRight, DefaultBase << 1));
   0107 fc0000       [3]     LDD   DEM_Average_Power
   010a 160000       [4]     JSR   _ILSEXT
   010d 3b           [2]     PSHD  
@@ -719,57 +718,57 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0115 160000       [4]     JSR   Math_FromQN
   0118 1b86         [2]     LEAS  6,SP
   011a 160000       [4]     JSR   LCD_OutInteger
-  307:        LCD_OutString("kW");
+  306:        LCD_OutString("kW");
   011d cc0000       [2]     LDD   #"kW"
   0120 160000       [4]     JSR   LCD_OutString
-  308:        LCD_SetLine(3);
+  307:        LCD_SetLine(3);
   0123 160000       [4]     JSR   CreateMenu:0x0288
-  309:        LCD_OutString(" Tarrif:");
+  308:        LCD_OutString(" Tarrif:");
   0126 cc0000       [2]     LDD   #" Tarrif:"
   0129 160000       [4]     JSR   LCD_OutString
-  310:        LCD_OutInteger(tarrifL);
+  309:        LCD_OutInteger(tarrifL);
   012c ec84         [3]     LDD   4,SP
   012e 160000       [4]     JSR   LCD_OutInteger
-  311:        (void)LCD_OutChar('.');
+  310:        (void)LCD_OutChar('.');
   0131 c62e         [1]     LDAB  #46
   0133 160000       [4]     JSR   LCD_OutChar
-  312:        LCD_OutInteger(tarrifR);
+  311:        LCD_OutInteger(tarrifR);
   0136 ec82         [3]     LDD   2,SP
   0138 160000       [4]     JSR   CreateMenu:0x029b
-  313:        LCD_SetLine(4);
-  314:        LCD_OutString("|              |");
+  312:        LCD_SetLine(4);
+  313:        LCD_OutString("|              |");
   013b cc0000       [2]     LDD   #"|              |"
   013e 160000       [4]     JSR   CreateMenu:0x0260
-  315:        LCD_SetLine(5);
-  316:        LCD_OutString("|              |");
+  314:        LCD_SetLine(5);
+  315:        LCD_OutString("|              |");
   0141 cc0000       [2]     LDD   #"|              |"
   0144 160000       [4]     JSR   LCD_OutString
-  317:        LCD_SetLine(6);
+  316:        LCD_SetLine(6);
   0147 c606         [1]     LDAB  #6
   0149 160000       [4]     JSR   LCD_SetLine
-  318:        LCD_OutString("|              |");
+  317:        LCD_OutString("|              |");
   014c cc0000       [2]     LDD   #"|              |"
   014f 160000       [4]     JSR   CreateMenu:0x0268
-  319:        LCD_SetLine(7);
-  320:        LCD_OutString("$------CYC-----$");
+  318:        LCD_SetLine(7);
+  319:        LCD_OutString("$------CYC-----$");
   0152 cc0000       [2]     LDD   #"$------CYC-----$"
-  321:      break;
+  320:      break;
   0155 2079         [3]     BRA   *+123 ;abs = 01d0
-  322:      
-  323:      case TotalEnergy:
-  324:        LCD_SetLine(0);
+  321:      
+  322:      case TotalEnergy:
+  323:        LCD_SetLine(0);
   0157 c7           [1]     CLRB  
   0158 160000       [4]     JSR   LCD_SetLine
-  325:        LCD_OutString("$--------------$");
+  324:        LCD_OutString("$--------------$");
   015b cc0000       [2]     LDD   #"$--------------$"
   015e 160000       [4]     JSR   CreateMenu:0x0258
-  326:        LCD_SetLine(1);
-  327:        LCD_OutString("| Total Energy |");
+  325:        LCD_SetLine(1);
+  326:        LCD_OutString("| Total Energy |");
   0161 cc0000       [2]     LDD   #"| Total Energy |"
   0164 160000       [4]     JSR   CreateMenu:0x0270
-  328:        
-  329:        LCD_SetLine(2);
-  330:        if (DEM_Total_Energy.l <= MAX_ENERGY)
+  327:        
+  328:        LCD_SetLine(2);
+  329:        if (DEM_Total_Energy.l <= MAX_ENERGY)
   0167 fc0000       [3]     LDD   DEM_Total_Energy
   016a 8c261b       [2]     CPD   #9755
   016d 250a         [3/1]   BCS   *+12 ;abs = 0179
@@ -777,10 +776,10 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0171 fc0000       [3]     LDD   DEM_Total_Energy:2
   0174 8c7e40       [2]     CPD   #32320
   0177 2233         [3/1]   BHI   *+53 ;abs = 01ac
-  331:        {
-  332:          (void)LCD_OutChar(' ');
+  330:        {
+  331:          (void)LCD_OutChar(' ');
   0179 160000       [4]     JSR   CreateMenu:0x0296
-  333:          LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qLeft, DefaultBase << 1) );
+  332:          LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qLeft, DefaultBase << 1) );
   017c fc0000       [3]     LDD   DEM_Total_Energy:2
   017f 3b           [2]     PSHD  
   0180 fc0000       [3]     LDD   DEM_Total_Energy
@@ -792,8 +791,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0189 160000       [4]     JSR   Math_FromQN
   018c 1b86         [2]     LEAS  6,SP
   018e 160000       [4]     JSR   CreateMenu:0x0280
-  334:          (void)LCD_OutChar('.');
-  335:          LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qRight, DefaultBase << 1) );
+  333:          (void)LCD_OutChar('.');
+  334:          LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qRight, DefaultBase << 1) );
   0191 fc0000       [3]     LDD   DEM_Total_Energy:2
   0194 3b           [2]     PSHD  
   0195 fc0000       [3]     LDD   DEM_Total_Energy
@@ -805,55 +804,55 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   019f 160000       [4]     JSR   Math_FromQN
   01a2 1b86         [2]     LEAS  6,SP
   01a4 160000       [4]     JSR   LCD_OutInteger
-  336:          LCD_OutString("kWh");
+  335:          LCD_OutString("kWh");
   01a7 cc0000       [2]     LDD   #"kWh"
-  337:        } 
+  336:        } 
   01aa 2003         [3]     BRA   *+5 ;abs = 01af
-  338:        else
-  339:          LCD_OutString(" xxx.xxx      ");
+  337:        else
+  338:          LCD_OutString(" xxx.xxx      ");
   01ac cc0000       [2]     LDD   #" xxx.xxx      "
   01af 160000       [4]     JSR   LCD_OutString
-  340:        
-  341:        LCD_SetLine(3);
+  339:        
+  340:        LCD_SetLine(3);
   01b2 160000       [4]     JSR   CreateMenu:0x0288
-  342:        LCD_OutString(" Tarrif:");
+  341:        LCD_OutString(" Tarrif:");
   01b5 cc0000       [2]     LDD   #" Tarrif:"
   01b8 160000       [4]     JSR   CreateMenu:0x024c
-  343:        LCD_OutInteger(tarrifL);
-  344:        (void)LCD_OutChar('.');
-  345:        LCD_OutInteger(tarrifR);
-  346:        LCD_SetLine(4);
-  347:        LCD_OutString("|              |");
+  342:        LCD_OutInteger(tarrifL);
+  343:        (void)LCD_OutChar('.');
+  344:        LCD_OutInteger(tarrifR);
+  345:        LCD_SetLine(4);
+  346:        LCD_OutString("|              |");
   01bb cc0000       [2]     LDD   #"|              |"
   01be 160000       [4]     JSR   CreateMenu:0x0260
-  348:        LCD_SetLine(5);
-  349:        LCD_OutString("|              |");
+  347:        LCD_SetLine(5);
+  348:        LCD_OutString("|              |");
   01c1 cc0000       [2]     LDD   #"|              |"
   01c4 160000       [4]     JSR   CreateMenu:0x0278
-  350:        LCD_SetLine(6);
-  351:        LCD_OutString("|              |");
+  349:        LCD_SetLine(6);
+  350:        LCD_OutString("|              |");
   01c7 cc0000       [2]     LDD   #"|              |"
   01ca 160000       [4]     JSR   CreateMenu:0x0268
-  352:        LCD_SetLine(7);
-  353:        LCD_OutString("$------CYC-----$");
+  351:        LCD_SetLine(7);
+  352:        LCD_OutString("$------CYC-----$");
   01cd cc0000       [2]     LDD   #"$------CYC-----$"
-  354:      break;
+  353:      break;
   01d0 2074         [3]     BRA   *+118 ;abs = 0246
-  355:      
-  356:      case TotalCost:
-  357:        LCD_SetLine(0);
+  354:      
+  355:      case TotalCost:
+  356:        LCD_SetLine(0);
   01d2 c7           [1]     CLRB  
   01d3 160000       [4]     JSR   LCD_SetLine
-  358:        LCD_OutString("$--------------$");
+  357:        LCD_OutString("$--------------$");
   01d6 cc0000       [2]     LDD   #"$--------------$"
   01d9 077d         [4]     BSR   *+127 ;abs = 0258
-  359:        LCD_SetLine(1);
-  360:        LCD_OutString("|  Total Cost  |");
+  358:        LCD_SetLine(1);
+  359:        LCD_OutString("|  Total Cost  |");
   01db cc0000       [2]     LDD   #"|  Total Cost  |"
   01de 160000       [4]     JSR   CreateMenu:0x0270
-  361:        LCD_SetLine(2);
-  362:        
-  363:        if (DEM_Total_Cost <= MAX_COST)
+  360:        LCD_SetLine(2);
+  361:        
+  362:        if (DEM_Total_Cost <= MAX_COST)
   01e1 fc0000       [3]     LDD   DEM_Total_Cost
   01e4 8c007a       [2]     CPD   #122
   01e7 250a         [3/1]   BCS   *+12 ;abs = 01f3
@@ -861,13 +860,13 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   01eb fc0000       [3]     LDD   DEM_Total_Cost:2
   01ee 8c11f8       [2]     CPD   #4600
   01f1 2234         [3/1]   BHI   *+54 ;abs = 0227
-  364:        {
-  365:          (void)LCD_OutChar(' ');
+  363:        {
+  364:          (void)LCD_OutChar(' ');
   01f3 160000       [4]     JSR   CreateMenu:0x0296
-  366:          (void)LCD_OutChar('$');
+  365:          (void)LCD_OutChar('$');
   01f6 c624         [1]     LDAB  #36
   01f8 160000       [4]     JSR   LCD_OutChar
-  367:          LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, DefaultBase) );
+  366:          LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, DefaultBase) );
   01fb fc0000       [3]     LDD   DEM_Total_Cost:2
   01fe 3b           [2]     PSHD  
   01ff fc0000       [3]     LDD   DEM_Total_Cost
@@ -879,8 +878,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0208 160000       [4]     JSR   Math_FromQN
   020b 1b86         [2]     LEAS  6,SP
   020d 0771         [4]     BSR   *+115 ;abs = 0280
-  368:          (void)LCD_OutChar('.');
-  369:          LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, DefaultBase) );
+  367:          (void)LCD_OutChar('.');
+  368:          LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, DefaultBase) );
   020f fc0000       [3]     LDD   DEM_Total_Cost:2
   0212 3b           [2]     PSHD  
   0213 fc0000       [3]     LDD   DEM_Total_Cost
@@ -892,41 +891,41 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   021d 160000       [4]     JSR   Math_FromQN
   0220 1b86         [2]     LEAS  6,SP
   0222 160000       [4]     JSR   LCD_OutInteger
-  370:        } 
+  369:        } 
   0225 2006         [3]     BRA   *+8 ;abs = 022d
-  371:        else
-  372:        {
-  373:          LCD_OutString(" xxxx.xx      ");
+  370:        else
+  371:        {
+  372:          LCD_OutString(" xxxx.xx      ");
   0227 cc0000       [2]     LDD   #" xxxx.xx      "
   022a 160000       [4]     JSR   LCD_OutString
-  374:        }
-  375:        LCD_SetLine(3);
+  373:        }
+  374:        LCD_SetLine(3);
   022d 0759         [4]     BSR   *+91 ;abs = 0288
-  376:        LCD_OutString(" Tarrif:");
+  375:        LCD_OutString(" Tarrif:");
   022f cc0000       [2]     LDD   #" Tarrif:"
   0232 0718         [4]     BSR   *+26 ;abs = 024c
-  377:        LCD_OutInteger(tarrifL);
-  378:        (void)LCD_OutChar('.');
-  379:        LCD_OutInteger(tarrifR);
-  380:        LCD_SetLine(4);
-  381:        LCD_OutString("|              |");
+  376:        LCD_OutInteger(tarrifL);
+  377:        (void)LCD_OutChar('.');
+  378:        LCD_OutInteger(tarrifR);
+  379:        LCD_SetLine(4);
+  380:        LCD_OutString("|              |");
   0234 cc0000       [2]     LDD   #"|              |"
   0237 0727         [4]     BSR   *+41 ;abs = 0260
-  382:        LCD_SetLine(5);
-  383:        LCD_OutString("|              |");
+  381:        LCD_SetLine(5);
+  382:        LCD_OutString("|              |");
   0239 cc0000       [2]     LDD   #"|              |"
   023c 073a         [4]     BSR   *+60 ;abs = 0278
-  384:        LCD_SetLine(6);
-  385:        LCD_OutString("|              |");
+  383:        LCD_SetLine(6);
+  384:        LCD_OutString("|              |");
   023e cc0000       [2]     LDD   #"|              |"
   0241 0725         [4]     BSR   *+39 ;abs = 0268
-  386:        LCD_SetLine(7);
-  387:        LCD_OutString("$------CYC-----$");
+  385:        LCD_SetLine(7);
+  386:        LCD_OutString("$------CYC-----$");
   0243 cc0000       [2]     LDD   #"$------CYC-----$"
   0246 160000       [4]     JSR   LCD_OutString
-  388:      break;
-  389:    }
-  390:  }
+  387:      break;
+  388:    }
+  389:  }
   0249 1b86         [2]     LEAS  6,SP
   024b 3d           [5]     RTS   
   024c 160000       [4]     JSR   LCD_OutString
@@ -964,27 +963,27 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   029b 160000       [4]     JSR   LCD_OutInteger
   029e c604         [1]     LDAB  #4
   02a0 060000       [3]     JMP   LCD_SetLine
-  391:  
-  392:  // ----------------------------------------
-  393:  // HandleButtonPress
-  394:  // 
-  395:  // Determines which functions to call/what to do when a button is pressed
-  396:  // Input:
-  397:  //   PBState is the push button state that was most recent
-  398:  //   LCDState is the menu currently displayed on the LCD
-  399:  // Output:
-  400:  //   none
-  401:  // Conditions:
-  402:  //   LCD and Buttons have been setup
-  403:  void HandleButtonPress(TButtonInputs PBState, TLCDState LCDState)
-  404:  {
+  390:  
+  391:  // ----------------------------------------
+  392:  // HandleButtonPress
+  393:  // 
+  394:  // Determines which functions to call/what to do when a button is pressed
+  395:  // Input:
+  396:  //   PBState is the push button state that was most recent
+  397:  //   LCDState is the menu currently displayed on the LCD
+  398:  // Output:
+  399:  //   none
+  400:  // Conditions:
+  401:  //   LCD and Buttons have been setup
+  402:  void HandleButtonPress(TButtonInputs PBState, TLCDState LCDState)
+  403:  {
 *** EVALUATION ***
 
 Function: HandleButtonPress
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\HMI.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\HMI.c.o" -WmsgSd1106 -WmsgSd5703
 
-  405:    switch(LCDState)
+  404:    switch(LCDState)
   0000 160000       [4]     JSR   _CASE_CHECKED_BYTE
   0003 05           DC.B  5
   0004 3d           DC.B  61
@@ -993,9 +992,9 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0007 23           DC.B  35
   0008 2b           DC.B  43
   0009 33           DC.B  51
-  406:    {
-  407:      case Dormant:
-  408:        switch(PBState)
+  405:    {
+  406:      case Dormant:
+  407:        switch(PBState)
   000a ec82         [3]     LDD   2,SP
   000c 160000       [4]     JSR   _CASE_SEARCH_8_BYTE
   000f 80           DC.B  128
@@ -1010,77 +1009,77 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0018 04           DC.B  4
   0019 80           DC.B  128
   001a 02           DC.B  2
-  409:        {
-  410:          case Button0:
-  411:          case Button1:
-  412:          case Button2:
-  413:          case Button3:
-  414:          case Button4:
-  415:            LCD_DisplayOn();
+  408:        {
+  409:          case Button0:
+  410:          case Button1:
+  411:          case Button2:
+  412:          case Button3:
+  413:          case Button4:
+  414:            LCD_DisplayOn();
   001b 160000       [4]     JSR   LCD_DisplayOn
-  416:            CreateMenu(MeteringTime);
-  417:          break;
+  415:            CreateMenu(MeteringTime);
+  416:          break;
   001e 201c         [3]     BRA   *+30 ;abs = 003c
-  418:        }
-  419:      break;
-  420:      
-  421:      case MeteringTime:
-  422:        switch(PBState)
+  417:        }
+  418:      break;
+  419:      
+  420:      case MeteringTime:
+  421:        switch(PBState)
   0020 0721         [4]     BSR   *+35 ;abs = 0043
   0022 261e         [3/1]   BNE   *+32 ;abs = 0042
-  423:        {
-  424:          case Button2:
-  425:            CreateMenu(AveragePower);
+  422:        {
+  423:          case Button2:
+  424:            CreateMenu(AveragePower);
   0024 c602         [1]     LDAB  #2
-  426:          break;
+  425:          break;
   0026 2016         [3]     BRA   *+24 ;abs = 003e
-  427:        }
-  428:      break;
-  429:      
-  430:      case AveragePower:
-  431:        switch(PBState)
+  426:        }
+  427:      break;
+  428:      
+  429:      case AveragePower:
+  430:        switch(PBState)
   0028 0719         [4]     BSR   *+27 ;abs = 0043
   002a 2616         [3/1]   BNE   *+24 ;abs = 0042
-  432:        {
-  433:          case Button2:
-  434:            CreateMenu(TotalEnergy);  
+  431:        {
+  432:          case Button2:
+  433:            CreateMenu(TotalEnergy);  
   002c c603         [1]     LDAB  #3
-  435:          break;
+  434:          break;
   002e 200e         [3]     BRA   *+16 ;abs = 003e
-  436:        }
-  437:      break;
-  438:      
-  439:      case TotalEnergy:
-  440:        switch(PBState)
+  435:        }
+  436:      break;
+  437:      
+  438:      case TotalEnergy:
+  439:        switch(PBState)
   0030 0711         [4]     BSR   *+19 ;abs = 0043
   0032 260e         [3/1]   BNE   *+16 ;abs = 0042
-  441:        {
-  442:          case Button2:
-  443:            CreateMenu(TotalCost);
+  440:        {
+  441:          case Button2:
+  442:            CreateMenu(TotalCost);
   0034 c604         [1]     LDAB  #4
-  444:          break;
+  443:          break;
   0036 2006         [3]     BRA   *+8 ;abs = 003e
-  445:        }
-  446:      break;
-  447:      
-  448:      case TotalCost:
-  449:        switch(PBState)
+  444:        }
+  445:      break;
+  446:      
+  447:      case TotalCost:
+  448:        switch(PBState)
   0038 0709         [4]     BSR   *+11 ;abs = 0043
   003a 2606         [3/1]   BNE   *+8 ;abs = 0042
-  450:        {
-  451:          case Button2:
-  452:            CreateMenu(MeteringTime);
+  449:        {
+  450:          case Button2:
+  451:            CreateMenu(MeteringTime);
   003c c601         [1]     LDAB  #1
   003e 87           [1]     CLRA  
   003f 160000       [4]     JSR   CreateMenu
-  453:          break;
-  454:        }
-  455:      break;
-  456:    }
-  457:    
-  458:  }
+  452:          break;
+  453:        }
+  454:      break;
+  455:    }
+  456:    
+  457:  }
   0042 3d           [5]     RTS   
   0043 ec84         [3]     LDD   4,SP
   0045 8c0010       [2]     CPD   #16
   0048 3d           [5]     RTS   
-  459:  
+  458:  

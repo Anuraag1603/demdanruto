@@ -61,7 +61,6 @@ void HMI_Setup(void)
   CreateMenu(MeteringTime);
   
   Clock_Interval      = 0;
-  
 }
 
 // ----------------------------------------

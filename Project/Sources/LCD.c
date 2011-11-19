@@ -265,11 +265,9 @@ void LCD_OutInteger(UINT16 const data)
     number -= (ten * 10);
     ten |= 0x30;  
   }
-  if (number >= 0)
-  {
-    single = (UINT8)number;
-    single |= 0x30;   
-  }
+  
+  single = (UINT8)number;
+  single |= 0x30;   
   
   if (thousand == 0 && tenThousand != 0)
     thousand |= 0x30;

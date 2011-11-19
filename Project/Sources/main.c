@@ -7,7 +7,7 @@
 //
 // Author: Danny Sok
 // Date: 3-11-2011
-// Date LM: 3-11-2011
+// Date LM: 19-11-2011
 
 // Constants and dependencies
 #include "main.h"
@@ -254,7 +254,7 @@ void interrupt 12 TIE4_ISR(void)
     {
       DEM_Average_Power.l += DEM_AvePower_Array[i];
     }
-    
+    // Find the average power over the samples
     DEM_Average_Power.l = DEM_Average_Power.l >> 4;
   }
     
@@ -263,6 +263,7 @@ void interrupt 12 TIE4_ISR(void)
   DEM_AvePower_Array[SampleCount] = Math_FindPower(voltage, current);
   //DEM_Average_Power.l = DEM_AvePower_Array[SampleCount];
   SampleCount++;
+  Math_FindFrequency(Periodic_Delay);
   /*
   Clock_MilliSeconds += 2;
   if (Clock_MilliSeconds >= 1000)
@@ -322,9 +323,7 @@ void interrupt 12 TIE4_ISR(void)
 BOOL HandleStartupPacket(void)
 {
   if(Packet_Parameter1 != 0 || Packet_Parameter1 != 0 || Packet_Parameter3 != 0)
-  {
     return bFALSE;  
-  }
     
   
   return Packet_Put(CMD_STARTUP, 0, 0, 0) && // startup takes 0 for all parameters
@@ -349,11 +348,11 @@ BOOL HandleSpecialPacket(void)
   {
     case 'v':
       return Packet_Put(CMD_SPECIAL, 'v', MAJOR_VERSION, MINOR_VERSION);
-      break;
+    break;
     case 'd':
       EEPROM_Write16(&Debug, Debug ^ 1); // Set debug
       return HandleTimePacket();
-      break;
+    break;
   }
   
   // If called by Startup Packet
@@ -377,12 +376,9 @@ BOOL HandleNumberPacket(void)
   {
     NbModCon.s.Lo = Packet_Parameter2;
     NbModCon.s.Hi = Packet_Parameter3;
-    
   }
   else
-  {
     NbModCon.l = sModConNb;
-  }
   
   return Packet_Put(CMD_MODCON_NB, 1, NbModCon.s.Lo, NbModCon.s.Hi);
   
@@ -502,7 +498,6 @@ void HandleTestModePack(void)
     EEPROM_Write16(&Debug, 1);
   else
     EEPROM_Write16(&Debug, 0);
-
 }
 
 void HandleTarrifPacket(void)
@@ -510,13 +505,16 @@ void HandleTarrifPacket(void)
   switch(Packet_Parameter1)
   {
     case 1:
-      DEM_Tarrif = sT1OffPeak;
+      //DEM_Tarrif = sT1OffPeak;
+      (void)EEPROM_Write16(&sTarrifMode, 1);
     break;
     case 2:
-      DEM_Tarrif = sT2NonTOU;
+      //DEM_Tarrif = sT2NonTOU;
+      (void)EEPROM_Write16(&sTarrifMode, 2);
     break;
     case 3:
-      DEM_Tarrif = sT3NonTOU;
+      //DEM_Tarrif = sT3NonTOU;
+      (void)EEPROM_Write16(&sTarrifMode, 3);
     break;
   }
   
@@ -569,7 +567,7 @@ BOOL HandleCostPacket(void)
 
 BOOL HandleFrquencyPacket(void)
 {
-  Math_FindFrequency();
+  Math_FindFrequency(Periodic_Delay);
   return Packet_Put(CMD_FREQUENCY, DEM_Frequency.s.Lo, DEM_Frequency.s.Hi, 0);
 }
 

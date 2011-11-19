@@ -8,7 +8,7 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
     5:  //
     6:  // Author: Danny Sok
     7:  // Date:   14-11-2011
-    8:  // Date LM: 14-11-2011
+    8:  // Date LM: 19-11-2011
     9:  
    10:  #include "DEM.h"
    11:  
@@ -28,7 +28,7 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
 
 Function: DEM_Setup
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\DEM.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\DEM.c.o" -WmsgSd1106 -WmsgSd5703
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\DEM.c.o" -WmsgSd1106 -WmsgSd5703
 
    24:    UINT8 i;
    25:    
@@ -47,9 +47,10 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
    30:    DEM_IRMS.l          = 0;
   0014 7c0000       [3]     STD   DEM_IRMS
    31:    
-   32:    for (i = 0; i < DEM_PWRSIZE; i++)
-   33:    {
-   34:      DEM_AvePower_Array[i] = 0;
+   32:    
+   33:    for (i = 0; i < DEM_PWRSIZE; i++)
+   34:    {
+   35:      DEM_AvePower_Array[i] = 0;
   0017 87           [1]     CLRA  
   0018 37           [2]     PSHB  
   0019 59           [1]     LSLD  
@@ -60,65 +61,75 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0024 52           [1]     INCB  
   0025 c110         [1]     CMPB  #16
   0027 25ee         [3/1]   BCS   *-16 ;abs = 0017
-   35:    }
-   36:  }
+   36:    }
+   37:  }
   0029 3d           [5]     RTS   
-   37:  
-   38:  // ----------------------------------------
-   39:  // DEM_SetTarrif
-   40:  // 
-   41:  // Updates the tarrif variable to the correct one
-   42:  // based on the time
-   43:  // Input:
-   44:  //   none
-   45:  // Output:
-   46:  //   none
-   47:  // Conditions:
-   48:  //   none
-   49:  void DEM_SetTarrif(void)
-   50:  {
+   38:  
+   39:  // ----------------------------------------
+   40:  // DEM_SetTarrif
+   41:  // 
+   42:  // Updates the tarrif variable to the correct one
+   43:  // based on the time
+   44:  // Input:
+   45:  //   none
+   46:  // Output:
+   47:  //   none
+   48:  // Conditions:
+   49:  //   none
+   50:  void DEM_SetTarrif(void)
+   51:  {
 *** EVALUATION ***
 
 Function: DEM_SetTarrif
 Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\DEM.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\DEM.c.o" -WmsgSd1106 -WmsgSd5703
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\DEM.c.o" -WmsgSd1106 -WmsgSd5703
 
-   51:    /*
-   52:    Peak 14-20
-   53:    Shoulder 7-14
-   54:    Off Peak every
-   55:    */
-   56:    
-   57:    // Time of Use
-   58:    if (DEM_Average_Power.l > 0)
+   52:    /*
+   53:    Peak 14-20
+   54:    Shoulder 7-14
+   55:    Off Peak every
+   56:    */
+   57:    
+   58:    // Time of Use
+   59:    if (DEM_Average_Power.l > 0 && sTarrifMode == 1)
   0000 fc0000       [3]     LDD   DEM_Average_Power
-  0003 2f21         [3/1]   BLE   *+35 ;abs = 0026
-   59:    {
-   60:      
-   61:      if (Clock_Hours >= 14 && Clock_Hours <= 20)
-  0005 f60000       [3]     LDAB  Clock_Hours
-  0008 c00e         [1]     SUBB  #14
-  000a c106         [1]     CMPB  #6
-  000c 2205         [3/1]   BHI   *+7 ;abs = 0013
-   62:        DEM_Tarrif = sT1Peak;  
-  000e fc0450       [3]     LDD   1104
-  0011 2016         [3]     BRA   *+24 ;abs = 0029
-   63:      else if (Clock_Hours >= 7 && Clock_Hours < 14)
-  0013 f60000       [3]     LDAB  Clock_Hours
-  0016 c007         [1]     SUBB  #7
-  0018 c106         [1]     CMPB  #6
-  001a 2205         [3/1]   BHI   *+7 ;abs = 0021
-   64:        DEM_Tarrif = sT1Shoulder;
-  001c fc0452       [3]     LDD   1106
-  001f 2008         [3]     BRA   *+10 ;abs = 0029
-   65:      else
-   66:        DEM_Tarrif = sT1OffPeak;
-  0021 fc0454       [3]     LDD   1108
-  0024 2003         [3]     BRA   *+5 ;abs = 0029
-   67:    }
-   68:    else
-   69:      DEM_Tarrif = sT2NonTOU;
-  0026 fc0456       [3]     LDD   1110
-  0029 7c0000       [3]     STD   DEM_Tarrif
-   70:  }
-  002c 3d           [5]     RTS   
+  0003 2f27         [3/1]   BLE   *+41 ;abs = 002c
+  0005 fc0460       [3]     LDD   1120
+  0008 042421       [3]     DBNE  D,*+36 ;abs = 002c
+   60:    {
+   61:      
+   62:      if (Clock_Hours >= 14 && Clock_Hours <= 20)
+  000b f60000       [3]     LDAB  Clock_Hours
+  000e c00e         [1]     SUBB  #14
+  0010 c106         [1]     CMPB  #6
+  0012 2205         [3/1]   BHI   *+7 ;abs = 0019
+   63:        DEM_Tarrif = sT1Peak;  
+  0014 fc0450       [3]     LDD   1104
+  0017 2023         [3]     BRA   *+37 ;abs = 003c
+   64:      else if (Clock_Hours >= 7 && Clock_Hours < 14)
+  0019 f60000       [3]     LDAB  Clock_Hours
+  001c c007         [1]     SUBB  #7
+  001e c106         [1]     CMPB  #6
+  0020 2205         [3/1]   BHI   *+7 ;abs = 0027
+   65:        DEM_Tarrif = sT1Shoulder;
+  0022 fc0452       [3]     LDD   1106
+  0025 2015         [3]     BRA   *+23 ;abs = 003c
+   66:      else
+   67:        DEM_Tarrif = sT1OffPeak;
+  0027 fc0454       [3]     LDD   1108
+  002a 2010         [3]     BRA   *+18 ;abs = 003c
+   68:    }
+   69:    else if (sTarrifMode == 2)
+  002c fc0460       [3]     LDD   1120
+  002f 8c0002       [2]     CPD   #2
+  0032 2605         [3/1]   BNE   *+7 ;abs = 0039
+   70:      DEM_Tarrif = sT2NonTOU;
+  0034 fc0456       [3]     LDD   1110
+  0037 2003         [3]     BRA   *+5 ;abs = 003c
+   71:    
+   72:    else
+   73:      DEM_Tarrif = sT3NonTOU;
+  0039 fc0458       [3]     LDD   1112
+  003c 7c0000       [3]     STD   DEM_Tarrif
+   74:  }
+  003f 3d           [5]     RTS   

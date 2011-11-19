@@ -11,6 +11,7 @@
 
 
 static const INT16 ADC_OFFSET = 2048; // 12 Bit Offset, 1000 0000 0000
+//static const INT16 DAC_OFFSET = 2048;
 
 // ----------------------------------------
 // Analog_Setup
@@ -39,7 +40,7 @@ void Analog_Setup(const UINT32 busClk)
   
   SPI_Setup(&aSPISetup, busClk);
   
-  // Init 0 for ADC
+  // No selection
   PTH_PTH4 = 0;
   PTH_PTH5 = 0;
   PTH_PTH6 = 0;
