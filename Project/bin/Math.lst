@@ -41,8 +41,8 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
 *** EVALUATION ***
 
 Function: Math_ToQN
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\Math.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
 
    38:    return number << base;
   0000 ed84         [3]     LDY   4,SP
@@ -67,8 +67,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
 *** EVALUATION ***
 
 Function: Math_FromQN
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\Math.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
 
   0000 1b9c         [2]     LEAS  -4,SP
    54:    INT32 tempNumber;
@@ -127,8 +127,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
 *** EVALUATION ***
 
 Function: Math_ConvertADCValue
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\Math.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
 
    87:    return (INT16)Math_ToQN(( (61 * number) + 25 ) / 50, DefaultBase);
   0000 cd003d       [2]     LDY   #61
@@ -154,65 +154,92 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
    88:  }
   0027 3d           [5]     RTS   
    89:  
-   90:  
-   91:  // ----------------------------------------
-   92:  // Math_FindPower
-   93:  // 
-   94:  // Determines the power usage
-   95:  // Input:
-   96:  //  voltage is the analog representation of voltage e.g. 5 Volts
-   97:  //  current is the analog representation of current e.g. 1 Amp
-   98:  // Output:
-   99:  //  The instantaneous power
-  100:  // Conditions:
-  101:  //  none
-  102:  INT16 Math_FindPower(const INT16 voltage, const INT16 current)
-  103:  {
+   90:  INT16 Math_ToDACValue(const INT32 number) 
+   91:  {
+*** EVALUATION ***
+
+Function: Math_ToDACValue
+Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
+
+  0000 3b           [2]     PSHD  
+  0001 34           [2]     PSHX  
+  0002 3b           [2]     PSHD  
+   92:    // 4096 * Vin / Vref
+   93:    return (INT16) (( (number << 13) + 3) / 5);
+  0003 c60d         [1]     LDAB  #13
+  0005 ed84         [3]     LDY   4,SP
+  0007 160000       [4]     JSR   _LSHL
+  000a ca03         [1]     ORAB  #3
+  000c 6e80         [2]     STX   0,SP
+  000e 1a45         [2]     LEAX  5,Y
+  0010 34           [2]     PSHX  
+  0011 35           [2]     PSHY  
+  0012 ee84         [3]     LDX   4,SP
+  0014 160000       [4]     JSR   _LDIVS
+   94:  }
+  0017 1b86         [2]     LEAS  6,SP
+  0019 3d           [5]     RTS   
+   95:  
+   96:  
+   97:  // ----------------------------------------
+   98:  // Math_FindPower
+   99:  // 
+  100:  // Determines the power usage
+  101:  // Input:
+  102:  //  voltage is the analog representation of voltage e.g. 5 Volts
+  103:  //  current is the analog representation of current e.g. 1 Amp
+  104:  // Output:
+  105:  //  The instantaneous power
+  106:  // Conditions:
+  107:  //  none
+  108:  INT16 Math_FindPower(const INT16 voltage, const INT16 current)
+  109:  {
 *** EVALUATION ***
 
 Function: Math_FindPower
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\Math.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
 
   0000 3b           [2]     PSHD  
-  104:    return (INT16)voltage * current;
+  110:    return (INT16)voltage * current;
   0001 ec84         [3]     LDD   4,SP
   0003 ed80         [3]     LDY   0,SP
   0005 13           [3]     EMUL  
-  105:  }
+  111:  }
   0006 30           [3]     PULX  
   0007 3d           [5]     RTS   
-  106:  
-  107:  // ----------------------------------------
-  108:  // Math_FindEnergy
-  109:  // 
-  110:  // Determines the total energy usage
-  111:  // Input:
-  112:  //  DEM_AvePower_Array is the array for the 16 samples of power
-  113:  // Output:
-  114:  //  none
-  115:  // Conditions:
-  116:  //  none
-  117:  void Math_FindEnergy(const INT16 DEM_AvePower_Array[])
-  118:  {
+  112:  
+  113:  // ----------------------------------------
+  114:  // Math_FindEnergy
+  115:  // 
+  116:  // Determines the total energy usage
+  117:  // Input:
+  118:  //  DEM_AvePower_Array is the array for the 16 samples of power
+  119:  // Output:
+  120:  //  none
+  121:  // Conditions:
+  122:  //  none
+  123:  void Math_FindEnergy(const INT16 DEM_AvePower_Array[])
+  124:  {
 *** EVALUATION ***
 
 Function: Math_FindEnergy
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\Math.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
 
   0000 3b           [2]     PSHD  
-  119:    // 16 Samples per Period/Cycle.
-  120:    // Sum of PkTs between k=0 and n
-  121:    // n = 15 then.
-  122:    // 1 cycle is approx 20 milliseconds
-  123:    // so 20/16 = 1.25, so sample approx every 1ms
-  124:    UINT8 i;
-  125:    
-  126:    for (i = 0; i < DEM_PWRSIZE; i++)
+  125:    // 16 Samples per Period/Cycle.
+  126:    // Sum of PkTs between k=0 and n
+  127:    // n = 15 then.
+  128:    // 1 cycle is approx 20 milliseconds
+  129:    // so 20/16 = 1.25, so sample approx every 1ms
+  130:    UINT8 i;
+  131:    
+  132:    for (i = 0; i < DEM_PWRSIZE; i++)
   0001 c7           [1]     CLRB  
-  127:    {
-  128:      DEM_Total_Energy.l += DEM_AvePower_Array[i];
+  133:    {
+  134:      DEM_Total_Energy.l += DEM_AvePower_Array[i];
   0002 87           [1]     CLRA  
   0003 37           [2]     PSHB  
   0004 59           [1]     LSLD  
@@ -230,33 +257,33 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0020 52           [1]     INCB  
   0021 c110         [1]     CMPB  #16
   0023 25dd         [3/1]   BCS   *-33 ;abs = 0002
-  129:    }
-  130:    //DEM_Total_Energy.l = (DEM_Total_Energy.l >> 3) * (Clock_RunningTimeInHours() << 3) ;
-  131:  }
+  135:    }
+  136:    //DEM_Total_Energy.l = (DEM_Total_Energy.l >> 3) * (Clock_RunningTimeInHours() << 3) ;
+  137:  }
   0025 3a           [3]     PULD  
   0026 3d           [5]     RTS   
-  132:  
-  133:  // ----------------------------------------
-  134:  // Math_FindCost
-  135:  // 
-  136:  // Determines the total cost of the user
-  137:  // Input:
-  138:  //  none
-  139:  // Output:
-  140:  //  none
-  141:  // Conditions:
-  142:  //  none
-  143:  void Math_FindCost(void)
-  144:  {
+  138:  
+  139:  // ----------------------------------------
+  140:  // Math_FindCost
+  141:  // 
+  142:  // Determines the total cost of the user
+  143:  // Input:
+  144:  //  none
+  145:  // Output:
+  146:  //  none
+  147:  // Conditions:
+  148:  //  none
+  149:  void Math_FindCost(void)
+  150:  {
 *** EVALUATION ***
 
 Function: Math_FindCost
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\Math.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
 
-  145:    // Energy in kWh * Tarrif
-  146:    // Downscale energy to base 3, upscale time to 3, tarrif by default is 3.
-  147:    DEM_Total_Cost += (UINT16) ((DEM_Total_Energy.l >> 3) * (Clock_RunningTimeInHours() << 3) * (DEM_Tarrif));
+  151:    // Energy in kWh * Tarrif
+  152:    // Downscale energy to base 3, upscale time to 3, tarrif by default is 3.
+  153:    DEM_Total_Cost += (UINT16) ((DEM_Total_Energy.l >> 3) * (Clock_RunningTimeInHours() << 3) * (DEM_Tarrif));
   0000 fd0000       [3]     LDY   DEM_Total_Energy:2
   0003 fe0000       [3]     LDX   DEM_Total_Energy
   0006 c603         [1]     LDAB  #3
@@ -276,58 +303,58 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0020 cc0000       [2]     LDD   #0
   0023 f90000       [3]     ADCB  DEM_Total_Cost:1
   0026 b90000       [3]     ADCA  DEM_Total_Cost
-  148:    
-  149:    // Then normalise back down to base 3   (9-6 = 3)
-  150:    DEM_Total_Cost = DEM_Total_Cost >> 6;
+  154:    
+  155:    // Then normalise back down to base 3   (9-6 = 3)
+  156:    DEM_Total_Cost = DEM_Total_Cost >> 6;
   0029 fd0000       [3]     LDY   DEM_Total_Cost:2
   002c b745         [1]     TFR   D,X
   002e c606         [1]     LDAB  #6
   0030 160000       [4]     JSR   _LSHRU
   0033 7c0000       [3]     STD   DEM_Total_Cost:2
   0036 7e0000       [3]     STX   DEM_Total_Cost
-  151:  }
+  157:  }
   0039 3d           [5]     RTS   
-  152:  
-  153:  // ----------------------------------------
-  154:  // Math_SQRT
-  155:  // 
-  156:  // Determines the square roots by using an initial guess
-  157:  // Input:
-  158:  //  number is the number to find the root of
-  159:  //  guess is the initial estimation of the root
-  160:  // Output:
-  161:  //  none
-  162:  // Conditions:
-  163:  //  none
-  164:  UINT16 Math_SQRT(const INT16 number, const INT16 guess)
-  165:  {
+  158:  
+  159:  // ----------------------------------------
+  160:  // Math_SQRT
+  161:  // 
+  162:  // Determines the square roots by using an initial guess
+  163:  // Input:
+  164:  //  number is the number to find the root of
+  165:  //  guess is the initial estimation of the root
+  166:  // Output:
+  167:  //  none
+  168:  // Conditions:
+  169:  //  none
+  170:  UINT16 Math_SQRT(const INT16 number, const INT16 guess)
+  171:  {
 *** EVALUATION ***
 
 Function: Math_SQRT
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\Math.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
 
   0000 3b           [2]     PSHD  
-  166:    return (UINT16) ( ((number + guess) + guess) >> 1);
+  172:    return (UINT16) ( ((number + guess) + guess) >> 1);
   0001 ec84         [3]     LDD   4,SP
   0003 e380         [3]     ADDD  0,SP
   0005 e380         [3]     ADDD  0,SP
   0007 47           [1]     ASRA  
   0008 56           [1]     RORB  
-  167:  }
+  173:  }
   0009 30           [3]     PULX  
   000a 3d           [5]     RTS   
-  168:  
-  169:  void Math_FindFrequency(UINT16 delay)
-  170:  {
+  174:  
+  175:  void Math_FindFrequency(UINT16 delay)
+  176:  {
 *** EVALUATION ***
 
 Function: Math_FindFrequency
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\Math.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
 
-  171:    // F = 1/T
-  172:    DEM_Frequency.l = 1 / (delay << 4);
+  177:    // F = 1/T
+  178:    DEM_Frequency.l = 1 / (delay << 4);
   0000 59           [1]     LSLD  
   0001 59           [1]     LSLD  
   0002 59           [1]     LSLD  
@@ -337,20 +364,20 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   0008 87           [1]     CLRA  
   0009 1810         [12]    IDIV  
   000b 7e0000       [3]     STX   DEM_Frequency
-  173:      
-  174:  }
+  179:      
+  180:  }
   000e 3d           [5]     RTS   
-  175:  
-  176:  INT16 Math_FindRMS(const INT16 number)
-  177:  {
+  181:  
+  182:  INT16 Math_FindRMS(const INT16 number)
+  183:  {
 *** EVALUATION ***
 
 Function: Math_FindRMS
-Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\Math.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o" -WmsgSd1106 -WmsgSd5703
+Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\Math.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\Math.c.o -WmsgSd1106 -WmsgSd5703
 
   0000 3b           [2]     PSHD  
-  178:    return number / Math_SQRT(2, 1);
+  184:    return number / Math_SQRT(2, 1);
   0001 c602         [1]     LDAB  #2
   0003 87           [1]     CLRA  
   0004 3b           [2]     PSHD  
@@ -360,6 +387,6 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software
   000a eca1         [3]     LDD   2,+SP
   000c 1810         [12]    IDIV  
   000e b754         [1]     TFR   X,D
-  179:  }
+  185:  }
   0010 30           [3]     PULX  
   0011 3d           [5]     RTS   

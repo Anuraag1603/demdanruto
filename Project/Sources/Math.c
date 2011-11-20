@@ -87,6 +87,12 @@ INT16 Math_ConvertADCValue(const INT32 number)
   return (INT16)Math_ToQN(( (61 * number) + 25 ) / 50, DefaultBase);
 }
 
+INT16 Math_ToDACValue(const INT32 number) 
+{
+  // 4096 * Vin / Vref
+  return (INT16) (( (number << 13) + 3) / 5);
+}
+
 
 // ----------------------------------------
 // Math_FindPower

@@ -95,12 +95,12 @@ void PWM_Setup(const UINT32 busClk)
   PWMCTL_PSWAI  = 1;    // PWM Stops in Wait Mode           :: 1 Stop Input Clock
   PWMCTL_PFRZ   = 1;    // PWM Counters Stop in Freeze Mode :: 1 Disable PWM Input Clock
   
-  PWMPER0       = 255;
-  PWMPER1       = 255;
-  PWMPER2       = 255;
-  PWMPER3       = 255;
-  PWMPER4       = 255;
-  PWMPER5       = 255;
+  PWMPER0       = 255;  // PWM Period
+  PWMPER1       = 255;  // PWM Period
+  PWMPER2       = 255;  // PWM Period
+  PWMPER3       = 255;  // PWM Period
+  PWMPER4       = 255;  // PWM Period
+  PWMPER5       = 255;  // PWM Period
   
   PWMDTY0       = 127;  // 50 Duty Cycle
   PWMDTY1       = 63;   // 25 Duty Cycle
@@ -242,6 +242,7 @@ void Analog_Put(const TChannelNb channelNb)
   
   // Output Chan + Normal Operation + Input register updated [0110 0000]
   SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  asm nop;
   //SPI_ExchangeChar( ((PWMCNT2 & 0x0F) | channelNbHex),  &rxByte.s.Hi);      
   SPI_ExchangeChar(~PWMCNT2, &rxByte.s.Lo);
   
@@ -262,6 +263,7 @@ void Analog_Put(const TChannelNb channelNb)
   PTH_PTH6 = 1;
   
   SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  asm nop;
   //SPI_ExchangeChar( ((PWMCNT1 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
   SPI_ExchangeChar(~PWMCNT1, &rxByte.s.Lo);
   
@@ -282,6 +284,7 @@ void Analog_Put(const TChannelNb channelNb)
   PTH_PTH6 = 1;
   
   SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  asm nop;
   //SPI_ExchangeChar( ((PWMCNT0 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
   SPI_ExchangeChar(~PWMCNT0, &rxByte.s.Lo);
   
@@ -299,6 +302,7 @@ void Analog_Put(const TChannelNb channelNb)
   PTH_PTH6 = 1;
   
   SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  asm nop;
   //SPI_ExchangeChar( ((PWMCNT0 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
   SPI_ExchangeChar(~PWMCNT0, &rxByte.s.Lo);
   
@@ -317,6 +321,7 @@ void Analog_Put(const TChannelNb channelNb)
   PTH_PTH6 = 1;
   
   SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  asm nop;
   //SPI_ExchangeChar( ((PWMCNT3 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
   SPI_ExchangeChar(~PWMCNT3, &rxByte.s.Lo);
   
@@ -335,6 +340,7 @@ void Analog_Put(const TChannelNb channelNb)
   
   
   SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  asm nop;
   //SPI_ExchangeChar( ((PWMCNT3 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
   SPI_ExchangeChar(~PWMCNT3, &rxByte.s.Lo);
   
@@ -356,6 +362,7 @@ void Analog_Put(const TChannelNb channelNb)
   
   
   SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  asm nop;
   //SPI_ExchangeChar( ((PWMCNT4 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
   SPI_ExchangeChar(~PWMCNT4, &rxByte.s.Lo);
   
@@ -376,6 +383,7 @@ void Analog_Put(const TChannelNb channelNb)
   PTH_PTH6 = 1;
   
   SPI_ExchangeChar(channelNbHex | test,  &rxByte.s.Hi);
+  asm nop;
   //SPI_ExchangeChar( ((PWMCNT5 & 0x0F) | channelNbHex),  &rxByte.s.Hi);
   SPI_ExchangeChar(~PWMCNT5, &rxByte.s.Lo);
   
