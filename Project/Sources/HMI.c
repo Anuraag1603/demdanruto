@@ -75,106 +75,12 @@ void HMI_Setup(void)
 //   none
 void HMI_Update(void)
 {
-  UINT16 tarrifL = Math_FromQN(DEM_Tarrif, qLeft, DefaultBase);
-  UINT16 tarrifR = Math_FromQN(DEM_Tarrif, qRight, DefaultBase);
-  //INT16 voltage, current;
   DEM_SetTarrif();
   Math_FindCost();
   
   DEM_VRMS.l = Math_FindRMS(DEM_Average_Power.l);
   DEM_IRMS.l = Math_FindRMS(Analog_Input[Ch2].Value.l);
-  
-  switch(LCDState)
-  {
-    case MeteringTime:
-      if (Clock_Days <= MAX_DAYS)
-      {
-        LCD_ClearLine(2);
-        LCD_SetLine(2);
-        (void)LCD_OutChar(' ');
-        LCD_OutInteger(Clock_Days);
-        (void)LCD_OutChar(':');
-        LCD_OutInteger(Clock_Hours);
-        (void)LCD_OutChar(':');
-        LCD_OutInteger(Clock_Minutes);
-        (void)LCD_OutChar(':');
-        LCD_OutInteger((UINT16)Clock_Seconds);
-        
-        LCD_ClearLine(3);
-        LCD_SetLine(3);
-        LCD_OutString(" Tarrif:");
-        LCD_OutInteger(tarrifL);
-        (void)LCD_OutChar('.');
-        LCD_OutInteger(tarrifR);
-      }
-      else
-        LCD_OutString(" xx:xx:xx:xx  ");
-    break;
-    
-    case AveragePower:
-      LCD_ClearLine(2);
-      LCD_SetLine(2);
-      (void)LCD_OutChar(' ');
-      //voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
-      //current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
-      //DEM_Average_Power.l = Math_FindPower(voltage, current);
-      LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qLeft, DefaultBase << 1));
-      (void)LCD_OutChar('.');
-      LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qRight, DefaultBase << 1));
-      LCD_OutString("kW");
-      LCD_ClearLine(3);
-      LCD_SetLine(3);
-      LCD_OutString(" Tarrif:");
-      LCD_OutInteger(tarrifL);
-      (void)LCD_OutChar('.');
-      LCD_OutInteger(tarrifR);
-    break;
-    
-    case TotalEnergy:
-      LCD_ClearLine(2);
-      LCD_SetLine(2);
-      if (DEM_Total_Energy.l <= MAX_ENERGY)
-      {
-        (void)LCD_OutChar(' ');
-        LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qLeft, DefaultBase << 1) );
-        (void)LCD_OutChar('.');
-        LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qRight, DefaultBase << 1) );
-        LCD_OutString("kWh");
-        LCD_ClearLine(3);
-        LCD_SetLine(3);
-        LCD_OutString(" Tarrif:");
-        LCD_OutInteger(tarrifL);
-        (void)LCD_OutChar('.');
-        LCD_OutInteger(tarrifR);
-      } 
-      else
-        LCD_OutString(" xxx.xxx      ");
-    break;
-    
-    case TotalCost:
-      LCD_ClearLine(2);
-      LCD_SetLine(2);
-      if (DEM_Total_Cost <= MAX_COST)
-      {
-        (void)LCD_OutChar(' ');
-        (void)LCD_OutChar('$');
-        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, DefaultBase) );
-        (void)LCD_OutChar('.');
-        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, DefaultBase) );
-        
-        LCD_ClearLine(3);
-        LCD_SetLine(3);
-        LCD_OutString(" Tarrif:");
-        LCD_OutInteger(tarrifL);
-        (void)LCD_OutChar('.');
-        LCD_OutInteger(tarrifR);
-      } 
-      else
-      {
-        LCD_OutString(" xxxx.xx      ");
-      }
-    break;
-  }
+  CreateMenu(LCDState);
 }
 
 // ----------------------------------------
@@ -224,8 +130,6 @@ void interrupt 13 TIE5_ISR(void)
 //   LCD and HMI have been setup
 void CreateMenu(TLCDState menu)
 {
-  UINT16 tarrifL = Math_FromQN(DEM_Tarrif, qLeft, DefaultBase);
-  UINT16 tarrifR = Math_FromQN(DEM_Tarrif, qRight, DefaultBase);
   //INT16 voltage, current;
   
   LCD_Clear();
@@ -277,9 +181,7 @@ void CreateMenu(TLCDState menu)
       
       LCD_SetLine(3);
       LCD_OutString(" Tarrif:");
-      LCD_OutInteger(tarrifL);
-      (void)LCD_OutChar('.');
-      LCD_OutInteger(tarrifR);
+      DEM_OutTarrif();
       LCD_SetLine(4);
       LCD_OutString("|              |");
       LCD_SetLine(5);
@@ -300,15 +202,16 @@ void CreateMenu(TLCDState menu)
       //voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
       //current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
       //DEM_Average_Power.l = Math_FindPower(voltage, current);
-      LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qLeft, DefaultBase << 1));
+      LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qLeft, PowerBase));
       (void)LCD_OutChar('.');
-      LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qRight, DefaultBase << 1));
+      LCD_OutInteger(Math_FromQN(DEM_Average_Power.l, qRight, PowerBase));
       LCD_OutString("kW");
       LCD_SetLine(3);
       LCD_OutString(" Tarrif:");
-      LCD_OutInteger(tarrifL);
-      (void)LCD_OutChar('.');
-      LCD_OutInteger(tarrifR);
+      DEM_OutTarrif();
+      //LCD_OutInteger(tarrifL);
+      //(void)LCD_OutChar('.');
+      //LCD_OutInteger(tarrifR);
       LCD_SetLine(4);
       LCD_OutString("|              |");
       LCD_SetLine(5);
@@ -329,9 +232,9 @@ void CreateMenu(TLCDState menu)
       if (DEM_Total_Energy.l <= MAX_ENERGY)
       {
         (void)LCD_OutChar(' ');
-        LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qLeft, DefaultBase << 1) );
+        LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qLeft, EnergyBase) );
         (void)LCD_OutChar('.');
-        LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qRight, DefaultBase << 1) );
+        LCD_OutInteger( Math_FromQN(DEM_Total_Energy.l, qRight, EnergyBase) );
         LCD_OutString("kWh");
       } 
       else
@@ -339,9 +242,7 @@ void CreateMenu(TLCDState menu)
       
       LCD_SetLine(3);
       LCD_OutString(" Tarrif:");
-      LCD_OutInteger(tarrifL);
-      (void)LCD_OutChar('.');
-      LCD_OutInteger(tarrifR);
+      DEM_OutTarrif();
       LCD_SetLine(4);
       LCD_OutString("|              |");
       LCD_SetLine(5);
@@ -363,9 +264,9 @@ void CreateMenu(TLCDState menu)
       {
         (void)LCD_OutChar(' ');
         (void)LCD_OutChar('$');
-        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, DefaultBase) );
+        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qLeft, CostBase) );
         (void)LCD_OutChar('.');
-        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, DefaultBase) );
+        LCD_OutInteger( Math_FromQN(DEM_Total_Cost, qRight, CostBase) );
       } 
       else
       {
@@ -373,9 +274,7 @@ void CreateMenu(TLCDState menu)
       }
       LCD_SetLine(3);
       LCD_OutString(" Tarrif:");
-      LCD_OutInteger(tarrifL);
-      (void)LCD_OutChar('.');
-      LCD_OutInteger(tarrifR);
+      DEM_OutTarrif();
       LCD_SetLine(4);
       LCD_OutString("|              |");
       LCD_SetLine(5);

@@ -9,7 +9,6 @@
 
 #include "buttons.h"
 
-
 // ----------------------------------------
 // Buttons_Get
 // 
@@ -24,18 +23,15 @@ void Buttons_Get(TButtonInputs * const dataPtr)
 {
   //Timer_Set(TIMER_Ch5, bFALSE);
   *dataPtr = PORTK & 0xBC;
-  
   //Wait Until the button is released
   //while ( !((PORTK & 0xBC) == 0) );
   Timer_Set(TIMER_Ch6, 40000);
   Timer_Enable(TIMER_Ch6, bTRUE);
-  while(TFLG1_C5F);
-  Timer_Enable(TIMER_Ch6, bFALSE);
   
   if (*dataPtr != (PORTK & 0xBC))
     return;
   
-  Timer_Enable(TIMER_Ch6, bTRUE);
+  Timer_Enable(TIMER_Ch6, bFALSE);
   
   // 10111100 
   // 1X1111XX

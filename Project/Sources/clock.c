@@ -125,20 +125,33 @@ BOOL Clock_Update(void)
   return bFALSE;  
 }
 
+/*
 UINT16 Clock_RunningTimeInHours(void)
 {
   UINT16 minutes, seconds;
   INT32 timeInHours, currentTime;
-  minutes = (UINT16)Math_ToQN(16, 3) * (Clock_Minutes << 3);
-  minutes = minutes >> 6;
-  seconds = (UINT16)Math_ToQN(27, 5) * (Clock_Seconds << 5);
-  seconds = seconds >> 10;
-  // Nfi how I'm gonna do this :S
+  
+  // Convert the Ratio to base 3, Convert Minutes to base 1000 to fit, and then into base 3
+  minutes = (UINT16)Math_ToQN(16, 3) * ((Clock_Minutes * 1000 ) << 3);
+  // Normalise back down, still base 1000
+  minutes = (minutes >> 6) / 1000;
+  
+  // Convert the Ratio to base 5, Convert Seconds to base 1000 to fit, and then into base 5
+  seconds = (UINT16)Math_ToQN(27, 5) * ((Clock_Seconds * 100000) << 5);
+  // Normalise back down 10000
+  seconds = (seconds >> 10) / 100000;
+  
   //return (Clock_Days * 24) + Clock_Hours + (Clock_Minutes * 0.0166666667)  = (Clock_Seconds * 0.000277777778);
   
   currentTime = (Clock_Days * 24) + Clock_Hours + minutes + seconds;
   timeInHours = currentTime - OldTimeInHours;
   OldTimeInHours = currentTime;
   
-  return timeInHours;
+  return (UINT16)timeInHours;
 }
+
+UINT16 Clock_TimeInSeconds(void)
+{
+  return (Clock_Days * 24 * 60 * 24) + (Clock_Hours * 24 * 60) + (Clock_Minutes * 60) + Clock_Seconds;
+}
+*/
