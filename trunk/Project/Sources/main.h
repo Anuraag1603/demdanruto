@@ -95,7 +95,7 @@ const UINT8 modulusCount      = 15; //0x0F;
 // Timer Delays
 const UINT16 Periodic_Delay   = 20000; // 20ms
 const UINT16 Timer_Ch7_Delay  = 2000;  // We need enough delay for 10 bits.
-const UINT16 Timer_Ch4_Delay  = 10000;
+const UINT16 Timer_Ch4_Delay  = 50000; //~20ms
 
 // ----------------------------------------
 // Command setups
@@ -114,18 +114,21 @@ TAnalogInput Analog_Input[NB_INPUT_CHANNELS];
 TUINT16 NbAnalogInputs;
 TUINT16 NbAnalogOutputs;
 
-UINT8 Clock_Seconds;
-UINT8 Clock_Minutes;
-UINT8 Clock_Hours;
-UINT8 Clock_Days;
+// Clock Setup
+UINT8  Clock_Seconds;
+UINT8  Clock_Minutes;
+UINT8  Clock_Hours;
+UINT8  Clock_Days;
 UINT32 Clock_MicroSeconds;
-TUINT16 DEM_Frequency;
 UINT32 Clock_Interval;
-TINT16 DEM_Average_Power;
-INT16 DEM_AvePower_Array[DEM_PWRSIZE];
+
+// DEM Setup
+TUINT16 DEM_Frequency;
+TUINT32 DEM_Average_Power;
+UINT32  DEM_Power_Array[DEM_PWRSIZE];
 TUINT32 DEM_Total_Energy;
-UINT32 DEM_Total_Cost;
-UINT16 DEM_Tarrif;
+UINT32  DEM_Total_Cost;
+UINT16  DEM_Tarrif;
 TUINT16 DEM_VRMS;
 TUINT16 DEM_IRMS;
 
@@ -133,27 +136,215 @@ TUINT16 DEM_IRMS;
 
 // ----------------------------------------
 //  Function Prototypes
+
+// ----------------------------------------
+// main
+//
+// Initializes the various peripherals
+// Handles received packets endlessly
+// Input: none
+// Output: none
+// Conditions: none
 void main(void);
+//---------------------------------
+//  HandlePacket
+//
+//  Determines what packet is recieved, then replies with the
+//  coresponding answer
+//  Input: none
+//  Output: none
+//  Conditions: none
 void HandlePacket(void);
+//---------------------------------
+//  HandleStartupPacket
+//
+//  Creates the packet that will be in
+//  response to the startup call by the PC.
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleStartupPacket(void);
+//---------------------------------
+//  HandleSpecialPacket
+//
+//  Creates the packet that will be in
+//  response to the special call by the PC.
+//  It responds with the ModCon Version.
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleSpecialPacket(void);
+//---------------------------------
+//  HandleNumberPacket
+//
+//  Creates the packet that will be in
+//  response to the ModCon number call by the PC.
+//  It responds with the last five digits of our
+//  student number.
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleNumberPacket(void);
+//---------------------------------
+//  HandleModePacket
+//
+//  Creates the packet that will be in
+//  response to the ModCon mode call by the PC.
+//  It responds with the modcon mode
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleModePacket(void);
+//---------------------------------
+//  HandleEEPROMProgramPacket
+//
+//  Creates the packet that will be in
+//  response to the ModCon EEPROM Programming call by the PC.
+//  It responds by writing the data recieved
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleEEPROMProgramPacket(void);
+//---------------------------------
+//  HandleEEPROMGetPacket
+//
+//  Creates the packet that will be in
+//  response to the ModCon mode call by the PC.
+//  It responds with the modcon mode
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleEEPROMGetPacket(void);
+//---------------------------------
+//  HandleTimePacket
+//
+//  Creates the packet that will be in
+//  response to the ModCon time call by the PC.
+//  It responds with the modcon time
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleTimePacket(void);
+//---------------------------------
+//  HandlePacketModePacket
+//
+//  Creates the packet that will be in
+//  response to the ModCon Packet Mode call by the PC.
+//  It responds with the Packet Mode
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandlePacketModePacket(void);
-BOOL HandleAnalogValPacket(TChannelNb channelNb);
+//---------------------------------
+//  HandleAnalogValPacket
+//
+//  Creates the packet that will be in
+//  response to the ModCon Analog Value call by the PC.
+//  It responds with the current Analog Value
+//  Input: none
+//  Output: none
+//  Conditions: none
+BOOL HandleAnalogValPacket(const TChannelNb channelNb);
+//---------------------------------
+//  HandleTestModePack
+//
+//  Toggles test mode
+//  Input: none
+//  Output: none
+//  Conditions: none
 void HandleTestModePack(void);
+//---------------------------------
+//  HandleTarrifPacket
+//
+//  Sets the tarrif type depending
+//  Input: none
+//  Output: none
+//  Conditions: none
 void HandleTarrifPacket(void);
+//---------------------------------
+//  HandleTime1Packet
+//
+//  Creates the packet that will respond with the
+//  seconds and minutes 
+//  OR
+//  sets the seconds and minutes based on the packet
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleTime1Packet(void);
+//---------------------------------
+//  HandleTime2Packet
+//
+//  Creates the packet that will respond with the
+//  hours and dayss 
+//  OR
+//  sets the hours and days based on the packet
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleTime2Packet(void);
+//---------------------------------
+//  HandlePowerPacket
+//
+//  Creates the packet that will return
+//  the current average power
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandlePowerPacket(void);
+//---------------------------------
+//  HandleEnergyPacket
+//
+//  Creates the packet that will return
+//  the current total energy
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleEnergyPacket(void);
+//---------------------------------
+//  HandleCostPacket
+//
+//  Creates the packet that will return
+//  the current total cost
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleCostPacket(void);
-BOOL HandleFrquencyPacket(void);
+//---------------------------------
+//  HandleFrequencyPacket
+//
+//  Creates the packet that will return
+//  the current frequency
+//  Input: none
+//  Output: none
+//  Conditions: none
+BOOL HandleFrequencyPacket(void);
+//---------------------------------
+//  HandleVRMS
+//
+//  Creates the packet that will return
+//  the VRMS value
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleVRMS(void);
+//---------------------------------
+//  HandleIRMS
+//
+//  Creates the packet that will return
+//  the IRMS value
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleIRMS(void);
+//---------------------------------
+//  HandlePFactor
+//
+//  Creates the packet that will return
+//  the power factor
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandlePFactor(void);
 
 #endif

@@ -23,8 +23,13 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
 *** EVALUATION ***
 
 Function: Packet_Setup
+<<<<<<< .mine
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\packet.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\packet.c.o" -WmsgSd1106 -WmsgSd5703
+=======
 Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\packet.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\packet.c.o -WmsgSd1106 -WmsgSd5703
+>>>>>>> .r12
 
   0000 3b           [2]     PSHD  
   0001 34           [2]     PSHX  
@@ -55,8 +60,13 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demd
 *** EVALUATION ***
 
 Function: Packet_Put
+<<<<<<< .mine
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\packet.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\packet.c.o" -WmsgSd1106 -WmsgSd5703
+=======
 Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\packet.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\packet.c.o -WmsgSd1106 -WmsgSd5703
+>>>>>>> .r12
 
   0000 37           [2]     PSHB  
    30:    if (!Timer_Enabled(TIMER_Ch7))
@@ -108,8 +118,13 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demd
 *** EVALUATION ***
 
 Function: Packet_Get
+<<<<<<< .mine
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\packet.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\packet.c.o" -WmsgSd1106 -WmsgSd5703
+=======
 Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\packet.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\packet.c.o -WmsgSd1106 -WmsgSd5703
+>>>>>>> .r12
 
   0000 3b           [2]     PSHD  
    42:    BOOL bStateInput = SCI_InChar(&FSM[StateIndex].data);  
@@ -188,8 +203,13 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demd
 *** EVALUATION ***
 
 Function: shuffleFSM
+<<<<<<< .mine
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\packet.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\packet.c.o" -WmsgSd1106 -WmsgSd5703
+=======
 Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\packet.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\packet.c.o -WmsgSd1106 -WmsgSd5703
+>>>>>>> .r12
 
    73:    INT8 i;
    74:    for (i = 0; i < StateIndex; i++)

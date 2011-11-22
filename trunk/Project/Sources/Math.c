@@ -13,13 +13,7 @@
 
 // *8 ~= << 3
 // /8 ~= >> 3
-/* 
-    5/4095 = 0.00122
-    122mv	1	122
-		5000
 
-    5000*N/4095
-    61*N+25/50             */
 
 
 // ----------------------------------------
@@ -64,7 +58,7 @@ INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const UINT8 ba
       /*if (tempNumber >= 100000)
       {
         hundredThousand = (UINT8)(number / 100000);
-        tempNumber -= (hundredThousand * 100000;  
+        tempNumber -= (hundredThousand * 100000);  
       }
       if (tempNumber >= 10000)
       {
@@ -82,9 +76,18 @@ INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const UINT8 ba
   }
 }
 
-INT16 Math_ConvertADCValue(const INT32 number)
-{
-  return (INT16)Math_ToQN(( (61 * number) + 25 ) / 50, DefaultBase);
+INT16 Math_ConvertADCValue(const INT16 number)
+{ 
+  /* 
+    5/4095 = 0.00122
+    122mv	1    122
+		5000  4095 5000
+
+    5000*N/4095
+    61*N+25/50             
+    where N = ADC Number    
+  */
+  return ((61 * number) + 25 ) / 50;
 }
 
 INT16 Math_ToDACValue(const INT32 number) 
@@ -105,9 +108,10 @@ INT16 Math_ToDACValue(const INT32 number)
 //  The instantaneous power
 // Conditions:
 //  none
-INT16 Math_FindPower(const INT16 voltage, const INT16 current)
+UINT32 Math_FindPower(const INT16 voltage, const INT16 current)
 {
-  return (INT16)voltage * current;
+  // Will come in as mV
+  return (voltage * current);
 }
 
 // ----------------------------------------
@@ -120,7 +124,7 @@ INT16 Math_FindPower(const INT16 voltage, const INT16 current)
 //  none
 // Conditions:
 //  none
-void Math_FindEnergy(const INT16 DEM_AvePower_Array[])
+void Math_FindEnergy(const UINT16 sample)
 {
   // 16 Samples per Period/Cycle.
   // Sum of PkTs between k=0 and n
@@ -128,12 +132,21 @@ void Math_FindEnergy(const INT16 DEM_AvePower_Array[])
   // 1 cycle is approx 20 milliseconds
   // so 20/16 = 1.25, so sample approx every 1ms
   UINT8 i;
+  UINT16 energy = 0;
   
   for (i = 0; i < DEM_PWRSIZE; i++)
   {
-    DEM_Total_Energy.l += DEM_AvePower_Array[i];
+    // Power is in 1000 p.u
+    // Sample is in ms in 1000 p.u. Energy is?
+    energy += DEM_Power_Array[i] * sample;
+    //DEM_Total_Energy.l += powerArr[i];
   }
-  //DEM_Total_Energy.l = (DEM_Total_Energy.l >> 3) * (Clock_RunningTimeInHours() << 3) ;
+  // Power is in milliWatt? (mV * mV)
+  DEM_Total_Energy.l += energy;
+  DEM_Total_Energy.l *= 1000 * 3600; // Wh in base 1000, need to div by 1 000 000 to get base 0
+  DEM_Total_Energy.l /= 1000000;     // Energy in Wh
+  //DEM_Total_Energy.l = (DEM_Total_Energy.l) * (Clock_RunningTimeInHours()) ;
+  //DEM_Total_Energy.l = DEM_Total_Energy.l;
 }
 
 // ----------------------------------------
@@ -148,12 +161,11 @@ void Math_FindEnergy(const INT16 DEM_AvePower_Array[])
 //  none
 void Math_FindCost(void)
 {
-  // Energy in kWh * Tarrif
-  // Downscale energy to base 3, upscale time to 3, tarrif by default is 3.
-  DEM_Total_Cost += (UINT16) ((DEM_Total_Energy.l >> 3) * (Clock_RunningTimeInHours() << 3) * (DEM_Tarrif));
-  
-  // Then normalise back down to base 3   (9-6 = 3)
-  DEM_Total_Cost = DEM_Total_Cost >> 6;
+  // Energy in kWh * Tarrif in cents...
+  // So energy in Watt-second * Tarrif in cents?
+  // Energy is mind fuck base, DEM_Tarrif is 256 p.u.
+  UINT32 cost =  (DEM_Total_Energy.l) * (DEM_Tarrif);
+  DEM_Total_Cost += cost;
 }
 
 // ----------------------------------------
@@ -172,14 +184,20 @@ UINT16 Math_SQRT(const INT16 number, const INT16 guess)
   return (UINT16) ( ((number + guess) + guess) >> 1);
 }
 
-void Math_FindFrequency(UINT16 delay)
+void Math_FindFrequency(const UINT16 delay)
 {
   // F = 1/T
-  DEM_Frequency.l = 1 / (delay << 4);
+  // delay in ms. to get in seconds div by 1000
+  DEM_Frequency.l = (1000000 / (delay)) * 10;
     
 }
 
-INT16 Math_FindRMS(const INT16 number)
+UINT16 Math_FindRMS(const INT16 number)
 {
   return number / Math_SQRT(2, 1);
+}
+
+UINT16 Math_SampleTime(const UINT16 delay)
+{
+  return (delay) / 16;   // 16 samples 
 }

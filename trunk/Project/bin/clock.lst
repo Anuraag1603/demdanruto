@@ -37,8 +37,8 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
 *** EVALUATION ***
 
 Function: Clock_Setup
-Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\clock.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\clock.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\clock.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\clock.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 37           [2]     PSHB  
    34:    // 2^16 = 63536. So RTR[6:4] (Prescale) = 111 and RTR[3:0] (Mod) = 0000.
@@ -77,8 +77,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demd
 *** EVALUATION ***
 
 Function: Clock_Update
-Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\clock.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\clock.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\clock.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\clock.c.o" -WmsgSd1106 -WmsgSd5703
 
   0000 1b99         [2]     LEAS  -7,SP
    55:    UINT32 second;
@@ -244,81 +244,33 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demd
   00c3 7b0000       [3]     STAB  Clock_Hours
   00c6 3d           [5]     RTS   
   127:  
-  128:  UINT16 Clock_RunningTimeInHours(void)
-  129:  {
-*** EVALUATION ***
-
-Function: Clock_RunningTimeInHours
-Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\clock.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\clock.c.o -WmsgSd1106 -WmsgSd5703
-
-  130:    UINT16 minutes, seconds;
-  131:    INT32 timeInHours, currentTime;
-  132:    minutes = (UINT16)Math_ToQN(16, 3) * (Clock_Minutes << 3);
-  0000 c610         [1]     LDAB  #16
-  0002 87           [1]     CLRA  
-  0003 6cac         [2]     STD   4,-SP
-  0005 c7           [1]     CLRB  
-  0006 3b           [2]     PSHD  
-  0007 c603         [1]     LDAB  #3
-  0009 160000       [4]     JSR   Math_ToQN
-  000c b746         [1]     TFR   D,Y
-  000e f60000       [3]     LDAB  Clock_Minutes
-  0011 87           [1]     CLRA  
-  0012 59           [1]     LSLD  
-  0013 59           [1]     LSLD  
-  0014 59           [1]     LSLD  
-  0015 13           [3]     EMUL  
-  133:    minutes = minutes >> 6;
-  0016 49           [1]     LSRD  
-  0017 49           [1]     LSRD  
-  0018 49           [1]     LSRD  
-  0019 49           [1]     LSRD  
-  001a 49           [1]     LSRD  
-  001b 49           [1]     LSRD  
-  001c 6ca3         [2]     STD   4,+SP
-  134:    seconds = (UINT16)Math_ToQN(27, 5) * (Clock_Seconds << 5);
-  001e c61b         [1]     LDAB  #27
-  0020 87           [1]     CLRA  
-  0021 3b           [2]     PSHD  
-  0022 c7           [1]     CLRB  
-  0023 3b           [2]     PSHD  
-  0024 c605         [1]     LDAB  #5
-  0026 160000       [4]     JSR   Math_ToQN
-  0029 1b84         [2]     LEAS  4,SP
-  002b b746         [1]     TFR   D,Y
-  002d c620         [1]     LDAB  #32
-  002f b60000       [3]     LDAA  Clock_Seconds
-  0032 12           [1]     MUL   
-  0033 13           [3]     EMUL  
-  135:    seconds = seconds >> 10;
-  0034 b746         [1]     TFR   D,Y
-  0036 c60a         [1]     LDAB  #10
-  0038 160000       [4]     JSR   _ISHRU
-  136:    // Nfi how I'm gonna do this :S
-  137:    //return (Clock_Days * 24) + Clock_Hours + (Clock_Minutes * 0.0166666667)  = (Clock_Seconds * 0.000277777778);
+  128:  /*
+  129:  UINT16 Clock_RunningTimeInHours(void)
+  130:  {
+  131:    UINT16 minutes, seconds;
+  132:    INT32 timeInHours, currentTime;
+  133:    
+  134:    // Convert the Ratio to base 3, Convert Minutes to base 1000 to fit, and then into base 3
+  135:    minutes = (UINT16)Math_ToQN(16, 3) * ((Clock_Minutes * 1000 ) << 3);
+  136:    // Normalise back down, still base 1000
+  137:    minutes = (minutes >> 6) / 1000;
   138:    
-  139:    currentTime = (Clock_Days * 24) + Clock_Hours + minutes + seconds;
-  003b b746         [1]     TFR   D,Y
-  003d c618         [1]     LDAB  #24
-  003f b60000       [3]     LDAA  Clock_Days
-  0042 12           [1]     MUL   
-  0043 b745         [1]     TFR   D,X
-  0045 f60000       [3]     LDAB  Clock_Hours
-  0048 87           [1]     CLRA  
-  0049 1ae6         [2]     LEAX  D,X
-  004b b754         [1]     TFR   X,D
-  004d e380         [3]     ADDD  0,SP
-  004f 19ee         [2]     LEAY  D,Y
-  140:    timeInHours = currentTime - OldTimeInHours;
-  0051 b764         [1]     TFR   Y,D
-  0053 b30000       [3]     SUBD  OldTimeInHours:2
-  141:    OldTimeInHours = currentTime;
-  0056 7d0000       [3]     STY   OldTimeInHours:2
-  0059 790000       [3]     CLR   OldTimeInHours:1
-  005c 790000       [3]     CLR   OldTimeInHours
-  142:    
-  143:    return timeInHours;
-  144:  }
-  005f 30           [3]     PULX  
-  0060 3d           [5]     RTS   
+  139:    // Convert the Ratio to base 5, Convert Seconds to base 1000 to fit, and then into base 5
+  140:    seconds = (UINT16)Math_ToQN(27, 5) * ((Clock_Seconds * 100000) << 5);
+  141:    // Normalise back down 10000
+  142:    seconds = (seconds >> 10) / 100000;
+  143:    
+  144:    //return (Clock_Days * 24) + Clock_Hours + (Clock_Minutes * 0.0166666667)  = (Clock_Seconds * 0.000277777778);
+  145:    
+  146:    currentTime = (Clock_Days * 24) + Clock_Hours + minutes + seconds;
+  147:    timeInHours = currentTime - OldTimeInHours;
+  148:    OldTimeInHours = currentTime;
+  149:    
+  150:    return (UINT16)timeInHours;
+  151:  }
+  152:  
+  153:  UINT16 Clock_TimeInSeconds(void)
+  154:  {
+  155:    return (Clock_Days * 24 * 60 * 24) + (Clock_Hours * 24 * 60) + (Clock_Minutes * 60) + Clock_Seconds;
+  156:  }
+  157:  */

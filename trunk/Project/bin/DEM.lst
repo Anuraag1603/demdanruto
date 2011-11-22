@@ -27,43 +27,46 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
 *** EVALUATION ***
 
 Function: DEM_Setup
-Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\DEM.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\DEM.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\DEM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\DEM.c.o" -WmsgSd1106 -WmsgSd5703
 
    24:    UINT8 i;
    25:    
    26:    DEM_Average_Power.l = 0;
   0000 c7           [1]     CLRB  
   0001 87           [1]     CLRA  
-  0002 7c0000       [3]     STD   DEM_Average_Power
+  0002 7c0000       [3]     STD   DEM_Average_Power:2
+  0005 7c0000       [3]     STD   DEM_Average_Power
    27:    DEM_Total_Energy.l  = 0;
-  0005 7c0000       [3]     STD   DEM_Total_Energy:2
-  0008 7c0000       [3]     STD   DEM_Total_Energy
+  0008 7c0000       [3]     STD   DEM_Total_Energy:2
+  000b 7c0000       [3]     STD   DEM_Total_Energy
    28:    DEM_Total_Cost      = 0;
-  000b 7c0000       [3]     STD   DEM_Total_Cost:2
-  000e 7c0000       [3]     STD   DEM_Total_Cost
+  000e 7c0000       [3]     STD   DEM_Total_Cost:2
+  0011 7c0000       [3]     STD   DEM_Total_Cost
    29:    DEM_VRMS.l          = 0;
-  0011 7c0000       [3]     STD   DEM_VRMS
+  0014 7c0000       [3]     STD   DEM_VRMS
    30:    DEM_IRMS.l          = 0;
-  0014 7c0000       [3]     STD   DEM_IRMS
+  0017 7c0000       [3]     STD   DEM_IRMS
    31:    
    32:    
    33:    for (i = 0; i < DEM_PWRSIZE; i++)
    34:    {
-   35:      DEM_AvePower_Array[i] = 0;
-  0017 87           [1]     CLRA  
-  0018 37           [2]     PSHB  
-  0019 59           [1]     LSLD  
-  001a b745         [1]     TFR   D,X
-  001c cd0000       [2]     LDY   #0
-  001f 6de20000     [3]     STY   DEM_AvePower_Array,X
-  0023 33           [3]     PULB  
-  0024 52           [1]     INCB  
-  0025 c110         [1]     CMPB  #16
-  0027 25ee         [3/1]   BCS   *-16 ;abs = 0017
+   35:      DEM_Power_Array[i] = 0;
+  001a 87           [1]     CLRA  
+  001b 37           [2]     PSHB  
+  001c 59           [1]     LSLD  
+  001d 59           [1]     LSLD  
+  001e b745         [1]     TFR   D,X
+  0020 cd0000       [2]     LDY   #0
+  0023 6de20000     [3]     STY   DEM_Power_Array:2,X
+  0027 6de20000     [3]     STY   DEM_Power_Array,X
+  002b 33           [3]     PULB  
+  002c 52           [1]     INCB  
+  002d c110         [1]     CMPB  #16
+  002f 25e9         [3/1]   BCS   *-21 ;abs = 001a
    36:    }
    37:  }
-  0029 3d           [5]     RTS   
+  0031 3d           [5]     RTS   
    38:  
    39:  // ----------------------------------------
    40:  // DEM_SetTarrif
@@ -81,8 +84,8 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demd
 *** EVALUATION ***
 
 Function: DEM_SetTarrif
-Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\DEM.c
-Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\DEM.c.o -WmsgSd1106 -WmsgSd5703
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\DEM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\DEM.c.o" -WmsgSd1106 -WmsgSd5703
 
    52:    /*
    53:    Peak 14-20
@@ -92,44 +95,102 @@ Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demd
    57:    
    58:    // Time of Use
    59:    if (DEM_Average_Power.l > 0 && sTarrifMode == 1)
-  0000 fc0000       [3]     LDD   DEM_Average_Power
-  0003 2f27         [3/1]   BLE   *+41 ;abs = 002c
-  0005 fc0460       [3]     LDD   1120
-  0008 042421       [3]     DBNE  D,*+36 ;abs = 002c
+  0000 fc0000       [3]     LDD   DEM_Average_Power:2
+  0003 2605         [3/1]   BNE   *+7 ;abs = 000a
+  0005 fc0000       [3]     LDD   DEM_Average_Power
+  0008 2727         [3/1]   BEQ   *+41 ;abs = 0031
+  000a fc0460       [3]     LDD   1120
+  000d 042421       [3]     DBNE  D,*+36 ;abs = 0031
    60:    {
    61:      
    62:      if (Clock_Hours >= 14 && Clock_Hours <= 20)
-  000b f60000       [3]     LDAB  Clock_Hours
-  000e c00e         [1]     SUBB  #14
-  0010 c106         [1]     CMPB  #6
-  0012 2205         [3/1]   BHI   *+7 ;abs = 0019
+  0010 f60000       [3]     LDAB  Clock_Hours
+  0013 c00e         [1]     SUBB  #14
+  0015 c106         [1]     CMPB  #6
+  0017 2205         [3/1]   BHI   *+7 ;abs = 001e
    63:        DEM_Tarrif = sT1Peak;  
-  0014 fc0450       [3]     LDD   1104
-  0017 2023         [3]     BRA   *+37 ;abs = 003c
+  0019 fc0450       [3]     LDD   1104
+  001c 2042         [3]     BRA   *+68 ;abs = 0060
    64:      else if (Clock_Hours >= 7 && Clock_Hours < 14)
-  0019 f60000       [3]     LDAB  Clock_Hours
-  001c c007         [1]     SUBB  #7
-  001e c106         [1]     CMPB  #6
-  0020 2205         [3/1]   BHI   *+7 ;abs = 0027
+  001e f60000       [3]     LDAB  Clock_Hours
+  0021 c007         [1]     SUBB  #7
+  0023 c106         [1]     CMPB  #6
+  0025 2205         [3/1]   BHI   *+7 ;abs = 002c
    65:        DEM_Tarrif = sT1Shoulder;
-  0022 fc0452       [3]     LDD   1106
-  0025 2015         [3]     BRA   *+23 ;abs = 003c
+  0027 fc0452       [3]     LDD   1106
+  002a 2034         [3]     BRA   *+54 ;abs = 0060
    66:      else
    67:        DEM_Tarrif = sT1OffPeak;
-  0027 fc0454       [3]     LDD   1108
-  002a 2010         [3]     BRA   *+18 ;abs = 003c
+  002c fc0454       [3]     LDD   1108
+  002f 202f         [3]     BRA   *+49 ;abs = 0060
    68:    }
-   69:    else if (sTarrifMode == 2)
-  002c fc0460       [3]     LDD   1120
-  002f 8c0002       [2]     CPD   #2
-  0032 2605         [3/1]   BNE   *+7 ;abs = 0039
+   69:    else if (DEM_Average_Power.l == 0 && sTarrifMode == 2)
+  0031 fc0000       [3]     LDD   DEM_Average_Power:2
+  0034 2612         [3/1]   BNE   *+20 ;abs = 0048
+  0036 fc0000       [3]     LDD   DEM_Average_Power
+  0039 260d         [3/1]   BNE   *+15 ;abs = 0048
+  003b fc0460       [3]     LDD   1120
+  003e 8c0002       [2]     CPD   #2
+  0041 2605         [3/1]   BNE   *+7 ;abs = 0048
    70:      DEM_Tarrif = sT2NonTOU;
-  0034 fc0456       [3]     LDD   1110
-  0037 2003         [3]     BRA   *+5 ;abs = 003c
-   71:    
-   72:    else
-   73:      DEM_Tarrif = sT3NonTOU;
-  0039 fc0458       [3]     LDD   1112
-  003c 7c0000       [3]     STD   DEM_Tarrif
-   74:  }
-  003f 3d           [5]     RTS   
+  0043 fc0456       [3]     LDD   1110
+  0046 2018         [3]     BRA   *+26 ;abs = 0060
+   71:    else if (DEM_Average_Power.l == 0 && sTarrifMode == 3)
+  0048 fc0000       [3]     LDD   DEM_Average_Power:2
+  004b 2611         [3/1]   BNE   *+19 ;abs = 005e
+  004d fc0000       [3]     LDD   DEM_Average_Power
+  0050 260c         [3/1]   BNE   *+14 ;abs = 005e
+  0052 fc0460       [3]     LDD   1120
+  0055 8c0003       [2]     CPD   #3
+  0058 2604         [3/1]   BNE   *+6 ;abs = 005e
+   72:      DEM_Tarrif = sT3NonTOU;
+  005a fc0458       [3]     LDD   1112
+  005d 8f           [2]     SKIP2 
+   73:    else 
+   74:      DEM_Tarrif = 0;
+  005e c7           [1]     CLRB  
+  005f 87           [1]     CLRA  
+  0060 7c0000       [3]     STD   DEM_Tarrif
+   75:  }
+  0063 3d           [5]     RTS   
+   76:  
+   77:  void DEM_OutTarrif(void)
+   78:  {
+*** EVALUATION ***
+
+Function: DEM_OutTarrif
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\DEM.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\DEM.c.o" -WmsgSd1106 -WmsgSd5703
+
+   79:    UINT16 tarrifL = DEM_Tarrif >> TarrifBase;
+  0000 fc0000       [3]     LDD   DEM_Tarrif
+  0003 b701         [1]     TFR   A,B
+  0005 87           [1]     CLRA  
+  0006 49           [1]     LSRD  
+   80:    UINT16 tarrifR = DEM_Tarrif * 1000 >> TarrifBase;
+  0007 cd03e8       [2]     LDY   #1000
+  000a 3b           [2]     PSHD  
+  000b fc0000       [3]     LDD   DEM_Tarrif
+  000e 13           [3]     EMUL  
+  000f b701         [1]     TFR   A,B
+  0011 87           [1]     CLRA  
+  0012 49           [1]     LSRD  
+   81:    tarrifR %= 1000;
+  0013 ce03e8       [2]     LDX   #1000
+  0016 1810         [12]    IDIV  
+   82:    
+   83:    LCD_OutInteger(tarrifL);
+  0018 3b           [2]     PSHD  
+  0019 ec82         [3]     LDD   2,SP
+  001b 160000       [4]     JSR   LCD_OutInteger
+   84:    (void)LCD_OutChar('.');
+  001e c62e         [1]     LDAB  #46
+  0020 160000       [4]     JSR   LCD_OutChar
+   85:    LCD_OutInteger(tarrifR);
+  0023 3a           [3]     PULD  
+  0024 160000       [4]     JSR   LCD_OutInteger
+  0027 3a           [3]     PULD  
+   86:    
+   87:    
+   88:  }
+  0028 3d           [5]     RTS   

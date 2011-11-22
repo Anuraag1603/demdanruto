@@ -12,79 +12,73 @@ ANSI-C/cC++ Compiler for HC12 V-5.0.41 Build 10203, Jul 23 2010
     9:  
    10:  #include "buttons.h"
    11:  
-   12:  
-   13:  // ----------------------------------------
-   14:  // Buttons_Get
-   15:  // 
-   16:  // Gets the state of the pushbuttons
-   17:  // Input:
-   18:  //   
-   19:  // Output:
-   20:  //   none
-   21:  // Conditions:
-   22:  //  none
-   23:  void Buttons_Get(TButtonInputs * const dataPtr) 
-   24:  {
+   12:  // ----------------------------------------
+   13:  // Buttons_Get
+   14:  // 
+   15:  // Gets the state of the pushbuttons
+   16:  // Input:
+   17:  //   
+   18:  // Output:
+   19:  //   none
+   20:  // Conditions:
+   21:  //  none
+   22:  void Buttons_Get(TButtonInputs * const dataPtr) 
+   23:  {
 *** EVALUATION ***
 
 Function: Buttons_Get
+<<<<<<< .mine
+Source  : F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources\buttons.c
+Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\prm;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\cmd;F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Sources;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\src;C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files (x86)\Freescale\CWS12v5.1\lib\HC12c\include" -Env"OBJPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Env"TEXTPATH=F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\bin" -Lasm=%n.lst -Ms -ObjN="F:\Dropbox\S11\Embedded Software\Assignments\demdanruto\Project\Project_Data\ModCon_Board\ObjectCode\buttons.c.o" -WmsgSd1106 -WmsgSd5703
+=======
 Source  : C:\Users\evildansta\Desktop\demdanruto\Project\Sources\buttons.c
 Options : -CPUHCS12 -D__NO_FLOAT__ -Env"GENPATH=C:\Users\evildansta\Desktop\demdanruto\Project;C:\Users\evildansta\Desktop\demdanruto\Project\bin;C:\Users\evildansta\Desktop\demdanruto\Project\prm;C:\Users\evildansta\Desktop\demdanruto\Project\cmd;C:\Users\evildansta\Desktop\demdanruto\Project\Sources;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\src;C:\Users\evildansta\Desktop\demdanruto\Project\lib;C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -Env"LIBPATH=C:\Program Files\Freescale\CWS12v5.1\lib\HC12c\include" -EnvOBJPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -EnvTEXTPATH=C:\Users\evildansta\Desktop\demdanruto\Project\bin -Lasm=%n.lst -Ms -ObjN=C:\Users\evildansta\Desktop\demdanruto\Project\Project_Data\Full_Chip_Simulation\ObjectCode\buttons.c.o -WmsgSd1106 -WmsgSd5703
+>>>>>>> .r12
 
   0000 3b           [2]     PSHD  
-   25:    //Timer_Set(TIMER_Ch5, bFALSE);
-   26:    *dataPtr = PORTK & 0xBC;
+   24:    //Timer_Set(TIMER_Ch5, bFALSE);
+   25:    *dataPtr = PORTK & 0xBC;
   0001 d600         [3]     LDAB  _PORTK
   0003 c4bc         [1]     ANDB  #188
   0005 87           [1]     CLRA  
   0006 ee80         [3]     LDX   0,SP
   0008 6c00         [2]     STD   0,X
-   27:    
-   28:    //Wait Until the button is released
-   29:    //while ( !((PORTK & 0xBC) == 0) );
-   30:    Timer_Set(TIMER_Ch6, 40000);
+   26:    //Wait Until the button is released
+   27:    //while ( !((PORTK & 0xBC) == 0) );
+   28:    Timer_Set(TIMER_Ch6, 40000);
   000a c606         [1]     LDAB  #6
   000c 3b           [2]     PSHD  
   000d cc9c40       [2]     LDD   #40000
   0010 160000       [4]     JSR   Timer_Set
-  0013 3a           [3]     PULD  
-   31:    Timer_Enable(TIMER_Ch6, bTRUE);
-  0014 c606         [1]     LDAB  #6
-  0016 87           [1]     CLRA  
-  0017 071d         [4]     BSR   *+31 ;abs = 0036
-   32:    while(TFLG1_C5F);
-  0019 4e0020fc     [4]     BRSET _TFLG1,#32,*+0 ;abs = 0019
-   33:    Timer_Enable(TIMER_Ch6, bFALSE);
-  001d c606         [1]     LDAB  #6
-  001f 87           [1]     CLRA  
-  0020 3b           [2]     PSHD  
-  0021 c7           [1]     CLRB  
-  0022 160000       [4]     JSR   Timer_Enable
-   34:    
-   35:    if (*dataPtr != (PORTK & 0xBC))
-  0025 eea1         [3]     LDX   2,+SP
-  0027 d600         [3]     LDAB  _PORTK
-  0029 c4bc         [1]     ANDB  #188
-  002b 87           [1]     CLRA  
-  002c ac00         [3]     CPD   0,X
-  002e 2604         [3/1]   BNE   *+6 ;abs = 0034
-   36:      return;
-   37:    
-   38:    Timer_Enable(TIMER_Ch6, bTRUE);
-  0030 c606         [1]     LDAB  #6
-  0032 0702         [4]     BSR   *+4 ;abs = 0036
+   29:    Timer_Enable(TIMER_Ch6, bTRUE);
+  0013 c606         [1]     LDAB  #6
+  0015 87           [1]     CLRA  
+  0016 6c80         [2]     STD   0,SP
+  0018 c601         [1]     LDAB  #1
+  001a 160000       [4]     JSR   Timer_Enable
+   30:    
+   31:    if (*dataPtr != (PORTK & 0xBC))
+  001d eea1         [3]     LDX   2,+SP
+  001f d600         [3]     LDAB  _PORTK
+  0021 c4bc         [1]     ANDB  #188
+  0023 87           [1]     CLRA  
+  0024 ac00         [3]     CPD   0,X
+  0026 2609         [3/1]   BNE   *+11 ;abs = 0031
+   32:      return;
+   33:    
+   34:    Timer_Enable(TIMER_Ch6, bFALSE);
+  0028 c606         [1]     LDAB  #6
+  002a 3b           [2]     PSHD  
+  002b c7           [1]     CLRB  
+  002c 160000       [4]     JSR   Timer_Enable
+  002f 1b82         [2]     LEAS  2,SP
+   35:    
+   36:    // 10111100 
+   37:    // 1X1111XX
+   38:    // MSB: BC, LSB: 3D
    39:    
-   40:    // 10111100 
-   41:    // 1X1111XX
-   42:    // MSB: BC, LSB: 3D
-   43:    
-   44:  }
-  0034 3a           [3]     PULD  
-  0035 3d           [5]     RTS   
-  0036 3b           [2]     PSHD  
-  0037 c601         [1]     LDAB  #1
-  0039 160000       [4]     JSR   Timer_Enable
-  003c 1b82         [2]     LEAS  2,SP
-  003e 3d           [5]     RTS   
-   45:  
-   46:  
+   40:  }
+  0031 3a           [3]     PULD  
+  0032 3d           [5]     RTS   
+   41:  
+   42:  

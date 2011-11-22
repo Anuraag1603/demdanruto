@@ -33,25 +33,23 @@ void main(void)
   BOOL bSetupState;
   TTimerSetup timerSetup;
   
+  Timer_Setup();
+  Clock_Setup(prescaleRate, modulusCount);
+  Analog_Setup(busClk);
+  PWM_Setup(busClk);
   
   bSetupState = Packet_Setup(baudRate, busClk) &&
                 EEPROM_Setup(oscClk, busClk) &&
                 CRG_SetupPLL(busClk, oscClk, refClk) &&
                 CRG_SetupCOP(watchDogRate);
                 
-                
+             
 
   timerSetup.outputCompare = bTRUE;
   timerSetup.outputAction = TIMER_OUTPUT_DISCONNECT;      
   timerSetup.inputDetection = TIMER_INPUT_OFF;
   timerSetup.toggleOnOverflow = bFALSE;
   timerSetup.interruptEnable = bTRUE;
-                
-  Clock_Setup(prescaleRate, modulusCount);
-  Analog_Setup(busClk);
-  PWM_Setup(busClk);
-  
-  Timer_Setup();
   Timer_PeriodicTimerEnable(bTRUE);
   Timer_SetupPeriodicTimer(Periodic_Delay, busClk);
   
@@ -63,7 +61,7 @@ void main(void)
   Timer_Set(TIMER_Ch4, Timer_Ch4_Delay);
   Timer_Enable(TIMER_Ch4, bTRUE);
   
-  HMI_Setup();
+  HMI_Setup();   
   
   if (bSetupState)
   {
@@ -95,7 +93,6 @@ void main(void)
     // Determine if a second has passed. If it has then send a time packet  
     if ( Clock_Update() )
     {
-      //Analog_Put(Ch1);
       (void)HandleTimePacket();
       HMI_Update();
     }
@@ -169,7 +166,7 @@ void HandlePacket(void)
          Packet_CommandOK = HandleCostPacket();
     break;
     case CMD_FREQUENCY:
-         Packet_CommandOK = HandleFrquencyPacket();
+         Packet_CommandOK = HandleFrequencyPacket();
     break;
     case CMD_VOLRMS:
          Packet_CommandOK = HandleVRMS();
@@ -195,8 +192,15 @@ void HandlePacket(void)
   
 
   
- }
- 
+}
+
+//---------------------------------
+//  TIE4_ISR
+//
+//  The ISR for ouputting Voltage and Current waves in Test mode
+//  Input: none
+//  Output: none
+//  Conditions: none    
 void interrupt 12 TIE4_ISR(void)
 {
   TFLG1_C4F = 1; // Clear flag to say it was done.
@@ -228,6 +232,8 @@ void interrupt 12 TIE4_ISR(void)
   if (Debug)
     PTT_PTT4 ^= 1;
   
+  //Analog_Put(Ch1);
+  //Analog_Put(Ch2);
   Analog_Get(Ch1);
   Analog_Get(Ch2);
   
@@ -248,11 +254,12 @@ void interrupt 12 TIE4_ISR(void)
   if (SampleCount >= DEM_PWRSIZE)
   {
     SampleCount = 0;
-    Math_FindEnergy(DEM_AvePower_Array);
+    Math_FindEnergy(Periodic_Delay);
     DEM_Average_Power.l = 0;
+    
     for (i = 0; i < DEM_PWRSIZE; i++)
     {
-      DEM_Average_Power.l += DEM_AvePower_Array[i];
+      DEM_Average_Power.l += DEM_Power_Array[i];
     }
     // Find the average power over the samples
     DEM_Average_Power.l = DEM_Average_Power.l >> 4;
@@ -260,7 +267,7 @@ void interrupt 12 TIE4_ISR(void)
     
   voltage = Math_ConvertADCValue(Analog_Input[Ch1].Value.l);
   current = Math_ConvertADCValue(Analog_Input[Ch2].Value.l);
-  DEM_AvePower_Array[SampleCount] = Math_FindPower(voltage, current);
+  DEM_Power_Array[SampleCount] = Math_FindPower(voltage, current);
   //DEM_Average_Power.l = DEM_AvePower_Array[SampleCount];
   SampleCount++;
   Math_FindFrequency(Periodic_Delay);
@@ -486,12 +493,19 @@ BOOL HandlePacketModePacket(void)
 //  Input: none
 //  Output: none
 //  Conditions: none
-BOOL HandleAnalogValPacket(TChannelNb channelNb)
+BOOL HandleAnalogValPacket(const TChannelNb channelNb)
 {
   // cmd, channel, lsb, msb
   return Packet_Put(CMD_ANALOG_VALUE, (UINT8)channelNb, Analog_Input[channelNb].Value.s.Lo, Analog_Input[channelNb].Value.s.Hi);  
 }
 
+//---------------------------------
+//  HandleTestModePack
+//
+//  Toggles test mode
+//  Input: none
+//  Output: none
+//  Conditions: none
 void HandleTestModePack(void)
 {
   if(Packet_Parameter1)
@@ -500,6 +514,13 @@ void HandleTestModePack(void)
     EEPROM_Write16(&Debug, 0);
 }
 
+//---------------------------------
+//  HandleTarrifPacket
+//
+//  Sets the tarrif type depending
+//  Input: none
+//  Output: none
+//  Conditions: none
 void HandleTarrifPacket(void)
 {
   switch(Packet_Parameter1)
@@ -517,15 +538,18 @@ void HandleTarrifPacket(void)
       (void)EEPROM_Write16(&sTarrifMode, 3);
     break;
   }
-  
-  /*if (Packet_Parameter1 == 1 && Packet_Parameter3 == 0)
-    DEM_Tarrif = sT1OffPeak;
-  else if (Packet_Parameter1 == 2 && Packet_Parameter3 == 0)
-    DEM_Tarrif = sT2NonTOU;
-  else if (Packet_Parameter1 == 3 && Packet_Parameter3 == 0) 
-    DEM_Tarrif = sT3NonTOU;*/
 }
 
+//---------------------------------
+//  HandleTime1Packet
+//
+//  Creates the packet that will respond with the
+//  seconds and minutes 
+//  OR
+//  sets the seconds and minutes based on the packet
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleTime1Packet(void)
 {
   if (Packet_Parameter3 == 0)
@@ -539,6 +563,16 @@ BOOL HandleTime1Packet(void)
   
 }
 
+//---------------------------------
+//  HandleTime2Packet
+//
+//  Creates the packet that will respond with the
+//  hours and dayss 
+//  OR
+//  sets the hours and days based on the packet
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleTime2Packet(void)
 {
   if (Packet_Parameter3 == 0)
@@ -546,42 +580,101 @@ BOOL HandleTime2Packet(void)
   else
   {
     Clock_Hours = Packet_Parameter1;
-    Clock_Days = Packet_Parameter2;
+    Clock_Days  = Packet_Parameter2;
   }
 }
 
+//---------------------------------
+//  HandlePowerPacket
+//
+//  Creates the packet that will return
+//  the current average power
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandlePowerPacket(void)
 {
+  TUINT16 power;
+  power.l = DEM_Average_Power.l >> 8;
   return Packet_Put(CMD_POWER, DEM_Average_Power.s.Lo, DEM_Average_Power.s.Hi, 0);
 }
 
+//---------------------------------
+//  HandleEnergyPacket
+//
+//  Creates the packet that will return
+//  the current total energy
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleEnergyPacket(void)
 {
   return Packet_Put(CMD_POWER, (UINT8)DEM_Total_Energy.s.Lo, (UINT8)DEM_Total_Energy.s.Hi, 0);
 }
 
+//---------------------------------
+//  HandleCostPacket
+//
+//  Creates the packet that will return
+//  the current total cost
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleCostPacket(void)
 {
-  return Packet_Put(CMD_COST, (UINT8)Math_FromQN(DEM_Total_Cost, qRight, 9), (UINT8)Math_FromQN(DEM_Total_Cost, qLeft, 9), 0);
+  return Packet_Put(CMD_COST, (UINT8)Math_FromQN(DEM_Total_Cost, qRight, CostBase), (UINT8)Math_FromQN(DEM_Total_Cost, qLeft, 9), CostBase);
 }
 
-BOOL HandleFrquencyPacket(void)
+//---------------------------------
+//  HandleFrequencyPacket
+//
+//  Creates the packet that will return
+//  the current frequency
+//  Input: none
+//  Output: none
+//  Conditions: none
+BOOL HandleFrequencyPacket(void)
 {
+  //TUINT16 tempFrequency;
   Math_FindFrequency(Periodic_Delay);
   return Packet_Put(CMD_FREQUENCY, DEM_Frequency.s.Lo, DEM_Frequency.s.Hi, 0);
 }
 
+//---------------------------------
+//  HandleVRMS
+//
+//  Creates the packet that will return
+//  the VRMS value
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleVRMS(void)
 {
   return Packet_Put(CMD_VOLRMS, DEM_VRMS.s.Lo, DEM_VRMS.s.Hi, 0);
 }
 
+//---------------------------------
+//  HandleIRMS
+//
+//  Creates the packet that will return
+//  the IRMS value
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandleIRMS(void)
 {
   return Packet_Put(CMD_CURRMS, DEM_IRMS.s.Lo, DEM_IRMS.s.Hi, 0);
 }
 
+//---------------------------------
+//  HandlePFactor
+//
+//  Creates the packet that will return
+//  the power factor
+//  Input: none
+//  Output: none
+//  Conditions: none
 BOOL HandlePFactor(void)
 {
-  return 0;
+  return Packet_Put(CMD_POWFAC, 0, 0, 0);
 }

@@ -14,6 +14,7 @@
 #include "packet.h"
 #include "Math.h"
 #include "types.h"
+#include "analog.h"
 
  
  // EEPROM Commands
@@ -56,10 +57,10 @@ BOOL EEPROM_Setup(const UINT32 oscClk, const UINT32 busClk)
     (void)EEPROM_Write16(&sControlMode, PACKET_ASYNCHRONOUS); 
  
   if (sNbAnalogInputs == 0xFFFF)
-    (void)EEPROM_Write16(&sNbAnalogInputs, 2);
+    (void)EEPROM_Write16(&sNbAnalogInputs, NbAnalogInputs.l);
   
   if (sNbAnalogOutputs == 0xFFFF)
-    (void)EEPROM_Write16(&sNbAnalogOutputs, 0);
+    (void)EEPROM_Write16(&sNbAnalogOutputs, NbAnalogOutputs.l);
   
   if (sAnalogPeriod == 0xFFFF)
     (void)EEPROM_Write16(&sAnalogPeriod, 10);
@@ -74,19 +75,28 @@ BOOL EEPROM_Setup(const UINT32 oscClk, const UINT32 busClk)
     (void)EEPROM_Write16(&sTarrifMode, 1);
   
   if (sT1Peak == 0xFFFF)
-    (void)EEPROM_Write16( &sT1Peak, (UINT16)Math_ToQN(22235, DefaultBase) );
+    //(void)EEPROM_Write16( &sT1Peak, Math_ToQN(22235, DefaultBase) );
+    (void)EEPROM_Write16( &sT1Peak, 11384 );
   
   if (sT1Shoulder == 0xFFFF)
-    (void)EEPROM_Write16(&sT1Shoulder, (UINT16)Math_ToQN(4400, DefaultBase) );
+    //(void)EEPROM_Write16(&sT1Shoulder, (UINT16)Math_ToQN(4400, DefaultBase) );
+    //(void)EEPROM_Write16(&sT1Shoulder, 4400);
+    (void)EEPROM_Write16(&sT1Shoulder, 2253 );
   
   if (sT1OffPeak == 0xFFFF)
-    (void)EEPROM_Write16(&sT1OffPeak, (UINT16)Math_ToQN(2109, DefaultBase) );
+    //(void)EEPROM_Write16(&sT1OffPeak, (UINT16)Math_ToQN(2109, DefaultBase) );
+    //(void)EEPROM_Write16(&sT1OffPeak, 2109);
+    (void)EEPROM_Write16(&sT1OffPeak, 1080 );
   
   if (sT2NonTOU == 0xFFFF)
-    (void)EEPROM_Write16(&sT2NonTOU, (UINT16)Math_ToQN(1713, DefaultBase) );
+    //(void)EEPROM_Write16(&sT2NonTOU, (UINT16)Math_ToQN(1713, DefaultBase) );
+    //(void)EEPROM_Write16(&sT2NonTOU, 1713;
+    (void)EEPROM_Write16(&sT2NonTOU, 877 );
   
   if (sT3NonTOU == 0xFFFF)
-    (void)EEPROM_Write16(&sT3NonTOU, (UINT16)Math_ToQN(4100, DefaultBase) );
+    //(void)EEPROM_Write16(&sT3NonTOU, (UINT16)Math_ToQN(4100, DefaultBase) );
+    //(void)EEPROM_Write16(&sT3NonTOU, 4100);
+    (void)EEPROM_Write16(&sT3NonTOU, 2099 );
   
   
   

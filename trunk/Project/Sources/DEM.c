@@ -32,7 +32,7 @@ void DEM_Setup(void)
   
   for (i = 0; i < DEM_PWRSIZE; i++)
   {
-    DEM_AvePower_Array[i] = 0;
+    DEM_Power_Array[i] = 0;
   }
 }
 
@@ -66,9 +66,23 @@ void DEM_SetTarrif(void)
     else
       DEM_Tarrif = sT1OffPeak;
   }
-  else if (sTarrifMode == 2)
+  else if (DEM_Average_Power.l == 0 && sTarrifMode == 2)
     DEM_Tarrif = sT2NonTOU;
-  
-  else
+  else if (DEM_Average_Power.l == 0 && sTarrifMode == 3)
     DEM_Tarrif = sT3NonTOU;
+  else 
+    DEM_Tarrif = 0;
+}
+
+void DEM_OutTarrif(void)
+{
+  UINT16 tarrifL = DEM_Tarrif >> TarrifBase;
+  UINT16 tarrifR = DEM_Tarrif * 1000 >> TarrifBase;
+  tarrifR %= 1000;
+  
+  LCD_OutInteger(tarrifL);
+  (void)LCD_OutChar('.');
+  LCD_OutInteger(tarrifR);
+  
+  
 }

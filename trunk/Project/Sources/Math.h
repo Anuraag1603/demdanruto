@@ -21,15 +21,16 @@ typedef enum
 
 INT32 Math_ToQN(const UINT32 number, const UINT8 base);
 INT16 Math_FromQN(UINT32 const number, const TQNotationSide side, const UINT8 base);
-INT16 Math_ConvertADCValue(const INT32 number);
+INT16 Math_ConvertADCValue(const INT16 number);
 INT16 Math_ToDACValue(const INT32 number);
-INT16 Math_FindPower(const INT16 voltage, const INT16 current);
-void Math_FindEnergy(const INT16 DEM_AvePower_Array[]);
+UINT32 Math_FindPower(const INT16 voltage, const INT16 current);
+void Math_FindEnergy(const UINT16 sample);
 void Math_FindCost(void);
 
 UINT16 Math_SQRT(const INT16 number, const INT16 guess);
 
 void Math_FindFrequency(const UINT16 delay);
-INT16 Math_FindRMS(const INT16 number);
+UINT16 Math_FindRMS(const INT16 number);
+UINT16 Math_SampleTime(const UINT16 delay);
 
 #endif
